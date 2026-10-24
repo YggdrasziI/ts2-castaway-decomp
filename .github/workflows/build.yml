@@ -7,7 +7,8 @@ on:
 jobs:
   build:
     # This is a *private* build container (YggdrasziI/ts2-castaway-decomp-build):
-    # it holds the ROM in /extract, the ARM7 BIOS and the mwccarm compilers.
+    # it holds the ROM in /extract and the mwccarm compilers. No BIOS: the ROM is
+    # checked against build_nobios.sha1 (see SPEC.md).
     container: ghcr.io/yggdraszii/ts2-castaway-decomp-build:main
 
     runs-on: ubuntu-latest
@@ -20,12 +21,9 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      # Copy the ROM to the workspace (dsd extracts it during the build) and the
-      # ARM7 BIOS to the root, so the original ROM SHA-1 is checked
+      # Copy the ROM to the workspace (dsd extracts it during the build)
       - name: Prepare
-        run: |
-          cp -a /extract/. ./extract/
-          cp /arm7_bios.bin .
+        run: cp -a /extract/. ./extract/
 
       # Tool versions must match tools/configure.py
       - name: Download tools

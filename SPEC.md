@@ -55,8 +55,10 @@ Evidence and the candidate analysis go in `notes/COMPILER.md`.
   other byte, all modules included, is identical (checked 2026-10-25 with `cmp`).
   With the owner's ARM7 BIOS dump (`bios/biosnds7.bin`, 16 KiB, SHA-1
   `24f67bdea115a2c847c8813a262502ee1607b7df`, copied to `arm7_bios.bin`) the rebuilt
-  ROM is identical to the original (checked 2026-10-25). `bios/` and `arm7_bios.bin`
-  are git-ignored.
+  ROM is identical to the original (checked 2026-10-25). BIOS and firmware dumps are
+  the owner's console dumps: `bios/` and `arm7_bios.bin` are git-ignored and never
+  pushed anywhere, including the private build image, so CI checks
+  `build_nobios.sha1` and the original SHA-1 is checked locally only.
 - A file in `delinks.txt` is `complete` only when objdiff reports 100 % for all its
   functions and data and the build still matches. Anything else stays not
   `complete`, with the remaining gap written in `TASKS.md`.
