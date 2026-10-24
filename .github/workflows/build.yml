@@ -37,6 +37,7 @@ jobs:
       # Delink, link, check modules and symbols, rebuild and check the ROM, report
       - name: Build
         run: |
+          ./dsd --version
           python tools/configure.py --version ${{ matrix.version }} -w ./wibo --compiler /mwccarm
           ninja
 
