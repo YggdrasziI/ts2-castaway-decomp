@@ -1,36 +1,17 @@
 /*
  * Unit 0x02092640-0x02092704: an iterator (Unk02092640) over the 40-byte entries
- * of one of two entry managers (func_02091820 / func_02091830 return them). It keeps
+ * of one of the two object managers (Unk020916a4 of unit_020916A4.cpp). It keeps
  * the first and the current entry and two halfwords; the second one selects the
  * manager. An entry counts while func_0208fd2c accepts it.
  *
- * Bounds: hypothesis. Before 0x02092640 lies the manager code (0x02092554 sets up
- * its 128 entries); 0x02092704 starts unit_02092704.cpp. Real file name unknown.
+ * Bounds: hypothesis. Before 0x02092640 lies the manager code; 0x02092704 starts unit_02092704.cpp. Real file name unknown.
  */
 
-typedef unsigned short u16;
+#include "game/unk_oam.h"
 
 extern "C" {
-void *func_02091820(void);
-void *func_02091830(void);
-void *func_0209250c(void *manager, void *entry);
 int func_0208fd2c(void *entry);
 }
-
-class Unk02092640 {
-public:
-    Unk02092640();
-    Unk02092640(void *entry, int unk8, int unkA);
-    void func_0209266c();
-    void *func_02092678();
-    bool func_020926d4();
-    u16 func_020926fc();
-
-    void *first;
-    void *cur;
-    u16 unk8;
-    u16 unkA;
-};
 
 Unk02092640::Unk02092640() {
     first = 0;
@@ -57,9 +38,9 @@ void *Unk02092640::func_02092678() {
         return 0;
     }
     if (unkA != 0) {
-        cur = func_0209250c(func_02091820(), e);
+        cur = Unk020916a4::func_02091820()->func_0209250c((Unk0208f8b0 *)e);
     } else {
-        cur = func_0209250c(func_02091830(), e);
+        cur = Unk020916a4::func_02091830()->func_0209250c((Unk0208f8b0 *)e);
     }
     if (func_0208fd2c(e)) {
         return e;

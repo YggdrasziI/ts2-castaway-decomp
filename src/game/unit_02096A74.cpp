@@ -52,7 +52,7 @@ extern "C" int OS_EnableInterrupts();
 extern "C" void func_0207cf0c();
 extern "C" void func_0208ab3c();
 extern "C" void func_0208dac8();
-extern "C" void func_020916a4();
+void func_020916a4();
 extern "C" void func_02095134(int x);
 extern "C" void *func_020999e8(int id);
 extern "C" int func_02099a0c(void *start, u32 size, u32 alignShift, u8 inlineHeader, int id);

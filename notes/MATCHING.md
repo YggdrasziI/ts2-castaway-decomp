@@ -184,7 +184,24 @@ default: add one here only once a unit of this ROM proves it with mwccarm.
 
 ## Control flow
 
-(none yet)
+- A two-way test whose original keeps the `== 0` branch conditional (`ldreq`,
+  `biceq`, `streq`, `bxeq`) and the other one after it did not move with any
+  `if` / `else` order on an `int` parameter; a `bool` parameter gave it
+  (`func_0209185c`, 48.75 % -> 100 %).
+- Members stored before an array member is constructed (the array loop comes after
+  the field stores) are a member initializer list, bitfields included:
+  `: used(0), ..., main(main), rest(0), unk820(unk820)` (`unit_020916A4.cpp`,
+  43.8 % -> 100 %).
+- A function that reuses one loop counter for several loops can need a second
+  counter: a separate `j` for the middle loop gave the original register of the
+  counter (`func_02092554`, 98.7 % -> 100 %).
+- Arguments computed before the `if (main)` that picks one of two calls with the
+  same arguments: modify the parameters first (`data += src; n *= 2;`); written in
+  each call, mwccarm sinks the last argument into both branches
+  (`func_0209201c`, 90.2 % -> 99.0 %).
+- A `u16` local shifted in a loop is masked again after every shift (`lsl #0xf`,
+  `lsr #0x10`); the original's plain `lsr` comes from a `u32` local set from
+  `(u16)param` (`func_02091eb4`, 92.4 % -> 100 %).
 
 ## ARM / Thumb
 
