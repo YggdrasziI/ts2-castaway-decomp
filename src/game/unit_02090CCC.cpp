@@ -27,9 +27,6 @@ typedef char *va_list;
 extern "C" {
 int func_0208299c(char *buf, int size, const char *fmt, va_list args);
 int func_0209a670(const u8 *str, u32 *out, int max);
-void func_0208faac(Unk0208f8b0 *entry, int tile);
-void func_0208fb80(Unk0208f8b0 *entry, int unk);
-void func_0208fb98(Unk0208f8b0 *entry, int unk);
 }
 
 /* Fields of the per-character word. */
@@ -113,7 +110,7 @@ void Unk02090ccc::func_02090e18(int unk) {
     }
     it.func_0209266c();
     while (it.func_020926d4()) {
-        func_0208fb98((Unk0208f8b0 *)it.func_02092678(), unk62c);
+        ((Unk0208f8b0 *)it.func_02092678())->func_0208fb98(unk62c);
     }
 }
 
@@ -158,12 +155,12 @@ void Unk02090ccc::func_02090ee4(Unk02092830Font *font, int n) {
     }
     it.func_0209266c();
     while (it.func_020926d4()) {
-        func_0208fb80((Unk0208f8b0 *)it.func_02092678(), unk628);
+        ((Unk0208f8b0 *)it.func_02092678())->func_0208fb80(unk628);
     }
     if (unk62c >= 0) {
         it.func_0209266c();
         while (it.func_020926d4()) {
-            func_0208fb98((Unk0208f8b0 *)it.func_02092678(), unk62c);
+            ((Unk0208f8b0 *)it.func_02092678())->func_0208fb98(unk62c);
         }
     }
     func_020910a4(font, n);
@@ -307,7 +304,7 @@ void Unk02090ccc::func_020927bc() {
         if (info & INFO_HIDDEN) {
             fetch = false;
         } else {
-            func_0208faac(e, tiles[i]);
+            e->func_0208faac(tiles[i]);
             fetch = true;
         }
         infos[i] = info;

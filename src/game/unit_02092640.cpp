@@ -9,10 +9,6 @@
 
 #include "game/unk_oam.h"
 
-extern "C" {
-int func_0208fd2c(void *entry);
-}
-
 Unk02092640::Unk02092640() {
     first = 0;
     cur = 0;
@@ -42,7 +38,7 @@ void *Unk02092640::func_02092678() {
     } else {
         cur = Unk020916a4::func_02091830()->func_0209250c((Unk0208f8b0 *)e);
     }
-    if (func_0208fd2c(e)) {
+    if (((Unk0208f8b0 *)e)->func_0208fd2c()) {
         return e;
     }
     return 0;
@@ -52,7 +48,7 @@ bool Unk02092640::func_020926d4() {
     bool r = false;
 
     if (cur != 0) {
-        if (func_0208fd2c(cur)) {
+        if (((Unk0208f8b0 *)cur)->func_0208fd2c()) {
             r = true;
         }
     }

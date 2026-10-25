@@ -16,7 +16,7 @@
  * (see above them).
  */
 
-#include "game/unk_file.h"
+#include "game/unk_resource.h"
 #include "game/unk_script.h"
 
 /* One sub-file: name hash, data offset (from the offset of block 0x10) and size. */
@@ -50,13 +50,6 @@ public:
     Unk020947c4(void *data);
     ~Unk020947c4();
     u8 unk3c[0xc];
-};
-
-class Unk02095140 : public Unk0209487c {
-public:
-    Unk02095140(void *data);
-    ~Unk02095140();
-    u8 unk3c[0x1c];
 };
 
 class Unk0209543c : public Unk0209487c {

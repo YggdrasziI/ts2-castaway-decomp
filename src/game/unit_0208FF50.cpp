@@ -8,11 +8,11 @@
  * func_020901a4 merges one tile (flips, horizontal shift) into the buffer.
  *
  * Bounds: hypothesis. Before 0x0208FF50 lie the functions of the 40-byte object
- * entry (func_0208ff24 and earlier); 0x02090CCC starts unit_02090CCC.cpp. The two
+ * entry (unit_0208F8B0.cpp); 0x02090CCC starts unit_02090CCC.cpp. The two
  * tile functions are only called from here. Real file name unknown.
  */
 
-#include "game/unk_file.h"
+#include "game/unk_resource.h"
 #include "game/unk_oam.h"
 #include "game/unk_rect.h"
 #include "game/unk_text.h"
@@ -23,31 +23,8 @@ typedef char *va_list;
     ((ap) = (va_list)((char *)((u32)&(parm) & ~3U) + ((sizeof(parm) + 3U) & ~3U)))
 #define va_end(ap) ((void)0)
 
-/* Header of the font file: size in tiles and bits per pixel. */
-struct Unk02095140Header {
-    int width;
-    int height;
-    int count;
-    int unkC;
-    u8 bpp;
-};
-
-class Unk02095140 : public Unk0209487c {
-public:
-    Unk02095140Header *func_02095180();
-    u8 *func_020951e4(int index);
-    u8 *func_020952b0(int index);
-};
-
 extern "C" {
 int func_0208299c(char *buf, int size, const char *fmt, va_list args);
-void func_0208fadc(Unk0208f8b0 *entry, int shape, int size);
-void func_0208fb44(Unk0208f8b0 *entry, int unk);
-void func_0208fb6c(Unk0208f8b0 *entry, int unk);
-void func_0208fb80(Unk0208f8b0 *entry, int unk);
-void func_0208fb98(Unk0208f8b0 *entry, int unk);
-void func_0208fddc(Unk0208f8b0 *entry);
-void func_0208ff24(Unk0208f8b0 *entry, int unk);
 }
 
 void func_0208ff50(Unk0208f8b0 *entry, Unk02095140 *file, int index, int x, int y);
@@ -291,24 +268,24 @@ void Unk02090308::func_02090420() {
             }
             switch (flip) {
             case 0:
-                func_0208fadc(e, 3, 0);
+                e->func_0208fadc(3, 0);
                 break;
             case 1:
-                func_0208fadc(e, 3, 2);
+                e->func_0208fadc(3, 2);
                 break;
             case 2:
-                func_0208fadc(e, 3, 1);
+                e->func_0208fadc(3, 1);
                 break;
             case 3:
-                func_0208fadc(e, 2, 0);
+                e->func_0208fadc(2, 0);
                 break;
             }
-            func_0208fb44(e, 0);
-            func_0208fb80(e, unk4);
-            func_0208fb98(e, unk8);
-            func_0208fddc(e);
-            func_0208ff24(e, 0);
-            func_0208fb6c(e, unk10);
+            e->func_0208fb44(0);
+            e->func_0208fb80(unk4);
+            e->func_0208fb98(unk8);
+            e->func_0208fddc();
+            e->func_0208ff24(0);
+            e->func_0208fb6c(unk10);
         }
     }
     func_020908ec();
@@ -335,7 +312,7 @@ void Unk02090308::func_020905d4(int unk) {
         return;
     }
     for (i = 0; i < count; i++) {
-        func_0208fb98(entries[i], unk8);
+        entries[i]->func_0208fb98(unk8);
     }
 }
 
@@ -347,7 +324,7 @@ void Unk02090308::func_02090620(int unk) {
         return;
     }
     for (i = 0; i < count; i++) {
-        func_0208fb6c(entries[i], unk10);
+        entries[i]->func_0208fb6c(unk10);
     }
 }
 
@@ -479,7 +456,7 @@ void Unk02090308::func_020908ec() {
         e = entries[i];
         e->unk0 = px;
         e->unk4 = py;
-        func_0208fb80(e, unk4);
+        e->func_0208fb80(unk4);
         px += 0x40000;
         if (--n == 0) {
             n = cols;

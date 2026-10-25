@@ -149,6 +149,9 @@ default: add one here only once a unit of this ROM proves it with mwccarm.
   definition between declarations starts a new run, and arrays and compiler nodes
   (`@<n>`) change the pattern. Fit the order with a script that rewrites the
   declarations, compiles, and compares symbol offsets (`unit_02099870.cpp`).
+  Initialized `const` arrays in `.rodata` follow the same pattern: four 12-byte
+  tables declared `a0 a1 a2 a3` come out `a2 a1 a0 a3`, so the source declares them
+  in the order `a2 a1 a0 a3` to get the ROM order (`unit_0208F8B0.cpp`).
 - dsd gives one `data_<addr>` to a run of adjacent statics the code reaches through
   one base; add a `local` symbol per static to `symbols.txt` so that objdiff pairs
   them (`.bss` 99.96 % -> 100 %).

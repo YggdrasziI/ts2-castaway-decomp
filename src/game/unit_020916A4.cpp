@@ -14,33 +14,10 @@
  * Not complete: one function does not match yet (see above it).
  */
 
-#include "game/unk_file.h"
+#include "game/unk_resource.h"
 #include "game/unk_oam.h"
 
-class Unk02095140 : public Unk0209487c {
-public:
-    u8 *func_02095354(int index);
-};
-
 extern "C" {
-void func_0208f90c(Unk0208f8b0 *entry, int unk);
-void func_0208f9dc(Unk0208f8b0 *entry);
-void func_0208fa14(Unk0208f8b0 *entry, int unk);
-void func_0208fa60(Unk0208f8b0 *entry);
-void func_0208fcd8(Unk0208f8b0 *entry, int affine);
-int func_0208fcf0(Unk0208f8b0 *entry);
-void func_0208fd04(Unk0208f8b0 *entry, int index);
-int func_0208fd1c(Unk0208f8b0 *entry);
-int func_0208fd2c(Unk0208f8b0 *entry);
-void func_0208fd44(Unk0208f8b0 *entry, int unk);
-int func_0208fd5c(Unk0208f8b0 *entry);
-void func_0208fd74(Unk0208f8b0 *entry, int unk);
-int func_0208fd8c(Unk0208f8b0 *entry);
-void func_0208fd9c(Unk0208f8b0 *entry, int next);
-void func_0208fdb4(Unk0208f8b0 *entry, int index);
-int func_0208fdcc(Unk0208f8b0 *entry);
-void func_0208fe80(Unk0208f8b0 *entry, int unk);
-void func_0208fed4(Unk0208f8b0 *entry, Unk0208f8b0 *other);
 void func_01ffab9c(Unk0208f8b0 *entry, int unk);
 void func_01ffadf8(Unk020916a4 *manager);
 void func_02078fb8(void *data, u32 offset, u32 size);
@@ -148,7 +125,7 @@ Unk0208f8b0 *Unk020916a4::func_0209189c(u16 priority) {
     n->priority = priority;
     count++;
     e = &entries[n->index];
-    func_0208f9dc(e);
+    e->func_0208f9dc();
     return e;
 }
 
@@ -156,7 +133,7 @@ Unk0208f8b0 *Unk020916a4::func_020919e4(int unk, u16 priority) {
     Unk0208f8b0 *e = func_0209189c(priority);
 
     if (e != 0) {
-        func_0208f90c(e, unk);
+        e->func_0208f90c((Unk02095140 *)unk);
     }
     return e;
 }
@@ -217,12 +194,12 @@ Unk02092640 Unk020916a4::func_02091ab0(int n, u16 priority) {
         if (i == 0) {
             first = e;
         }
-        func_0208fd44(e, 1);
+        e->func_0208fd44(1);
         if (i == n - 1) {
-            func_0208fd74(e, 1);
+            e->func_0208fd74(1);
         }
         if (prev != 0) {
-            func_0208fd9c(prev, func_0208fdcc(e));
+            prev->func_0208fd9c(e->func_0208fdcc());
         }
         prev = e;
     }
@@ -233,7 +210,7 @@ Unk02092640 Unk020916a4::func_02091b9c(int n, int unk, u16 priority) {
     Unk02092640 it = func_02091ab0(n, priority);
 
     while (it.func_020926d4()) {
-        func_0208f90c((Unk0208f8b0 *)it.func_02092678(), unk);
+        ((Unk0208f8b0 *)it.func_02092678())->func_0208f90c((Unk02095140 *)unk);
     }
     it.func_0209266c();
     return it;
@@ -245,9 +222,9 @@ void Unk020916a4::func_02091bec(Unk02092640 &it) {
     it.func_0209266c();
     while (it.func_020926d4()) {
         e = (Unk0208f8b0 *)it.func_02092678();
-        func_0208fd44(e, 0);
-        func_0208fd9c(e, 0);
-        func_0208fd74(e, 0);
+        e->func_0208fd44(0);
+        e->func_0208fd9c(0);
+        e->func_0208fd74(0);
         func_02091c68(e);
     }
 }
@@ -256,7 +233,7 @@ void Unk020916a4::func_02091c68(Unk0208f8b0 *entry) {
     Unk020916a4Node *p;
     Unk020916a4Node *prev;
 
-    if (func_0208fd2c(entry)) {
+    if (entry->func_0208fd2c()) {
         return;
     }
     p = used;
@@ -277,14 +254,14 @@ void Unk020916a4::func_02091c68(Unk0208f8b0 *entry) {
         used = p->next;
     }
     if (entry->unk20 != 0) {
-        func_0208fa60(entry);
+        entry->func_0208fa60();
         p->next = pending;
         pending = p;
     } else {
-        if (func_0208fcf0(entry)) {
+        if (entry->func_0208fcf0()) {
             func_0209241c(entry);
         }
-        func_0208fa14(entry, unk820);
+        entry->func_0208fa14(unk820);
         p->next = free;
         free = p;
         count--;
@@ -348,9 +325,9 @@ void Unk020916a4::func_02091de0(Unk0208f8b0 *a, Unk0208f8b0 *b) {
         func_01ffab9c(a, unk820);
     }
     if (b->unk20 != 0) {
-        func_0208fe80(b, unk820);
+        b->func_0208fe80(unk820);
     }
-    func_0208fed4(b, a);
+    b->func_0208fed4(a);
 }
 
 void Unk020916a4::func_02091eb4(Unk02095140 *file, int index, int mask) {
@@ -467,11 +444,11 @@ void Unk020916a4::func_02092160(Unk0208f8b0 *entry, Unk020916a4Affine *affine) {
     if (!func_020924c0(affine)) {
         return;
     }
-    if (func_0208fcf0(entry)) {
+    if (entry->func_0208fcf0()) {
         func_0209241c(entry);
     }
-    func_0208fcd8(entry, 1);
-    func_0208fd04(entry, affine->index);
+    entry->func_0208fcd8(1);
+    entry->func_0208fd04(affine->index);
     affine->refCount++;
 }
 
@@ -489,14 +466,14 @@ void Unk020916a4::func_020921c4(Unk0208f8b0 *entry, int angle, int scaleX, int s
     int sin;
     int cos;
 
-    if (!func_0208fcf0(entry)) {
+    if (!entry->func_0208fcf0()) {
         a = func_020920dc();
         if (a == 0) {
             return;
         }
         func_02092160(entry, a);
     } else {
-        a = &affines[func_0208fd1c(entry)];
+        a = &affines[entry->func_0208fd1c()];
     }
     sx = func_inverse(scaleX);
     sy = func_inverse(scaleY);
@@ -516,14 +493,14 @@ void Unk020916a4::func_020922cc(Unk0208f8b0 *entry, int angle, int scaleX, int s
     int sin;
     int cos;
 
-    if (!func_0208fcf0(entry)) {
+    if (!entry->func_0208fcf0()) {
         a = func_020920dc();
         if (a == 0) {
             return;
         }
         func_02092160(entry, a);
     } else {
-        a = &affines[func_0208fd1c(entry)];
+        a = &affines[entry->func_0208fd1c()];
     }
     sx = func_inverse(scaleX);
     sy = func_inverse(scaleY);
@@ -546,13 +523,13 @@ void Unk020916a4::func_020922cc(Unk0208f8b0 *entry, int angle, int scaleX, int s
 void Unk020916a4::func_0209241c(Unk0208f8b0 *entry) {
     Unk020916a4Affine *a;
 
-    if (!func_0208fcf0(entry)) {
+    if (!entry->func_0208fcf0()) {
         return;
     }
-    func_0208fcd8(entry, 0);
-    a = &affines[func_0208fd1c(entry)];
+    entry->func_0208fcd8(0);
+    a = &affines[entry->func_0208fd1c()];
     a->refCount--;
-    func_0208fd04(entry, 0);
+    entry->func_0208fd04(0);
     if (a->refCount == 0) {
         func_02092490(a);
     }
@@ -581,8 +558,8 @@ int Unk020916a4::func_020924fc() {
 Unk0208f8b0 *Unk020916a4::func_0209250c(Unk0208f8b0 *entry) {
     Unk0208f8b0 *next = 0;
 
-    if (func_0208fd2c(entry) && !func_0208fd5c(entry)) {
-        next = &entries[func_0208fd8c(entry)];
+    if (entry->func_0208fd2c() && !entry->func_0208fd5c()) {
+        next = &entries[entry->func_0208fd8c()];
     }
     return next;
 }
@@ -601,7 +578,7 @@ void Unk020916a4::func_02092554() {
     nodes[0x7f].index = 0x7f;
     nodes[0x7f].next = 0;
     for (j = 0; j < 0x80; j++) {
-        func_0208fdb4(&entries[j], j);
+        entries[j].func_0208fdb4(j);
         entries[j].unk10_13 = main ? 1 : 0;
     }
     for (i = 0; i < 0x20; i++) {

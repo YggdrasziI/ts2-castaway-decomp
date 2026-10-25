@@ -1,5 +1,6 @@
 /*
- * Object (OAM) manager of unit_020916A4.cpp and the iterator of unit_02092640.cpp.
+ * Object entry of unit_0208F8B0.cpp, object (OAM) manager of unit_020916A4.cpp and
+ * the iterator of unit_02092640.cpp.
  * Layouts come from the code; all names are placeholders.
  */
 #ifndef GAME_UNK_OAM_H
@@ -10,13 +11,49 @@ typedef unsigned short u16;
 typedef short s16;
 typedef unsigned long u32;
 
+class Unk02095140;
+
 /*
- * The 40-byte entry built by func_0208f8b0 (code not decompiled yet): only the
- * fields the manager uses are named.
+ * The 40-byte object entry of unit_0208F8B0.cpp: the OAM attributes it builds
+ * (unk8: attributes 0 and 1, unkC: attribute 2), its size and flags, the file of
+ * its pixels and the block allocated for them.
  */
 class Unk0208f8b0 {
 public:
     Unk0208f8b0();
+    void func_0208f90c(Unk02095140 *file);
+    void func_0208f9dc();
+    void func_0208fa14(int heap);
+    void func_0208fa60();
+    int func_0208fa84();
+    int func_0208faa4();
+    void func_0208faac(int frame);
+    void func_0208fadc(int size, int shape);
+    void func_0208fb44(int color256);
+    void func_0208fb6c(int mode);
+    void func_0208fb80(int priority);
+    void func_0208fb98(int palette);
+    void func_0208fbac(int flip);
+    void func_0208fbe0(int flip);
+    static bool func_0208fc14(int width, int height, int *size, int *shape);
+    int func_0208fc74();
+    void func_0208fcd8(int affine);
+    bool func_0208fcf0();
+    void func_0208fd04(int index);
+    int func_0208fd1c();
+    bool func_0208fd2c();
+    void func_0208fd44(int unk);
+    bool func_0208fd5c();
+    void func_0208fd74(int unk);
+    int func_0208fd8c();
+    void func_0208fd9c(int next);
+    void func_0208fdb4(int index);
+    int func_0208fdcc();
+    void func_0208fddc();
+    bool func_0208fe08(int heap);
+    void func_0208fe80(int heap);
+    void func_0208fed4(Unk0208f8b0 *other);
+    void func_0208ff24(u32 data);
 
     u32 unk0;
     u32 unk4;
@@ -24,14 +61,18 @@ public:
     u16 unkC;
     u32 unk10_0 : 2;
     u32 unk10_2 : 2;
-    u32 unk10_4 : 9;
+    u32 unk10_4 : 7;
+    u32 unk10_11 : 1;
+    u32 unk10_12 : 1;
     u32 unk10_13 : 1;
-    u32 unk10_14 : 18;
+    u32 unk10_14 : 7;
+    u32 unk10_21 : 1;
+    u32 unk10_22 : 10;
     int unk14;
     int unk18;
-    int unk1c;
-    int unk20;
-    int unk24;
+    Unk02095140 *unk1c;
+    void *unk20;
+    u32 unk24;
 };
 
 /* Iterator over a chain of entries (unit_02092640.cpp). */
@@ -77,8 +118,6 @@ struct Unk020916a4Affine {
     u16 index;
     s16 refCount;
 };
-
-class Unk02095140;
 
 class Unk020916a4 {
 public:
