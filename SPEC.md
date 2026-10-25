@@ -82,6 +82,11 @@ Evidence and the candidate analysis go in `notes/COMPILER.md`.
   the address (`func_<addr>`, mangled as a member when the unit is C++).
 - SDK and library code under `libs/<lib>/{include,src}` with the real names of the
   library once identified by signature or reference project.
+- Library function names (owner's choice, 2026-10-25): a function found at exactly
+  one address by `tools/compiler_sweep.py` (more than 8 bytes) takes khdays-decomp's
+  name, which follows the NitroSDK / NitroSystem API (`MIi_CpuCopy16`,
+  `DC_FlushAll`); twewy's name only where khdays has no match. The byte match is the
+  evidence; the name is the reference's.
 - Code, comments, notes and commit messages are in English.
 
 ## Repository layout
