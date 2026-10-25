@@ -10,7 +10,7 @@
  * Real file name unknown.
  */
 
-typedef unsigned long u32;
+#include "game/unk_heap.h"
 
 extern "C" void *OS_GetArenaLo(int id);
 extern "C" void *OS_GetArenaHi(int id);
@@ -21,32 +21,8 @@ extern "C" void MIi_CpuClearFast(u32 data, void *dest, u32 size);
  * 0x01FFB0C0 have no relocation in the original, so they stay constants here. */
 extern char data_027e0000[];
 
-/* One heap (0x2C bytes); its code is in the unit before 0x02099800. */
-class Unk020c8440 {
-public:
-    Unk020c8440();
-    ~Unk020c8440();
-
-    char unk0[0x2C];
-};
-
-/* Per-heap block (0xC0C bytes). */
-struct Unk020c8700 {
-    Unk020c8700() { unkC08 = 0; }
-    ~Unk020c8700() {}
-
-    char unk0[0xC08];
-    int unkC08;
-};
-
-extern "C" void func_02099280(Unk020c8440 *heap, void *start, u32 size, int arg3, int id, int arg5, Unk020c8700 *block);
-extern "C" void *func_02099390(Unk020c8440 *heap, u32 size);
-extern "C" void func_02099638(Unk020c8440 *heap, void *ptr);
-extern "C" int func_020997ac(Unk020c8440 *heap);
-extern "C" int func_020997e4(void *ptr);
-
 extern "C" Unk020c8440 *func_020999e8(int id);
-extern "C" int func_02099a0c(void *start, u32 size, int arg2, int arg3, int id);
+extern "C" int func_02099a0c(void *start, u32 size, u32 alignShift, u8 inlineHeader, int id);
 extern "C" void func_02099afc(int id);
 
 static int data_020bd578 = -1;
@@ -114,7 +90,7 @@ extern "C" Unk020c8440 *func_020999e8(int id) {
     return data_020c8300[id];
 }
 
-extern "C" int func_02099a0c(void *start, u32 size, int arg2, int arg3, int id) {
+extern "C" int func_02099a0c(void *start, u32 size, u32 alignShift, u8 inlineHeader, int id) {
     if (id < 0 || id >= 16) {
         return -1;
     }
@@ -122,7 +98,7 @@ extern "C" int func_02099a0c(void *start, u32 size, int arg2, int arg3, int id) 
         return -1;
     }
     data_020c8300[id] = &data_020c8440[id];
-    func_02099280(&data_020c8440[id], start, size, arg2, id, arg3, &data_020c8700[id]);
+    func_02099280(&data_020c8440[id], start, size, alignShift, id, inlineHeader, &data_020c8700[id]);
     return id;
 }
 

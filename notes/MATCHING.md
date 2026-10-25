@@ -30,6 +30,17 @@ default: add one here only once a unit of this ROM proves it with mwccarm.
 - Calling a not yet decompiled function from C++: declare it `extern "C"` so its
   name stays `func_<addr>` (`unit_02099840.cpp`).
 
+- A field re-read from memory where the source could reuse a register (here
+  `heap->list` after the first search) and checks split into separate branches
+  point to inline helpers; rewriting the body as `static inline` functions fixed
+  the control flow of `func_020993d8` (83 % -> 96 %).
+- Local declaration order drives register allocation: permuting the declarations
+  with a script took `func_02099678` from 89.9 % to 99.3 % and `func_020993d8` to
+  99.8 %. Removing a temporary (`end = a + b; ... rest = end - c` -> `rest = a + b -
+  c`) fixed the last swap (100 %).
+- `if (x != 0) { ... } else { return -1; }` puts the failure path after the body,
+  where `if (x == 0) return -1;` gives a conditional `mvneq`.
+
 ## Data layout
 
 - `.bss` order of file statics is not the declaration order: with all statics in
