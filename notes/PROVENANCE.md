@@ -41,4 +41,8 @@ this ROM by `tools/compiler_sweep.py`, then checked at 100 % in objdiff and link
 |---|---|---|
 | `libs/nitro/src/os/os_cache.c` | khdays `libs/nitro/os/asm_stubs/auto/{DC_FlushAll,DC_InvalidateRange,DC_StoreRange,DC_WaitWriteBufferEmpty,IC_InvalidateRange}.c`, `libs/nitro/os/calls/DC_FlushRange.c` | one file; `nitro/hw.h` constants defined locally; `DC_FlushRange` written as the `asm` function its C version compiles to |
 | `libs/nitro/src/os/os_system.c` | khdays `libs/nitro/os/asm_stubs/auto/OS_{EnableInterrupts,DisableInterrupts,RestoreInterrupts,DisableInterrupts_IrqAndFiq,RestoreInterrupts_IrqAndFiq,GetCpsrIrq,GetProcMode,SpinWait}.c` | one file; constants and typedefs local; `@1` label in `OS_SpinWait` |
+| `libs/nitro/src/os/os_tcm.c` | khdays `libs/nitro/os/asm_stubs/auto/OS_GetDTCMAddress.c` | constant local |
+| `libs/nitro/src/os/os_protectionUnit.c` | khdays `libs/nitro/os/asm_stubs/auto/OS_{EnableProtectionUnit,DisableProtectionUnit}.c` | one file; constant local |
+| `libs/nitro/src/os/os_protectionRegion.c` | khdays `libs/nitro/os/asm_stubs/auto/OS_{SetDPermissionsForProtectionRegion,SetProtectionRegion1,SetProtectionRegion2}.c` | one file |
+| `libs/nitro/src/os/os_terminate_proc.c` | khdays `libs/nitro/os/asm_stubs/auto/OS_Halt.c`, `libs/nitro/os/calls/OS_Terminate.c` | one file; built with 1.2/sp2p3 |
 | `libs/nitro/src/mi/cpumem.c` | khdays `libs/nitro/mi/asm_stubs/auto/{MIi_CpuCopy16,MIi_CpuCopy32,MIi_CpuClearFast,MIi_CpuCopyFast,MI_Copy36B,MI_CpuFill8,MI_CpuCopy8}.c`; twewy `libs/nitro/src/mi/cpumem.c` (`MI_CpuFillU32`, `MI_CpuSwap` body) | one file; `MI_CpuSwap` named `MI_SwapWord` (khdays' name) |

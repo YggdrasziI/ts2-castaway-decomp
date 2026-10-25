@@ -19,9 +19,25 @@ libs/nitro/src/os/os_cache.c:
     complete
     .text       start:0x0207b3c4 end:0x0207b47c
 
+libs/nitro/src/os/os_tcm.c:
+    complete
+    .text       start:0x0207b8e4 end:0x0207b8f8
+
+libs/nitro/src/os/os_protectionUnit.c:
+    complete
+    .text       start:0x0207b8f8 end:0x0207b918
+
+libs/nitro/src/os/os_protectionRegion.c:
+    complete
+    .text       start:0x0207b918 end:0x0207b93c
+
 libs/nitro/src/os/os_system.c:
     complete
     .text       start:0x0207c194 end:0x0207c224
+
+libs/nitro/src/os/os_terminate_proc.c:
+    complete
+    .text       start:0x0207c3a8 end:0x0207c3c8
 
 libs/c/src/abort_exit_arm_eabi.c:
     .text       start:0x02080114 end:0x020802ac
