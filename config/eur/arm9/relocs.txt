@@ -17969,10 +17969,10 @@ from:0x0208e318 kind:arm_call to:0x0208e364 module:main
 from:0x0208e358 kind:arm_call to:0x0208e364 module:main
 from:0x0208e508 kind:arm_call to:0x0208d570 module:main
 from:0x0208e510 kind:arm_call to:0x0208d7b8 module:main
-from:0x0208e598 kind:load to:0x020bd0f4 module:main
-from:0x0208e5c0 kind:load to:0x020bd0f4 module:main
+from:0x0208e598 kind:load to:0x020bd0ec add:0x8 module:main
+from:0x0208e5c0 kind:load to:0x020bd0ec add:0x8 module:main
 from:0x0208e5e4 kind:arm_call to:0x02099858 module:main
-from:0x0208e5f0 kind:load to:0x020bd0f4 module:main
+from:0x0208e5f0 kind:load to:0x020bd0ec add:0x8 module:main
 from:0x0208e618 kind:arm_call to:0x02094f88 module:main
 from:0x0208e628 kind:arm_call to:0x02095180 module:main
 from:0x0208e658 kind:arm_call to:0x02094f9c module:main

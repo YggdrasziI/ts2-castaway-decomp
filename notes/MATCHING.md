@@ -98,12 +98,17 @@ default: add one here only once a unit of this ROM proves it with mwccarm.
   parameter before the store) keeps the result in the parameter register and stores
   each member alone; computing it first and storing both members after gave a second
   register and an `stmia` (`unit_0209A11C.cpp`, 53.75 % -> 100 %).
+- A guarded return of a load: `if (i < n) return a[i]; return 0;` gives the
+  original `movge r0, #0` / `ldmge` early exit and plain loads, while
+  `if (i >= n) return 0; return a[i];` makes the loads conditional (`ldrlt`)
+  (`unit_0208E570.cpp`, 75.8 % -> 100 %).
 - `if (x != 0) { ... } else { return -1; }` puts the failure path after the body,
   where `if (x == 0) return -1;` gives a conditional `mvneq`.
 
 - A loop bound re-read from memory at every test while the other members stay in
   registers (and no store in the loop) was matched by declaring that member
-  `volatile` (`unit_02093648.cpp`, seven search loops 95 % -> 100 %). Hypothesis
+  `volatile` (`unit_02093648.cpp`, seven search loops 95 % -> 100 %; again for
+  `rangeCount` in `unit_0208E570.cpp`, 92 % -> 100 %). Hypothesis
   only: it costs a reload after a loop elsewhere, and it did not help the same
   pattern in `func_020949b8` (`unit_02094824.cpp`). Not a compiler option: every
   2.0 service pack and `-opt noloop` / `nocse` / `nostrength` give the same code.
