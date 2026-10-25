@@ -87,7 +87,8 @@ Evidence and the candidate analysis go in `notes/COMPILER.md`.
   name, which follows the NitroSDK / NitroSystem API (`MIi_CpuCopy16`,
   `DC_FlushAll`); twewy's name only where khdays has no match. The byte match is the
   evidence; the name is the reference's. Advance Wars fingerprints (CC0) confirm a
-  function whose khdays name is known from khdays' symbols (runtime helpers).
+  function whose khdays name is known from khdays' symbols (runtime helpers), and
+  name one that neither khdays nor twewy has (`_drsb`).
 - Code, comments, notes and commit messages are in English.
 
 ## Repository layout
