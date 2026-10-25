@@ -18065,10 +18065,10 @@ from:0x0208f0fc kind:arm_call to:0x0209a510 module:main
 from:0x0208f10c kind:arm_call to:0x0209a550 module:main
 from:0x0208f120 kind:arm_call to:0x0209a418 module:main
 from:0x0208f144 kind:arm_call to:0x0209a418 module:main
-from:0x0208f194 kind:load to:0x020bd204 module:main
-from:0x0208f1bc kind:load to:0x020bd204 module:main
+from:0x0208f194 kind:load to:0x020bd1fc add:0x8 module:main
+from:0x0208f1bc kind:load to:0x020bd1fc add:0x8 module:main
 from:0x0208f1e0 kind:arm_call to:0x02099858 module:main
-from:0x0208f1ec kind:load to:0x020bd204 module:main
+from:0x0208f1ec kind:load to:0x020bd1fc add:0x8 module:main
 from:0x0208f220 kind:arm_call to:0x02094f88 module:main
 from:0x0208f234 kind:arm_call to:0x02094f88 module:main
 from:0x0208f244 kind:arm_call to:0x02095180 module:main

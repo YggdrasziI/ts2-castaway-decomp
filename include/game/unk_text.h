@@ -13,23 +13,29 @@ typedef unsigned long u32;
 
 class Unk02095140;
 
-/* The font: only the virtual functions used here or in unit_02090CCC.cpp are named. */
+class Unk02096348;
+
+/*
+ * The font interface: a virtual destructor and 13 pure virtual functions, named by
+ * their vtable offset because two classes implement them (vtables 0x020BD0F4 and
+ * unit_0208F16C.cpp's 0x020BD204). c is a character code.
+ */
 class Unk02092830Font {
 public:
-    virtual void func_00();
-    virtual void func_04();
-    virtual void func_08();
-    virtual void func_0c();
-    virtual int func_10(u32 c);
-    virtual int func_14(u32 c);
-    virtual int func_18(u32 c);
-    virtual int func_1c(u32 c);
-    virtual void func_20();
-    virtual int func_24();
-    virtual bool func_28(u32 c);
-    virtual bool func_2c(u32 c);
-    virtual bool func_30(u32 c);
-    virtual Unk02095140 *func_34();
+    virtual ~Unk02092830Font() {}
+    virtual void func_08(Unk02095140 *file, Unk02096348 *script) = 0;
+    virtual int func_0c(u32 c) = 0;
+    virtual int func_10(u32 c) = 0;
+    virtual int func_14(u32 c) = 0;
+    virtual int func_18(u32 c) = 0;
+    virtual int func_1c(u32 c) = 0;
+    virtual int func_20(const char *str) = 0;
+    virtual int func_24() = 0;
+    virtual bool func_28(u32 c) = 0;
+    virtual bool func_2c(u32 c) = 0;
+    virtual bool func_30(u32 c) = 0;
+    virtual Unk02095140 *func_34() = 0;
+    virtual void func_38() = 0;
 };
 
 /* One word: counts, byte range, width and the trailing character. */

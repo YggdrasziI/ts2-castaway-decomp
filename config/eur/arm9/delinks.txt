@@ -97,6 +97,10 @@ libs/runtime/src/ExceptionHandlerTS.cpp:
     .text       start:0x02085d24 end:0x02085ea0
     .exceptix   start:0x020ad000 end:0x020ad018
 
+src/game/unit_0208F16C.cpp:
+    .text       start:0x0208f16c end:0x0208f8b0
+    .data       start:0x020bd174 end:0x020bd284
+
 src/game/unit_0208F8B0.cpp:
     complete
     .text       start:0x0208f8b0 end:0x0208ff50

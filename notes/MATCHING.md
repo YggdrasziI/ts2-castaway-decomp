@@ -235,3 +235,14 @@ default: add one here only once a unit of this ROM proves it with mwccarm.
   weak symbol: a global one clashes ("Multiply-defined") and a weak one loses to
   the compiled copy. The file stays not `complete` until the first copy's file is
   compiled too (`unit_0209543C.cpp`).
+- The same holds for the inline virtual destructor of an interface: every file
+  emitting the interface vtable emits D1 and D0 as multiply-definable functions,
+  and the link keeps the first copy of each (`unit_0208F16C.cpp`: D1 0x0208F168 at
+  the end of the other font's file, D0 0x0201B92C in a far file). Named after the
+  interface while they are assembly, they clash ("Multiply-defined"); left with
+  their dsd names, this file's copies stay in its `.text` and shift everything.
+- String literals: mwccarm puts each one in its own `.data` section with alignment
+  1, and the link still places them 4-byte aligned in source order (trial link of
+  `unit_0208F16C.cpp`). objdiff does not pair these sections with the original
+  `.data` (`data_<addr>` symbols), so `.data` scores low although the bytes are
+  right; it only shows once the file links as `complete`.

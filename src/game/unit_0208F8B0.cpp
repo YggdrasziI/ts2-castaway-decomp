@@ -5,8 +5,8 @@
  * priority, palette, flips and affine parameter set; it keeps the file of its
  * pixels (Unk02095140) and a block of the heap of unit_02099210.cpp for them.
  *
- * Bounds: hypothesis. Before 0x0208F8B0 lie small functions of another class
- * (virtual call at 0x1c, fields 0x12 and 0x14); 0x0208FF50 starts
+ * Bounds: hypothesis. Before 0x0208F8B0 lies the font of unit_0208F16C.cpp;
+ * 0x0208FF50 starts
  * unit_0208FF50.cpp. The constructor is the only one building this layout, and the
  * tables at 0x020B38B8-0x020B38E8 are only read here. Real file name unknown.
  */
