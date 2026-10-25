@@ -113,7 +113,9 @@ default: add one here only once a unit of this ROM proves it with mwccarm.
 - mwccarm lays out a file's `.bss` objects by increasing size (equal sizes keep a
   compiler-chosen order), whatever the declaration order. A larger object below a
   smaller one in the original means they come from different files
-  (`unit_020973BC.cpp`).
+  (`unit_020973BC.cpp`). To order equal-size objects, try the declaration
+  permutations (`unit_02096A74.cpp`: a word reached at +4 from `data_020c7f74` is
+  its own 4-byte object, declared first).
 
 ## Control flow
 
@@ -125,4 +127,6 @@ default: add one here only once a unit of this ROM proves it with mwccarm.
 
 ## Unsolved patterns
 
-(none yet)
+- `swpb` (a byte lock set to 1) has no C form. Inline `asm { swpb ... }` gives the
+  right instructions, but mwccarm then puts a zero word before the function's
+  literal pool, for every form tried (`func_02096dac`, 89.5 %).
