@@ -24,6 +24,9 @@ default: add one here only once a unit of this ROM proves it with mwccarm.
   short b = op->b;`) keep the original load order (`func_02099d04`, 97.4 % -> 100 %).
 - A constructor that ends with a chain of tests: `if (!x) return;` for the last one
   too, not `if (x) { ... }` (`moveq r0, this` / `movne r0, this` in the original).
+- `a + b` where both sides are products: mwccarm emits the right-hand product
+  first. Writing the terms in the reverse order fixed `func_020991b8` (45.7 % ->
+  100 %).
 - A loop whose first test leaves through the function's shared return is
   `for (;;) { ... if (c == 0) break; ... }`; `return` there gives a conditional
   `ldmeq` instead (`func_0209a32c`, 95.5 % -> 99.7 %).
@@ -63,6 +66,10 @@ default: add one here only once a unit of this ROM proves it with mwccarm.
 
 ## Data layout
 
+- A class with user-declared constructors is copied member by member
+  (`ldr` / `str` pairs); deriving it from a plain struct that holds the members
+  gives the block copy (`ldm` / `stm`) of the original (`unit_02098E70.cpp`, 0 % ->
+  100 % for the copying functions).
 - Vtables: mwccarm emits `_ZTV<class>` with two zero words (offset to top, no RTTI
   with `-RTTI off`) before the slots, and the object points 8 bytes in. Pure virtual
   slots are zero; a virtual destructor takes two slots (D1, then the deleting D0). In
