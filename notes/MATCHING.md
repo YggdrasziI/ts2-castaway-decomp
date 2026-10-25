@@ -117,6 +117,17 @@ default: add one here only once a unit of this ROM proves it with mwccarm.
   permutations (`unit_02096A74.cpp`: a word reached at +4 from `data_020c7f74` is
   its own 4-byte object, declared first).
 
+## C++ classes
+
+- mwccarm emits a C1 and a C2 copy of every constructor (and D1 / D2 of a
+  destructor); a derived class calls its base through C2 and D2, and the linker
+  drops the copies nobody calls. Two identical constructors in a row in the original
+  are such a pair. Name the base functions the derived code calls `...C2E...` /
+  `...D2Ev` (`unit_02096348.cpp`).
+- An implicit virtual destructor comes out of the link as D0 then D1; an explicit
+  `~Class() {}` defined at the end of the file gives D1 then D0, as in the original
+  (`unit_02096348.cpp`).
+
 ## Control flow
 
 (none yet)
