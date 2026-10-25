@@ -432,7 +432,7 @@ def main():
 
         n.rule(
             name="objdiff",
-            command=f"{DSD} {DSD_BASE_FLAGS} objdiff --config-path $config_path {DSD_OBJDIFF_ARGS}",
+            command=f"{PYTHON} tools/objdiff_prune.py {DSD} {DSD_BASE_FLAGS} objdiff --config-path $config_path {DSD_OBJDIFF_ARGS}",
         )
         n.newline()
 
@@ -782,7 +782,7 @@ def add_check_builds(n: ninja_syntax.Writer, project: Project):
 def add_objdiff_builds(n: ninja_syntax.Writer, project: Project):
     n.build(
         inputs=project.dsd_configs(),
-        implicit=DSD,
+        implicit=[DSD, "tools/objdiff_prune.py"],
         rule="objdiff",
         outputs="objdiff.json",
         variables={
