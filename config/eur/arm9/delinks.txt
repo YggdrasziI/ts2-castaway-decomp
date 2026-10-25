@@ -11,6 +11,18 @@ src/game/unit_0205D6E0.c:
     complete
     .text       start:0x0205d6e0 end:0x0205d6fc
 
+libs/nitro/src/mi/cpumem.c:
+    complete
+    .text       start:0x02079abc end:0x02079d70
+
+libs/nitro/src/os/os_cache.c:
+    complete
+    .text       start:0x0207b3c4 end:0x0207b47c
+
+libs/nitro/src/os/os_system.c:
+    complete
+    .text       start:0x0207c194 end:0x0207c224
+
 libs/c/src/abort_exit_arm_eabi.c:
     .text       start:0x02080114 end:0x020802ac
     .exceptix   start:0x020acd24 end:0x020acd48

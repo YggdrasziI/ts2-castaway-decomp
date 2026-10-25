@@ -28,3 +28,17 @@ Source: `YggdrasziI/spyro-dotd-decomp` (private, same owner), commit
 
 `CLAUDE.md`, `SPEC.md`, `ROADMAP.md`, `TASKS.md`, `notes/` and `.claude/skills/` follow
 the structure of spyro-dotd-decomp (same commit), rewritten for the DS toolchain.
+
+## NitroSDK sources (`libs/nitro/src/`)
+
+Sources: [Yokimitsuro/khdays-decomp](https://github.com/Yokimitsuro/khdays-decomp),
+local clone at commit `261a89eaa8f65dd566ae0828b0b57c85c847a6ee`, and twewy (commit `0026d7347107415cbfbf2cd218f5859ae00b69a7`), both
+**CC0-1.0**. Taken on 2026-10-25. Each function was first found byte-identical in
+this ROM by `tools/compiler_sweep.py`, then checked at 100 % in objdiff and linked
+(`complete`).
+
+| Our file | Their files | Changes |
+|---|---|---|
+| `libs/nitro/src/os/os_cache.c` | khdays `libs/nitro/os/asm_stubs/auto/{DC_FlushAll,DC_InvalidateRange,DC_StoreRange,DC_WaitWriteBufferEmpty,IC_InvalidateRange}.c`, `libs/nitro/os/calls/DC_FlushRange.c` | one file; `nitro/hw.h` constants defined locally; `DC_FlushRange` written as the `asm` function its C version compiles to |
+| `libs/nitro/src/os/os_system.c` | khdays `libs/nitro/os/asm_stubs/auto/OS_{EnableInterrupts,DisableInterrupts,RestoreInterrupts,DisableInterrupts_IrqAndFiq,RestoreInterrupts_IrqAndFiq,GetCpsrIrq,GetProcMode,SpinWait}.c` | one file; constants and typedefs local; `@1` label in `OS_SpinWait` |
+| `libs/nitro/src/mi/cpumem.c` | khdays `libs/nitro/mi/asm_stubs/auto/{MIi_CpuCopy16,MIi_CpuCopy32,MIi_CpuClearFast,MIi_CpuCopyFast,MI_Copy36B,MI_CpuFill8,MI_CpuCopy8}.c`; twewy `libs/nitro/src/mi/cpumem.c` (`MI_CpuFillU32`, `MI_CpuSwap` body) | one file; `MI_CpuSwap` named `MI_SwapWord` (khdays' name) |

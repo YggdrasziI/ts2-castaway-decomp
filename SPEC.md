@@ -88,7 +88,8 @@ Evidence and the candidate analysis go in `notes/COMPILER.md`.
   `DC_FlushAll`); twewy's name only where khdays has no match. The byte match is the
   evidence; the name is the reference's. Advance Wars fingerprints (CC0) confirm a
   function whose khdays name is known from khdays' symbols (runtime helpers), and
-  name one that neither khdays nor twewy has (`_drsb`).
+  name one that neither khdays nor twewy has (`_drsb`). Library file names: the
+  NitroSDK file khdays cites in its source comment, else twewy's file name.
 - Code, comments, notes and commit messages are in English.
 
 ## Repository layout

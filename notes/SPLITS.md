@@ -57,6 +57,9 @@ Commands: `python tools/compiler_sweep.py --ref <project> --compilers 2.0/sp1p5
 | Unit | Bounds | Content | Status |
 |---|---|---|---|
 | `src/game/unit_0205D6E0.c` | 0x0205D6E0-0x0205D6FC (hypothesis: one function of a larger unit whose other functions, 0x0205D618 and 0x0205D6C4, call it) | `func_0205d6e0`: clears 6 ints | complete (first compiled file, 2.0/sp1p5) |
+| `libs/nitro/src/mi/cpumem.c` | 0x02079ABC-0x02079D70 (hypothesis: twewy's `cpumem.c` layout; neighbours unlike its functions) | 9 MI copy / fill primitives | complete |
+| `libs/nitro/src/os/os_cache.c` | 0x0207B3C4-0x0207B47C (hypothesis: earlier `DC_*` functions of the file may precede) | `DC_FlushAll` ... `IC_InvalidateRange` (6) | complete |
+| `libs/nitro/src/os/os_system.c` | 0x0207C194-0x0207C224 (hypothesis: the file may go on; `OS_Halt` 0x0207C3A8 is `os_terminate_proc.c`) | interrupt masks, `OS_GetProcMode`, `OS_SpinWait` (8) | complete |
 | `libs/c/src/*`, `libs/runtime/src/*` (14 files, below) | see `delinks.txt` | MSL C and runtime, not decompiled | delinked, no source |
 
 ### MSL / runtime files (2026-10-25)
