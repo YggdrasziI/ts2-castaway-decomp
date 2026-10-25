@@ -18702,7 +18702,7 @@ from:0x02095fb4 kind:arm_call to:0x0209498c module:main
 from:0x02095fc8 kind:arm_call to:0x0209498c module:main
 from:0x02095fd0 kind:arm_call to:0x02099858 module:main
 from:0x02095fe4 kind:arm_call to:0x0209487c module:main
-from:0x02096010 kind:load to:0x020bd4f4 module:main
+from:0x02096010 kind:load to:0x020bd4ec add:0x8 module:main
 from:0x02096030 kind:arm_call to:0x02094d4c module:main
 from:0x02096058 kind:arm_call to:0x02094d4c module:main
 from:0x02096080 kind:arm_call to:0x02094ddc module:main

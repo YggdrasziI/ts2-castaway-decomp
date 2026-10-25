@@ -20,6 +20,7 @@ public:
     virtual void func_02095000();
 
     void *func_02094d4c(int tag);
+    void *func_02094ddc(int tag);
 
     u8 unk4[0x38];
 };
