@@ -22,7 +22,6 @@ import sys
 import tempfile
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-GHIDRA_VERSION = "11.2.1"
 DEFAULT_GHIDRA = r"E:\Projets\Github\Decomp\Tools\Ghidra\ghidra_11.2.1_PUBLIC"
 DEFAULT_PROJECT = r"E:\Projets\Dev\ts2-castaway-ghidra"
 PROJECT_NAME = "ts2c_eur"
@@ -40,9 +39,12 @@ HEADLESS = """String[] scriptArgs = getScriptArgs();
         dryRun = scriptArgs.length > 1 && scriptArgs[1].equals("dry");"""
 
 
-def installed_script():
+def installed_script(ghidra_dir):
+    """SyncDsd.java of the dsd-ghidra extension installed for this Ghidra: user
+    extensions live in %APPDATA%/ghidra/<install dir name>/Extensions."""
     appdata = os.environ.get("APPDATA", "")
-    path = os.path.join(appdata, "ghidra", f"ghidra_{GHIDRA_VERSION}_PUBLIC", "Extensions",
+    install_name = os.path.basename(os.path.normpath(ghidra_dir))
+    path = os.path.join(appdata, "ghidra", install_name, "Extensions",
                         "dsd-ghidra", "ghidra_scripts", "SyncDsd.java")
     if not os.path.isfile(path):
         sys.exit(f"dsd-ghidra not installed: {path} not found (see notes/GHIDRA.md)")
@@ -59,7 +61,7 @@ def main():
     parser.add_argument("--dry-run", action="store_true", help="change nothing")
     args = parser.parse_args()
 
-    source = open(installed_script(), encoding="utf-8").read()
+    source = open(installed_script(args.ghidra), encoding="utf-8").read()
     patched, count = CHOOSER.subn(HEADLESS, source)
     if count != 1:
         sys.exit("SyncDsd.java changed: the file chooser block was not found")
@@ -81,11 +83,17 @@ def main():
         if args.dry_run:
             cmd.append("dry")
         out = subprocess.run(cmd, capture_output=True, text=True)
-    log = out.stdout + out.stderr
-    for line in log.splitlines():
-        if "SyncDsdHeadless" in line or "ERROR" in line or "REPORT" in line:
-            print(line.strip())
-    return 0 if out.returncode == 0 and "ERROR" not in log else 1
+    lines = [line.strip() for line in (out.stdout + out.stderr).splitlines()]
+    for line in lines:
+        if "SyncDsdHeadless" in line or line.startswith(("ERROR", "INFO  REPORT")):
+            print(line)
+    # Ghidra log lines start with their level; symbol names may contain "ERROR".
+    errors = [line for line in lines if line.startswith("ERROR")]
+    programs = [line for line in lines if "REPORT: Processing project file:" in line]
+    if len(programs) > 1:
+        print(f"WARNING: {len(programs)} programs matched {args.program!r}; each was synced "
+              "with this config (use --program)", file=sys.stderr)
+    return 0 if out.returncode == 0 and not errors else 1
 
 
 if __name__ == "__main__":
