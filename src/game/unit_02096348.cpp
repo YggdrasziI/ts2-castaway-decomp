@@ -13,26 +13,10 @@
  * unknown.
  */
 
-typedef unsigned char u8;
-typedef unsigned short u16;
-typedef unsigned long u32;
+#include "game/unk_file.h"
 
 extern "C" u32 func_0209a32c(const u32 *str, u32 last, u32 end);
 extern "C" u32 func_0209a3c4(u32 hash, const u32 *str);
-
-class Unk0209487c {
-public:
-    Unk0209487c(void *data);
-    virtual ~Unk0209487c();
-    virtual bool func_02094d18();
-    virtual void func_02094df4();
-    virtual void func_02094f0c();
-    virtual void func_02095000();
-
-    void *func_02094d4c(int tag);
-
-    u8 unk4[0x38];
-};
 
 struct Unk02096348Block40 {
     u32 count;
