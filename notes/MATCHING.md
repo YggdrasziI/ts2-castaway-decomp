@@ -43,6 +43,8 @@ default: add one here only once a unit of this ROM proves it with mwccarm.
 - Results that the original computes in reverse order before one constructor call
   (z, y, x, then `stm`) come from locals assigned in that order and passed to the
   constructor (`func_020983ac`, 91.7 % -> 100 %).
+- An `if (c) { x = 1; return; } x++;` tail gives conditional `ldrle` / `addle`;
+  `if (!c) x++; else x = 1;` gives the original early `ldmgt` exit (`func_02097464`).
 - A loop whose first test leaves through the function's shared return is
   `for (;;) { ... if (c == 0) break; ... }`; `return` there gives a conditional
   `ldmeq` instead (`func_0209a32c`, 95.5 % -> 99.7 %).
@@ -82,6 +84,9 @@ default: add one here only once a unit of this ROM proves it with mwccarm.
 
 ## Data layout
 
+- A dsd symbol inside a static object (here `data_020c806c`, the object + 4 that
+  one function returns) makes `.bss` score 3 %: drop the symbol and write the
+  relocation as `to:<object> add:0x4` (`unit_02097434.cpp`).
 - A class with user-declared constructors is copied member by member
   (`ldr` / `str` pairs); deriving it from a plain struct that holds the members
   gives the block copy (`ldm` / `stm`) of the original (`unit_02098E70.cpp`, 0 % ->

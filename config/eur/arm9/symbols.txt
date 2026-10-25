@@ -3604,15 +3604,15 @@ func_020972e8 kind:function(arm,size=0x1c) addr:0x020972e8
 func_02097304 kind:function(arm,size=0xa4) addr:0x02097304
 func_020973a8 kind:function(arm,size=0x14) addr:0x020973a8
 func_020973bc kind:function(arm,size=0x78) addr:0x020973bc
-func_02097434 kind:function(arm,size=0x30) addr:0x02097434
-func_02097464 kind:function(arm,size=0x2e8) addr:0x02097464
-func_0209774c kind:function(arm,size=0xf4) addr:0x0209774c
-func_02097840 kind:function(arm,size=0x9c) addr:0x02097840
-func_020978dc kind:function(arm,size=0x74) addr:0x020978dc
-func_02097950 kind:function(arm,size=0x74) addr:0x02097950
-func_020979c4 kind:function(arm,size=0x74) addr:0x020979c4
-func_02097a38 kind:function(arm,size=0x14) addr:0x02097a38
-func_02097a4c kind:function(arm,size=0xc) addr:0x02097a4c
+_Z13func_02097434v kind:function(arm,size=0x30) addr:0x02097434
+_Z13func_02097464v kind:function(arm,size=0x2e8) addr:0x02097464
+_Z13func_0209774ci kind:function(arm,size=0xf4) addr:0x0209774c
+_Z13func_02097840i kind:function(arm,size=0x9c) addr:0x02097840
+_Z13func_020978dci kind:function(arm,size=0x74) addr:0x020978dc
+_Z13func_02097950i kind:function(arm,size=0x74) addr:0x02097950
+_Z13func_020979c4i kind:function(arm,size=0x74) addr:0x020979c4
+_Z13func_02097a38v kind:function(arm,size=0x14) addr:0x02097a38
+_Z13func_02097a4cv kind:function(arm,size=0xc) addr:0x02097a4c
 func_02097a58 kind:function(arm,size=0x14) addr:0x02097a58
 func_02097a6c kind:function(arm,size=0x60) addr:0x02097a6c
 func_02097acc kind:function(arm,size=0x3c) addr:0x02097acc
@@ -4491,7 +4491,7 @@ __sinit_020ae28c kind:function(arm,size=0x2c) addr:0x020ae28c
 __sinit_020ae2b8 kind:function(arm,size=0x2c) addr:0x020ae2b8
 __sinit_020ae2e4 kind:function(arm,size=0x2c) addr:0x020ae2e4
 __sinit_020ae310 kind:function(arm,size=0x2c) addr:0x020ae310
-__sinit_020ae33c kind:function(arm,size=0x48) addr:0x020ae33c
+__sinit_unit_02097434.cpp kind:function(arm,size=0x48) addr:0x020ae33c local
 __sinit_unit_02099800.cpp kind:function(arm,size=0x2c) addr:0x020ae384 local
 __sinit_unit_02099870.cpp kind:function(arm,size=0x8c) addr:0x020ae3b0 local
 __sinit_020ae43c kind:function(arm,size=0x2c) addr:0x020ae43c
@@ -4626,7 +4626,7 @@ data_020b6de0 kind:data(any) addr:0x020b6de0
 .p__sinit_020ae2b8 kind:data(word) addr:0x020b6e98
 .p__sinit_020ae2e4 kind:data(word) addr:0x020b6e9c
 .p__sinit_020ae310 kind:data(word) addr:0x020b6ea0
-.p__sinit_020ae33c kind:data(word) addr:0x020b6ea4
+.p__sinit_unit_02097434.cpp kind:data(word) addr:0x020b6ea4 local
 .p__sinit_unit_02099800.cpp kind:data(word) addr:0x020b6ea8 local
 .p__sinit_unit_02099870.cpp kind:data(word) addr:0x020b6eac local
 .p__sinit_020ae43c kind:data(word) addr:0x020b6eb0
@@ -5898,7 +5898,6 @@ data_020c8034 kind:bss addr:0x020c8034
 data_020c8048 kind:bss addr:0x020c8048
 data_020c8058 kind:bss addr:0x020c8058
 data_020c8068 kind:bss addr:0x020c8068
-data_020c806c kind:bss addr:0x020c806c
 @1 kind:bss addr:0x020c80a4 local
 data_020c80b0 kind:bss addr:0x020c80b0
 data_020c82c4 kind:bss addr:0x020c82c4 local
