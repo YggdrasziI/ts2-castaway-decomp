@@ -74,6 +74,15 @@ default: add one here only once a unit of this ROM proves it with mwccarm.
   `cmp r0,#0`, then the constructor; `delete p` is `movs`, null exit, destructor,
   `bl _ZdlPv`. A forward to another function compiles to `ldr ip,=f; bx ip` whether
   `f` is in the same file or not, so it says nothing about bounds.
+- `delete p` / `delete[] p` on a type with a trivial destructor is a bare
+  `bl _ZdlPv` / `bl _ZdaPv` without a null test; a `cmp r0,#0; beq` before the call
+  means the source tested the pointer itself (`if (p != 0) delete[] p;`,
+  `unit_02094824.cpp`, 80 % -> 100 %).
+- `if` / `else` order shows in the conditional loads: the branch written first
+  becomes the conditional (`ldrge ...; bge`) block. `if (tag < 0) {B} else {A}`
+  gave the original `ldrge` A loads; `if (tag >= 0) {A} else {B}` gave `ldrlt` B
+  loads. Wrapping the body in `if (e != 0) { ... } return 0;` also moved the null
+  exit to the end (`func_02094d4c`, 89 % -> 100 %).
 - Calling a not yet decompiled function from C++: declare it `extern "C"` so its
   name stays `func_<addr>` (`unit_02099840.cpp`).
 

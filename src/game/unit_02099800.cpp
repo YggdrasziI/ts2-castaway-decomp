@@ -14,7 +14,7 @@ public:
     Unk020c80b0();
     ~Unk020c80b0();
     void func_02099828();
-    void func_0209982c();
+    void func_0209982c(const char *name);
     void func_02099830();
 
     int unk0;
@@ -39,7 +39,7 @@ Unk020c80b0::~Unk020c80b0() {}
 
 void Unk020c80b0::func_02099828() {}
 
-void Unk020c80b0::func_0209982c() {}
+void Unk020c80b0::func_0209982c(const char *name) {}
 
 void Unk020c80b0::func_02099830() {}
 
