@@ -199,6 +199,13 @@ default: add one here only once a unit of this ROM proves it with mwccarm.
   same arguments: modify the parameters first (`data += src; n *= 2;`); written in
   each call, mwccarm sinks the last argument into both branches
   (`func_0209201c`, 90.2 % -> 99.0 %).
+- `switch` case bodies come out in source order while the tests stay in value
+  order: an original that tests 4 then 8 but places the case 8 body first was
+  `switch (v) { case 8: ...; case 4: ...; }` (`func_02092788`, 68 % -> 94 %).
+- Variadic functions: mwccarm's `va_start(ap, fmt)` is
+  `ap = (char *)((u32)&fmt & ~3) + 4` after the `push {r0-r3}` of the prologue; no
+  header in the project defines it, so the unit defines the macro
+  (`unit_02090CCC.cpp`).
 - A `u16` local shifted in a loop is masked again after every shift (`lsl #0xf`,
   `lsr #0x10`); the original's plain `lsr` comes from a `u32` local set from
   `(u16)param` (`func_02091eb4`, 92.4 % -> 100 %).

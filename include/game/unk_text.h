@@ -11,14 +11,14 @@
 typedef unsigned char u8;
 typedef unsigned long u32;
 
-/* The font: only the virtual functions the layout calls are named. */
+/* The font: only the virtual functions used here or in unit_02090CCC.cpp are named. */
 class Unk02092830Font {
 public:
     virtual void func_00();
     virtual void func_04();
     virtual void func_08();
     virtual void func_0c();
-    virtual void func_10();
+    virtual int func_10(u32 c);
     virtual int func_14(u32 c);
     virtual int func_18(u32 c);
     virtual int func_1c(u32 c);
@@ -27,6 +27,7 @@ public:
     virtual bool func_28(u32 c);
     virtual bool func_2c(u32 c);
     virtual bool func_30(u32 c);
+    virtual int func_34();
 };
 
 /* One word: counts, byte range, width and the trailing character. */

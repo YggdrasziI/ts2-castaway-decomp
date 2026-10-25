@@ -11,25 +11,6 @@
 
 #include "game/unk_rect.h"
 
-typedef unsigned short u16;
-
-class Unk02092704 {
-public:
-    Unk02092704();
-    virtual ~Unk02092704();
-    void func_0209276c(int x, int y);
-    virtual void func_020927bc();
-    virtual void func_02092788();
-    void func_0209278c(int w, int h);
-    void func_020927c0(const Unk02098bc8 *rect);
-    void func_02092808(int a, int b);
-
-    u16 unk4;
-    u16 unk6;
-    u16 unk8;
-    Unk02098bc8 rect;
-};
-
 Unk02092704::Unk02092704() : unk4(0), unk6(0), unk8(0), rect(0, 0, 0x100000, 0xc0000) {}
 
 Unk02092704::~Unk02092704() {}
