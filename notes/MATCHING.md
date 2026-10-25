@@ -38,6 +38,10 @@ default: add one here only once a unit of this ROM proves it with mwccarm.
   with a script took `func_02099678` from 89.9 % to 99.3 % and `func_020993d8` to
   99.8 %. Removing a temporary (`end = a + b; ... rest = end - c` -> `rest = a + b -
   c`) fixed the last swap (100 %).
+- Assigning a member from a conditional: `m = c ? a : b;` (or `if` / `else` on the
+  parameter before the store) keeps the result in the parameter register and stores
+  each member alone; computing it first and storing both members after gave a second
+  register and an `stmia` (`unit_0209A11C.cpp`, 53.75 % -> 100 %).
 - `if (x != 0) { ... } else { return -1; }` puts the failure path after the body,
   where `if (x == 0) return -1;` gives a conditional `mvneq`.
 
