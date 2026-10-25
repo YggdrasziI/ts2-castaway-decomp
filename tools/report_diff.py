@@ -15,7 +15,6 @@ fully matched function or data section disappeared without a 100 % replacement.
 
 import argparse
 import json
-import re
 import os
 import shutil
 import sys
@@ -25,20 +24,29 @@ DEFAULT_VERSION = "eur"
 
 
 def load(path):
+    """(measures, {key: percent}, {key: unit name})."""
     with open(path, encoding="utf-8") as f:
         report = json.load(f)
-    items = {}
+    items, units = {}, {}
     for unit in report["units"]:
-        # dsd numbers the not yet delinked gaps of a module (_dsd_gap@main_5); the
-        # numbers change whenever a file is added, so compare gaps by module only.
-        name = re.sub(r"^(_dsd_gap@\w+?)_\d+$", r"\1", unit["name"])
+        name = unit["name"]
+        # Functions are keyed by symbol name only (unique in a dsd project), so a
+        # function that moves from a dsd gap (_dsd_gap@main_5, renumbered whenever a
+        # file is delinked) to a source file is compared, not removed and re-added.
         for func in unit.get("functions", []):
-            items[(name, "fn", func["name"])] = func.get("fuzzy_match_percent", 0.0)
+            key = ("fn", func["name"])
+            items[key] = func.get("fuzzy_match_percent", 0.0)
+            units[key] = name
+        # Data sections of gaps are not diffed, and their names repeat across gaps.
+        if name.startswith("_dsd_gap@"):
+            continue
         for section in unit.get("sections", []):
             if section["name"].startswith(".text"):
                 continue
-            items[(name, "data", section["name"])] = section.get("fuzzy_match_percent", 0.0)
-    return report["measures"], items
+            key = ("data", f"{name} {section['name']}")
+            items[key] = section.get("fuzzy_match_percent", 0.0)
+            units[key] = name
+    return report["measures"], items, units
 
 
 def main():
@@ -60,8 +68,8 @@ def main():
         print(f"No baseline at {args.base}; run with --save first", file=sys.stderr)
         return 2
 
-    base_measures, base = load(args.base)
-    cur_measures, cur = load(report)
+    base_measures, base, base_units = load(args.base)
+    cur_measures, cur, cur_units = load(report)
 
     regressions, improvements, removed, added = [], [], [], []
     for key in sorted(set(base) | set(cur)):
@@ -81,8 +89,12 @@ def main():
     lost = removed_full[added_full:] if len(removed_full) > added_full else []
 
     def fmt(key):
-        unit, kind, name = key
-        return f"{unit.replace('main/', '')} {kind} {name}"
+        kind, name = key
+        if kind == "data":
+            return f"data {name}"
+        old, new = base_units.get(key), cur_units.get(key)
+        where = old or new if old == new or None in (old, new) else f"{old} -> {new}"
+        return f"{where} fn {name}"
 
     for title, rows in (("Regressions", regressions), ("Improvements", improvements)):
         if rows:
