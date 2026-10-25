@@ -32,6 +32,17 @@ default: add one here only once a unit of this ROM proves it with mwccarm.
 
 ## Data layout
 
+- `.bss` order of file statics is not the declaration order: with all statics in
+  one run of declarations, k ints come out as `a(k-2) ... a1 a0 a(k-1)`; a function
+  definition between declarations starts a new run, and arrays and compiler nodes
+  (`@<n>`) change the pattern. Fit the order with a script that rewrites the
+  declarations, compiles, and compares symbol offsets (`unit_02099870.cpp`).
+- dsd gives one `data_<addr>` to a run of adjacent statics the code reaches through
+  one base; add a `local` symbol per static to `symbols.txt` so that objdiff pairs
+  them (`.bss` 99.96 % -> 100 %).
+- `(int)(a - b) - c` with `a - b` unsigned keeps the runtime `add` and both `sub`
+  (`(u32)x + 0x4000 - y - 0x1400` folds `0x4000 - 0x1400`).
+
 (none yet)
 
 ## Control flow
