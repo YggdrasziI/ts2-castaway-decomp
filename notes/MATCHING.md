@@ -10,7 +10,14 @@ default: add one here only once a unit of this ROM proves it with mwccarm.
 
 ## Registers and stack
 
-(none yet)
+- `h = f(h) * 31 + c;` gave `add rd, c, x`; splitting it into `h = f(h) * 31;
+  h += c;` gave the original `add rd, x, c` and its register allocation
+  (`func_0209a3c4`, `func_0209a32c`, 99.5 % -> 100 %).
+- A call result compared with a parameter: `v = f(...); if (v == p)` gives
+  `cmp r0, rp`, while `if (f(...) == p)` gives `cmp rp, r0` (`func_0209a418`).
+- A loop whose first test leaves through the function's shared return is
+  `for (;;) { ... if (c == 0) break; ... }`; `return` there gives a conditional
+  `ldmeq` instead (`func_0209a32c`, 95.5 % -> 99.7 %).
 
 ## Inlining and emission order
 
