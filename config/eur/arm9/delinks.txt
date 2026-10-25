@@ -96,3 +96,11 @@ libs/runtime/src/MWException.cpp:
 libs/runtime/src/ExceptionHandlerTS.cpp:
     .text       start:0x02085d24 end:0x02085ea0
     .exceptix   start:0x020ad000 end:0x020ad018
+
+src/game/unit_02099800.cpp:
+    complete
+    .text       start:0x02099800 end:0x02099840
+    .init       start:0x020ae384 end:0x020ae3b0
+    .ctor       start:0x020b6ea8 end:0x020b6eac
+    .bss        start:0x020c80a4 end:0x020c82c4
+
