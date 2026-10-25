@@ -45,6 +45,10 @@ default: add one here only once a unit of this ROM proves it with mwccarm.
   constructor (`func_020983ac`, 91.7 % -> 100 %).
 - An `if (c) { x = 1; return; } x++;` tail gives conditional `ldrle` / `addle`;
   `if (!c) x++; else x = 1;` gives the original early `ldmgt` exit (`func_02097464`).
+- A loop over a global array whose original keeps the counter in a lower register
+  than the element pointer is written with an explicit pointer, set before the loop
+  and incremented after the body; `array[i].field` and `&array[i]` swap the two
+  registers (`func_02097100`, 98.5 % -> 100 %).
 - A loop whose first test leaves through the function's shared return is
   `for (;;) { ... if (c == 0) break; ... }`; `return` there gives a conditional
   `ldmeq` instead (`func_0209a32c`, 95.5 % -> 99.7 %).
