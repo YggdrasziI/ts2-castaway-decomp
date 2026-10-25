@@ -13,64 +13,7 @@
  * them).
  */
 
-typedef long long s64;
-
-extern "C" int func_02077c60(int a, int b);
-extern "C" int func_02097a6c(s64 x);
-
-static inline int func_fxmul(int a, int b) {
-    return (int)(((s64)a * b) >> 12);
-}
-
-static inline int func_fxdiv(int a, int b) {
-    if (b != 0) {
-        return func_02077c60(a, b);
-    }
-    return a;
-}
-
-struct Unk02098e70Base {
-    int x;
-    int y;
-};
-
-class Unk02098e70 : public Unk02098e70Base {
-public:
-    Unk02098e70(int v);
-    Unk02098e70(int x, int y);
-    int func_02098e84() const;
-    s64 func_02098e94() const;
-    void func_02098ec0(int f);
-    Unk02098e70 &func_02098eec();
-    Unk02098e70 func_02098f38() const;
-    void func_02098f74(int min, int max);
-    Unk02098e70 func_02098fa8(const Unk02098e70 &o) const;
-    Unk02098e70 func_02098fcc(const Unk02098e70 &o) const;
-};
-
-struct Unk02098ff0Base {
-    int x;
-    int y;
-    int z;
-};
-
-class Unk02098ff0 : public Unk02098ff0Base {
-public:
-    Unk02098ff0(int x, int y, int z) {
-        this->x = x;
-        this->y = y;
-        this->z = z;
-    }
-    int func_02098ff0() const;
-    s64 func_02099000() const;
-    void func_02099048(int f);
-    Unk02098ff0 &func_02099088();
-    Unk02098ff0 func_020990ec() const;
-    Unk02098ff0 func_0209911c(const Unk02098ff0 &o) const;
-    Unk02098ff0 func_02099150(const Unk02098ff0 &o) const;
-    int func_02099184(const Unk02098ff0 &o) const;
-    Unk02098ff0 func_020991b8(const Unk02098ff0 &o, int t) const;
-};
+#include "game/unk_vector.h"
 
 Unk02098e70::Unk02098e70(int v) {
     x = v;

@@ -62,6 +62,7 @@ Commands: `python tools/compiler_sweep.py --ref <project> --compilers 2.0/sp1p5
 
 | Unit | Bounds | Content | Status |
 |---|---|---|---|
+| `src/game/unit_020987D8.cpp` | `.text` 0x020987D8-0x020988D8 (hypothesis: a 4x4 matrix product before, quaternion functions after) | plane `Unk020987d8` (3D vector normal, distance): constructors, line intersection, signed distance; vectors from `include/game/unk_vector.h` | complete |
 | `src/game/unit_02098BC8.cpp` | `.text` 0x02098BC8-0x02098E70 (hypothesis: a plane class on the 3D vector before, the vectors after) | integer rectangle `Unk02098bc8` (x, y, width, height): constructors, point test, overlap test, subtraction into up to four pieces | complete |
 | `src/game/unit_02098E70.cpp` | `.text` 0x02098E70-0x02099210 (hypothesis: a rectangle class before, unit_02099210.cpp after; may be two files) | 20.12 fixed-point 2D and 3D vectors `Unk02098e70` / `Unk02098ff0` (derived from plain structs): constructors, squared length, length, scale, normalise, clamp, sum, difference, dot product, interpolation | not complete: 17 / 19 functions at 100 % (`func_02098e94` 96.8 %, `func_02099000` 90 %) |
 | `src/game/unit_02099210.cpp` | `.text` 0x02099210-0x02099800 (hypothesis: fixed-point vector helpers before, unit_02099800.cpp after) | heap class `Unk020c8440`: constructor, destructor, init, aligned first-fit allocation from a hint, free with neighbour merging, block headers (24-bit size, used bit, 6-bit heap id) | not complete: 12 / 14 functions at 100 % (`func_02099280` 94 %, `func_02099678` 99.3 %) |
