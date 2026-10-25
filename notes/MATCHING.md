@@ -65,6 +65,25 @@ default: add one here only once a unit of this ROM proves it with mwccarm.
   give the same `movne` / `moveq` but different loop registers around the call
   (`func_0201be00`, 99.7 % -> 100 %).
 
+- A one-bit field set from a parameter: `bool` gives the plain `lsl #31` insert,
+  an `int` adds an `lsl #16; lsr #16` truncation; `f = p ? 0 : 1` on a `bool`
+  gave the original `moveq` / `movne` then truncation where `!p` dropped it
+  (`func_0208d774`, 63 % -> 100 %).
+- A field extracted into a local then tested (`asr`, `and #3`, `tst #1`): an
+  `int` local lets mwccarm fold the `and`; a `u16` local keeps it
+  (`func_0208d7d0`, 85.7 % -> 100 %).
+- A `u16` parameter that the original normalises once at entry (`lsl #16; lsr
+  #16`) after an early return, then shifts without truncation: take an `int` and
+  copy `(u16)mask` into a `u32` local after that return (`func_0208e058`,
+  89 % -> 100 %).
+- Constants not shared between a local's initial value and a later `return -1` /
+  `x = 0`: initialise the locals at their declaration; assigned as statements,
+  mwccarm reuses their registers for the constant (`func_0208e364`, 94.5 % ->
+  100 %).
+- A second loop whose counter and accumulator take new registers (count copied
+  to another register, the word in the freed one): move the loop into an inline
+  function taking copies of the values (`func_0208e364`).
+
 ## Inlining and emission order
 
 - C++ static object: write the global and its out-of-line constructor; mwccarm builds
