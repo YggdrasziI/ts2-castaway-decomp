@@ -19029,7 +19029,7 @@ from:0x02099c64 kind:arm_call to:0x02099c0c module:main
 from:0x02099c98 kind:arm_call to:0x02094f88 module:main
 from:0x02099cac kind:arm_call to:0x0209576c module:main
 from:0x02099cc0 kind:arm_call to:0x0209585c module:main
-from:0x02099cdc kind:load to:0x020bd584 module:main
+from:0x02099cdc kind:load to:0x020bd57c add:0x8 module:main
 from:0x02099cec kind:arm_call to:0x020957ec module:main
 from:0x02099cfc kind:arm_call to:0x02099d04 module:main
 from:0x02099d28 kind:arm_call to:0x02095794 module:main

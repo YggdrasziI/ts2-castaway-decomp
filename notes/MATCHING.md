@@ -18,6 +18,12 @@ default: add one here only once a unit of this ROM proves it with mwccarm.
 - Members loaded once before a loop (`ldr` of the array and the count ahead of the
   first test) come from copying them to locals; reading them in the loop condition
   reloads the array inside the loop (`unit_02099C0C.cpp`, 83 % -> 100 %).
+- `p + i * 12` with `i` a `short` gives `smlabb`; with an `int` it gives `mla`. A
+  parameter passed on without `lsl` / `asr` is an `int` (`unit_02099C78.cpp`).
+- Fields read into locals before the stores of a stack struct (`short a = op->a;
+  short b = op->b;`) keep the original load order (`func_02099d04`, 97.4 % -> 100 %).
+- A constructor that ends with a chain of tests: `if (!x) return;` for the last one
+  too, not `if (x) { ... }` (`moveq r0, this` / `movne r0, this` in the original).
 - A loop whose first test leaves through the function's shared return is
   `for (;;) { ... if (c == 0) break; ... }`; `return` there gives a conditional
   `ldmeq` instead (`func_0209a32c`, 95.5 % -> 99.7 %).
@@ -57,6 +63,11 @@ default: add one here only once a unit of this ROM proves it with mwccarm.
 
 ## Data layout
 
+- Vtables: mwccarm emits `_ZTV<class>` with two zero words (offset to top, no RTTI
+  with `-RTTI off`) before the slots, and the object points 8 bytes in. Pure virtual
+  slots are zero; a virtual destructor takes two slots (D1, then the deleting D0). In
+  `symbols.txt` the vtable symbol goes at the start, and the constructor's load in
+  `relocs.txt` becomes `to:<_ZTV> add:0x8` (`unit_02099C78.cpp`).
 - `.bss` order of file statics is not the declaration order: with all statics in
   one run of declarations, k ints come out as `a(k-2) ... a1 a0 a(k-1)`; a function
   definition between declarations starts a new run, and arrays and compiler nodes
