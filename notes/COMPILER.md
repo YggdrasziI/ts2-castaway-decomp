@@ -49,8 +49,13 @@ one byte-identical at its address on the first try):
 | 0x0206AF40 | bounded array element address | ✓ | ✓ | ✓ |
 | 0x02026F24 | `x == 2 \|\| x == 1` | ✗ | (several) | (several) |
 
-Only the 2.0 family produces all seven. Telling its service packs apart needs larger
-functions (open).
+Only the 2.0 family produces all seven. Five more probes with fixed-point arithmetic
+(`FX_Mul`-style 64-bit multiplies with and without rounding, a multiply-and-clamp,
+an `mla` element address) gave 2 unique matches (0x0206A7FC, 0x02066298) with every
+2.0 version alike, and 3 without match: the service pack is still open.
+
+Confirmed in the build: `src/game/unit_0205D6E0.c` compiled with 2.0/sp1p5 and
+`tools/configure.py`'s flags is 100 % in objdiff and linked (`complete`), ROM OK.
 
 Command (NitroSDK): `python tools/compiler_sweep.py --ref E:/Projets/Github/Decomp/DS/twewy
 --define REGION_USA "E:/Projets/Github/Decomp/DS/twewy/libs/nitro/src/*/*.c"`
