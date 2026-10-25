@@ -42,7 +42,9 @@ Evidence and the candidate analysis go in `notes/COMPILER.md`.
   families in `tools/mwccarm/`). Game code and NitroSDK: **mwccarm 2.0 family**
   (byte-identical probes, `notes/COMPILER.md`); service pack not settled, so
   `configure.py` keeps 2.0/sp1p5 (twewy's flags) as a working choice.
-- Linker flags (twewy): `-proc arm946e -interworking -nodead -nostdlib -m Entry`.
+- Linker flags: `-proc arm946e -interworking -dead -nostdlib -m Entry` (twewy has
+  `-nodead`; `-dead` drops the unused C1/C2, D1/D2 copies, as the original link did,
+  and `tools/lcf_keep.py` keeps `.exception` alive; notes/COMPILER.md).
 - Ghidra with the dsd-ghidra extension (`notes/GHIDRA.md`), outside the repository.
 
 ## Acceptance criteria

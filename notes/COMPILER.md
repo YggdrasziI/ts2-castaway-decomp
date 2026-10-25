@@ -122,6 +122,21 @@ static objects (hypothesis until one is decompiled). They come in two
 runs, 0x020AD024-0x020AD318 and 0x020AE130-0x020AE4E8; what lies between (0x020AD318-
 0x020AE130) is not known yet.
 
+## Link: dead stripping
+
+mwccarm (every 2.0 and DSi version in `tools/mwccarm`) emits a C++ constructor
+twice, as the complete-object (`C1`) and base-object (`C2`) variants, each in its own
+section, and a destructor likewise (`D1`, `D2`). The ROM holds one copy only
+(`unit_02099800.cpp`: one 0x24-byte constructor, one 4-byte destructor), so the
+original link stripped the unused variant. With twewy's `-nodead` both copies stay
+and every later address moves; the link therefore uses `-dead`.
+
+`-dead` alone fails: dsd's LCF keeps `.init`, `.ctor` and `.exceptix` but not
+`.exception`, whose records no relocation reaches, so the linker drops its 0xC4 bytes
+and `.init` moves. `tools/lcf_keep.py` adds `.exception` to `KEEP_SECTION` after
+`dsd lcf`; with it the ARM9, ITCM and DTCM modules and the ROM stay identical
+(build of 2026-10-25, before and after `unit_02099800.cpp` became complete).
+
 ## Open questions
 
 - Game-code service pack inside 2.0 (probe larger functions: switches, multiplies,

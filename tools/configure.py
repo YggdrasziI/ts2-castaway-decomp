@@ -109,7 +109,7 @@ LD_FLAGS = " ".join(
         "-interworking",  # Enable ARM/Thumb interworking
         "-map closure,unused",  # Generate map file
         "-msgstyle gcc",  # Use GCC-like messages (some IDEs will make file names clickable)
-        "-nodead",  # Do not strip unused code
+        "-dead",  # Strip unused code, as the original link did (tools/lcf_keep.py)
         "-nostdlib",  # Do not link to MWLibraries
     ]
 )
@@ -415,7 +415,10 @@ def main():
         )
         n.newline()
 
-        n.rule(name="lcf", command=f"{DSD} {DSD_BASE_FLAGS} lcf -c $config_path")
+        n.rule(
+            name="lcf",
+            command=f"{PYTHON} tools/lcf_keep.py $lcf_file {DSD} {DSD_BASE_FLAGS} lcf -c $config_path",
+        )
         n.newline()
 
         n.rule(
@@ -731,11 +734,12 @@ def add_delink_and_lcf_builds(n: ninja_syntax.Writer, project: Project):
     objects_file = project.arm9_objects_file()
     n.build(
         inputs=project.delinks_files + [str(rom_config)],
-        implicit=DSD,
+        implicit=[DSD, "tools/lcf_keep.py"],
         rule="lcf",
         outputs=[lcf_file, objects_file],
         variables={
             "config_path": str(project.arm9_config_yaml()),
+            "lcf_file": str(lcf_file),
         },
     )
     n.newline()
