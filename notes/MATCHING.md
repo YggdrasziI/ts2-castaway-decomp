@@ -15,6 +15,9 @@ default: add one here only once a unit of this ROM proves it with mwccarm.
   (`func_0209a3c4`, `func_0209a32c`, 99.5 % -> 100 %).
 - A call result compared with a parameter: `v = f(...); if (v == p)` gives
   `cmp r0, rp`, while `if (f(...) == p)` gives `cmp rp, r0` (`func_0209a418`).
+- Members loaded once before a loop (`ldr` of the array and the count ahead of the
+  first test) come from copying them to locals; reading them in the loop condition
+  reloads the array inside the loop (`unit_02099C0C.cpp`, 83 % -> 100 %).
 - A loop whose first test leaves through the function's shared return is
   `for (;;) { ... if (c == 0) break; ... }`; `return` there gives a conditional
   `ldmeq` instead (`func_0209a32c`, 95.5 % -> 99.7 %).
