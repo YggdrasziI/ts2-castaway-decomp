@@ -58,6 +58,12 @@ default: add one here only once a unit of this ROM proves it with mwccarm.
 - A loop whose first test leaves through the function's shared return is
   `for (;;) { ... if (c == 0) break; ... }`; `return` there gives a conditional
   `ldmeq` instead (`func_0209a32c`, 95.5 % -> 99.7 %).
+- Reusing a dead local for a new value changes the coloring where no declaration
+  order does: in `func_0201c2d8` the top of the items goes into `w` (no longer
+  needed) instead of its own variable (98.8 % -> 100 %).
+- A bool argument built from a flag: `(flags & 1) != 0` and `(flags & 1) ? 1 : 0`
+  give the same `movne` / `moveq` but different loop registers around the call
+  (`func_0201be00`, 99.7 % -> 100 %).
 
 ## Inlining and emission order
 

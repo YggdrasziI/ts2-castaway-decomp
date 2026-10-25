@@ -14,8 +14,7 @@
  * vtable data_020b8ac0. The .data (pointer data_020b8908, then the strings) follows
  * the tables of unit_020B8888.cpp; data_020be384 is this file's only .bss object
  * (the original loads it through its own symbol). Real file name unknown.
- * Not complete: three functions differ in register allocation only (see above
- * them).
+ * Not complete: func_0201baa4 differs in register allocation (see above it).
  */
 
 #include "game/unk_archive.h"
@@ -243,8 +242,8 @@ void *func_0201ba94() {
 
 /*
  * 99.80 %: in the swing block the original loads the angle into r0 and keeps
- * pointerY / pointers[1] in r3 / r2; ours uses r1 for the angle (local copies and
- * types tried).
+ * pointerY / pointers[1] in r3 / r2; ours uses r1 for the angle (declarations, scopes,
+ * types, index forms, inline helpers, variable reuse and access paths tried).
  */
 int Unk0201b6d4::func_0201baa4(int close, int swing) {
     if (close) {
@@ -345,10 +344,6 @@ void Unk0201b6d4::func_0201bcf8() {
     }
 }
 
-/*
- * 99.69 %: in the pointer loop the original keeps the counter in r9 and the file
- * in r8, ours the reverse (declaration orders and types tried).
- */
 void Unk0201b6d4::func_0201be00() {
     Unk0209487c *file;
     int i;
@@ -360,7 +355,7 @@ void Unk0201b6d4::func_0201be00() {
     }
     file = func_020a18e4()->archive->func_02093c18((const u32 *)data_020b8908);
     for (i = 0; i < 2; i++) {
-        pointers[i] = Unk020916a4::func_02091840((flags & 1) ? 1 : 0)->func_020919e4((int)file, 0);
+        pointers[i] = Unk020916a4::func_02091840((flags & 1) != 0)->func_020919e4((int)file, 0);
         pointers[i]->unk4 = 0xC0000;
         pointers[i]->func_0208faac(i);
         pointers[i]->func_0208fb98(14);
@@ -490,17 +485,12 @@ void Unk0201b6d4::func_0201c2c4(int x, int y) {
     func_0201c2d8();
 }
 
-/*
- * 98.77 %: the original computes top before left and keeps the item pointer, top
- * and left in lr / r4 / r3; ours uses r4 / r3 / lr (every declaration order, both
- * assignment orders, pointer loops and an inline setter tried).
- */
+/* w is reused for the top of the items: a separate variable colors differently. */
 void Unk0201b6d4::func_0201c2d8() {
     int w;
     int h;
-    int top;
-    u32 i;
     int left;
+    u32 i;
 
     cols = ((maxWidth + 0x28) >> 4) + 1;
     rows = ((itemCount << 4) + 0x20) >> 4;
@@ -522,10 +512,10 @@ void Unk0201b6d4::func_0201c2d8() {
         y = 0xC0000 - h;
     }
     left = x - w + 0x14000;
-    top = y - h + 0x10000;
+    w = y - h + 0x10000;
     for (i = 0; i != itemCount; i++) {
         items[i].rect.x = left;
-        items[i].rect.y = top + func_itemOffset(i);
+        items[i].rect.y = w + func_itemOffset(i);
         items[i].rect.w = (((cols - 1) << 4) - 0x14) << 12;
         items[i].rect.h = 0x10000;
     }
