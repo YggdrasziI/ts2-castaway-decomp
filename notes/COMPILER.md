@@ -60,6 +60,15 @@ Confirmed in the build: `src/game/unit_0205D6E0.c` compiled with 2.0/sp1p5 and
 Command (NitroSDK): `python tools/compiler_sweep.py --ref E:/Projets/Github/Decomp/DS/twewy
 --define REGION_USA "E:/Projets/Github/Decomp/DS/twewy/libs/nitro/src/*/*.c"`
 
+## NitroSystem and MSL
+
+Both are linked (region map in `notes/SPLITS.md`): MSL C and the C++ runtime at
+0x02080114-~0x02089780 (fingerprints from twewy and khdays: `printf.c`, `string.c`,
+console I/O, `CompressedNumbers.cpp`, `ExceptionHandlerTS.cpp`), NitroSystem at
+0x0209A740-~0x0209F0AC (khdays fingerprints: `NNS_Fnd` lists, `NNSi_SndFader`,
+`NNS_SndArc` callbacks). Their versions are unknown: no `[SDK+...]` marker for them.
+CRI middleware (twewy's `libs/cri`) is absent: only 8-byte or mid-function hits.
+
 ## Candidates
 
 Available in `tools/mwccarm/`: 1.2 (base, b56, sp2, sp2p3, sp3, sp4), 2.0 (base, sp1,

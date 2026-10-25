@@ -51,7 +51,7 @@ DS, `E:\Projets\Github\Decomp\DS\`:
 | `st` | [zeldaret/st](https://github.com/zeldaret/st) | CC0 | 0.12.0 | dsi/1.2p1 | libs nitro, nns, c, cpp, runtime; **CONTRIBUTING forbids AI use for its library decompilation and mostly-AI PRs**: build patterns only |
 | `DQIV-DECOMP` | [GoldieLeGenie/DQIV-DECOMP](https://github.com/GoldieLeGenie/DQIV-DECOMP) | none | 0.10.2 | 2.0/sp1p6, libs 2.0/sp1p2 | libs MSL, NitroSDK, NitroSystem, Runtime; ask before reuse |
 | `fe11-us` | [Eebit/fe11-us](https://github.com/Eebit/fe11-us) | none | 0.12.0 | 2.0/sp2p2 | ask before reuse |
-| `khdays-decomp` | [Yokimitsuro/khdays-decomp](https://github.com/Yokimitsuro/khdays-decomp) | CC0 | own build | 3.0_patch4 | heavily customised |
+| `khdays-decomp` | [Yokimitsuro/khdays-decomp](https://github.com/Yokimitsuro/khdays-decomp) | CC0 | own build | 3.0_patch4 | heavily customised; `libs/{nitro,nns,msl}` used as sweep fingerprints (nothing copied) |
 | `advance-wars-dual-strike-decomp` | [sturmds/advance-wars-dual-strike-decomp](https://github.com/sturmds/advance-wars-dual-strike-decomp) | CC0 | 0.12.1 | metroskrew 2.0-72 | `tools/dsd_init.py` works around `dsd init` aborting |
 | `pokebw2` | [fuddlesworth/pokebw2](https://github.com/fuddlesworth/pokebw2) | GPL-3.0 | fork | dsi/1.1p1 | `docs/configs.md` (ambiguous relocs); GPL: patterns only, no code |
 

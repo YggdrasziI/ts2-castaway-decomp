@@ -20,9 +20,9 @@ import os
 import re
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-# Game code region (notes/SPLITS.md): after main, before NitroSDK (first SDK function
-# found by compiler_sweep at 0x0207AE98). Approximate until the region map is done.
-GAME_START, GAME_END = 0x02000C68, 0x0207A000
+# Game code regions of the region map (notes/SPLITS.md): block 1 after crt0, block 2
+# after NitroSystem. Bounds are approximate (~ in the map).
+GAME_REGIONS = [(0x02000BA0, 0x02073ED0), (0x0209F0AC, 0x020ACC60)]
 
 
 def read_symbols(path):
@@ -63,10 +63,11 @@ def main():
     parser.add_argument("--max-calls", type=int, default=0, help="most outgoing calls (default 0: leaves)")
     parser.add_argument("--min-size", type=lambda x: int(x, 0), default=8,
                         help="smallest size (default 8: skips 4-byte 'bx lr' stubs)")
-    parser.add_argument("--start", type=lambda x: int(x, 0), default=GAME_START)
-    parser.add_argument("--end", type=lambda x: int(x, 0), default=GAME_END)
+    parser.add_argument("--start", type=lambda x: int(x, 0), help="with --end: one range instead of the game regions")
+    parser.add_argument("--end", type=lambda x: int(x, 0))
     args = parser.parse_args()
 
+    regions = [(args.start, args.end)] if args.start is not None and args.end is not None else GAME_REGIONS
     cfg = os.path.join(ROOT, "config", args.version, "arm9")
     funcs = read_symbols(os.path.join(cfg, "symbols.txt"))
     calls = read_calls(os.path.join(cfg, "relocs.txt"))
@@ -82,7 +83,7 @@ def main():
 
     rows = []
     for addr, size, name, mode in funcs:
-        if not args.start <= addr < args.end or size < args.min_size:
+        if not any(s <= addr < e for s, e in regions) or size < args.min_size:
             continue
         if any(s <= addr < e for s, e in delinked):
             continue
@@ -96,7 +97,8 @@ def main():
     print(f"{'address':<11} {'size':>6} {'mode':<5} {'calls':>5} {'callers':>7} {'near':>4}  name")
     for n_calls, size, addr, name, mode, n_callers, near in rows[:args.n]:
         print(f"0x{addr:08X} {size:>#6x} {mode:<5} {n_calls:>5} {n_callers:>7} {near:>4}  {name}")
-    print(f"{len(rows)} functions (calls <= {args.max_calls}) in 0x{args.start:08X}-0x{args.end:08X}, "
+    where = ", ".join(f"0x{s:08X}-0x{e:08X}" for s, e in regions)
+    print(f"{len(rows)} functions (calls <= {args.max_calls}) in {where}, "
           f"not delinked; 'near' = callers within 0x400 bytes")
 
 
