@@ -39,8 +39,9 @@ Evidence and the candidate analysis go in `notes/COMPILER.md`.
   ROM rebuild, checks, objdiff config.
 - objdiff-cli **v3.8.1** (report, diff with the unarm disassembler), objdiff GUI.
 - mwccarm / mwldarm from `decomp.aetias.com/files/mwccarm.zip` (1.2, 2.0 and DSi
-  families in `tools/mwccarm/`). **Compiler not identified yet**: `configure.py`
-  uses 2.0/sp1p5 as a provisional default (twewy's flags), to replace in Step 2.
+  families in `tools/mwccarm/`). Game code and NitroSDK: **mwccarm 2.0 family**
+  (byte-identical probes, `notes/COMPILER.md`); service pack not settled, so
+  `configure.py` keeps 2.0/sp1p5 (twewy's flags) as a working choice.
 - Linker flags (twewy): `-proc arm946e -interworking -nodead -nostdlib -m Entry`.
 - Ghidra with the dsd-ghidra extension (`notes/GHIDRA.md`), outside the repository.
 

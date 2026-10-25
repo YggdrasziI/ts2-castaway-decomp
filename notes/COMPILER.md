@@ -1,8 +1,8 @@
 # Compiler, SDK and runtime evidence
 
-Status: **not identified** (Step 2). `tools/configure.py` builds with a provisional
-2.0/sp1p5 and twewy's flags; nothing is compiled from source yet, so this choice is
-untested.
+Status: **mwccarm 2.0 family** for game code and NitroSDK (proven by byte-identical
+probes, below); the service pack is not settled yet. `tools/configure.py` keeps
+2.0/sp1p5 as a working choice inside the family.
 
 ## NitroSDK
 
@@ -16,6 +16,44 @@ Reading of the relstep (hypothesis, from NitroSDK's `SDK_VERSION_RELSTEP` scheme
 
 No other `[SDK+...]` markers (NitroSystem, NitroWiFi, CW) are in the ARM9, so the
 library list must come from signatures and fingerprints.
+
+## Probes (`tools/compiler_sweep.py`, 2026-10-25)
+
+The sweep compiles a file with every mwccarm in `tools/mwccarm/` (flags: twewy's
+common flags, `-O4,p`, `-lang=c99`) and searches each function in the ARM9 modules
+with relocated words masked. "Unique" = found at exactly one address.
+
+NitroSDK, twewy's CC0 sources `libs/nitro/src/*/*.c` (as written for twewy, not
+necessarily this SDK 3.2 build): 32 functions unique with every 2.0 sp1 ... sp2p4;
+2.0/base 20, 1.2 19-20, DSi 29-30. Found, e.g.: `DC_PurgeAll` 0x0207B3C4,
+`DC_InvalidateRange` 0x0207B3F8, `OS_EnableIRQ` 0x0207C194, `OS_DisableIRQ` 0x0207C1A8,
+`OS_PopThreadFromQueue` 0x0207AF1C, `OS_GetRegionBottom` 0x0207B724 (full list:
+rerun the command below). So the SDK is built with 2.0 sp1 or later.
+
+MSL C / runtime, twewy's `libs/c/src`, `libs/runtime/src` (built there with
+`-Cpp_exceptions on -ipa file -str reuse`, not used here): `strcpy` 0x02082C28,
+`strncpy` 0x02082CF0, `strcmp` 0x02082D40, `round_decimal` 0x020818AC (printf.c),
+`sys_WriteChar` / `sys_ReadChar` / `sys_Exit` 0x020841B4-0x020841DC; all 2.0 versions
+alike.
+
+Game code, seven leaf functions rewritten from their assembly (scratch file, every
+one byte-identical at its address on the first try):
+
+| Address | Function | 1.2 | 2.0 (base ... sp2p4) | DSi |
+|---|---|---|---|---|
+| 0x0205D6E0 | clear 6 ints in a loop | ✓ | ✓ | ✓ |
+| 0x020605D0 | 4 fields = 0, 0, 0, -1 | ✗ | ✓ | ✗ |
+| 0x020388AC | 4 fields = -1, 0, 0, 0 | (several addresses) | (several) | ✗ |
+| 0x02012558 | `if (++count == 200) flag = 1` | ✗ | ✓ | ✓ |
+| 0x02017184 | short clamp + clear | (several) | (several) | ✗ |
+| 0x0206AF40 | bounded array element address | ✓ | ✓ | ✓ |
+| 0x02026F24 | `x == 2 \|\| x == 1` | ✗ | (several) | (several) |
+
+Only the 2.0 family produces all seven. Telling its service packs apart needs larger
+functions (open).
+
+Command (NitroSDK): `python tools/compiler_sweep.py --ref E:/Projets/Github/Decomp/DS/twewy
+--define REGION_USA "E:/Projets/Github/Decomp/DS/twewy/libs/nitro/src/*/*.c"`
 
 ## Candidates
 
@@ -41,7 +79,8 @@ runs, 0x020AD024-0x020AD318 and 0x020AE130-0x020AE4E8; what lies between (0x020A
 
 ## Open questions
 
-- Game-code compiler version and flags (probe leaf functions with every version).
+- Game-code service pack inside 2.0 (probe larger functions: switches, multiplies,
+  division by constants, inlining, struct copies).
 - Whether the SDK libraries were built with another version (`COMPILER_CONFIGS`).
 - MSL / runtime version (look for `__call_static_initializers`, `_s32_div_f`-style
   helpers; the `%a %b %e %T %Y` / `%I:%M:%S %p` strings look like a C library's
