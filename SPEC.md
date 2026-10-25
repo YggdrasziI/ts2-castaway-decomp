@@ -86,7 +86,8 @@ Evidence and the candidate analysis go in `notes/COMPILER.md`.
   one address by `tools/compiler_sweep.py` (more than 8 bytes) takes khdays-decomp's
   name, which follows the NitroSDK / NitroSystem API (`MIi_CpuCopy16`,
   `DC_FlushAll`); twewy's name only where khdays has no match. The byte match is the
-  evidence; the name is the reference's.
+  evidence; the name is the reference's. Advance Wars fingerprints (CC0) confirm a
+  function whose khdays name is known from khdays' symbols (runtime helpers).
 - Code, comments, notes and commit messages are in English.
 
 ## Repository layout
