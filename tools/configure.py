@@ -77,9 +77,10 @@ COMMON_CC_FLAGS = (
     "-enc SJIS",  # Use Shift-JIS encoding
 )
 
-DEFAULT_CC_FLAGS = " ".join(
-    (*COMMON_CC_FLAGS, "-ipa file", "-str reuse", "-Cpp_exceptions off")
-)
+# No "-ipa file" (twewy has it): with it, mwccarm emits a file's deferred functions
+# (array destructors, inline constructors) in the opposite order to the ROM
+# (unit_02099870.cpp, notes/COMPILER.md).
+DEFAULT_CC_FLAGS = " ".join((*COMMON_CC_FLAGS, "-str reuse", "-Cpp_exceptions off"))
 
 
 @dataclass(frozen=True)

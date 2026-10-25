@@ -39,9 +39,11 @@ Evidence and the candidate analysis go in `notes/COMPILER.md`.
   ROM rebuild, checks, objdiff config.
 - objdiff-cli **v3.8.1** (report, diff with the unarm disassembler), objdiff GUI.
 - mwccarm / mwldarm from `decomp.aetias.com/files/mwccarm.zip` (1.2, 2.0 and DSi
-  families in `tools/mwccarm/`). Game code and NitroSDK: **mwccarm 2.0 family**
-  (byte-identical probes, `notes/COMPILER.md`); service pack not settled, so
-  `configure.py` keeps 2.0/sp1p5 (twewy's flags) as a working choice.
+  families in `tools/mwccarm/`). Game code: **mwccarm 2.0 family**; NitroSDK and
+  NitroSystem: **1.2 family** (byte-identical probes, `notes/COMPILER.md`). Service
+  packs not settled: `configure.py` uses 2.0/sp1p5 and 1.2/sp2p3 as working choices.
+  Game flags: twewy's without `-ipa file` (`notes/COMPILER.md`, "Game flags: no
+  `-ipa file`").
 - Linker flags: `-proc arm946e -interworking -dead -nostdlib -m Entry` (twewy has
   `-nodead`; `-dead` drops the unused C1/C2, D1/D2 copies, as the original link did,
   and `tools/lcf_keep.py` keeps `.exception` alive; notes/COMPILER.md).

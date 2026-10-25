@@ -122,6 +122,17 @@ static objects (hypothesis until one is decompiled). They come in two
 runs, 0x020AD024-0x020AD318 and 0x020AE130-0x020AE4E8; what lies between (0x020AD318-
 0x020AE130) is not known yet.
 
+## Game flags: no `-ipa file`
+
+twewy's flags include `-ipa file`. With it, mwccarm emits a file's deferred functions
+(array destructors `__arraydtor$N`, out-of-line copies of inline constructors and
+destructors) in the opposite order to the ROM: in `unit_02099870.cpp` the ROM has
+`__arraydtor` (second array), `D1`, `C1`, `__arraydtor` (first array), and every
+2.0 service pack from base to sp2p4 gives the reverse with `-ipa file`. Without it
+(or with `-ipa function`) the order matches; `-inline auto`, `-inline off` and
+`-O4,s` do not change it. The three units complete before (`unit_0205D6E0.c`,
+`unit_02099800.cpp`, `unit_02099840.cpp`) match either way.
+
 ## Link: dead stripping
 
 mwccarm (every 2.0 and DSi version in `tools/mwccarm`) emits a C++ constructor
