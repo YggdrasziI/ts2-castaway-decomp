@@ -30,6 +30,11 @@ default: add one here only once a unit of this ROM proves it with mwccarm.
 - `return a && b && c;` for a bool builds flag registers; `if (a && b && c) return
   true; return false;` gives the original branch chain and `ldmgt` exit
   (`func_02098c3c`, 39 % -> 100 %).
+- A default set first and overridden (`s = k; if (c) s = f();`) moves the `mov`
+  of the default before the test; `if (!c) s = k; else s = f();` puts it after the
+  compare, as in the original (`func_02098934`, 94.3 % -> 99.3 %).
+- Sums of four products: try all 24 term orders with a script; one order matched
+  the loads each time (`func_020988f4`, `func_02098a5c`).
 - A loop whose first test leaves through the function's shared return is
   `for (;;) { ... if (c == 0) break; ... }`; `return` there gives a conditional
   `ldmeq` instead (`func_0209a32c`, 95.5 % -> 99.7 %).

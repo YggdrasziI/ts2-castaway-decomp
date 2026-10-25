@@ -101,6 +101,9 @@ src/game/unit_020987D8.cpp:
     complete
     .text       start:0x020987d8 end:0x020988d8
 
+src/game/unit_020988D8.cpp:
+    .text       start:0x020988d8 end:0x02098bc8
+
 src/game/unit_02098BC8.cpp:
     complete
     .text       start:0x02098bc8 end:0x02098e70
