@@ -36,15 +36,24 @@ Unk020c8440::~Unk020c8440() {
     }
 }
 
-/* 94.06 %: the free-list loop differs. The original keeps one pointer for the
- * node it clears but computes the next-node address with a multiply from the
- * incremented index (`add r3, r3, #1; mla r1, r3, r0, lr`) and stores offset, size,
- * next in that order; every loop form tried strength-reduces both addresses. */
+/*
+ * Inline helper (hypothesis): with the index passed as an int, mwccarm computes
+ * the next node with `mla` from the incremented counter, as the original does,
+ * instead of a running pointer.
+ */
+static inline Unk02099210Node *nodeAt(Unk020c8700 *l, int k) {
+    return &l->nodes[k];
+}
+
+/*
+ * 98.60 %: register allocation only. The original keeps the list in lr and the
+ * loop counter in r3, ours the reverse (declaration orders and types, reuse of
+ * the parameters, next-node and null-test forms tried). aligned is reused as the
+ * counter: a separate variable scores lower.
+ */
 extern "C" void func_02099280(Unk020c8440 *heap, void *start, u32 size, u32 alignShift, int id, u8 inlineHeader, Unk020c8700 *list) {
     u32 aligned;
     Unk020c8700 *l;
-    Unk02099210Node *node;
-    u32 i;
 
     heap->start = (u32)start;
     heap->size = size;
@@ -75,10 +84,10 @@ extern "C" void func_02099280(Unk020c8440 *heap, void *start, u32 size, u32 alig
     l->nodes[0].offset = 0;
     l->nodes[0].size = size;
     l->nodes[0].next = 0;
-    for (i = 1; i < 255; i++) {
-        l->nodes[i].next = &l->nodes[i + 1];
-        l->nodes[i].offset = 0;
-        l->nodes[i].size = 0;
+    for (aligned = 1; aligned < 255; aligned++) {
+        l->nodes[aligned].offset = 0;
+        l->nodes[aligned].size = 0;
+        l->nodes[aligned].next = nodeAt(l, aligned + 1);
     }
     l->nodes[255].offset = 0;
     l->nodes[255].size = 0;

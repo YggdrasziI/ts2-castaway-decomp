@@ -123,7 +123,9 @@ default: add one here only once a unit of this ROM proves it with mwccarm.
   running sum (`add r8, r8, #0x10`) whatever the counter type or expression form:
   write it through an inline function with an `int` parameter,
   `static inline int f(int i) { return i * 16 + 16; }` (`func_0201be00`, 97.95 % ->
-  99.67 %; again in `func_0201c2d8`).
+  99.67 %; again in `func_0201c2d8`). Same for an address: `&a[i + 1]` that the
+  original computes with `mla` comes from `static inline T *at(L *l, int k) {
+  return &l->a[k]; }` (`func_02099280`, 94.1 % -> 98.6 %).
 - A struct returned by value from a call whose fields the original re-reads from
   the stack inside the loop: give the struct a user-declared constructor, so the
   result is built in place in the local; without one, mwccarm copies it to a second
