@@ -22,6 +22,14 @@ default: add one here only once a unit of this ROM proves it with mwccarm.
   `symbols.txt`: `_ZN<class>C1Ev`, `_ZN<class>D1Ev`, `__sinit_<file> ... local`,
   `.p__sinit_<file> ... local`, `@<n> ... local` (`unit_02099800.cpp`).
 
+- Global `operator new` and friends: mwccarm mangles them `_Znwm`, `_Znam`, `_ZdlPv`,
+  `_ZdaPv` (size_t is `unsigned long`). A `new T(...)` call site is `bl _Znwm`,
+  `cmp r0,#0`, then the constructor; `delete p` is `movs`, null exit, destructor,
+  `bl _ZdlPv`. A forward to another function compiles to `ldr ip,=f; bx ip` whether
+  `f` is in the same file or not, so it says nothing about bounds.
+- Calling a not yet decompiled function from C++: declare it `extern "C"` so its
+  name stays `func_<addr>` (`unit_02099840.cpp`).
+
 ## Data layout
 
 (none yet)

@@ -104,3 +104,7 @@ src/game/unit_02099800.cpp:
     .ctor       start:0x020b6ea8 end:0x020b6eac
     .bss        start:0x020c80a4 end:0x020c82c4
 
+src/game/unit_02099840.cpp:
+    complete
+    .text       start:0x02099840 end:0x02099870
+

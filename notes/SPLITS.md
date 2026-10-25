@@ -63,6 +63,7 @@ Commands: `python tools/compiler_sweep.py --ref <project> --compilers 2.0/sp1p5
 | Unit | Bounds | Content | Status |
 |---|---|---|---|
 | `src/game/unit_02099800.cpp` | `.text` 0x02099800-0x02099840, `.init` 0x020AE384-0x020AE3B0, `.ctor` 0x020B6EA8-0x020B6EAC, `.bss` 0x020C80A4-0x020C82C4 (hypothesis for `.text`: the object's constructor, destructor, three empty methods called only on it, and its accessor; 0x02099840-0x0209986C may belong too) | `Unk020c80b0` static object (0x214 bytes) | complete |
+| `src/game/unit_02099840.cpp` | 0x02099840-0x02099870 (hypothesis: may belong to the unit before or to the allocator after) | global `operator new`, `new[]`, `delete`, `delete[]`, forwarding to func_02099b44 / func_02099b60 | complete |
 | `src/game/unit_0205D6E0.c` | 0x0205D6E0-0x0205D6FC (hypothesis: one function of a larger unit whose other functions, 0x0205D618 and 0x0205D6C4, call it) | `func_0205d6e0`: clears 6 ints | complete (first compiled file, 2.0/sp1p5) |
 | `libs/nitro/src/mi/cpumem.c` | 0x02079ABC-0x02079D70 (hypothesis: twewy's `cpumem.c` layout; neighbours unlike its functions) | 9 MI copy / fill primitives | complete |
 | `libs/nitro/src/os/os_context.c` | 0x0207AFE0-0x0207B0DC (after the thread queue functions, before func_0207b0dc) | `OS_InitContext`, `OS_SaveContext`, `OS_LoadContext` | complete |
