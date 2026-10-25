@@ -93,8 +93,14 @@ DEFAULT_COMPILER_CONFIG = CompilerConfig(
     flags=DEFAULT_CC_FLAGS,
 )
 
+# NitroSDK is built with the 1.2 family (notes/COMPILER.md): 1.2/base ... sp2p3 match
+# alike, sp2p3 is a working choice. 1.2 rejects "-ipa file".
+SDK_CC_FLAGS = " ".join((*COMMON_CC_FLAGS, "-str reuse", "-Cpp_exceptions off"))
+
 # Configurations for when a file or directory needs different settings than the project default
-COMPILER_CONFIGS: dict[Path, CompilerConfig] = {}
+COMPILER_CONFIGS: dict[Path, CompilerConfig] = {
+    Path("libs/nitro"): CompilerConfig(version="1.2/sp2p3", flags=SDK_CC_FLAGS),
+}
 
 # Passed to all modules and final arm9.o link
 LD_FLAGS = " ".join(

@@ -1,8 +1,37 @@
 # Compiler, SDK and runtime evidence
 
-Status: **mwccarm 2.0 family** for game code and NitroSDK (proven by byte-identical
-probes, below); the service pack is not settled yet. `tools/configure.py` keeps
-2.0/sp1p5 as a working choice inside the family.
+Status: **mwccarm 2.0 family** for game code, MSL / runtime and the engine block;
+**1.2 family (base ... sp2p3)** for NitroSDK and NitroSystem (2026-10-25, below).
+Service packs not settled; `tools/configure.py` uses 2.0/sp1p5 by default and
+1.2/sp2p3 for `libs/nitro` (`COMPILER_CONFIGS`).
+
+## NitroSDK and NitroSystem: 1.2 family
+
+The two families save a lone `lr` differently in a non-leaf function: 1.2 emits
+`stmdb sp!, {lr}` + `sub sp, sp, #4`, 2.0 (base ... sp2p4) and DSi emit
+`stmdb sp!, {r3, lr}` (checked on `OS_Terminate`, all 25 compilers). Function
+starts in this ROM (2026-10-25):
+
+| Region (`notes/SPLITS.md`) | `stmdb {lr}` + `sub sp, #4` | `stmdb {r3, lr}` |
+|---|---|---|
+| NitroSDK | 93 | 0 |
+| NitroSystem | 17 | 0 |
+| game blocks 1 and 2 | 0 | 172 |
+| MSL / runtime | 0 | 13 |
+| engine block | 0 | 64 |
+| `.init` | 0 | 21 |
+
+twewy's NitroSDK C sources confirm it: `FX_DivAsync`, `FX_InvAsync`,
+`FX_GetDivResult`, `GX_VBlankIntr`, `SetLCDC`, `GetBankSize`, `OS_SetIRQMask`,
+`OS_ResetIRQRequestFlags` and twewy's `OS_EnableInterrupts` match only with 1.2
+(the 2.0-only hits of Step 2 are `asm` functions of files 1.2 does not compile).
+twewy's `OS_DisableInterrupts` (an IE-mask function, 0x0207A028) matches with 1.2
+base, b56, sp2 and sp2p3 but not sp3 / sp4: the SDK is built with 1.2 sp2p3 or
+earlier. `libs/nitro/src/os/os_terminate_proc.c` (C) matches with 1.2/sp2p3 and
+`tools/configure.py`'s flags without `-ipa file` (1.2 rejects it).
+
+The engine block (0x02089780-0x0209A740) is built like the game, not like the Nintendo
+libraries: it is EA code.
 
 ## NitroSDK
 
@@ -97,7 +126,7 @@ runs, 0x020AD024-0x020AD318 and 0x020AE130-0x020AE4E8; what lies between (0x020A
 
 - Game-code service pack inside 2.0 (probe larger functions: switches, multiplies,
   division by constants, inlining, struct copies).
-- Whether the SDK libraries were built with another version (`COMPILER_CONFIGS`).
+- NitroSDK / NitroSystem service pack inside 1.2 base ... sp2p3, and their flags.
 - MSL / runtime version (look for `__call_static_initializers`, `_s32_div_f`-style
   helpers; the `%a %b %e %T %Y` / `%I:%M:%S %p` strings look like a C library's
   C-locale `strftime` formats, to compare with MSL sources).
