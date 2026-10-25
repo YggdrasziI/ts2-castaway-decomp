@@ -122,6 +122,21 @@ static objects (hypothesis until one is decompiled). They come in two
 runs, 0x020AD024-0x020AD318 and 0x020AE130-0x020AE4E8; what lies between (0x020AD318-
 0x020AE130) is not known yet.
 
+## Game flags: `-avoid_byte strb`
+
+The game code has no `STRB`: every byte store is a `SWPB` (result register dead),
+loads stay `LDRB`. `build/eur/asm/_dsd_gap@main_14.s` has 0 `strb` and 21 `swpb`,
+`_dsd_gap@main_18.s` 2 and 481, including conditional `swpbne` and stores to stack
+locals, so it is code generation, not inline asm (inline asm also lowers the
+optimization of the whole function, which the ROM does not show). mwccarm has the
+option `-avoid_byte none|strb|all` ("replace STRB instructions only" for `strb`),
+next to `-allow_byte global|local` (strings of `mwccarm.exe`, `-help all` does not
+list them). With `-avoid_byte strb`, `p->b = v` compiles to the ROM's
+`add rX, p, #off; swpb rY, v, [rX]`. Added to the game flags in
+`tools/configure.py` (build of 2026-10-25: ROM identical, no report regression);
+`unit_02096A74.cpp` then became complete. The C library and runtime units keep
+`STRB` (they are not compiled with these flags).
+
 ## Game flags: no `-ipa file`
 
 twewy's flags include `-ipa file`. With it, mwccarm emits a file's deferred functions

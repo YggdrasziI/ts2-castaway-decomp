@@ -80,7 +80,11 @@ COMMON_CC_FLAGS = (
 # No "-ipa file" (twewy has it): with it, mwccarm emits a file's deferred functions
 # (array destructors, inline constructors) in the opposite order to the ROM
 # (unit_02099870.cpp, notes/COMPILER.md).
-DEFAULT_CC_FLAGS = " ".join((*COMMON_CC_FLAGS, "-str reuse", "-Cpp_exceptions off"))
+# "-avoid_byte strb": the game code has no STRB, every byte store is a SWPB
+# (notes/COMPILER.md).
+DEFAULT_CC_FLAGS = " ".join(
+    (*COMMON_CC_FLAGS, "-str reuse", "-Cpp_exceptions off", "-avoid_byte strb")
+)
 
 
 @dataclass(frozen=True)

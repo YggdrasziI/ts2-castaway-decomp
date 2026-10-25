@@ -9,7 +9,6 @@
  * button state code. The start-up entry points are called from 0x02000BA8-0x02000BB0.
  * The data 0x020C7F74-0x020C7F80 have no other user. Real file
  * name unknown.
- * Not complete: func_02096dac does not match yet (comment above it).
  */
 
 #include "game/unk_matrix.h"
@@ -73,11 +72,11 @@ Unk020c80b0 *func_02099834();
 extern char data_027e0000[];
 
 /* Declaration order chosen to reproduce the .bss layout (notes/MATCHING.md).
- * data_020c7f74 has no user; the lock word data_020c7f7c is only set with a byte
- * swap. */
+ * data_020c7f74 has no user; of the lock word data_020c7f7c only the first byte is
+ * set (a SWPB under -avoid_byte strb, notes/COMPILER.md). */
 Unk0208a0a8 *data_020c7f78;
 int data_020c7f74;
-u32 data_020c7f7c;
+u8 data_020c7f7c[4];
 
 void func_02096d5c();
 void func_02096d78();
@@ -155,10 +154,6 @@ void func_02096d78() {
     func_02096dac(0xf, 0x10, 0x20, 0x80, 0x40, 0x100);
 }
 
-/* 89.53 %: the lock byte is set with swpb, which has no C form, so it is inline
- * asm here; with every asm form tried, mwccarm puts a zero word before the literal
- * pool. Register, constant and literal forms of the asm were tried, and mwccarm has
- * no swap intrinsic. */
 void func_02096dac(int a, int b, int c, int d, int e, int f) {
     func_0207845c(0);
     func_02078368(0);
@@ -173,15 +168,7 @@ void func_02096dac(int a, int b, int c, int d, int e, int f) {
     func_02078660(e);
     func_02078240(f);
     func_02096e60(a, b, c, d, e, f);
-    {
-        register int v;
-        register volatile u8 *p;
-        asm {
-            mov v, #1
-            ldr p, =data_020c7f7c
-            swpb v, v, [p]
-        }
-    }
+    data_020c7f7c[0] = 1;
 }
 
 void func_02096e60(int a, int b, int c, int d, int e, int f) {

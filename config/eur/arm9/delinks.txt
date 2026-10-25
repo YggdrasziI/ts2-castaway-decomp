@@ -175,6 +175,7 @@ src/game/unit_02096348.cpp:
     .data       start:0x020bd54c end:0x020bd56c
 
 src/game/unit_02096A74.cpp:
+    complete
     .text       start:0x02096a74 end:0x020970e0
     .bss        start:0x020c7f74 end:0x020c7f80
 

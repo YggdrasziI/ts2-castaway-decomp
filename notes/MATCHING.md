@@ -110,6 +110,11 @@ default: add one here only once a unit of this ROM proves it with mwccarm.
 - `switch` case groups: the return blocks follow the order of the groups in the
   source, and the `default:` block comes first when written first.
 
+- `swpb` byte stores are plain C stores: the game flags include `-avoid_byte strb`
+  (`notes/COMPILER.md`). A lock byte stored as `*(u8 *)&word = 1` is addressed
+  from the first static of the file plus an offset; declaring it `u8 x[4]` keeps
+  its own relocation and its 4-byte `.bss` slot (`unit_02096A74.cpp`).
+
 ## Data layout
 
 - A dsd symbol inside a static object (here `data_020c806c`, the object + 4 that
@@ -177,9 +182,6 @@ default: add one here only once a unit of this ROM proves it with mwccarm.
 
 ## Unsolved patterns
 
-- `swpb` (a byte lock set to 1) has no C form. Inline `asm { swpb ... }` gives the
-  right instructions, but mwccarm then puts a zero word before the function's
-  literal pool, for every form tried (`func_02096dac`, 89.5 %).
 - mwccarm gives such vtable copies (and other multiply-defined objects) symbol
   binding 13. While the first copy is still assembly, dsd emits it as a global or
   weak symbol: a global one clashes ("Multiply-defined") and a weak one loses to
