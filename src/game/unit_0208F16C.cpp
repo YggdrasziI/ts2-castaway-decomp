@@ -22,6 +22,7 @@
  * string literal is its own section.
  */
 
+#include "game/unk_datatree.h"
 #include "game/unk_resource.h"
 #include "game/unk_text.h"
 
@@ -30,34 +31,6 @@ u32 func_0209a418(const u8 *str, u32 ch);
 u32 func_0209a550(const u8 *str);
 int func_0209a5d8(const u8 *str, int *length);
 }
-
-struct Unk02096348Node;
-
-/* Data tree file of unit_02096348.cpp: only the functions used here. */
-class Unk02096348 : public Unk0209487c {
-public:
-    int func_0209645c(const u32 *name, int sub);
-    bool func_02096538(int index, u32 type);
-    u8 *func_02096564(int index);
-    int func_02096574(int index);
-    bool func_020965c8(int index);
-    class Unk0209674c func_02096980();
-};
-
-/* A node of the tree. */
-class Unk0209674c {
-public:
-    Unk0209674c();
-    Unk0209674c(Unk02096348 *file, Unk02096348Node *node, int index);
-    Unk0209674c func_02096774(u32 n) const;
-    int func_020967ec() const;
-    bool func_0209683c(const u32 *name) const;
-    int func_0209688c() const;
-
-    int index;
-    Unk02096348Node *node;
-    Unk02096348 *file;
-};
 
 /* One character: code, break flags and kerning. */
 struct Unk0208f16cEntry {

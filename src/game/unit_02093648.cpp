@@ -16,6 +16,7 @@
  * (see above them).
  */
 
+#include "game/unk_datatree.h"
 #include "game/unk_resource.h"
 #include "game/unk_script.h"
 
@@ -99,13 +100,6 @@ public:
     Unk020962ec(void *data);
     ~Unk020962ec();
     u8 unk3c[0x8];
-};
-
-class Unk02096348 : public Unk0209487c {
-public:
-    Unk02096348(void *data);
-    ~Unk02096348();
-    u8 unk3c[0x1c];
 };
 
 class Unk02093648 : public Unk0209487c {
