@@ -35,6 +35,11 @@ default: add one here only once a unit of this ROM proves it with mwccarm.
   compare, as in the original (`func_02098934`, 94.3 % -> 99.3 %).
 - Sums of four products: try all 24 term orders with a script; one order matched
   the loads each time (`func_020988f4`, `func_02098a5c`).
+- A sum of 64-bit fixed-point products truncated once (`adds` without `adc`) is
+  `(int)((((s64)a * b) >> 12) + ...)`; a sum of per-term `int` casts gives `add`
+  (`func_02097c6c`, `func_02097d38`).
+- Stack slots of local objects follow their declaration order: declare them so that
+  the offsets match (`func_02097f1c`).
 - A loop whose first test leaves through the function's shared return is
   `for (;;) { ... if (c == 0) break; ... }`; `return` there gives a conditional
   `ldmeq` instead (`func_0209a32c`, 95.5 % -> 99.7 %).

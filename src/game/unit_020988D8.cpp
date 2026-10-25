@@ -5,37 +5,21 @@
  * Bounds: hypothesis. Before 0x020988D8 lies unit_020987D8.cpp (a plane); 0x02098BC8
  * starts unit_02098BC8.cpp (a rectangle). The matrix and interpolation functions
  * have no direct caller. Real file name unknown.
- * func_02097b6c is taken as the constructor of a 3x3 matrix: it receives the
- * hidden result pointer and the nine elements.
+ * The rotation matrix is the 3x3 matrix of unit_02097B6C.cpp.
  * Not complete: func_02098934 and func_02098a5c do not match yet (comments above
  * them).
  */
 
+#include "game/unk_matrix.h"
+
 typedef unsigned short u16;
 
-extern "C" int func_02077c60(int a, int b);
-extern "C" int func_02097a6c(long long x);
 extern "C" int func_02097b14(int x);
 extern "C" const short data_020af1e8[];
-
-static inline int func_fxdiv(int a, int b) {
-    if (b != 0) {
-        return func_02077c60(a, b);
-    }
-    return a;
-}
 
 static inline int func_sin(u16 index) {
     return data_020af1e8[(index >> 4) * 2];
 }
-
-/* 3x3 matrix built by func_02097b6c (not decompiled). */
-class Unk02097b6c {
-public:
-    Unk02097b6c(int m00, int m01, int m02, int m10, int m11, int m12, int m20, int m21, int m22);
-
-    int m[3][3];
-};
 
 class Unk020988d8 {
 public:

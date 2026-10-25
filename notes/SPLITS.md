@@ -62,6 +62,7 @@ Commands: `python tools/compiler_sweep.py --ref <project> --compilers 2.0/sp1p5
 
 | Unit | Bounds | Content | Status |
 |---|---|---|---|
+| `src/game/unit_02097B6C.cpp` | `.text` 0x02097B6C-0x02098094 (hypothesis: fixed-point helpers before, functions on another matrix type after) | 20.12 fixed-point 3x3 matrix `Unk02097b6c` (stored by column; `include/game/unk_matrix.h`): constructors, identity, scale, product, transpose, vector product, rotations about X / Y / Z, rotation from three angles | not complete: 11 / 12 functions at 100 % (`func_02097f78` 51 %) |
 | `src/game/unit_020987D8.cpp` | `.text` 0x020987D8-0x020988D8 (hypothesis: a 4x4 matrix product before, quaternion functions after) | plane `Unk020987d8` (3D vector normal, distance): constructors, line intersection, signed distance; vectors from `include/game/unk_vector.h` | complete |
 | `src/game/unit_020988D8.cpp` | `.text` 0x020988D8-0x02098BC8 (hypothesis: the plane before, the rectangle after) | quaternion `Unk020988d8`: identity, norm, rotation matrix (through the 3x3 matrix constructor func_02097b6c), slerp (NitroSDK sine table data_020af1e8) | not complete: 2 / 4 functions at 100 % (matrix 99.26 %, slerp 99.34 %) |
 | `src/game/unit_02098BC8.cpp` | `.text` 0x02098BC8-0x02098E70 (hypothesis: a plane class on the 3D vector before, the vectors after) | integer rectangle `Unk02098bc8` (x, y, width, height): constructors, point test, overlap test, subtraction into up to four pieces | complete |
