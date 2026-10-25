@@ -26,6 +26,12 @@ Drawn on 2026-10-25 from two kinds of evidence:
   starts at 0x02089780; NitroSDK makes one call into the block above it
   (0x0207B0FC -> 0x02089368, runtime or MSL).
 
+- **Prologue style** (`notes/COMPILER.md`): NitroSDK and NitroSystem are built with
+  mwccarm 1.2 (`stmdb {lr}` + `sub sp, #4`), the rest with 2.0 (`stmdb {r3, lr}`).
+  The last 2.0 prologue of game block 1 is at 0x02073D08 and the first 1.2 one at
+  0x02073FCC; engine block / NitroSystem: 0x0209A3C4 / 0x0209A7BC; NitroSystem /
+  game block 2: 0x0209ED0C / 0x0209F74C. Both agree with the call-direction bounds.
+
 Bounds marked ~ are within one or two small functions (a leaf called from both
 sides cannot be placed by calls alone).
 
@@ -36,15 +42,15 @@ sides cannot be placed by calls alone).
 | 0x02000BA0-~0x02073ED0 | **Game code, block 1** (`main` first) | calls into everything below; no library fingerprint |
 | ~0x02073ED0-0x02080114 | **NitroSDK** | fingerprints from 0x020755F4 (`CP_SaveContext`) to 0x0207F540 (`PMi_PrependList`); 0x02073EF0 is called by FS and calls OS card-bus functions |
 | 0x02080114-~0x02089780 | **MSL C and the C++ runtime** | `.exceptix` covers 0x02080114-0x02085EEC (the only code built with exception tables); `round_decimal` (printf.c) 0x020818AC, `strcpy` / `strncpy` / `strcmp` 0x02082C28-0x02082D40, `sys_*` console I/O 0x020841B4, `__DecodeSignedNumber` 0x02084278, `__PopStackFrame` 0x02085D24; NitroSDK and MSL never call above 0x02089780 |
-| ~0x02089780-0x0209A740 | **Engine code that never calls the game** (not identified) | no fingerprint; heavily called by game code (e.g. 559 calls into 0x02099000-0x0209A000); uses `FontMetrics` / `Character` XML key strings (0x0208E96C-0x0208F5EC) and `"    File %s"`; the runtime calls it (0x020857B8 -> 0x0209984C, 0x02099864: hypothesis, the allocator behind `operator new`). Hypothesis: an EA engine library, or game files linked after the libraries |
+| ~0x02089780-0x0209A740 | **EA engine code** (never calls the game blocks) | built with 2.0 like the game (`stmdb {r3, lr}` prologues, none of the 1.2 SDK style: `notes/COMPILER.md`); heavily called by game code (e.g. 559 calls into 0x02099000-0x0209A000); `FontMetrics` / `Character` XML keys (0x0208E96C-0x0208F5EC), `"    File %s"`; the runtime calls it (0x020857B8 -> 0x0209984C, 0x02099864: hypothesis, the allocator behind `operator new`) |
 | 0x0209A740-~0x0209F0AC | **NitroSystem** (NNS) | `NNS_SndArc` dispose callbacks 0x0209B97C-0x0209B994, `NNSi_SndFader*` 0x0209E798, `NNS_Fnd` list functions 0x0209E854-0x0209EA64; no call from the SDK or MSL into it |
 | ~0x0209F0AC-0x020ACC60 | **Game code, block 2** | calls game block 1 (e.g. 0x0209FA80), the engine block and NNS; strings `build/data/text/*.nitro_text`, `ROM_Euro/source/archives/text.nitro_archive`, sound and micro-game messages |
 | 0x020ACC60-0x020AD024 | `.exception` (-0x020ACD24) and `.exceptix`: C++ exception tables | `.exceptix` entries are (function, size and flags, action), 64 of them, for functions 0x02080114-0x02085EEC only |
 | 0x020AD024-0x020AE514 | `.init`: 32 `__sinit_*` | `.ctor` 0x020B6E44-0x020B6EC4 |
-| ITCM 0x01FF8000-0x01FFB0BC | 57 functions: SDK (calls `OS_DisableInterrupts` / `OS_RestoreInterrupts`, references `CP_SaveContext`) and engine code (calls 0x02098A5C-0x02099B28) | `relocs.txt` of the ITCM; not split yet |
+| ITCM 0x01FF8000-0x01FFB0BC | 57 functions. Hypothesis: 0x01FF8000-0x01FF8114 EA (calls game block 1 and the engine block); 0x01FF8114-~0x01FF84D0 NitroSDK (1.2 prologue at 0x01FF8174, khdays fingerprint at 0x01FF8114, calls only NitroSDK, the IRQ handler at 0x01FF8374 references the DTCM); ~0x01FF84D0-0x01FFB0BC EA (2.0 prologues at 0x01FF84D0, 0x01FF8D4C, 0x01FF9128; calls the engine block) | `itcm/relocs.txt`, prologue style |
 
 Link order read from this map (hypothesis): game objects, NitroSDK, MSL / runtime,
-engine block, NitroSystem, game objects. Inside NitroSDK the modules found are in
+EA engine objects, NitroSystem, game objects. Inside NitroSDK the modules found are in
 alphabetical order (CP, CTRDG, FS, GX, MI, OS, PM), so 0x02073ED0-0x020755F4 is
 probably CARD (not fingerprinted).
 

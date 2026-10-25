@@ -20,9 +20,9 @@ import os
 import re
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-# Game code regions of the region map (notes/SPLITS.md): block 1 after crt0, block 2
-# after NitroSystem. Bounds are approximate (~ in the map).
-GAME_REGIONS = [(0x02000BA0, 0x02073ED0), (0x0209F0AC, 0x020ACC60)]
+# EA code regions of the region map (notes/SPLITS.md): game block 1 after crt0, the
+# engine block after MSL, game block 2 after NitroSystem. Bounds are approximate.
+GAME_REGIONS = [(0x02000BA0, 0x02073ED0), (0x02089780, 0x0209A740), (0x0209F0AC, 0x020ACC60)]
 
 
 def read_symbols(path):
