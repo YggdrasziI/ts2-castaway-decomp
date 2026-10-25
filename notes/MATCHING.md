@@ -49,6 +49,9 @@ default: add one here only once a unit of this ROM proves it with mwccarm.
   than the element pointer is written with an explicit pointer, set before the loop
   and incremented after the body; `array[i].field` and `&array[i]` swap the two
   registers (`func_02097100`, 98.5 % -> 100 %).
+- Two tests of the same array element (`==`, then `<`) compiled into one `cmp`
+  with the operands of the first test: read the element into a local first; the
+  original then compares twice (`func_02095ef8`, 95.4 % -> 100 %).
 - A loop whose first test leaves through the function's shared return is
   `for (;;) { ... if (c == 0) break; ... }`; `return` there gives a conditional
   `ldmeq` instead (`func_0209a32c`, 95.5 % -> 99.7 %).
