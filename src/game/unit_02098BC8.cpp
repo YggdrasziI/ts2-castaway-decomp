@@ -8,19 +8,7 @@
  * rectangle does not use. Real file name unknown.
  */
 
-class Unk02098bc8 {
-public:
-    Unk02098bc8();
-    Unk02098bc8(int x, int y, int w, int h);
-    bool func_02098bf4(int px, int py) const;
-    bool func_02098c3c(const Unk02098bc8 &o) const;
-    int func_02098c98(const Unk02098bc8 &o, Unk02098bc8 *out) const;
-
-    int x;
-    int y;
-    int w;
-    int h;
-};
+#include "game/unk_rect.h"
 
 Unk02098bc8::Unk02098bc8() {
     x = 0;
