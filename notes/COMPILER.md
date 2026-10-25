@@ -24,7 +24,7 @@ starts in this ROM (2026-10-25):
 twewy's NitroSDK C sources confirm it: `FX_DivAsync`, `FX_InvAsync`,
 `FX_GetDivResult`, `GX_VBlankIntr`, `SetLCDC`, `GetBankSize`, `OS_SetIRQMask`,
 `OS_ResetIRQRequestFlags` and twewy's `OS_EnableInterrupts` match only with 1.2
-(the 2.0-only hits of Step 2 are `asm` functions of files 1.2 does not compile).
+(the 2.0-only hits of the first probes are `asm` functions of files 1.2 does not compile).
 twewy's `OS_DisableInterrupts` (an IE-mask function, 0x0207A028) matches with 1.2
 base, b56, sp2 and sp2p3 but not sp3 / sp4: the SDK is built with 1.2 sp2p3 or
 earlier. `libs/nitro/src/os/os_terminate_proc.c` (C) matches with 1.2/sp2p3 and

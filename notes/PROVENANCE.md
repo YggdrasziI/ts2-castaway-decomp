@@ -22,12 +22,12 @@ Source: `YggdrasziI/spyro-dotd-decomp` (private, same owner), commit
 | Our file | Changes |
 |---|---|
 | `tools/report_diff.py` | default version `eur`, lower-case version names |
-| `tools/progress_badges.py` | default version `eur`; function addresses read from the dsd `symbols.txt` files (dsd's objdiff report has no `virtual_address`); no regions yet |
+| `tools/progress_badges.py` | default version `eur`; function addresses read from the dsd `symbols.txt` files (dsd's objdiff report has no `virtual_address`); regions from `notes/SPLITS.md` |
 
 ## Project documents
 
-`CLAUDE.md`, `SPEC.md`, `ROADMAP.md`, `TASKS.md`, `notes/` and `.claude/skills/` follow
-the structure of spyro-dotd-decomp (same commit), rewritten for the DS toolchain.
+`SPEC.md` and `notes/` follow the structure of spyro-dotd-decomp (same commit),
+rewritten for the DS toolchain.
 
 ## NitroSDK sources (`libs/nitro/src/`)
 

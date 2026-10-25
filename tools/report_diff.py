@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Compare the objdiff report with a saved baseline and list what changed.
 
-Used as the no-regression gate before a commit (see the unit-readiness skill).
+Used as the no-regression gate before a commit.
 
 Usage:
   python tools/report_diff.py --save            # save build/eur/report.json as the baseline

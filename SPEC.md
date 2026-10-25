@@ -47,7 +47,8 @@ Evidence and the candidate analysis go in `notes/COMPILER.md`.
 - Linker flags: `-proc arm946e -interworking -dead -nostdlib -m Entry` (twewy has
   `-nodead`; `-dead` drops the unused C1/C2, D1/D2 copies, as the original link did,
   and `tools/lcf_keep.py` keeps `.exception` alive; notes/COMPILER.md).
-- Ghidra with the dsd-ghidra extension (`notes/GHIDRA.md`), outside the repository.
+- Optional: Ghidra 11.2.1 with the dsd-ghidra v0.7.0 extension, outside the repository
+  (`tools/ghidra_sync.py` pushes the dsd symbols to a Ghidra project).
 
 ## Acceptance criteria
 
@@ -66,7 +67,7 @@ Evidence and the candidate analysis go in `notes/COMPILER.md`.
   `build_nobios.sha1` and the original SHA-1 is checked locally only.
 - A file in `delinks.txt` is `complete` only when objdiff reports 100 % for all its
   functions and data and the build still matches. Anything else stays not
-  `complete`, with the remaining gap written in `TASKS.md`.
+  `complete`, with the remaining gap written above each unfinished function.
 - A delink that builds proves the bytes, not the translation unit: a TU boundary is
   proven only once the unit is decompiled and matches (`notes/SPLITS.md`).
 - Every name, compiler fact or structure layout rests on evidence (strings with their
@@ -99,7 +100,7 @@ Evidence and the candidate analysis go in `notes/COMPILER.md`.
 ## Repository layout
 
 ```
-CLAUDE.md SPEC.md ROADMAP.md TASKS.md README.md
+README.md SPEC.md LICENSE
 config/eur/               build.sha1, build_nobios.sha1, arm9/ (dsd configs:
                           config.yaml, delinks.txt, symbols.txt, relocs.txt; itcm/, dtcm/)
 extract/                  baserom_ts2c_eur.nds and dsd extraction (git-ignored)
@@ -107,9 +108,7 @@ build/                    build output (git-ignored)
 src/  include/  libs/     sources and headers (game, SDK, MSL), when added
 tools/                    configure.py and scripts (progress badges, report diff)
 progress/eur/             progress badges and history (README images)
-notes/                    reference documentation (see CLAUDE.md routing table)
-.claude/skills/           project workflows (decomp-manager, decomp-unit,
-                          unit-readiness)
+notes/                    reference documentation
 .github/workflows/        CI: delink, link, rebuild and check the ROM in a private image
 ```
 

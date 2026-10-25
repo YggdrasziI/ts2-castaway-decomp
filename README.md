@@ -69,6 +69,5 @@ Documentation
 =============
 
 - `SPEC.md`: target ROM, toolchain, acceptance criteria, naming.
-- `ROADMAP.md` and `TASKS.md`: phases and current work.
-- `notes/`: compiler evidence, region map, matching techniques, Ghidra setup,
-  references and provenance of reused code.
+- `notes/`: compiler evidence, region map, matching techniques, references and
+  provenance of reused code, progress log.

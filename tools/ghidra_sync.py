@@ -5,7 +5,9 @@ dsd-ghidra's SyncDsd.java asks for config.yaml in a file chooser, so it only run
 the GUI. This script writes a headless copy of the installed script (same code, the
 chooser replaced by the first script argument) to a temporary folder and runs it with
 Ghidra's analyzeHeadless on the imported ROM. Nothing from dsd-ghidra is stored in
-this repository. Setup and paths: notes/GHIDRA.md.
+this repository. Needs Ghidra 11.2.1 with the dsd-ghidra v0.7.0 extension installed
+(Install Extensions) and the ROM imported once in the GUI as ARM9, without
+auto-analysis; --ghidra and --project override the default paths.
 
 Usage:
   python tools/ghidra_sync.py              # sync config/eur/arm9/config.yaml
@@ -47,7 +49,7 @@ def installed_script(ghidra_dir):
     path = os.path.join(appdata, "ghidra", install_name, "Extensions",
                         "dsd-ghidra", "ghidra_scripts", "SyncDsd.java")
     if not os.path.isfile(path):
-        sys.exit(f"dsd-ghidra not installed: {path} not found (see notes/GHIDRA.md)")
+        sys.exit(f"dsd-ghidra not installed: {path} not found (install the dsd-ghidra extension)")
     return path
 
 
