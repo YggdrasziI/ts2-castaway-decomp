@@ -38,9 +38,18 @@ BADGES = [
 ]
 
 # Code regions of the card per version, from the region map of notes/SPLITS.md. Each
-# region is a list of [start, end) ranges. A version without regions gets no "Code by
-# region" section (none yet: the region map is Step 4 of ROADMAP.md).
-REGIONS: dict[str, list] = {"eur": []}
+# region is a list of [start, end) ranges; bounds marked "~" there are approximate.
+# The engine block stays apart from the game until its ownership is proven. "Other"
+# gathers the rest: BIOS call veneers, `.init` (static initializers of units from
+# several regions) and the 2.0 code of the ITCM.
+REGIONS: dict[str, list] = {"eur": [
+    ("Game", [(0x02000BA0, 0x02073ED0), (0x0209F0AC, 0x020ACC60)]),
+    ("Engine block (owner unproven)", [(0x02089780, 0x0209A740)]),
+    ("NitroSDK (+ crt0, ITCM IRQ)", [(0x02000800, 0x02000BA0), (0x02073ED0, 0x02080114),
+                                     (0x01FF8114, 0x01FF84D0)]),
+    ("NitroSystem", [(0x0209A740, 0x0209F0AC)]),
+    ("MSL, C++ runtime", [(0x02080114, 0x02089780)]),
+]}
 
 
 # Card colors (light, dark): bars are stacked fuzzy > perfect > linked.
