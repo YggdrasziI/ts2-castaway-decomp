@@ -113,6 +113,11 @@ default: add one here only once a unit of this ROM proves it with mwccarm.
 
 (none yet)
 
+- mwccarm lays out a file's `.bss` objects by increasing size (equal sizes keep a
+  compiler-chosen order), whatever the declaration order. A larger object below a
+  smaller one in the original means they come from different files
+  (`unit_020973BC.cpp`).
+
 ## Control flow
 
 (none yet)
