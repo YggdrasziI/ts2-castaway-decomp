@@ -1,4 +1,6 @@
-    .text       start:0x02000000 end:0x020ad024 kind:code align:32
+    .text       start:0x02000000 end:0x020acc60 kind:code align:32
+    .exception  start:0x020acc60 end:0x020acd24 kind:rodata align:1
+    .exceptix   start:0x020acd24 end:0x020ad024 kind:rodata align:4
     .init       start:0x020ad024 end:0x020ae514 kind:code align:4
     .rodata     start:0x020ae514 end:0x020b6e44 kind:rodata align:4
     .ctor       start:0x020b6e44 end:0x020b6ec4 kind:rodata align:4

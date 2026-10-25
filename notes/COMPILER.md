@@ -67,7 +67,9 @@ Both are linked (region map in `notes/SPLITS.md`): MSL C and the C++ runtime at
 console I/O, `CompressedNumbers.cpp`, `ExceptionHandlerTS.cpp`), NitroSystem at
 0x0209A740-~0x0209F0AC (khdays fingerprints: `NNS_Fnd` lists, `NNSi_SndFader`,
 `NNS_SndArc` callbacks). Their versions are unknown: no `[SDK+...]` marker for them.
-CRI middleware (twewy's `libs/cri`) is absent: only 8-byte or mid-function hits.
+Only 0x02080114-0x02085EEC (MSL / runtime) has `.exceptix` entries: that code is
+built with C++ exception tables, the game and the other libraries are not (or have no
+function that needs one). CRI middleware (twewy's `libs/cri`) is absent: only 8-byte or mid-function hits.
 
 ## Candidates
 
