@@ -14,7 +14,7 @@ Usage:
       [--compilers 2.0/sp1p5,2.0/sp2p3 | all]   (default: all of tools/mwccarm)
       [--include <dir>] ...                      (extra include dirs)
       [--ref <reference project root>]           (adds its include/ and libs/*/include)
-      [--flags "<mwccarm flags>"]                (default: DEFAULT_FLAGS below)
+      [--flags "<mwccarm flags>"]                (default: tools/configure.py's)
       [--min-size 12]                            (smaller functions are not reported)
       [--json out.json]                          (machine-readable results)
 
@@ -24,6 +24,7 @@ Example (NitroSDK OS sources of twewy, every compiler):
 """
 
 import argparse
+import ast
 import glob
 import json
 import os
@@ -36,15 +37,37 @@ ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 MWCC_ROOT = os.path.join(ROOT, "tools", "mwccarm")
 EXTRACT = os.path.join(ROOT, "extract", "eur", "arm9")
 
-# twewy's COMMON_CC_FLAGS without the options some old compilers reject; a sweep
-# compares compilers, the project's real flags are in tools/configure.py.
-DEFAULT_FLAGS = ("-O4,p -enum int -char signed -proc arm946e -gccext,on -fp soft "
-                 "-inline noauto -RTTI off -Cpp_exceptions off -interworking -w off "
-                 "-gccinc -nolink -msgstyle gcc")
+# Options that a compiler family rejects ("Unknown option"): dropped for that family.
+UNSUPPORTED = {"1.2": ["-ipa file"]}
 
-# ELF relocation types that change a whole word (ARM) or a BL pair (Thumb)
-R_ARM_PC24, R_ARM_ABS32, R_ARM_THM_CALL = 1, 2, 10
-R_ARM_CALL, R_ARM_JUMP24 = 28, 29
+# ELF relocation types that patch a code or data word (ARM) or a BL pair (Thumb)
+R_ARM_PC24, R_ARM_ABS32, R_ARM_REL32, R_ARM_THM_CALL = 1, 2, 3, 10
+R_ARM_XPC25, R_ARM_THM_XPC22 = 15, 16
+R_ARM_CALL, R_ARM_JUMP24, R_ARM_THM_JUMP24 = 28, 29, 30
+MASKED_RELOCS = {R_ARM_PC24, R_ARM_ABS32, R_ARM_REL32, R_ARM_THM_CALL, R_ARM_XPC25,
+                 R_ARM_THM_XPC22, R_ARM_CALL, R_ARM_JUMP24, R_ARM_THM_JUMP24}
+
+
+def project_flags():
+    """DEFAULT_CC_FLAGS of tools/configure.py, read from its source (importing it
+    would parse the command line): COMMON_CC_FLAGS plus the literal extras."""
+    tree = ast.parse(open(os.path.join(ROOT, "tools", "configure.py"), encoding="utf-8").read())
+    values = {}
+    for node in tree.body:
+        if isinstance(node, ast.Assign) and isinstance(node.targets[0], ast.Name):
+            values[node.targets[0].id] = node.value
+    flags = [ast.literal_eval(e) for e in values["COMMON_CC_FLAGS"].elts]
+    # DEFAULT_CC_FLAGS = " ".join((*COMMON_CC_FLAGS, "-ipa file", ...))
+    for e in values["DEFAULT_CC_FLAGS"].args[0].elts:
+        if isinstance(e, ast.Constant):
+            flags.append(e.value)
+    return " ".join(flags)
+
+
+def flags_for(flags, version):
+    for opt in UNSUPPORTED.get(version.split("/")[0], []):
+        flags = flags.replace(opt, " ")
+    return flags.split()
 
 
 def modules():
@@ -60,7 +83,8 @@ def modules():
 
 
 def read_elf(path):
-    """{name: (bytes, mask)} for each function of an ELF32 relocatable object."""
+    """{name: (bytes, mask, alignment)} for each function of an ELF32 relocatable
+    object; alignment is 2 for Thumb functions (odd symbol value), 4 for ARM."""
     data = open(path, "rb").read()
     shoff, = struct.unpack_from("<I", data, 0x20)
     shentsize, shnum, shstrndx = struct.unpack_from("<HHH", data, 0x2E)
@@ -89,10 +113,8 @@ def read_elf(path):
             mask = masks[s[7]]
             for off in range(s[4], s[4] + s[5], 8):
                 r_off, r_info = struct.unpack_from("<II", data, off)
-                width = 4
-                if r_info & 0xFF in (R_ARM_PC24, R_ARM_ABS32, R_ARM_CALL, R_ARM_JUMP24,
-                                     R_ARM_THM_CALL):
-                    mask[r_off:r_off + width] = b"\0" * width
+                if r_info & 0xFF in MASKED_RELOCS:
+                    mask[r_off:r_off + 4] = b"\0" * 4
     funcs = {}
     for name, shndx, value, size in symbols:
         start = value & ~1
@@ -100,11 +122,11 @@ def read_elf(path):
             continue
         code = bytes(contents[shndx][start:start + size])
         mask = bytes(masks[shndx][start:start + size])
-        funcs[name] = (code, mask)
+        funcs[name] = (code, mask, 2 if value & 1 else 4)
     return funcs
 
 
-def find(code, mask, mods):
+def find(code, mask, align, mods):
     """Addresses where code matches, ignoring the bytes whose mask is 0."""
     # Anchor on the longest run of unmasked bytes, then check the whole function.
     best, run_start = (0, 0), None
@@ -124,7 +146,7 @@ def find(code, mask, mods):
         pos = blob.find(anchor)
         while pos != -1:
             start = pos - a
-            if start >= 0 and start + len(code) <= len(blob) and start % 2 == 0:
+            if start >= 0 and start + len(code) <= len(blob) and start % align == 0:
                 window = blob[start:start + len(code)]
                 if all(m == 0 or x == y for x, y, m in zip(window, code, mask)):
                     hits.append(base + start)
@@ -149,11 +171,13 @@ def main():
     parser.add_argument("--compilers", default="all")
     parser.add_argument("--include", action="append", default=[])
     parser.add_argument("--ref", help="reference project root")
-    parser.add_argument("--flags", default=DEFAULT_FLAGS)
+    parser.add_argument("--flags", help="mwccarm flags (default: tools/configure.py's)")
     parser.add_argument("--define", action="append", default=[], help="extra -d defines")
     parser.add_argument("--min-size", type=int, default=12)
     parser.add_argument("--json")
     args = parser.parse_args()
+    if args.flags is None:
+        args.flags = project_flags()
 
     includes = list(args.include)
     if args.ref:
@@ -171,8 +195,12 @@ def main():
                 obj = os.path.join(tmp, "out.o")
                 if os.path.exists(obj):
                     os.remove(obj)
-                cmd = [os.path.join(MWCC_ROOT, *ver.split("/"), "mwccarm.exe"),
-                       *args.flags.split(), lang]
+                exe = os.path.join(MWCC_ROOT, *ver.split("/"), "mwccarm.exe")
+                if not os.path.isfile(exe):
+                    print(f"no compiler {ver} ({exe})", file=sys.stderr)
+                    per_func.setdefault("<compile>", {})[ver] = None
+                    continue
+                cmd = [exe, *flags_for(args.flags, ver), lang]
                 for d in args.define:
                     cmd += ["-d", d]
                 for inc in includes:
@@ -182,10 +210,10 @@ def main():
                 if out.returncode != 0 or not os.path.exists(obj):
                     per_func.setdefault("<compile>", {})[ver] = None
                     continue
-                for name, (code, mask) in read_elf(obj).items():
+                for name, (code, mask, align) in read_elf(obj).items():
                     if len(code) < args.min_size:
                         continue
-                    per_func.setdefault(name, {})[ver] = find(code, mask, mods)
+                    per_func.setdefault(name, {})[ver] = find(code, mask, align, mods)
 
     totals = {ver: 0 for ver in versions}
     for src, funcs in results.items():
