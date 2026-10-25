@@ -110,9 +110,6 @@ default: add one here only once a unit of this ROM proves it with mwccarm.
   them (`.bss` 99.96 % -> 100 %).
 - `(int)(a - b) - c` with `a - b` unsigned keeps the runtime `add` and both `sub`
   (`(u32)x + 0x4000 - y - 0x1400` folds `0x4000 - 0x1400`).
-
-(none yet)
-
 - mwccarm lays out a file's `.bss` objects by increasing size (equal sizes keep a
   compiler-chosen order), whatever the declaration order. A larger object below a
   smaller one in the original means they come from different files
