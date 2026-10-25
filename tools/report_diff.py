@@ -15,6 +15,7 @@ fully matched function or data section disappeared without a 100 % replacement.
 
 import argparse
 import json
+import re
 import os
 import shutil
 import sys
@@ -28,7 +29,9 @@ def load(path):
         report = json.load(f)
     items = {}
     for unit in report["units"]:
-        name = unit["name"]
+        # dsd numbers the not yet delinked gaps of a module (_dsd_gap@main_5); the
+        # numbers change whenever a file is added, so compare gaps by module only.
+        name = re.sub(r"^(_dsd_gap@\w+?)_\d+$", r"\1", unit["name"])
         for func in unit.get("functions", []):
             items[(name, "fn", func["name"])] = func.get("fuzzy_match_percent", 0.0)
         for section in unit.get("sections", []):
