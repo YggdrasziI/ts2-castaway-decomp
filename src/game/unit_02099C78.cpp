@@ -10,33 +10,7 @@
  * implementations are in derived classes elsewhere. Real file name unknown.
  */
 
-typedef unsigned long u32;
-
-struct Unk02099c78Op {
-    int arg;
-    u32 code;
-    short a;
-    short b;
-};
-
-struct Unk02099c78Var {
-    int unk0;
-    short unk4;
-    short init;
-    short min;
-    short max;
-};
-
-struct Unk02099c78Block {
-    int unk0;
-    short start;
-    short count;
-};
-
-struct Unk02099c78Value {
-    int unk0;
-    int unk4;
-};
+#include "game/unk_script.h"
 
 class Unk02099c78;
 
@@ -47,57 +21,48 @@ struct Unk02099c78Call {
     int b;
 };
 
-extern "C" int func_02094f88(void *res);
-extern "C" int *func_0209576c(void *res);
-extern "C" Unk02099c78Op *func_02095794(void *res);
-extern "C" Unk02099c78Block *func_020957c0(void *res);
-extern "C" Unk02099c78Block *func_020957ec(void *res);
-extern "C" Unk02099c78Var *func_0209585c(void *res);
-extern "C" int func_020958bc(void *res);
-extern "C" void func_02095934(void *res);
-extern "C" Unk02099c78Value *func_02095ab0(void *res);
 
 class Unk02099c78 {
 public:
-    Unk02099c78(void *res);
+    Unk02099c78(Unk020956f8 *res);
     virtual void vfunc_00() = 0;
     virtual short vfunc_04(int index) = 0;
     virtual void vfunc_08(int index, short value) = 0;
     virtual ~Unk02099c78();
     virtual int vfunc_14(int arg, Unk02099c78Call *call) = 0;
 
-    void func_02099ce0();
+    void func_02099ce0(int key);
     int func_02099d04(Unk02099c78Block *block, int budget);
     int func_02099fd0(int index, int a, int b);
     bool func_0209a034(int index);
     bool func_0209a078(int index);
     void func_0209a0bc(int index);
-    int func_0209a0f4();
+    int func_0209a0f4(int key);
 
-    void *res;
+    Unk020956f8 *res;
     short unk8;
 };
 
-Unk02099c78::Unk02099c78(void *res) {
-    int *p;
+Unk02099c78::Unk02099c78(Unk020956f8 *res) {
+    Unk020956f8Header *p;
 
     this->res = res;
     unk8 = 0;
-    if (func_02094f88(this->res) == 0) {
+    if (this->res->func_02094f88() == 0) {
         return;
     }
-    p = func_0209576c(this->res);
+    p = this->res->func_0209576c();
     if (p == 0) {
         return;
     }
-    if (func_0209585c(this->res) == 0) {
+    if (this->res->func_0209585c() == 0) {
         return;
     }
-    unk8 = *p;
+    unk8 = p->varCount;
 }
 
-void Unk02099c78::func_02099ce0() {
-    func_02099d04(func_020957ec(res), 0x100);
+void Unk02099c78::func_02099ce0(int key) {
+    func_02099d04(res->func_020957ec(key), 0x100);
 }
 
 int Unk02099c78::func_02099d04(Unk02099c78Block *block, int budget) {
@@ -112,9 +77,9 @@ int Unk02099c78::func_02099d04(Unk02099c78Block *block, int budget) {
     if (block == 0) {
         return 0;
     }
-    ops = func_02095794(res) + block->start;
-    values = func_02095ab0(res);
-    func_02095934(res);
+    ops = res->func_02095794() + block->start;
+    values = res->func_02095ab0();
+    res->func_02095934();
     if (ops == 0 || values == 0) {
         return 0;
     }
@@ -169,7 +134,7 @@ int Unk02099c78::func_02099d04(Unk02099c78Block *block, int budget) {
             i += op->a - 1;
             break;
         case 9:
-            func_02099d04(func_020957c0(res) + op->a, budget);
+            func_02099d04(res->func_020957c0() + op->a, budget);
             break;
         case 10:
             return 1;
@@ -206,22 +171,22 @@ int Unk02099c78::func_02099fd0(int index, int a, int b) {
 }
 
 bool Unk02099c78::func_0209a034(int index) {
-    Unk02099c78Var *var = &func_0209585c(res)[index];
+    Unk02099c78Var *var = &res->func_0209585c()[index];
     return var->min == vfunc_04(index);
 }
 
 bool Unk02099c78::func_0209a078(int index) {
-    Unk02099c78Var *var = &func_0209585c(res)[index];
+    Unk02099c78Var *var = &res->func_0209585c()[index];
     return var->max == vfunc_04(index);
 }
 
 void Unk02099c78::func_0209a0bc(int index) {
-    Unk02099c78Var *var = &func_0209585c(res)[index];
+    Unk02099c78Var *var = &res->func_0209585c()[index];
     vfunc_08(index, var->init);
 }
 
-int Unk02099c78::func_0209a0f4() {
-    return func_020958bc(res);
+int Unk02099c78::func_0209a0f4(int key) {
+    return res->func_020958bc(key);
 }
 
 Unk02099c78::~Unk02099c78() {}

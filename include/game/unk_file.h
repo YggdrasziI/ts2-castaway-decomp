@@ -19,6 +19,7 @@ public:
     virtual void func_02094f0c();
     virtual void func_02095000();
 
+    int func_02094f88();
     void *func_02094d4c(int tag);
     void *func_02094ddc(int tag);
 
