@@ -21,7 +21,7 @@ public:
 
     int func_02094f88();
     void *func_02094d4c(int tag);
-    void *func_02094ddc(int tag);
+    u32 func_02094ddc(int tag);
 
     u8 unk4[0x38];
 };

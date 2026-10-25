@@ -1,7 +1,7 @@
 /*
  * Unit 0x02095FDC-0x0209612C: a resource file class (Unk02095fdc) derived from the
- * file class Unk0209487c. It caches the blocks 1, 2 and 3 and a second view of
- * block 2, and keeps flags (bit 0: block 3 looked up, bit 1: block 3 found).
+ * file class Unk0209487c. It caches the blocks 1, 2 and 3 and the size of block
+ * 2, and keeps flags (bit 0: block 3 looked up, bit 1: block 3 found).
  *
  * Bounds: hypothesis. Each resource file class of this region starts its file with
  * its constructor; the destructors close this one and 0x0209612C starts
@@ -22,14 +22,14 @@ public:
     ~Unk02095fdc();
     Unk02095fdcBlock1 *func_02096014();
     void *func_0209603c();
-    void *func_02096064();
+    u32 func_02096064();
     void *func_0209608c();
     int func_020960d4();
 
     Unk02095fdcBlock1 *block1;
     void *block3;
     void *block2;
-    void *block2b;
+    u32 block2Size;
     u32 flags;
 };
 
@@ -37,7 +37,7 @@ Unk02095fdc::Unk02095fdc(void *data) : Unk0209487c(data) {
     block1 = 0;
     block3 = 0;
     block2 = 0;
-    block2b = 0;
+    block2Size = 0;
     flags = 0;
 }
 
@@ -57,12 +57,12 @@ void *Unk02095fdc::func_0209603c() {
     return block2;
 }
 
-void *Unk02095fdc::func_02096064() {
-    if (block2b != 0) {
-        return block2b;
+u32 Unk02095fdc::func_02096064() {
+    if (block2Size != 0) {
+        return block2Size;
     }
-    block2b = func_02094ddc(2);
-    return block2b;
+    block2Size = func_02094ddc(2);
+    return block2Size;
 }
 
 void *Unk02095fdc::func_0209608c() {

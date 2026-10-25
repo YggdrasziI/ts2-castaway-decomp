@@ -62,6 +62,7 @@ Commands: `python tools/compiler_sweep.py --ref <project> --compilers 2.0/sp1p5
 
 | Unit | Bounds | Content | Status |
 |---|---|---|---|
+| `src/game/unit_02095140.cpp` | `.text` 0x02095140-0x0209543C, `.data` 0x020BD360-0x020BD380 (hypothesis: the end of the file class code before; its destructors close it; the vtable is only used here) | resource file class `Unk02095140`: block 0x20 (count), 8-byte entries in 0x24-0x26 pointing into 0x21-0x23 | complete |
 | `src/game/unit_020956F8.cpp` | `.text` 0x020956F8-0x02095B88, `.data` 0x020BD434-0x020BD454 (hypothesis: each resource file class of this region starts its file with its constructor; the vtable is only used here) | script resource file class `Unk020956f8` (`include/game/unk_script.h`), read by the interpreter of `unit_02099C78.cpp`: cached blocks 0x400-0x407, binary searches by key | complete |
 | `src/game/unit_02095B88.cpp` | `.text` 0x02095B88-0x02095BF4, `.data` 0x020BD454-0x020BD474 (same hypothesis) | resource file class `Unk02095b88`: constructor and destructors only | complete |
 | `src/game/unit_02095BF4.cpp` | `.text` 0x02095BF4-0x02095D1C, `.data` 0x020BD474-0x020BD4AC (hypothesis: the destructors of the class with vtable `data_020bd454` before; the factory's implicit destructors close the file) | resource file class `Unk02095bf4` (0x68 bytes) and its factory `Unk02095c74` (file ids 100000-100010 -> kind 2000, `new Unk02095bf4`); the factory vtable has no reference | complete |

@@ -52,6 +52,9 @@ default: add one here only once a unit of this ROM proves it with mwccarm.
 - Two tests of the same array element (`==`, then `<`) compiled into one `cmp`
   with the operands of the first test: read the element into a local first; the
   original then compares twice (`func_02095ef8`, 95.4 % -> 100 %).
+- `if (c) return x; return 0;` puts the conditional `moveq r0, #0` last; the
+  original's `moveq` before `ldrne` / `addne` comes from
+  `if (!c) return 0; return x;` (`func_0209526c`, 88.2 % -> 100 %).
 - A loop whose first test leaves through the function's shared return is
   `for (;;) { ... if (c == 0) break; ... }`; `return` there gives a conditional
   `ldmeq` instead (`func_0209a32c`, 95.5 % -> 99.7 %).
