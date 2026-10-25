@@ -133,6 +133,16 @@ default: add one here only once a unit of this ROM proves it with mwccarm.
 - An implicit virtual destructor comes out of the link as D0 then D1; an explicit
   `~Class() {}` defined at the end of the file gives D1 then D0, as in the original
   (`unit_02096348.cpp`).
+- A class with a second base: its overrides of the second base's functions get new
+  slots in the primary vtable in the class's declaration order, and the second
+  vtable lists `_ZThn<offset>_` thunks in the interface's order; the thunks are
+  emitted after the destructors in reverse slot order. Declaring the overrides in
+  the primary-vtable order and the interface in the thunk order matches both
+  (`unit_0209543C.cpp`).
+- Every file that constructs a class with no key function (an all-pure interface)
+  emits its vtable; the linker keeps the bytes and resolves references to the first
+  copy. A vtable that sits alone between other data (all zero for an interface) is
+  such a copy (`unit_0209543C.cpp`, 0x020BD400).
 
 ## Control flow
 
@@ -147,3 +157,8 @@ default: add one here only once a unit of this ROM proves it with mwccarm.
 - `swpb` (a byte lock set to 1) has no C form. Inline `asm { swpb ... }` gives the
   right instructions, but mwccarm then puts a zero word before the function's
   literal pool, for every form tried (`func_02096dac`, 89.5 %).
+- mwccarm gives such vtable copies (and other multiply-defined objects) symbol
+  binding 13. While the first copy is still assembly, dsd emits it as a global or
+  weak symbol: a global one clashes ("Multiply-defined") and a weak one loses to
+  the compiled copy. The file stays not `complete` until the first copy's file is
+  compiled too (`unit_0209543C.cpp`).
