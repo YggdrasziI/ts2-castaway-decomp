@@ -206,6 +206,17 @@ default: add one here only once a unit of this ROM proves it with mwccarm.
   `ap = (char *)((u32)&fmt & ~3) + 4` after the `push {r0-r3}` of the prologue; no
   header in the project defines it, so the unit defines the macro
   (`unit_02090CCC.cpp`).
+- A flag word tested inside a loop (`flags & 1`, `flags & 4`) whose original
+  computes the masks after the loop's first test: use the expression in the loop,
+  not a local; mwccarm hoists it behind the guard. Dropping the local `vflip`
+  (writing `flags & 2` twice) gave the original stack slots (`func_020901a4`,
+  90.5 % -> 100 %).
+- A parameter changed in two steps (`tiles <<= 3; ... tiles -= 8;`) can come out
+  as two registers; one assignment `tiles = (tiles << 3) - 8;` keeps one
+  (`func_020901a4`, 81.6 % -> 90.5 %).
+- An index register that grows by 8 next to a column counter is `col * 8` in the
+  source (`dst + col * 8`); a separate `off += 8` became a pointer increment
+  (`func_0208ff50`, 77.5 % -> 85.8 %).
 - A `u16` local shifted in a loop is masked again after every shift (`lsl #0xf`,
   `lsr #0x10`); the original's plain `lsr` comes from a `u32` local set from
   `(u16)param` (`func_02091eb4`, 92.4 % -> 100 %).

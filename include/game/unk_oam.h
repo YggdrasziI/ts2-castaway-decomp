@@ -22,7 +22,9 @@ public:
     u32 unk4;
     u32 unk8;
     u16 unkC;
-    u32 unk10_0 : 13;
+    u32 unk10_0 : 2;
+    u32 unk10_2 : 2;
+    u32 unk10_4 : 9;
     u32 unk10_13 : 1;
     u32 unk10_14 : 18;
     int unk14;

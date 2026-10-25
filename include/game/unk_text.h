@@ -11,6 +11,8 @@
 typedef unsigned char u8;
 typedef unsigned long u32;
 
+class Unk02095140;
+
 /* The font: only the virtual functions used here or in unit_02090CCC.cpp are named. */
 class Unk02092830Font {
 public:
@@ -27,7 +29,7 @@ public:
     virtual bool func_28(u32 c);
     virtual bool func_2c(u32 c);
     virtual bool func_30(u32 c);
-    virtual int func_34();
+    virtual Unk02095140 *func_34();
 };
 
 /* One word: counts, byte range, width and the trailing character. */

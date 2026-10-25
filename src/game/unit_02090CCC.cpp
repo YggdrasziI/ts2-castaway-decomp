@@ -148,7 +148,7 @@ void Unk02090ccc::func_02090ee4(Unk02092830Font *font, int n) {
         if (visible != 0) {
             Unk020916a4 *manager = Unk020916a4::func_02091840(screen != 0);
 
-            it = manager->func_02091b9c(visible, font->func_34(), priority);
+            it = manager->func_02091b9c(visible, (int)font->func_34(), priority);
             allocated = it.func_020926fc();
         }
     }
