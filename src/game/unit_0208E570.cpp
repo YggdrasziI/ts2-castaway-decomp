@@ -21,6 +21,7 @@
 
 #include "game/unk_datatree.h"
 #include "game/unk_resource.h"
+#include "game/unk_font.h"
 #include "game/unk_text.h"
 
 extern "C" {
@@ -29,52 +30,6 @@ int func_0209a510(const u8 *str);
 u32 func_0209a550(const u8 *str);
 int func_0209a5d8(const u8 *str, int *length);
 }
-
-typedef signed char s8;
-
-/* Metrics of one glyph. */
-struct Unk0208e570Glyph {
-    s8 leading;
-    s8 kerning;
-    s8 baseline;
-    s8 flags;
-};
-
-/* Characters start-end use the frames from base on. */
-struct Unk0208e570Range {
-    u32 start;
-    u32 end;
-    u32 base;
-};
-
-class Unk0208e570 : public Unk02092830Font {
-public:
-    Unk0208e570();
-    virtual ~Unk0208e570();
-    virtual void func_08(Unk02095140 *file, Unk02096348 *script);
-    virtual int func_0c(u32 c);
-    virtual int func_10(u32 c);
-    virtual int func_14(u32 c);
-    virtual int func_18(u32 c);
-    virtual int func_1c(u32 c);
-    virtual int func_20(const char *str);
-    virtual int func_24();
-    virtual bool func_28(u32 c);
-    virtual bool func_2c(u32 c);
-    virtual bool func_30(u32 c);
-    virtual Unk02095140 *func_34();
-    virtual void func_38();
-    void func_0208e96c(Unk02096348 *script, u32 count);
-    bool func_0208f088(Unk02096348 *script, int index, u32 *c);
-
-    Unk02095140 *file;
-    u16 width;
-    u16 height;
-    u16 count;
-    Unk0208e570Glyph *glyphs;
-    Unk0208e570Range ranges[16];
-    volatile int rangeCount;
-};
 
 Unk0208e570::Unk0208e570() {
     file = 0;
