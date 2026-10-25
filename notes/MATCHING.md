@@ -27,6 +27,9 @@ default: add one here only once a unit of this ROM proves it with mwccarm.
 - `a + b` where both sides are products: mwccarm emits the right-hand product
   first. Writing the terms in the reverse order fixed `func_020991b8` (45.7 % ->
   100 %).
+- `return a && b && c;` for a bool builds flag registers; `if (a && b && c) return
+  true; return false;` gives the original branch chain and `ldmgt` exit
+  (`func_02098c3c`, 39 % -> 100 %).
 - A loop whose first test leaves through the function's shared return is
   `for (;;) { ... if (c == 0) break; ... }`; `return` there gives a conditional
   `ldmeq` instead (`func_0209a32c`, 95.5 % -> 99.7 %).
