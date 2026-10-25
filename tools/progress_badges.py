@@ -28,6 +28,8 @@ from xml.sax.saxutils import escape
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
+GAME_TITLE = "The Sims 2: Castaway"
+
 # (file name, label, report measure, color)
 BADGES = [
     ("fuzzy", "Fuzzy", "fuzzy_match_percent", "#a28c64"),
@@ -167,7 +169,7 @@ def card(report, version, commit):
 
     width, bar_x, bar_w, row_h = 760, 186, 300, 26
     y = 34
-    body = [f'<text class="t b" x="16" y="{y}">Spyro: Dawn of the Dragon ({escape(version)})</text>',
+    body = [f'<text class="t b" x="16" y="{y}">{GAME_TITLE} ({escape(version)})</text>',
             f'<text class="m" x="{width - 16}" y="{y}" text-anchor="end">commit {escape(commit)}</text>']
 
     def bar_row(label, total, fuzzy, perfect, linked, unit):
@@ -245,7 +247,7 @@ def read_history(path):
 def record(report, history_path):
     rows = read_history(history_path)
     commit = git("rev-parse", "--short=7", "HEAD")
-    if rows and rows[-1].get("commit") == commit:
+    if commit and rows and rows[-1].get("commit") == commit:
         rows.pop()
     m = report["measures"]
     rows.append({
