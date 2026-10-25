@@ -8,13 +8,13 @@
 
 #include "game/unk_vector.h"
 
-class Unk02097bacSrc;
+class Unk02098094;
 
 class Unk02097b6c {
 public:
     Unk02097b6c() {}
     Unk02097b6c(int m00, int m01, int m02, int m10, int m11, int m12, int m20, int m21, int m22);
-    Unk02097b6c(const Unk02097bacSrc &o);
+    Unk02097b6c(const Unk02098094 &o);
     static Unk02097b6c func_02097bf8();
     static Unk02097b6c func_02097c2c(const Unk02098ff0 &scale);
     void func_02097c6c(const Unk02097b6c &a, const Unk02097b6c &b);
@@ -29,10 +29,23 @@ public:
     int m[3][3];
 };
 
-/* Source of the conversion func_02097bac: a matrix with rows of four words; only
- * its layout is known. */
-class Unk02097bacSrc {
+/* 4x4 matrix of unit_02098094.cpp, stored by column like the 3x3 one. */
+class Unk02098094 {
 public:
+    Unk02098094() {}
+    Unk02098094(const Unk02097b6c &r);
+    Unk02098094(const Unk02097b6c &r, const Unk02098ff0 &t);
+    Unk02098094(int m00, int m01, int m02, int m03, int m10, int m11, int m12, int m13, int m20, int m21,
+                   int m22, int m23, int m30, int m31, int m32, int m33);
+    Unk02098094(const Unk02098ff0 &t);
+    static Unk02098094 func_02098254();
+    Unk02098ff0 func_020982a8() const;
+    void func_020982bc(const Unk02098ff0 &t);
+    Unk02098ff0 func_020982d8(const Unk02098ff0 &v) const;
+    Unk02098ff0 func_020983ac(const Unk02098ff0 &v) const;
+    void func_020985b0(const Unk02098094 &o);
+    void func_0209873c(const Unk02098094 &a, const Unk02098094 &b);
+
     int m[4][4];
 };
 

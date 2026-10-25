@@ -40,6 +40,9 @@ default: add one here only once a unit of this ROM proves it with mwccarm.
   (`func_02097c6c`, `func_02097d38`).
 - Stack slots of local objects follow their declaration order: declare them so that
   the offsets match (`func_02097f1c`).
+- Results that the original computes in reverse order before one constructor call
+  (z, y, x, then `stm`) come from locals assigned in that order and passed to the
+  constructor (`func_020983ac`, 91.7 % -> 100 %).
 - A loop whose first test leaves through the function's shared return is
   `for (;;) { ... if (c == 0) break; ... }`; `return` there gives a conditional
   `ldmeq` instead (`func_0209a32c`, 95.5 % -> 99.7 %).

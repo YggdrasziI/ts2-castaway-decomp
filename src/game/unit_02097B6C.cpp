@@ -4,8 +4,7 @@
  * about the three axes, rotation from three angles.
  *
  * Bounds: hypothesis. Before 0x02097B6C lie fixed-point helpers (hardware square
- * root, arc cosine table); from 0x02098094 come functions on another matrix type
- * that do not use this constructor. Real file name unknown.
+ * root, arc cosine table); 0x02098094 starts unit_02098094.cpp (4x4 matrix). Real file name unknown.
  * Not complete: func_02097f78 does not match yet (comment above it).
  */
 
@@ -35,7 +34,7 @@ Unk02097b6c::Unk02097b6c(int m00, int m01, int m02, int m10, int m11, int m12, i
     m[2][2] = m22;
 }
 
-Unk02097b6c::Unk02097b6c(const Unk02097bacSrc &o) {
+Unk02097b6c::Unk02097b6c(const Unk02098094 &o) {
     m[0][0] = o.m[0][0];
     m[1][0] = o.m[1][0];
     m[2][0] = o.m[2][0];

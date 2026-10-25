@@ -100,6 +100,10 @@ libs/runtime/src/ExceptionHandlerTS.cpp:
 src/game/unit_02097B6C.cpp:
     .text       start:0x02097b6c end:0x02098094
 
+src/game/unit_02098094.cpp:
+    complete
+    .text       start:0x02098094 end:0x020987d8
+
 src/game/unit_020987D8.cpp:
     complete
     .text       start:0x020987d8 end:0x020988d8
