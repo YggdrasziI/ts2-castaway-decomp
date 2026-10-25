@@ -115,6 +115,16 @@ default: add one here only once a unit of this ROM proves it with mwccarm.
   from the first static of the file plus an offset; declaring it `u8 x[4]` keeps
   its own relocation and its 4-byte `.bss` slot (`unit_02096A74.cpp`).
 
+- Functions called with an uninitialized local in r0 and an object in r1 are
+  methods returning a class by value (hidden result pointer first, then `this`):
+  `Unk02092b94 Unk02092830::func_02092b78(...) { return Unk02092b94(...); }`
+  (`unit_02092830.cpp`). A class argument read through r3 is a reference.
+- Inside a constructor, a member read where the parameter of the same name is
+  still in a register (`ldr r0, [r4, #0x90]`) is `this->member`.
+- Declaration order search: moving each declaration to each position (n^2 tries,
+  scratch script) found 100 % for `func_02092a34` where full permutations are too
+  many.
+
 ## Data layout
 
 - A dsd symbol inside a static object (here `data_020c806c`, the object + 4 that
