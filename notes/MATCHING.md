@@ -112,6 +112,22 @@ default: add one here only once a unit of this ROM proves it with mwccarm.
   only: it costs a reload after a loop elsewhere, and it did not help the same
   pattern in `func_020949b8` (`unit_02094824.cpp`). Not a compiler option: every
   2.0 service pack and `-opt noloop` / `nocse` / `nostrength` give the same code.
+- A subexpression of the loop counter that the original recomputes at every
+  iteration (`mov r2, r7, lsl #4; add r2, r2, #0x10`), where mwccarm makes it a
+  running sum (`add r8, r8, #0x10`) whatever the counter type or expression form:
+  write it through an inline function with an `int` parameter,
+  `static inline int f(int i) { return i * 16 + 16; }` (`func_0201be00`, 97.95 % ->
+  99.67 %; again in `func_0201c2d8`).
+- A struct returned by value from a call whose fields the original re-reads from
+  the stack inside the loop: give the struct a user-declared constructor, so the
+  result is built in place in the local; without one, mwccarm copies it to a second
+  slot and keeps the fields in registers (`func_0201baa4`, 79 % -> 88 %).
+- A global read before an unrelated store in the original (`ldrh` of the angle
+  ahead of `str` to another object) comes from copying it to a local before that
+  store; read in the expression after the store, it is loaded after it
+  (`func_0201baa4`, 91.2 % -> 99.8 %).
+- A loop that advances a pointer before the counter (`add r9, r9, #0xc` then
+  `add r6, r6, #1`) is `for (...; p++, i++)` (`func_0201b964`, 97 % -> 99.9 %).
 - `switch` case groups: the return blocks follow the order of the groups in the
   source, and the `default:` block comes first when written first.
 
@@ -168,6 +184,20 @@ default: add one here only once a unit of this ROM proves it with mwccarm.
   (`unit_020973BC.cpp`). To order equal-size objects, try the declaration
   permutations (`unit_02096A74.cpp`: a word reached at +4 from `data_020c7f74` is
   its own 4-byte object, declared first).
+
+- `.data` objects defined before a file's first out-of-line function are laid out
+  by size, whatever the declaration order (a 4-byte pointer always lands before
+  0x40-byte tables); an object defined after a function is appended after them,
+  and its string literal follows that function's code. A pointer after larger
+  tables in the ROM, followed by its own string, points to a file boundary. Here
+  the tables and their static initializer are a unit with no code
+  (`unit_020B8888.cpp`), and the pie menu keeps the pointer (`unit_0201B6D4.cpp`).
+- A static object loaded through its own symbol where mwccarm reaches it through
+  another static of the file plus an offset is the only `.bss` object of its file
+  (`data_020be384`, `unit_0201B6D4.cpp`).
+- A static initializer builds objects in declaration order, independently of their
+  `.bss` order: declared `data_020be37c` then `data_020be374`, they are built in
+  that order and laid out `374, 37c` as in the ROM (`unit_020B8888.cpp`).
 
 ## C++ classes
 
