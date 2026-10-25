@@ -14,10 +14,6 @@
 
 #include "game/unk_file.h"
 
-struct Unk0209487cFile {
-    u32 unk[0x12];
-};
-
 class Unk020c80b0 {
 public:
     void func_0209982c(const char *name);
@@ -131,12 +127,6 @@ void Unk0209487c::func_020949b8(const char *path) {
         }
     }
     func_02099834()->func_02099830();
-}
-
-Unk0209487cEntry::Unk0209487cEntry() {
-    tag = 0;
-    size = 0;
-    offset = 0;
 }
 
 /*

@@ -101,6 +101,15 @@ default: add one here only once a unit of this ROM proves it with mwccarm.
 - `if (x != 0) { ... } else { return -1; }` puts the failure path after the body,
   where `if (x == 0) return -1;` gives a conditional `mvneq`.
 
+- A loop bound re-read from memory at every test while the other members stay in
+  registers (and no store in the loop) was matched by declaring that member
+  `volatile` (`unit_02093648.cpp`, seven search loops 95 % -> 100 %). Hypothesis
+  only: it costs a reload after a loop elsewhere, and it did not help the same
+  pattern in `func_020949b8` (`unit_02094824.cpp`). Not a compiler option: every
+  2.0 service pack and `-opt noloop` / `nocse` / `nostrength` give the same code.
+- `switch` case groups: the return blocks follow the order of the groups in the
+  source, and the `default:` block comes first when written first.
+
 ## Data layout
 
 - A dsd symbol inside a static object (here `data_020c806c`, the object + 4 that
@@ -110,6 +119,11 @@ default: add one here only once a unit of this ROM proves it with mwccarm.
   (`ldr` / `str` pairs); deriving it from a plain struct that holds the members
   gives the block copy (`ldm` / `stm`) of the original (`unit_02098E70.cpp`, 0 % ->
   100 % for the copying functions).
+- A file-scope pointer initialized to 0 goes to `.bss`; when the ROM has it in
+  `.data` next to another initialized word, a struct holding both with an
+  initializer list puts it there (`unit_02093648.cpp`, hook and name). A string
+  literal is a local `@<n>` symbol: give the dsd symbol its exact length
+  (`data(byte[21])`) and `local`, or `.data` scores below 100 %.
 - Vtables: mwccarm emits `_ZTV<class>` with two zero words (offset to top, no RTTI
   with `-RTTI off`) before the slots, and the object points 8 bytes in. Pure virtual
   slots are zero; a virtual destructor takes two slots (D1, then the deleting D0). In

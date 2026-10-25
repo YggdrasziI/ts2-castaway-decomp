@@ -27,7 +27,11 @@ struct Unk0209487cHeader {
 
 /* One block of the file: its tag, size and offset. */
 struct Unk0209487cEntry {
-    Unk0209487cEntry();
+    Unk0209487cEntry() {
+        tag = 0;
+        size = 0;
+        offset = 0;
+    }
 
     int tag;
     u32 size;
@@ -38,6 +42,11 @@ struct Unk0209487cEntry {
 struct Unk0209487cFileId {
     void *unk0;
     u32 unk4;
+};
+
+/* The 0x48-byte file object of the file system functions (func_020777bc...). */
+struct Unk0209487cFile {
+    u32 unk[0x12];
 };
 
 class Unk0209487c {
