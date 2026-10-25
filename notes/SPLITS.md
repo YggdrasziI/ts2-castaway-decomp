@@ -57,3 +57,42 @@ Commands: `python tools/compiler_sweep.py --ref <project> --compilers 2.0/sp1p5
 | Unit | Bounds | Content | Status |
 |---|---|---|---|
 | `src/game/unit_0205D6E0.c` | 0x0205D6E0-0x0205D6FC (hypothesis: one function of a larger unit whose other functions, 0x0205D618 and 0x0205D6C4, call it) | `func_0205d6e0`: clears 6 ints | complete (first compiled file, 2.0/sp1p5) |
+| `libs/c/src/*`, `libs/runtime/src/*` (14 files, below) | see `delinks.txt` | MSL C and runtime, not decompiled | delinked, no source |
+
+### MSL / runtime files (2026-10-25)
+
+Function bounds are exact (every function of 0x02080114-0x02085EEC has a `.exceptix`
+entry with its address and size). File bounds come from twewy's file layout (its
+MSL / runtime is another version): the sequence of function sizes was aligned with
+ours in order, and a file is delinked only when the functions on both sides of each
+of its bounds have the same size as in twewy (byte-identical where a fingerprint
+exists: `round_decimal`, `strcpy`, `strncpy`, `strcmp`, the console I/O,
+`CompressedNumbers.cpp`, `BinarySearch`, `SetupCatchInfo`, `__end_catch`,
+`__throw_catch_compare`, `__PopStackFrame`). Each file takes the `.exceptix` entries of
+its functions and the `.exception` records they point to; the files twewy has
+without exception tables (`mem_funcs.c`, `string.c`, `CompressedNumbers.cpp`) have
+none here either.
+
+| File | `.text` | Matched in order (twewy names) |
+|---|---|---|
+| `abort_exit_arm_eabi.c` | 0x02080114-0x020802AC | `abort`, `exit`, `__exit` |
+| `file_io.c` | 0x0208063C-0x02080724 | `fflush` |
+| `mbstring.c` | 0x02080724-0x02080804 | `__mbtowc_noconv`, `__wctomb_noconv`, `wctomb`, `wcstombs` |
+| `mem.c` | 0x02080804-0x02080864 | `memcpy`, `memset`, `memchr` |
+| `mem_funcs.c` | 0x02080864-0x02080914 | `__fill_mem` |
+| `printf.c` | 0x02080914-0x02082A58 | `parse_format` ... `sprintf` (11) |
+| `scanf.c` | 0x02082A58-0x02082ADC | `__StringRead` only |
+| `signal.c` | 0x02082ADC-0x02082C0C | `raise` |
+| `string.c` | 0x02082C0C-0x02082E90 | `strlen`, `strcpy`, `strncpy`, `strcmp`, `strchr` |
+| `console_io.c` | 0x020841B4-0x02084278 | `sys_*`, `__read_console`, `__write_console`, `__close_console` |
+| `CompressedNumbers.cpp` | 0x02084278-0x02084390 | `__DecodeSignedNumber`, `__DecodeUnsignedNumber` |
+| `ExceptionHandler.cpp` | 0x02084390-0x02085750 | `BinarySearch` ... `func_02058614` |
+| `MWException.cpp` | 0x02085B34-0x02085D24 | `dthandler`, `duhandler`, `terminate`, `unexpected`, `__throw_catch_compare` |
+| `ExceptionHandlerTS.cpp` | 0x02085D24-0x02085EA0 | `__PopStackFrame` ... `__TransferControl` |
+
+Left in gaps (no anchor on one side): 0x020802AC-0x0208063C (`ansi_files.c`,
+`buffer_io.c` and unknown functions), 0x02082E90-0x020841B4 (`strtoul.c`, `fabs`,
+`pool_alloc.c`, unknown), 0x02085750-0x02085B34 (`New.cpp`, `StaticInitializers.cpp`
+region, sizes differ), 0x02085EA0-0x02089780 (end of `ExceptionHandlerTS.cpp`, FP
+emulation, division helpers). Function names stay `func_<addr>` where only the size
+matches (`SPEC.md`).

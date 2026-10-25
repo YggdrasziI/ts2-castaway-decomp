@@ -10,3 +10,57 @@
 src/game/unit_0205D6E0.c:
     complete
     .text       start:0x0205d6e0 end:0x0205d6fc
+
+libs/c/src/abort_exit_arm_eabi.c:
+    .text       start:0x02080114 end:0x020802ac
+    .exceptix   start:0x020acd24 end:0x020acd48
+
+libs/c/src/file_io.c:
+    .text       start:0x0208063c end:0x02080724
+    .exceptix   start:0x020acda8 end:0x020acdb4
+
+libs/c/src/mbstring.c:
+    .text       start:0x02080724 end:0x02080804
+    .exceptix   start:0x020acdb4 end:0x020acdcc
+
+libs/c/src/mem.c:
+    .text       start:0x02080804 end:0x02080864
+    .exceptix   start:0x020acdcc end:0x020acdd8
+
+libs/c/src/mem_funcs.c:
+    .text       start:0x02080864 end:0x02080914
+
+libs/c/src/printf.c:
+    .text       start:0x02080914 end:0x02082a58
+    .exception  start:0x020acc60 end:0x020acc68
+    .exceptix   start:0x020acdd8 end:0x020ace44
+
+libs/c/src/scanf.c:
+    .text       start:0x02082a58 end:0x02082adc
+
+libs/c/src/signal.c:
+    .text       start:0x02082adc end:0x02082c0c
+    .exceptix   start:0x020ace44 end:0x020ace50
+
+libs/c/src/string.c:
+    .text       start:0x02082c0c end:0x02082e90
+
+libs/runtime/src/console_io.c:
+    .text       start:0x020841b4 end:0x02084278
+    .exceptix   start:0x020acee0 end:0x020acef8
+
+libs/runtime/src/CompressedNumbers.cpp:
+    .text       start:0x02084278 end:0x02084390
+
+libs/runtime/src/ExceptionHandler.cpp:
+    .text       start:0x02084390 end:0x02085750
+    .exception  start:0x020acc68 end:0x020acc98
+    .exceptix   start:0x020acef8 end:0x020acf7c
+
+libs/runtime/src/MWException.cpp:
+    .text       start:0x02085b34 end:0x02085d24
+    .exceptix   start:0x020acfdc end:0x020ad000
+
+libs/runtime/src/ExceptionHandlerTS.cpp:
+    .text       start:0x02085d24 end:0x02085ea0
+    .exceptix   start:0x020ad000 end:0x020ad018
