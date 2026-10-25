@@ -11,6 +11,7 @@ Usage:
   python tools/ghidra_sync.py              # sync config/eur/arm9/config.yaml
   python tools/ghidra_sync.py --dry-run    # report what would change, change nothing
   python tools/ghidra_sync.py --ghidra <install dir> --project <project dir>
+  python tools/ghidra_sync.py --program "<name of the imported ROM in the project>"
 """
 
 import argparse
@@ -25,7 +26,9 @@ GHIDRA_VERSION = "11.2.1"
 DEFAULT_GHIDRA = r"E:\Projets\Github\Decomp\Tools\Ghidra\ghidra_11.2.1_PUBLIC"
 DEFAULT_PROJECT = r"E:\Projets\Dev\ts2-castaway-ghidra"
 PROJECT_NAME = "ts2c_eur"
-PROGRAM = "baserom_ts2c_eur.nds"
+# Wildcard: the project holds one ROM, whatever name it was imported under (cmd.exe
+# breaks analyzeHeadless.bat arguments with parentheses, e.g. "(EU)")
+PROGRAM = "*.nds"
 
 CHOOSER = re.compile(
     r"DsdConfigChooser dsdConfigChooser = new DsdConfigChooser\(.*?"
@@ -51,6 +54,8 @@ def main():
     parser.add_argument("--version", default="eur", help="game version (default: %(default)s)")
     parser.add_argument("--ghidra", default=DEFAULT_GHIDRA, help="Ghidra install dir")
     parser.add_argument("--project", default=DEFAULT_PROJECT, help="Ghidra project dir")
+    parser.add_argument("--program", default=PROGRAM,
+                        help="program name in the Ghidra project (default: %(default)s)")
     parser.add_argument("--dry-run", action="store_true", help="change nothing")
     args = parser.parse_args()
 
@@ -71,7 +76,7 @@ def main():
     with tempfile.TemporaryDirectory() as tmp:
         with open(os.path.join(tmp, "SyncDsdHeadless.java"), "w", encoding="utf-8") as f:
             f.write(patched)
-        cmd = [headless, args.project, PROJECT_NAME, "-process", PROGRAM, "-noanalysis",
+        cmd = [headless, args.project, PROJECT_NAME, "-process", args.program, "-noanalysis",
                "-scriptPath", tmp, "-postScript", "SyncDsdHeadless.java", config]
         if args.dry_run:
             cmd.append("dry")
