@@ -782,7 +782,8 @@ def add_check_builds(n: ninja_syntax.Writer, project: Project):
 def add_objdiff_builds(n: ninja_syntax.Writer, project: Project):
     n.build(
         inputs=project.dsd_configs(),
-        implicit=[DSD, "tools/objdiff_prune.py"],
+        # Sources too: objdiff_prune.py keeps base objects only for existing sources.
+        implicit=[DSD, "tools/objdiff_prune.py", *map(str, project.source_files())],
         rule="objdiff",
         outputs="objdiff.json",
         variables={

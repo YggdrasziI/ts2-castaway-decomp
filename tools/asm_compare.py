@@ -85,7 +85,8 @@ def main():
 
     sides = []
     for side in ("left", "right"):
-        found = [s for s in diff[side].get("symbols", []) if s.get("name") == symbol]
+        # A unit without a source (tools/objdiff_prune.py) has no right side.
+        found = [s for s in diff.get(side, {}).get("symbols", []) if s.get("name") == symbol]
         sides.append(found[0] if found else {})
     if not sides[0] and not sides[1]:
         sys.exit(f"{symbol} not found")
