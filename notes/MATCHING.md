@@ -19,6 +19,14 @@ default: add one here only once a unit of this ROM proves it with mwccarm.
 
 ## Registers and stack
 
+- Two loops sharing one counter declared at the top: the second loop got the
+  counter, the entry pointer and its strength-reduced `i * 2` in rotated registers;
+  `for (int i = 0; ...)` in each loop gave the original allocation
+  (`func_01ffadf8`, 99.3 % -> 100 %).
+- A product used only as a down counter (`while (n-- != 0)`): with `w` and `h`
+  locals, mwccarm folds the test into `muls`; computing `n` in one expression and
+  declaring it before the other locals gave the original `mul` / `cmp` and their
+  order (`func_01ffab9c`, 58 % -> 100 %).
 - `h = f(h) * 31 + c;` gave `add rd, c, x`; splitting it into `h = f(h) * 31;
   h += c;` gave the original `add rd, x, c` and its register allocation
   (`func_0209a3c4`, `func_0209a32c`, 99.5 % -> 100 %).
@@ -139,6 +147,14 @@ default: add one here only once a unit of this ROM proves it with mwccarm.
 
 ## Inlining and emission order
 
+- A member the original reads twice (a flag test, then the whole word in an
+  expression) where mwccarm keeps the first load in a register: testing the flag
+  through a `static inline` predicate and doing the whole write in a `static inline`
+  function with its arguments given inline gave the reload and the original
+  registers (`func_01ffadf8`, 95.3 % -> 99.3 %).
+- Leaf functions saving registers inside a branch or using register post-indexed
+  loads (`ldr r2, [r0], r6`) are hand-written: write them as `asm` functions, as in
+  the SDK (`func_01ffaca0`, `func_01ffad44`).
 - C++ static object: write the global and its out-of-line constructor; mwccarm builds
   `__sinit_<file>` in `.init`, its `.ctor` pointer, and a 12-byte local `@<n>` chain
   node in `.bss` just before the object, and calls `__register_global_object(obj,
