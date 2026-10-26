@@ -6,7 +6,16 @@ default: add one here only once a unit of this ROM proves it with mwccarm.
 
 ## Loads, constants and literal pools
 
-(none yet)
+- I/O registers written as base + offset after a call (`ldr r0, =0x040000B0`,
+  `str r1, [r0, #0x8]`) come from a local pointer to a register struct
+  (`volatile Dma *dma = (volatile Dma *)0x040000B0; dma->ctrl = ...`); a cast of
+  each address gives a second pool word 0x040000B8 (`func_01ff8c64`,
+  97.9 % -> 100 %).
+- objdiff marks a `bl` as "argument differs" when its target is the function
+  right after the caller's literal pool: target - 8 falls inside the caller, so
+  objdiff reads the original's relocation as a branch inside the function. The
+  bytes match (`func_01ff8c64` stays at 99.90 % in the report with its file
+  `complete`, ITCM: OK).
 
 ## Registers and stack
 

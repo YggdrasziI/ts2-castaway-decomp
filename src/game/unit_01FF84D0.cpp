@@ -8,7 +8,7 @@
  * a loop mode and a finished flag. The others are accessors.
  *
  * Bounds: hypothesis. 0x01FF84D0 follows the NitroSDK functions of the ITCM;
- * 0x01FF8BEC after works on the pool objects of unit_0208B554.cpp. No data. Real
+ * 0x01FF8BEC after works on the model (unit_01FF8BEC.cpp). No data. Real
  * file name unknown.
  * Not complete: func_01ff84f0 is at 97.57 % (comment above it).
  */
