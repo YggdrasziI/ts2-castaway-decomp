@@ -36,7 +36,7 @@ public:
     void func_0208b464();
 
     Unk0209543cBlockB blockB;
-    u8 unk24[0x2C];
+    u8 unk30[0x20];
     u8 *unk50;
     u8 *blockC;
     u8 unk58[4];

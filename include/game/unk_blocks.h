@@ -15,6 +15,9 @@ struct Unk0209543cBlockB {
     int unk4[5];
     int unk18;
     int unk1c;
+    int unk20;
+    int unk24;
+    int unk28;
 };
 
 class Unk020bd014 {

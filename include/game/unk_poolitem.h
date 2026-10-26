@@ -9,6 +9,8 @@
 
 #include "game/unk_matset.h"
 
+class Unk02089f38;
+
 struct Unk0208b554Item {
     Unk0208b554Item()
         : unk0(0), unk4(0), unk8(0), unk0c(0), unk10(0), unk14(0), key(0), model(0), unk38(0), flags(0),
@@ -17,7 +19,7 @@ struct Unk0208b554Item {
         func_0208ad80();
     }
     void func_0208ac48(void *key);
-    void *func_0208ac64();
+    Unk02089f38 *func_0208ac64();
     Unk0208adc0 *func_0208ad18();
     void func_0208ad38(int value);
     void func_0208ad40();
@@ -31,7 +33,7 @@ struct Unk0208b554Item {
     int unk10;
     int unk14;
     void *key;
-    void *model;
+    Unk02089f38 *model;
     Unk0208adc0 set;
     int unk38;
     u16 flags;

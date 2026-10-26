@@ -12,12 +12,10 @@
  */
 
 #include "game/unk_poolitem.h"
+#include "game/unk_model.h"
 
 extern "C" {
-void *func_0208a4c8(void *library, void *key);
-void func_0208a084(void *model);
-void func_0208a094(void *model);
-Unk0208adc0 *func_0208a050(void *model);
+Unk02089f38 *func_0208a4c8(void *library, void *key);
 void func_01ff9624(Unk0208adc0 *set);
 void func_01ff97bc(Unk0208adc0 *set);
 void func_01ff9838(Unk0208adc0 *set);
@@ -31,12 +29,12 @@ void Unk0208b554Item::func_0208ac48(void *key) {
     func_0208ad80();
 }
 
-void *Unk0208b554Item::func_0208ac64() {
+Unk02089f38 *Unk0208b554Item::func_0208ac64() {
     if (flags & 1) {
         model = func_0208a4c8(data_020c7d24, key);
         if (model != 0) {
-            func_0208a084(model);
-            set.func_0208af70(*func_0208a050(model));
+            model->func_0208a084();
+            set.func_0208af70(*model->func_0208a050());
             if (flags & 2) {
                 bool skip = false;
                 if ((set.flags & 2) && !(set.flags & 4)) {
@@ -80,7 +78,7 @@ void Unk0208b554Item::func_0208ad60() {
 
 void Unk0208b554Item::func_0208ad80() {
     if (model != 0) {
-        func_0208a094(model);
+        model->func_0208a094();
         model = 0;
     }
     if (flags & 2) {
