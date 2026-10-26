@@ -10,15 +10,17 @@
  * use.
  *
  * Bounds: hypothesis. Before 0x0208C050 lie the two empty functions and the two
- * accessors of the class of func_0208befc (its count at 0xC, its second array at
- * 4); 0x0208D304 starts unit_0208D304.cpp. __sinit_020ae2e4 builds data_020c7f48
+ * accessors of unit_0208BE3C.cpp; 0x0208D304 starts unit_0208D304.cpp. __sinit_020ae2e4 builds data_020c7f48
  * and registers func_0208c5ac as its destructor (chain node data_020c7f3c). Real
  * file name unknown.
  *
  * The tree functions emitted out of line after func_0208c700 (func_0208c90c ...
- * func_0208c9b4) are inline functions defined after that function: it calls them,
- * while the functions after it inline them (hypothesis from the emission order).
- * Not complete: four functions do not match yet (see above them).
+ * func_0208c9b4) are inline functions defined after that function: it calls them
+ * (hypothesis from the emission order). The other searches inline a second copy
+ * of the lookup defined in the class body (find), and the tree's constructor is an
+ * inline one calling the initializer func_0208d254: the same tree code as in
+ * unit_0208A0A8.cpp.
+ * Not complete: func_0208c700 does not match yet (see above it).
  */
 
 #include "game/unk_archive.h"
@@ -135,15 +137,48 @@ struct Unk0208d2ec {
 /* Binary search tree from a key to a value, nodes in an array (0x1C bytes). */
 class Unk0208d254 {
 public:
-    Unk0208d254(u32 capacity);
+    Unk0208d254(u32 capacity) {
+        func_0208d254(capacity);
+    }
     ~Unk0208d254();
+    Unk0208d254 &func_0208d254(u32 capacity);
     inline void func_0208c924(int from, int to);
     inline int func_0208c9b4(int key);
 
-    bool contains(int key) { return func_0208c9b4(key) != -1; }
+    int find(int key) {
+        int i;
+        Unk0208d2ec *node;
+
+        if (count == 0) {
+            return -1;
+        }
+        if (key == cacheKey) {
+            return cacheIndex;
+        }
+        i = 0;
+        node = nodes;
+        do {
+            if (key == node->key) {
+                break;
+            }
+            if (key < node->key) {
+                i = node->left;
+            } else if (key > node->key) {
+                i = node->right;
+            }
+            if (i != -1) {
+                node = &nodes[i];
+            }
+        } while (i != -1);
+        cacheKey = key;
+        cacheIndex = i;
+        return i;
+    }
+
+    bool contains(int key) { return find(key) != -1; }
 
     int get(int key) {
-        int i = func_0208c9b4(key);
+        int i = find(key);
         if (i == -1) {
             return values[0];
         }
@@ -507,12 +542,6 @@ Unk020c7f48::~Unk020c7f48() {
     func_0208c654();
 }
 
-/*
- * 84.75 %: the original keeps the result of operator new in r4 and stores it after
- * the constructor call; this code stores the constructor's return value (r0). The
- * entry and slot arrays match. Same with every 2.0 service pack, with the tree as a
- * template, an inline constructor or a local copy of the pointer.
- */
 void Unk020c7f48::func_0208c5c0() {
     entries = new Unk0208c050[entryCapacity];
     entryCount = 0;
@@ -743,10 +772,6 @@ Unk0208c050 *Unk020c7f48::func_0208cc70(int id) {
     return &entries[id];
 }
 
-/*
- * 97.38 %: registers of the two inlined searches. The declaration order that matches
- * func_0208c9b4 itself is not the one these copies need.
- */
 int Unk020c7f48::func_0208ccc0(int key) {
     if (map == 0) {
         return -1;
@@ -811,11 +836,6 @@ int Unk020c7f48::func_0208cefc(Unk02095fdc *file, int key, bool load) {
     return id;
 }
 
-/*
- * 99.38 %: registers of the inlined search (index in r8, nodes in r9 and node in r4
- * in the original); the order base, i, node in func_0208c9b4 gives 100 % here but
- * not in func_0208c9b4.
- */
 int Unk020c7f48::func_0208cf6c(Unk02095fdc *file, Unk02093648 *container, int key, bool flag) {
     int id;
     int i;
@@ -829,7 +849,7 @@ int Unk020c7f48::func_0208cf6c(Unk02095fdc *file, Unk02093648 *container, int ke
     if (key == 0) {
         return -1;
     }
-    if (map->func_0208c9b4(key) != -1) {
+    if (map->find(key) != -1) {
         return -1;
     }
     if (entryCount >= entryCapacity) {
@@ -870,7 +890,7 @@ Unk0208d254::~Unk0208d254() {
     nodes = 0;
 }
 
-Unk0208d254::Unk0208d254(u32 capacity) {
+Unk0208d254 &Unk0208d254::func_0208d254(u32 capacity) {
     Unk0208d2ec *p;
     u32 i;
 
@@ -887,4 +907,6 @@ Unk0208d254::Unk0208d254(u32 capacity) {
         p->func_0208c90c();
         p++;
     }
+    return *this;
+    return *this;
 }
