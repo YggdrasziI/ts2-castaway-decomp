@@ -18,18 +18,6 @@
 
 typedef unsigned char u8;
 
-/* A record of block 0x0E (0x34 bytes). */
-struct Unk0208adf8Record {
-    int id;
-    int offset0;
-    int offset4;
-    int offset8;
-    int unk10[7];
-    int unk2c;
-    u16 unk30;
-    u16 unk32;
-};
-
 extern "C" {
 void func_02099afc(int id);
 void func_02099b28(void);

@@ -17,6 +17,18 @@ typedef signed short s16;
 
 class Unk020bd014;
 
+/* A record of block 0x0E (0x34 bytes). */
+struct Unk0208adf8Record {
+    int id;
+    int offset0;
+    int offset4;
+    int offset8;
+    int unk10[7];
+    int unk2c;
+    u16 unk30;
+    u16 unk32;
+};
+
 /* One element (0x24 bytes). */
 struct Unk0208af38 {
     Unk0208af38() {

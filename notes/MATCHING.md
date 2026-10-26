@@ -246,6 +246,16 @@ default: add one here only once a unit of this ROM proves it with mwccarm.
   calls `__cxa_vec_new`; the original `_Znam(n * 12)` and the word-by-word copy
   loop come from the plain base struct (`Unk02098ff0Base`) as element type
   (`func_02089874`, 92.3 % -> 100 %).
+- Stores at offsets read from records (`*(u32 *)(data + (rec->a & ~3))`) keep the
+  original load order and registers only through one pointer local per field
+  (`u32 *p = (u32 *)(data + (rec->a & ~3)); *p = ...; DC_StoreRange(p, 4)`); offset
+  locals added to `data` at each use are scheduled differently
+  (`func_01ff9478`, 95.7 % -> 100 %).
+- `x >= 0 ? 1 << x : 1 >> -x` written as `if (x < 0) ... else ...` gives the
+  original mix of a branch for the first value and conditional moves for the
+  second (84.7 % -> 95.7 %). A mask parameter narrowed in place (`mask &= ...`)
+  right after a second mask is taken from it, with the loop's count and pointer
+  read first, gives the original registers (`func_01ff924c`, 89.7 % -> 100 %).
 - A file-scope pointer initialized to 0 goes to `.bss`; when the ROM has it in
   `.data` next to another initialized word, a struct holding both with an
   initializer list puts it there (`unit_02093648.cpp`, hook and name). A string
