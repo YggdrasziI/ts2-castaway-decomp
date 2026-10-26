@@ -63,6 +63,29 @@ public:
     Unk02098ff0 func_02099150(const Unk02098ff0 &o) const;
     int func_02099184(const Unk02098ff0 &o) const;
     Unk02098ff0 func_020991b8(const Unk02098ff0 &o, int t) const;
+
+    /* Clamps each component to [-0x1000, 0xFFF] (inline in the ITCM drawing code). */
+    Unk02098ff0 &func_clamp() {
+        if (x < -0x1000) {
+            x = -0x1000;
+        }
+        if (x > 0xfff) {
+            x = 0xfff;
+        }
+        if (y < -0x1000) {
+            y = -0x1000;
+        }
+        if (y > 0xfff) {
+            y = 0xfff;
+        }
+        if (z < -0x1000) {
+            z = -0x1000;
+        }
+        if (z > 0xfff) {
+            z = 0xfff;
+        }
+        return *this;
+    }
 };
 
 #endif

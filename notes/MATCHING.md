@@ -51,6 +51,20 @@ default: add one here only once a unit of this ROM proves it with mwccarm.
   inside the store copies k before the increment; `dst[k] = ...; k++;` with k
   declared in the outer loop's init, `for (int i = 0, k = 0; ...)`, gives the
   original's registers (`func_01ff8fd8`, 98.96 % -> 100 %).
+- Temporaries built inside an inline helper (a view matrix computed by
+  `static inline Unk02098094 f(...)`, a product returned by an inline
+  `func_mul`) get the lowest stack slots, below the caller's own temporaries;
+  written in the caller they sit above them (`func_01ff9924`).
+- A vector copy done with `ldm` / `stm` where the class copies member by member:
+  copy construction (`Unk02098ff0 d = v.func_clamp();`) gives the block copy and
+  the original's stack slot; the assignment operator does not (`func_01ff9f00`).
+- A clamp that the original applies through a pointer kept in a register (`ldr r0,
+  [r9]`, `strlt r7, [r9]`) is an inline member called on the temporary returned by
+  a call (`m.func_02097d38(v).func_clamp()`), not a clamp of a named local
+  (`func_01ff9f00`, 72.9 % -> 74.3 %).
+- Packed values computed before an unrelated clamp in the original (light vector
+  before the colour clamps): compute them first in the source; the scheduler does
+  not move them across (`func_01ff9f00`, 74.6 % -> 98.4 %).
 - Stack slots of local objects follow their declaration order: declare them so that
   the offsets match (`func_02097f1c`).
 - Results that the original computes in reverse order before one constructor call
