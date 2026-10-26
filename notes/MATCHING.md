@@ -206,6 +206,15 @@ default: add one here only once a unit of this ROM proves it with mwccarm.
   (`ldr` / `str` pairs); deriving it from a plain struct that holds the members
   gives the block copy (`ldm` / `stm`) of the original (`unit_02098E70.cpp`, 0 % ->
   100 % for the copying functions).
+- Assigning such a vector directly (`e->pos = Vec(0, 0, 0)`) is folded into three
+  stores even through a named temporary, an aggregate or an inline helper. The
+  original's stack temporary copied with one `ldm` / `stm` comes from the implicit
+  assignment of a struct that contains the vector: `Light::reset() { *this =
+  Light(); }` (`func_0208b9dc` and the constructor of `unit_0208B554.cpp`, 99.9 %
+  -> 100 %), or a position wrapper `struct Pos { Vec v; }` declared before the
+  next local so the temporaries take the original stack slots (`func_0208befc`,
+  92.3 % -> 100 %). The u16 members of such a struct must be separate fields: a
+  `u16[4]` array is copied through the stack too (69.6 % -> 99.9 %).
 - A file-scope pointer initialized to 0 goes to `.bss`; when the ROM has it in
   `.data` next to another initialized word, a struct holding both with an
   initializer list puts it there (`unit_02093648.cpp`, hook and name). A string

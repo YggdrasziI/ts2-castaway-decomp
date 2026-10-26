@@ -113,6 +113,13 @@ src/game/unit_0208B41C.cpp:
     .text       start:0x0208b41c end:0x0208b554
     .data       start:0x020bcfd8 end:0x020bd048
 
+src/game/unit_0208B554.cpp:
+    complete
+    .text       start:0x0208b554 end:0x0208be3c
+    .init       start:0x020ae2b8 end:0x020ae2e4
+    .ctor       start:0x020b6e98 end:0x020b6e9c
+    .bss        start:0x020c7d2c end:0x020c7f3c
+
 src/game/unit_0208BE3C.cpp:
     .text       start:0x0208be3c end:0x0208c050
 
