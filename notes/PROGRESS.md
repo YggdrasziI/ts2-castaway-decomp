@@ -20,3 +20,4 @@
 | 2026-10-26 | 46faa29 | 71276 / 720836 bytes (9.89 %; fuzzy 11.84 %, linked 4.91 %) | 816 / 4557 | 52 / 107 | ITCM VRAM transfer unit (complete) |
 | 2026-10-26 | 2212dff | 73880 / 720836 bytes (10.25 %; fuzzy 12.01 %, linked 5.33 %) | 825 / 4557 | 56 / 109 | Whole ITCM delinked: start of the ITCM (EA, NitroSDK DMA and IRQ), animation unit complete |
 | 2026-10-26 | de7adb4 | 75112 / 720836 bytes (10.42 %; fuzzy 12.41 %, linked 5.33 %) | 834 / 4557 | 56 / 111 | Palette set unit (9 / 14 functions at 100 %, the rest above 88 %) |
+| 2026-10-26 | 0d09c35 | 76740 / 720836 bytes (10.65 %; fuzzy 12.77 %, linked 5.33 %) | 851 / 4557 | 56 / 113 | Texture coordinate animation unit (17 / 21 functions at 100 %) and the software floating-point runtime named |
