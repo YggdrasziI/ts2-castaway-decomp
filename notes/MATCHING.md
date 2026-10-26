@@ -177,6 +177,16 @@ default: add one here only once a unit of this ROM proves it with mwccarm.
 - A vector result copied once more with `ldm` / `stm` before a sum: pass it by
   value to an inline helper (`func_add(const Vec &a, Vec b)`) (`func_02071564`,
   83.5 % -> 99.9 %).
+- A global object whose address the original keeps in a register across a loop
+  (`ldr r4, =data_020c7d38` before the counters): take a local pointer to it
+  (`Unk020c7d38 *pool = &data_020c7d38;`) and call through it (`Unk020717b8`
+  constructor, `func_02071cc0`: 92 % / 94 % -> 100 %). A member array pointer
+  the original reads once for a slot and again for a later field
+  (`ldr r1, [r5, r4]`) is a local copy too (`Unk020717b8Slot *list = slots;`,
+  `func_020718c0`, 84 % -> 96 %).
+- A returned vector the original copies once more with `ldm` / `stm` into a
+  named local: `Unk02098ff0 r = f(); Unk02098ff0 dir(r);` (`func_02071a60`,
+  84.5 % -> 99.9 %).
 
 ## Inlining and emission order
 
