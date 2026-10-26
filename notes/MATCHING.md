@@ -158,6 +158,16 @@ default: add one here only once a unit of this ROM proves it with mwccarm.
   from one base register (`add r0, base, k` then `ldrb [r0, #1]`, `[r0, #2]`):
   take a pointer `const u8 *c = &colors[k];` for the first use only
   (`Unk0206fac8` constructor, 88.7 % -> 100 %).
+- An array index the original computes once with `lsr #2` and then uses twice
+  scaled by 4 (`ldr r0, [r1, r2, lsl #2]`, `add r1, r1, r2, lsl #2`) is a `u32`
+  local `k = i * sizeof(Entry) / 4` read as `entries[k]` and `&entries[k] + 1`; a
+  pointer to the entry gave `bic r1, off, #3` (`func_02070d5c`, 97.8 % -> 100 %).
+- A call result shifted straight into the argument register (`mov r1, r0, lsl
+  #0xc` after the call) before another argument is loaded: put the shifted value in
+  a local before the call that uses it (`int w = tex->func_0208c16c() << 12;`,
+  `func_02070d5c`, 94.0 % -> 97.8 %).
+- A parameter shifted once (`mov r11, r11, lsr #2`) and used as the loop bound:
+  `size /= 4;` before the loop, not `i < size / 4` (`Unk02070eac` constructor).
 
 ## Inlining and emission order
 
