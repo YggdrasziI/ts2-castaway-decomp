@@ -54,7 +54,7 @@ DS, `E:\Projets\Github\Decomp\DS\`:
 | `khdays-decomp` | [Yokimitsuro/khdays-decomp](https://github.com/Yokimitsuro/khdays-decomp) | CC0 | own build | 3.0_patch4 | heavily customised; `libs/{nitro,nns,msl}` used as sweep fingerprints (nothing copied) |
 | `advance-wars-dual-strike-decomp` | [sturmds/advance-wars-dual-strike-decomp](https://github.com/sturmds/advance-wars-dual-strike-decomp) | CC0 | 0.12.1 | metroskrew 2.0-72 | `tools/dsd_init.py` works around `dsd init` aborting |
 | `pokebw2` | [fuddlesworth/pokebw2](https://github.com/fuddlesworth/pokebw2) | GPL-3.0 | fork | dsi/1.1p1 | `docs/configs.md` (ambiguous relocs); GPL: patterns only, no code |
-| `dqix-decomp` | [DQIX/dqix-decomp](https://github.com/DQIX/dqix-decomp) | Unlicense | 0.10.2 | 2.0/sp2p2, SDK 2.0/sp1p2 | Dragon Quest IX, USA and JPN; C++ game code by subsystem (`src/Graphics`, `src/Filesystem`, ...) with ITCM files (`src/Graphics/itcm`, `src/NitroSDK/itcm`); clone at 1253a35 (2026-10-23); public domain like CC0, but reuse only after the owner's go (not CC0) |
+| `dqix-decomp` | [DQIX/dqix-decomp](https://github.com/DQIX/dqix-decomp) | Unlicense | 0.10.2 | 2.0/sp2p2, SDK 2.0/sp1p2 | Dragon Quest IX, USA and JPN; C++ game code by subsystem (`src/Graphics`, `src/Filesystem`, ...) with ITCM files (`src/Graphics/itcm`, `src/NitroSDK/itcm`); clone at 1253a35 (2026-10-23); public-domain dedication, reuse allowed like CC0 (owner, 2026-10-26) |
 
 Other platforms:
 
@@ -69,8 +69,8 @@ Other platforms:
 
 ## Reuse permissions
 
-- CC0 projects: allowed, logged in `notes/PROVENANCE.md`.
+- CC0 and Unlicense projects (dqix-decomp, owner's go on 2026-10-26): allowed,
+  logged in `notes/PROVENANCE.md`.
 - No license (DQIV, fe11) or GPL (pokebw2): ask the owner first.
-- Unlicense (dqix-decomp): ask the owner first; patterns may be read freely.
 - zeldaret/st library code: not reused (its AI policy), unless the owner decides
   otherwise.
