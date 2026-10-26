@@ -4,43 +4,18 @@
  * virtual functions, vtable data_020bd014). It caches the blocks 0x0B, 0x0C, 0x0E,
  * 0x10 and 0x64 and reads three words of block 0x0B. The last two interface
  * functions, which add and drop a reference on the file, are defined in another
- * file (0x0208A1EC and 0x0208AA84).
+ * file (0x0208A1EC and 0x0208AA84). The interface is shared in
+ * include/game/unk_blocks.h.
  *
  * Bounds: hypothesis. Before 0x0209543C lie the destructors that close
  * unit_02095140.cpp; 0x020956F8 starts unit_020956F8.cpp. The thunks of the
  * interface vtable close the file. The interface vtable is emitted here too
- * (0x020BD400, unused: references go to the first copy, 0x020BD014). Real file name
- * unknown.
- * Not complete although every function and the data match: mwccarm emits the
- * interface vtable copy with a multiply-definable binding, and the first copy
- * (0x020BD014) still comes from assembly as a plain global, so the link fails
- * (strong) or resolves to this copy (weak). It completes with the file that owns
- * 0x020BD014.
+ * (0x020BD400, unused: references go to the first copy, 0x020BD014, emitted by
+ * unit_0208B41C.cpp). Real file name unknown.
  */
 
 #include "game/unk_file.h"
-
-struct Unk0209543cBlockB {
-    int unk0;
-    int unk4[5];
-    int unk18;
-    int unk1c;
-};
-
-class Unk020bd014 {
-public:
-    virtual Unk0209543cBlockB *func_0209548c() = 0;
-    virtual int func_020955e0() = 0;
-    virtual void *func_020954f8() = 0;
-    virtual int func_02095520() = 0;
-    virtual void *func_020954b4() = 0;
-    virtual u32 func_020954dc() = 0;
-    virtual void *func_02095558() = 0;
-    virtual int func_02095580() = 0;
-    virtual void *func_020955b8() = 0;
-    virtual void func_0208a1ec() = 0;
-    virtual void func_0208aa84() = 0;
-};
+#include "game/unk_blocks.h"
 
 class Unk0209543c : public Unk0209487c, public Unk020bd014 {
 public:

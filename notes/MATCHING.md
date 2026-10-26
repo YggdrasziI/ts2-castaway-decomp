@@ -270,6 +270,16 @@ default: add one here only once a unit of this ROM proves it with mwccarm.
   emits its vtable; the linker keeps the bytes and resolves references to the first
   copy. A vtable that sits alone between other data (all zero for an interface) is
   such a copy (`unit_0209543C.cpp`, 0x020BD400).
+- A file emits the vtable of a base class only when it defines a constructor of a
+  derived class (the implicit base constructor stores the base vptr). The first
+  interface vtable copy (0x020BD014) sits after the vtable of a class whose
+  constructor is not in the ROM: an out-of-line `Unk0208b41c::Unk0208b41c() {}`
+  emits the copy, and the `-dead` link drops the unused constructor
+  (`unit_0208B41C.cpp`). The derived class's own vtable is emitted without it.
+- Once every copy is compiled, mwccarm's multiply-definable copies link like the
+  original (one copy keeps the name, the others are anonymous bytes); the later
+  copies must then leave `symbols.txt`, or `check symbols` fails ("not found by
+  address in linked binary") (`unit_0209543C.cpp`, 0x020BD400).
 
 ## Control flow
 
@@ -320,7 +330,8 @@ default: add one here only once a unit of this ROM proves it with mwccarm.
   binding 13. While the first copy is still assembly, dsd emits it as a global or
   weak symbol: a global one clashes ("Multiply-defined") and a weak one loses to
   the compiled copy. The file stays not `complete` until the first copy's file is
-  compiled too (`unit_0209543C.cpp`).
+  compiled too (solved for `unit_0209543C.cpp` by `unit_0208B41C.cpp`, see "Data
+  layout").
 - The same holds for the inline virtual destructor of an interface: every file
   emitting the interface vtable emits D1 and D0 as multiply-definable functions,
   and the link keeps the first copy of each (`unit_0208F16C.cpp`: D1 0x0208F168 at

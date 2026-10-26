@@ -17693,10 +17693,10 @@ from:0x0208b040 kind:arm_call to:0x02099864 module:main
 from:0x0208b258 kind:load to:0x01ff9180 module:itcm
 from:0x0208b418 kind:load to:0x020c7d28 module:main
 from:0x0208b42c kind:arm_call to:0x0208b464 module:main
-from:0x0208b438 kind:load to:0x020bcfe0 module:main
+from:0x0208b438 kind:load to:0x020bcfd8 add:0x8 module:main
 from:0x0208b44c kind:arm_call to:0x0208b464 module:main
 from:0x0208b454 kind:arm_call to:0x02099858 module:main
-from:0x0208b460 kind:load to:0x020bcfe0 module:main
+from:0x0208b460 kind:load to:0x020bcfd8 add:0x8 module:main
 from:0x0208b478 kind:arm_call to:0x02099864 module:main
 from:0x0208b490 kind:arm_call to:0x02099864 module:main
 from:0x0208b4a8 kind:arm_call to:0x02099864 module:main
