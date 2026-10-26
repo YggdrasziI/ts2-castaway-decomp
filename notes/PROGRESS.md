@@ -17,3 +17,4 @@
 | 2026-10-26 | fddcfcd | 67712 / 720836 bytes (9.39 %; fuzzy 11.31 %, linked 4.41 %) | 803 / 4557 | 50 / 106 | ITCM pool drawing unit (4 of 5 functions) |
 | 2026-10-26 | 26b91b1 | 67712 / 720836 bytes (9.39 %; fuzzy 11.34 %, linked 4.41 %) | 803 / 4557 | 50 / 106 | Pool draw order sort added to the ITCM pool drawing unit |
 | 2026-10-26 | 03ab275 | 69748 / 720836 bytes (9.68 %; fuzzy 11.62 %, linked 4.70 %) | 811 / 4557 | 51 / 107 | ITCM transform set unit (complete) |
+| 2026-10-26 | 46faa29 | 71276 / 720836 bytes (9.89 %; fuzzy 11.84 %, linked 4.91 %) | 816 / 4557 | 52 / 108 | ITCM VRAM transfer unit (complete) |
