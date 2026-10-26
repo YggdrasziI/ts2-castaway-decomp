@@ -148,6 +148,15 @@ destructors) in the opposite order to the ROM: in `unit_02099870.cpp` the ROM ha
 `-O4,s` do not change it. The three units complete before (`unit_0205D6E0.c`,
 `unit_02099800.cpp`, `unit_02099840.cpp`) match either way.
 
+## NitroSDK: function order of C files (1.2)
+
+`libs/nitro/src/unit_01FF8114.c`, the first NitroSDK file with several C functions
+(the files before hold only `asm` functions, emitted in source order), links its
+five functions in the reverse of their source order with 1.2/sp2p3 and the SDK
+flags: written in address order, `check symbols` found them reversed. The source
+lists them from the highest address down. Whether this holds for every 1.2 C file
+is a hypothesis until a second file confirms it.
+
 ## Link: dead stripping
 
 mwccarm (every 2.0 and DSi version in `tools/mwccarm`) emits a C++ constructor
