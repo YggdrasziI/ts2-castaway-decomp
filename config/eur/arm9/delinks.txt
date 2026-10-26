@@ -43,6 +43,10 @@ src/game/unit_02071D94.cpp:
 src/game/unit_020724CC.cpp:
     .text       start:0x020724cc end:0x02072bec
 
+src/game/unit_02072BEC.cpp:
+    .text       start:0x02072bec end:0x02072d94
+    .data       start:0x020bc98c end:0x020bc9c4
+
 libs/nitro/src/mi/cpumem.c:
     complete
     .text       start:0x02079abc end:0x02079d70

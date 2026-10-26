@@ -496,7 +496,8 @@ default: add one here only once a unit of this ROM proves it with mwccarm.
   weak symbol: a global one clashes ("Multiply-defined") and a weak one loses to
   the compiled copy. The file stays not `complete` until the first copy's file is
   compiled too (solved for `unit_0209543C.cpp` by `unit_0208B41C.cpp`, see "Data
-  layout").
+  layout"; `unit_02072BEC.cpp`, at 100 %, waits on the base vtable copy 0x020BC8FC
+  of the game states).
 - The same holds for the inline virtual destructor of an interface: every file
   emitting the interface vtable emits D1 and D0 as multiply-definable functions,
   and the link keeps the first copy of each (`unit_0208F16C.cpp`: D1 0x0208F168 at
