@@ -13,7 +13,7 @@
 #include "game/unk_model.h"
 
 Unk02089f38::Unk02089f38(Unk020bd014 *file)
-    : file(0), data(0), size(0), unk0c(0), refs(0), unk14(0x1000), unk18(0x1000), unk1c(0) {
+    : file(0), data(0), size(0), xform(0), refs(0), unk14(0x1000), unk18(0x1000), unk1c(0) {
     func_02089fb4(file);
 }
 
