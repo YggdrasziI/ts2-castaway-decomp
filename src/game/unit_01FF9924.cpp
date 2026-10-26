@@ -15,7 +15,7 @@
  * fields of the pool (0x54-0x158) have the layout of Unk020899a4
  * (include/game/unk_camera.h) and are read through it. The functions keep C
  * linkage and their addresses as names. No data. Real file name unknown.
- * Not complete: func_01ff9924 84.41 %, func_01ffa1e0 95.22 % (comments above
+ * Not complete: func_01ff9924 84.41 %, func_01ffa1e0 99.00 % (comments above
  * them).
  */
 
@@ -305,24 +305,22 @@ void func_01ffa180(Unk020c7d38 *pool) {
 }
 
 /*
- * 95.22 %: register allocation (the original keeps the count in lr, i in r1, best
- * in r2 and loads unk24 before unk20). Tried: the comparison as an inline
- * helper, nested ifs or reversed, int / u16 indices, swap forms, loop variable
- * declarations.
+ * 99.00 %: register allocation (the original keeps the count in lr and the
+ * unk24 array in r12, ours the reverse). Tried: per-loop counters, the
+ * comparison through inline helpers, nested or split ifs, local array
+ * pointers, loop forms and declaration orders.
  */
 void func_01ffa1e0(Unk020c7d38 *pool) {
-    int i;
-    for (i = 0; i < pool->count; i++) {
+    for (int i = 0; i < pool->count; i++) {
         pool->unk20[i] = i;
     }
-    for (i = 0; i < pool->count; i++) {
-        int j = i;
+    for (int i = 0; i < pool->count; i++) {
         int best = i;
+        int j = i;
         for (; j < pool->count; j++) {
-            u16 a = pool->unk20[best];
-            u16 b = pool->unk20[j];
-            if (pool->unk24[a] > pool->unk24[b] ||
-                (pool->unk24[a] == pool->unk24[b] && pool->items[a].index > pool->items[b].index)) {
+            if (pool->unk24[pool->unk20[best]] > pool->unk24[pool->unk20[j]] ||
+                (pool->unk24[pool->unk20[best]] == pool->unk24[pool->unk20[j]] &&
+                 pool->items[pool->unk20[best]].index > pool->items[pool->unk20[j]].index)) {
                 best = j;
             }
         }
