@@ -13,7 +13,7 @@ class Unk02089f38;
 
 struct Unk0208b554Item {
     Unk0208b554Item()
-        : unk0(0), unk4(0), unk8(0), unk0c(0), unk10(0), unk14(0), key(0), model(0), unk38(0), flags(0),
+        : pos(0, 0, 0), unk0c(0), unk10(0), unk14(0), key(0), model(0), unk38(0), flags(0),
           index(-1) {}
     ~Unk0208b554Item() {
         func_0208ad80();
@@ -26,9 +26,7 @@ struct Unk0208b554Item {
     void func_0208ad60();
     void func_0208ad80();
 
-    int unk0;
-    int unk4;
-    int unk8;
+    Unk02098ff0 pos;
     int unk0c;
     int unk10;
     int unk14;
