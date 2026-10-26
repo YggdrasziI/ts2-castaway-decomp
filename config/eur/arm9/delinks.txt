@@ -36,6 +36,10 @@ src/game/unit_020717B8.cpp:
     .text       start:0x020717b8 end:0x02071d94
     .data       start:0x020bc934 end:0x020bc954
 
+src/game/unit_02071D94.cpp:
+    .text       start:0x02071d94 end:0x020724cc
+    .data       start:0x020bc954 end:0x020bc98c
+
 libs/nitro/src/mi/cpumem.c:
     complete
     .text       start:0x02079abc end:0x02079d70

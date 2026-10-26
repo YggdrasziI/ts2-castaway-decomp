@@ -187,6 +187,16 @@ default: add one here only once a unit of this ROM proves it with mwccarm.
 - A returned vector the original copies once more with `ldm` / `stm` into a
   named local: `Unk02098ff0 r = f(); Unk02098ff0 dir(r);` (`func_02071a60`,
   84.5 % -> 99.9 %).
+- A virtual call on a global object (`ldr r2, [r0]`, `ldr r2, [r2, #0x18]`, `blx`)
+  goes through a local pointer (`Unk020c43a8 *owner = &data_020c43a8;`): called on
+  the object itself, mwccarm calls the function directly. An argument stored to
+  an unused stack slot before the call (`mov r1, #2`, `str r1, [sp, #8]`) is a
+  one-word struct passed by value (`func_18(Unk020c43a8Mode(2))`,
+  `func_02071e04`, 96 % -> 100 %).
+- A not yet decompiled C function that fills a record on the caller's stack
+  (`add r0, sp, #8`, then the record read in place): declare it with an out
+  pointer; declared as returning the struct by value, the result is copied
+  (`ldmia` / `stmia` x 3) (`func_02072398`, 78.6 % -> 99.3 %).
 
 ## Inlining and emission order
 
