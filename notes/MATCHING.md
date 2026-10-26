@@ -168,6 +168,15 @@ default: add one here only once a unit of this ROM proves it with mwccarm.
   `func_02070d5c`, 94.0 % -> 97.8 %).
 - A parameter shifted once (`mov r11, r11, lsr #2`) and used as the loop bound:
   `size /= 4;` before the loop, not `i < size / 4` (`Unk02070eac` constructor).
+- A global pointer loaded before a member store that precedes the call through it
+  (`ldr r0, [r0]` then `str key, [this, #0x40]`): copy the pointer to a local
+  first (`Unk0208a0a8 *lib = data_020c7d24; modelKey = key; lib->f(file);`,
+  `func_02071120`, 92 % -> 100 %). An early `return` in the equal case instead of
+  the original's `if / else` moved the else block up (`func_020711e8`, 90.8 % ->
+  100 %).
+- A vector result copied once more with `ldm` / `stm` before a sum: pass it by
+  value to an inline helper (`func_add(const Vec &a, Vec b)`) (`func_02071564`,
+  83.5 % -> 99.9 %).
 
 ## Inlining and emission order
 
