@@ -21,6 +21,11 @@ public:
     void *func_020935a0();
     void *func_020935c8();
     void *func_020935f0();
+
+    void *block13;
+    void *block14;
+    void *block15;
+    void *block16;
 };
 
 /* An element of the array the ITCM function allocates (0x28 bytes). */
