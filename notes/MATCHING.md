@@ -462,6 +462,10 @@ default: add one here only once a unit of this ROM proves it with mwccarm.
   own 8-byte `.data` constant, emitted in source order before the vtable (one
   per use, duplicates included); `(this->*phase)()` tests the adjustment's bit 0
   (`unit_02072D94.cpp`, 0x020BC9C8-0x020BCA28).
+- A pointer to member constant that no code loads (0x020BCAC4 in
+  `unit_02073878.cpp`) still comes from the source: mwccarm emits the constant
+  for a `&C::f` in a dead branch (`if (0)`, or after a `return`) and drops the
+  code. Its place in `.data` tells which function held it.
 
 ## Control flow
 

@@ -15761,7 +15761,7 @@ from:0x02073840 kind:load to:0x020bca20 module:main
 from:0x02073858 kind:arm_call to:0x020a2994 module:main
 from:0x02073860 kind:arm_call to:0x020a3734 module:main
 from:0x020738c8 kind:load to:0x020bc8fc add:0x8 module:main
-from:0x020738cc kind:load to:0x020bcadc module:main
+from:0x020738cc kind:load to:0x020bcad4 add:0x8 module:main
 from:0x020738d0 kind:load to:0x020b38b0 module:main
 from:0x020738e0 kind:arm_call to:0x02099858 module:main
 from:0x02073918 kind:arm_call to:0x02096dac module:main
