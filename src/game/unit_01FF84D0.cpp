@@ -10,7 +10,6 @@
  * Bounds: hypothesis. 0x01FF84D0 follows the NitroSDK functions of the ITCM;
  * 0x01FF8BEC after works on the model (unit_01FF8BEC.cpp). No data. Real
  * file name unknown.
- * Not complete: func_01ff84f0 is at 97.57 % (comment above it).
  */
 
 #include "game/unk_anim.h"
@@ -32,13 +31,6 @@ void Unk020897c0::func_01ff84d0(u32 frame, int t) {
     func_01ff84f0(frame, next, t);
 }
 
-/*
- * 97.57 %: only the rotation key search differs. The original keeps the frame in
- * r6, the index in r0 and a separate byte offset (i * 12) next to the key pointer
- * (`ldr r11, [r1, #0xc]!` then `add r11, r3, r2`); ours walks the pointer alone.
- * Index and frame locals, int / u32 indices, pointer walks and other loop forms
- * were tried. The two vector tracks match.
- */
 void Unk020897c0::func_01ff84f0(u32 frame, u32 next, int t) {
     if (file == 0) {
         return;
@@ -114,19 +106,17 @@ void Unk020897c0::func_01ff84f0(u32 frame, u32 next, int t) {
             unk44[n].setScale(unk40[i].value.func_0209911c(func_scaled(unk40[j].value.func_02099150(unk40[i].value), t)));
         }
 
-        Unk020897c0RotKey *rkeys = unk3c;
-        u32 rf = unk04;
-        u32 ri = cur->rot;
-        if (rkeys[ri].frame < rf || (rkeys[ri].frame > rf && (ri = first->rot) < cur->rot)) {
-            while (rkeys[ri + 1].frame <= rf) {
-                ri++;
-                if (rkeys[ri].frame == rf) {
+        f = unk04;
+        i = cur->rot;
+        if (unk3c[i].frame < f || (unk3c[i].frame > f && (i = first->rot) < cur->rot)) {
+            while (unk3c[i + 1].frame <= f) {
+                i++;
+                if (unk3c[i].frame == f) {
                     break;
                 }
             }
-            cur->rot = ri;
+            cur->rot = i;
         }
-        i = ri;
         if (unk04 > unk08) {
             j = first->rot;
         } else {
@@ -136,17 +126,16 @@ void Unk020897c0::func_01ff84f0(u32 frame, u32 next, int t) {
             }
             j = i + step;
         }
-        rkeys = unk3c;
         if (j == i || t == 0) {
-            Unk020897c0RotKey *k = &rkeys[i];
+            Unk020897c0RotKey *k = &unk3c[i];
             Unk020988d8 *rot = &unk44[n].rot;
             rot->x = k->x;
             rot->y = k->y;
             rot->z = k->z;
             rot->w = k->w;
         } else {
-            Unk020897c0RotKey *ka = &rkeys[i];
-            Unk020897c0RotKey *kb = &rkeys[j];
+            Unk020897c0RotKey *ka = &unk3c[i];
+            Unk020897c0RotKey *kb = &unk3c[j];
             Unk020988d8 qa;
             qa.x = ka->x;
             qa.y = ka->y;

@@ -19,6 +19,11 @@ default: add one here only once a unit of this ROM proves it with mwccarm.
 
 ## Registers and stack
 
+- A key search where the original keeps a byte offset (`i * 12`) next to the
+  walked pointer: indexing the member array directly (`unk3c[i]`) instead of a local
+  copy of it, and reusing the frame and index locals of the searches before, gave
+  the original loop; loading the array inside the branches that use it fixed the
+  last scheduling (`func_01ff84f0`, 97.57 % -> 100 %).
 - Two loops sharing one counter declared at the top: the second loop got the
   counter, the entry pointer and its strength-reduced `i * 2` in rotated registers;
   `for (int i = 0; ...)` in each loop gave the original allocation
