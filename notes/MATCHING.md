@@ -149,6 +149,15 @@ default: add one here only once a unit of this ROM proves it with mwccarm.
 - A second loop whose counter and accumulator take new registers (count copied
   to another register, the word in the freed one): move the loop into an inline
   function taking copies of the values (`func_0208e364`).
+- A colour channel taken out of a `u16` with `lsl #0x1b; lsr #0x18` then `and
+  #0xff` is `int r = (u8)((c & 0x1f) << 3);`; a `u8` local gave other shifts and
+  registers (`func_02070318`, 96.2 % -> 99.7 %). Sums of fixed-point products
+  that the original adds with `add` (not `adds`) are `int` sums: cast each 64-bit
+  product to `int` (82.9 % -> 92.2 %).
+- A loop that reads three bytes `colors[k]`, `colors[k + 1]`, `colors[k + 2]`
+  from one base register (`add r0, base, k` then `ldrb [r0, #1]`, `[r0, #2]`):
+  take a pointer `const u8 *c = &colors[k];` for the first use only
+  (`Unk0206fac8` constructor, 88.7 % -> 100 %).
 
 ## Inlining and emission order
 
