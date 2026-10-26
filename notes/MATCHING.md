@@ -415,6 +415,17 @@ default: add one here only once a unit of this ROM proves it with mwccarm.
   `.bss` order: declared `data_020be37c` then `data_020be374`, they are built in
   that order and laid out `374, 37c` as in the ROM (`unit_020B8888.cpp`).
 
+- A `u32` loop counter that also indexes a global byte array: mwccarm turned
+  `data_020d60c8.unk110[i]` into a pointer stepping with the loop; the original
+  reloads the base each pass, which `unk110[(int)i]` gives (`func_020732c4`,
+  93.3 % -> 98.3 %). In the same loop, the two results declared before the loop
+  and `h << 11` written in both calls instead of a local gave the original
+  registers (98.3 % -> 100 %).
+- A member array of vectors assigned with `ldm` / `stm`: the elements are a
+  struct wrapping the vector (`Unk0205fae8Pos { Unk02098ff0 v; }`), whose implicit
+  assignment is a block copy; the vector class's own `operator=` copies field by
+  field (`func_020732c4`, 87.3 % -> 93.3 %).
+
 ## C++ classes
 
 - mwccarm emits a C1 and a C2 copy of every constructor (and D1 / D2 of a
@@ -445,6 +456,12 @@ default: add one here only once a unit of this ROM proves it with mwccarm.
   original (one copy keeps the name, the others are anonymous bytes); the later
   copies must then leave `symbols.txt`, or `check symbols` fails ("not found by
   address in linked binary") (`unit_0209543C.cpp`, 0x020BD400).
+
+- Pointers to member functions are two words (function, `this` adjustment),
+  passed by value in two registers. Each `&C::f` taken in the source becomes its
+  own 8-byte `.data` constant, emitted in source order before the vtable (one
+  per use, duplicates included); `(this->*phase)()` tests the adjustment's bit 0
+  (`unit_02072D94.cpp`, 0x020BC9C8-0x020BCA28).
 
 ## Control flow
 

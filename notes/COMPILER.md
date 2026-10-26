@@ -110,6 +110,14 @@ calls to runtime functions. A probe (`(float)s / 4096.0f`, `> 0`, `* 4096.0f`,
 0x02088D18 and 0x020885E8, which are named so in `symbols.txt`. They sit in the
 MSL / runtime region; their source file is unknown.
 
+## Runtime: null pointer to member
+
+A null pointer to member function (`phase(0)` for `void (C::*)()`) makes mwccarm
+2.0/sp1p5 copy the 8-byte constant `__ptmf_null` (a reference in the object of
+`unit_02072D94.cpp`). The constructor 0x02072D94 copies the two words at
+0x020B38B0 (8 zero bytes, loaded by 16 sites), which is named so in `symbols.txt`.
+Its source file is unknown.
+
 ## Candidates
 
 Available in `tools/mwccarm/`: 1.2 (base, b56, sp2, sp2p3, sp3, sp4), 2.0 (base, sp1,

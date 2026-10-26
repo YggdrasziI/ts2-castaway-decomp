@@ -15593,7 +15593,7 @@ from:0x02072d88 kind:arm_call to:0x020a18e4 module:main
 from:0x02072d8c kind:arm_call to:0x0206c290 module:main
 from:0x02072de4 kind:arm_call to:0x02069fec module:main
 from:0x02072e1c kind:load to:0x020bc8fc add:0x8 module:main
-from:0x02072e20 kind:load to:0x020bca30 module:main
+from:0x02072e20 kind:load to:0x020bca28 add:0x8 module:main
 from:0x02072e24 kind:load to:0x020b38b0 module:main
 from:0x02072e34 kind:arm_call to:0x02099858 module:main
 from:0x02072e6c kind:arm_call to:0x02096dac module:main
