@@ -7,12 +7,14 @@
  * func_01ff8d4c calls the callback stored with it once the transfer is done.
  *
  * Bounds: hypothesis. 0x01FF8BEC follows the ITCM functions of the animation;
- * func_01ff8d4c shares the two globals of func_01ff8c64; 0x01FF8D84 after works on
- * another object (field 0x0C). The callback and its argument (data_020c7d20,
- * data_020c7d1c) are in the main module's .bss and stay there. The functions keep
- * C linkage and their addresses as names. No data. Real file name unknown.
+ * func_01ff8d4c shares the two globals of func_01ff8c64; the model functions
+ * from 0x01FF8D84 (unit_01FF8D84.cpp) may belong to this file too. The callback
+ * and its argument (data_020c7d20, data_020c7d1c) are in the main module's .bss
+ * and stay there. The functions keep C linkage and their addresses as names. No
+ * data. Real file name unknown.
  */
 
+#include "game/unk_matrix.h"
 #include "game/unk_model.h"
 
 /* Source, destination and control registers of DMA 0. */
@@ -32,7 +34,7 @@ void func_02079748(int dma);
 void func_0207a174(int mask, void (*handler)());
 void OS_EnableIrqMask(int mask);
 void func_01ff9404(Unk0208adc0 *set, void *data, Unk020bd014 *file);
-void func_01ff8dac(Unk02089f38 *model, int arg);
+void func_01ff8dac(Unk02089f38 *model, const Unk02098094 *mtx);
 
 int func_01ff8d30(void);
 void func_01ff8d4c(void);
@@ -46,12 +48,12 @@ void func_01ff8bec(Unk02089f38 *model) {
     func_01ff9404(&model->setA, model->data, model->file);
 }
 
-void func_01ff8c38(Unk02089f38 *model, int arg) {
+void func_01ff8c38(Unk02089f38 *model, const Unk02098094 *mtx) {
     if (model->file == 0) {
         return;
     }
     func_01ff8bec(model);
-    func_01ff8dac(model, arg);
+    func_01ff8dac(model, mtx);
 }
 
 int func_01ff8c64(Unk02089f38 *model, int async, void (*callback)(int), int arg) {

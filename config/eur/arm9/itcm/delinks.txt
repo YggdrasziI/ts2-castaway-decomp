@@ -8,6 +8,9 @@ src/game/unit_01FF8BEC.cpp:
     complete
     .text       start:0x01ff8bec end:0x01ff8d84
 
+src/game/unit_01FF8D84.cpp:
+    .text       start:0x01ff8d84 end:0x01ff9098
+
 src/game/unit_01FF9098.cpp:
     complete
     .text       start:0x01ff9098 end:0x01ff9924

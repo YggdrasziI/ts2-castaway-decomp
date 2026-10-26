@@ -47,6 +47,10 @@ default: add one here only once a unit of this ROM proves it with mwccarm.
 - A sum of 64-bit fixed-point products truncated once (`adds` without `adc`) is
   `(int)((((s64)a * b) >> 12) + ...)`; a sum of per-term `int` casts gives `add`
   (`func_02097c6c`, `func_02097d38`).
+- A running index next to two nested loop counters (`dst[k] = m[i][j]`): `k++`
+  inside the store copies k before the increment; `dst[k] = ...; k++;` with k
+  declared in the outer loop's init, `for (int i = 0, k = 0; ...)`, gives the
+  original's registers (`func_01ff8fd8`, 98.96 % -> 100 %).
 - Stack slots of local objects follow their declaration order: declare them so that
   the offsets match (`func_02097f1c`).
 - Results that the original computes in reverse order before one constructor call
