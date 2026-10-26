@@ -242,6 +242,10 @@ default: add one here only once a unit of this ROM proves it with mwccarm.
   assignment: `p = (const Point &)f(p.v);` with `struct Point { Vec v; }`
   (`func_02089cac`, 69.1 % -> 100 %). A plain `p = f(p)` is three stores; a new
   local initialized from the result takes its own slot (96.7 %).
+- `new T[n]` of a vector class with a constructor, even an empty inline one,
+  calls `__cxa_vec_new`; the original `_Znam(n * 12)` and the word-by-word copy
+  loop come from the plain base struct (`Unk02098ff0Base`) as element type
+  (`func_02089874`, 92.3 % -> 100 %).
 - A file-scope pointer initialized to 0 goes to `.bss`; when the ROM has it in
   `.data` next to another initialized word, a struct holding both with an
   initializer list puts it there (`unit_02093648.cpp`, hook and name). A string

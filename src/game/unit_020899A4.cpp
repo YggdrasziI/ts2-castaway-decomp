@@ -5,9 +5,9 @@
  * into the geometry engine (MTX_MODE 0x04000440) and maps screen points back
  * into the world.
  *
- * Bounds: hypothesis. Before 0x020899A4 lie the functions of another class (the
- * empty element constructor func_020899a0 that an ITCM function passes to
- * __cxa_vec_new ends them); 0x02089F38 starts unit_02089F38.cpp. No data. Real
+ * Bounds: hypothesis. Before 0x020899A4 lies the animation of unit_020897C0.cpp
+ * (the empty element constructor func_020899a0 that an ITCM function passes to
+ * __cxa_vec_new ends it); 0x02089F38 starts unit_02089F38.cpp. No data. Real
  * file name unknown.
  */
 

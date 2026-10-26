@@ -2997,10 +2997,10 @@ _u32_div_not_0_f kind:label(arm) addr:0x0208957c
 func_02089758 kind:function(arm,size=0x28) addr:0x02089758
 func_02089780 kind:function(arm,size=0x34) addr:0x02089780
 func_020897b4 kind:function(arm,size=0xc) addr:0x020897b4
-func_020897c0 kind:function(arm,size=0x5c) addr:0x020897c0
-func_0208981c kind:function(arm,size=0x58) addr:0x0208981c
-func_02089874 kind:function(arm,size=0x124) addr:0x02089874
-func_02089998 kind:function(arm,size=0x8) addr:0x02089998
+_ZN11Unk020897c0C1EP11Unk02093544i kind:function(arm,size=0x5c) addr:0x020897c0
+_ZN11Unk020897c0D1Ev kind:function(arm,size=0x58) addr:0x0208981c
+_ZN11Unk020897c013func_02089874EP11Unk02093544 kind:function(arm,size=0x124) addr:0x02089874
+_ZN11Unk020897c013func_02089998Ev kind:function(arm,size=0x8) addr:0x02089998
 func_020899a0 kind:function(arm,size=0x4) addr:0x020899a0
 _ZN11Unk020899a413func_020899a4ERK11Unk02098ff0i kind:function(arm,size=0x1a4) addr:0x020899a4
 _ZN11Unk020899a413func_02089b48Ei kind:function(arm,size=0x5c) addr:0x02089b48
