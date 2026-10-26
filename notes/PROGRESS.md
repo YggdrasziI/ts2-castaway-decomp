@@ -6,3 +6,4 @@
 | 2026-10-26 | 1a75823 | 49556 / 720836 bytes (6.87 %; fuzzy 8.20 %, linked 2.92 %) | 620 / 4557 | 39 / 89 | Step 6 under way: engine block delinked from 0x0208D304 to 0x0209A740 (resource files, heap, math, input, object entries and managers, text, fonts) and the pie menu |
 | 2026-10-26 | 6dfd7af | 52912 / 720836 bytes (7.34 %; fuzzy 8.87 %, linked 2.92 %) | 660 / 4557 | 39 / 90 | Texture manager unit: engine block delinked from 0x0208C050 to 0x0209A740 |
 | 2026-10-26 | 0a6dcdd | 53128 / 720836 bytes (7.37 %; fuzzy 8.94 %, linked 2.92 %) | 666 / 4557 | 39 / 92 | Transform set unit: engine block delinked from 0x0208BE3C to 0x0209A740 |
+| 2026-10-26 | f893a1c | 56080 / 720836 bytes (7.78 %; fuzzy 9.31 %, linked 3.46 %) | 700 / 4557 | 43 / 94 | Interface class, object pool and transform set units complete: engine block delinked from 0x0208B41C to 0x0209A740 |
