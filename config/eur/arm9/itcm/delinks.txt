@@ -1,6 +1,9 @@
     .text       start:0x01ff8000 end:0x01ffb0bc kind:code align:32
     .bss        start:0x01ffb0c0 end:0x01ffb0c0 kind:bss align:32
 
+src/game/unit_01FF84D0.cpp:
+    .text       start:0x01ff84d0 end:0x01ff8bec
+
 src/game/unit_01FF9098.cpp:
     complete
     .text       start:0x01ff9098 end:0x01ff9924

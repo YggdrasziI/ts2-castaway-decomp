@@ -256,6 +256,16 @@ default: add one here only once a unit of this ROM proves it with mwccarm.
   second (84.7 % -> 95.7 %). A mask parameter narrowed in place (`mask &= ...`)
   right after a second mask is taken from it, with the loop's count and pointer
   read first, gives the original registers (`func_01ff924c`, 89.7 % -> 100 %).
+- Two branches that store a vector into the same array element (a key's vector,
+  or an interpolated temporary) share the original's copy tail (`add r3, r1,
+  #0x10; ldm; stm`, with `r1` the element) only through an inline setter of the
+  element (`unk44[n].setPos(v)`, whose body does the wrapper assignment). A named
+  reference to the interpolated value moves its temporary to the top of the frame
+  (`func_01ff84f0`, 83.4 % -> 97.5 %).
+- A quaternion built member by member (`q.x = k->x; ...`) loads and stores each
+  field in turn as the original; the four-argument constructor loads all four
+  first (88.1 % -> 93.9 % with the key array read once into a local before the
+  branches).
 - A file-scope pointer initialized to 0 goes to `.bss`; when the ROM has it in
   `.data` next to another initialized word, a struct holding both with an
   initializer list puts it there (`unit_02093648.cpp`, hook and name). A string
