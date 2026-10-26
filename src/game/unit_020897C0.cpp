@@ -1,16 +1,15 @@
 /*
- * Unit 0x020897C0-0x020899A0: an animation (Unk020897c0, 0x4C bytes) read from a
+ * Unit 0x020897C0-0x020899A4: an animation (Unk020897c0, 0x4C bytes) read from a
  * resource file (Unk02093544): it keeps the file and two words of its header
  * block 0x13, the blocks 0x14 to 0x16, a frame rate derived from the third
  * header word, and a copy of the 12-byte records of block 0x14 allocated on its
  * heap. An ITCM function (0x01FF84F0) fills it.
  *
  * Bounds: hypothesis. 0x020897B4 before is an empty variadic function called from
- * everywhere; the class starts with its constructor. The empty constructor of the
- * 0x28-byte elements that the ITCM function passes to __cxa_vec_new
- * (func_020899a0) follows func_02089998 and is emitted with that ITCM function,
- * so it stays outside this unit; 0x020899A4 starts unit_020899A4.cpp. No data.
- * Real file name unknown.
+ * everywhere; the class starts with its constructor. It ends with the empty
+ * constructor of the 0x28-byte elements that the ITCM function passes to
+ * __cxa_vec_new, defined out of line here; 0x020899A4 starts unit_020899A4.cpp.
+ * No data. Real file name unknown.
  */
 
 #include "game/unk_file.h"
@@ -26,7 +25,7 @@ public:
 
 /* An element of the array the ITCM function allocates (0x28 bytes). */
 struct Unk020897c0Elem {
-    Unk020897c0Elem() {}
+    Unk020897c0Elem();
 
     int unk[10];
 };
@@ -115,3 +114,5 @@ void Unk020897c0::func_02089874(Unk02093544 *file) {
 int Unk020897c0::func_02089998() {
     return unk24;
 }
+
+Unk020897c0Elem::Unk020897c0Elem() {}
