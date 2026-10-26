@@ -64,6 +64,23 @@ default: add one here only once a unit of this ROM proves it with mwccarm.
 - A bool argument built from a flag: `(flags & 1) != 0` and `(flags & 1) ? 1 : 0`
   give the same `movne` / `moveq` but different loop registers around the call
   (`func_0201be00`, 99.7 % -> 100 %).
+- An early `bxeq lr` then unconditional code comes from the main result in the
+  `if` and the fallback after it (`if (x != -1) return a | f(x); return a;`); the
+  reverse order gives conditional `ldrne` / `movne` / `orrne` (`func_0208c110`,
+  87.2 % -> 100 %).
+- A count-down loop over a new array (`cmp n, #0; sub r3, n, #1; beq`, pointer
+  incremented in the body) is `p = array; i = count; while (i--) { p->f(); p++; }`
+  with an unsigned count; `for (i = 0; i < count; i++) array[i].f()` reloads both
+  (`func_0208d254`, 79.9 % -> 100 %).
+- An increment that the original schedules before the compare of a following `if`
+  (`add r7, r7, #1; cmp r8, #0`) is written before the preceding `if`
+  (`func_0208cdc4`, 96.9 % -> 100 %).
+- A field the original re-reads in a loop body although the loop condition just
+  loaded it (`next = nodes[next].left`): take a pointer to the element in the body,
+  `Node *n = &nodes[next]; parent = next; next = n->left;` (`func_0208c700`,
+  88.8 % -> 95.2 %).
+- Read the return register before naming a result: `mvn r0, #0; cmp r8, r0; popne`
+  returns -1 when the search finds the key, not the index found (`func_0208cf6c`).
 
 - A one-bit field set from a parameter: `bool` gives the plain `lsl #31` insert,
   an `int` adds an `lsl #16; lsr #16` truncation; `f = p ? 0 : 1` on a `bool`
@@ -93,6 +110,13 @@ default: add one here only once a unit of this ROM proves it with mwccarm.
   the dead-stripping link drops the unused one (`notes/COMPILER.md`). Names in
   `symbols.txt`: `_ZN<class>C1Ev`, `_ZN<class>D1Ev`, `__sinit_<file> ... local`,
   `.p__sinit_<file> ... local`, `@<n> ... local` (`unit_02099800.cpp`).
+- A struct returned by value through the hidden pointer and stored with one `stm`
+  of two locals comes from a user-declared constructor, `return R(first, count);`;
+  assigned field by field it is built in a stack copy first (`func_0208cdc4`,
+  84.8 % -> 96.9 %).
+- The declaration order of an inline function's locals has no effect on the code
+  where it is inlined: moving the body into the caller with the caller's own
+  locals let the declaration search work (`func_0208c700`).
 
 - Global `operator new` and friends: mwccarm mangles them `_Znwm`, `_Znam`, `_ZdlPv`,
   `_ZdaPv` (size_t is `unsigned long`). A `new T(...)` call site is `bl _Znwm`,
@@ -308,3 +332,8 @@ default: add one here only once a unit of this ROM proves it with mwccarm.
   `unit_0208F16C.cpp`). objdiff does not pair these sections with the original
   `.data` (`data_<addr>` symbols), so `.data` scores low although the bytes are
   right; it only shows once the file links as `complete`.
+- `p = new T(n)` where the original keeps the `operator new` result in a
+  callee-saved register (`movs r4, r0`), calls the constructor and stores r4:
+  mwccarm stores the constructor's return value (`cmp r0, #0` ... `str r0`) with
+  every 2.0 service pack, with `T` a template, with an inline constructor and with
+  a local copy (`func_0208c5c0`, 84.75 %).
