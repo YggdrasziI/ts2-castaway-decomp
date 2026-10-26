@@ -8,3 +8,4 @@
 | 2026-10-26 | 0a6dcdd | 53128 / 720836 bytes (7.37 %; fuzzy 8.94 %, linked 2.92 %) | 666 / 4557 | 39 / 92 | Transform set unit: engine block delinked from 0x0208BE3C to 0x0209A740 |
 | 2026-10-26 | f893a1c | 56080 / 720836 bytes (7.78 %; fuzzy 9.31 %, linked 3.46 %) | 700 / 4557 | 43 / 94 | Interface class, object pool and transform set units complete: engine block delinked from 0x0208B41C to 0x0209A740 |
 | 2026-10-26 | 34409cd | 61464 / 720836 bytes (8.53 %; fuzzy 10.05 %, linked 3.79 %) | 760 / 4557 | 46 / 98 | Model, model library, pool object and element set units: engine block delinked from 0x02089F38 to 0x0209A740 |
+| 2026-10-26 | 3408752 | 62892 / 720836 bytes (8.72 %; fuzzy 10.25 %, linked 3.99 %) | 766 / 4557 | 47 / 99 | Camera unit complete: engine block delinked from 0x020899A4 to 0x0209A740 |
