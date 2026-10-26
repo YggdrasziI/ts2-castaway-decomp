@@ -22,3 +22,4 @@
 | 2026-10-26 | de7adb4 | 75112 / 720836 bytes (10.42 %; fuzzy 12.41 %, linked 5.33 %) | 834 / 4557 | 56 / 111 | Palette set unit (9 / 14 functions at 100 %, the rest above 88 %) |
 | 2026-10-26 | 0d09c35 | 76740 / 720836 bytes (10.65 %; fuzzy 12.77 %, linked 5.33 %) | 851 / 4557 | 56 / 113 | Texture coordinate animation unit (17 / 21 functions at 100 %) and the software floating-point runtime named |
 | 2026-10-26 | 1ef3246 | 78400 / 720836 bytes (10.88 %; fuzzy 13.04 %, linked 5.33 %) | 865 / 4557 | 56 / 114 | Pool object resource unit (14 / 15 functions at 100 %) |
+| 2026-10-26 | 53a6001 | 78984 / 720836 bytes (10.96 %; fuzzy 13.25 %, linked 5.33 %) | 870 / 4557 | 56 / 115 | Pool effect unit (5 / 7 functions and the data at 100 %) |
