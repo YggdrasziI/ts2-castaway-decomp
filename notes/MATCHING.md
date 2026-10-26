@@ -213,6 +213,12 @@ default: add one here only once a unit of this ROM proves it with mwccarm.
   (`func_0208ccc0` 97.4 % -> 100 %, `func_0208cf6c` 99.4 % -> 100 %,
   `func_0208a4c8` 96.7 % -> 100 %).
 
+- Stack temporaries are laid out in creation order, top down. A product of two
+  matrices built from temporaries (`view = mul(T(-pos), R(rot).transposed())`)
+  gets the original slots only through an inline `mul` returning by value
+  around the out-of-line `void m.mul(a, b)`; named locals for the factors are
+  laid out in another order (`func_02089d48`, 99.9 % -> 100 %).
+
 ## Data layout
 
 - A dsd symbol inside a static object (here `data_020c806c`, the object + 4 that
@@ -231,6 +237,11 @@ default: add one here only once a unit of this ROM proves it with mwccarm.
   next local so the temporaries take the original stack slots (`func_0208befc`,
   92.3 % -> 100 %). The u16 members of such a struct must be separate fields: a
   `u16[4]` array is copied through the stack too (69.6 % -> 99.9 %).
+- Copying a returned vector back into the slot of a local (`ldm` / `stm` from the
+  call's temporary into the argument's slot) also needs the wrapper's implicit
+  assignment: `p = (const Point &)f(p.v);` with `struct Point { Vec v; }`
+  (`func_02089cac`, 69.1 % -> 100 %). A plain `p = f(p)` is three stores; a new
+  local initialized from the result takes its own slot (96.7 %).
 - A file-scope pointer initialized to 0 goes to `.bss`; when the ROM has it in
   `.data` next to another initialized word, a struct holding both with an
   initializer list puts it there (`unit_02093648.cpp`, hook and name). A string

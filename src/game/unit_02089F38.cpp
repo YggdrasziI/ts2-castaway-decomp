@@ -5,7 +5,7 @@
  * element sets read from the file; the library of unit_0208A0A8.cpp counts its
  * references.
  *
- * Bounds: hypothesis. Before 0x02089F38, func_02089d48 belongs to other code;
+ * Bounds: hypothesis. Before 0x02089F38 lies the camera (unit_020899A4.cpp);
  * 0x0208A0A8 starts the library (its constructor). No data. Real file name
  * unknown.
  */
