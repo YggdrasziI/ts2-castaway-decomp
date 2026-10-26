@@ -7,9 +7,13 @@ DS, built with [ds-decomp](https://github.com/AetiasHax/ds-decomp).
 This repository does **not** contain any game assets or assembly whatsoever. An existing
 copy of the game is required.
 
-Supported versions:
+It builds the following versions:
 
-- `eur`: `YS2P`, Rev 0 (Europe)
+Name | Description       | SHA1 Hash of input ROM(s)
+---- | ----------------- | ------------------------------------------
+eur  | Europe Revision 0 (`YS2P`) | `035eb8f242d3c83acb478b313e1b135c6aebc76d`
+
+The default version is `eur`, i.e. the Europe Revision 0 ROM.
 
 Progress
 ========
