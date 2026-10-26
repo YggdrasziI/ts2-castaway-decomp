@@ -12,3 +12,4 @@
 | 2026-10-26 | c01b862 | 63372 / 720836 bytes (8.79 %; fuzzy 10.31 %, linked 4.05 %) | 770 / 4557 | 48 / 101 | Animation unit complete: engine block delinked from 0x020897C0 to 0x0209A740 |
 | 2026-10-26 | e3d0c0c | 65564 / 720836 bytes (9.10 %; fuzzy 10.62 %, linked 4.36 %) | 782 / 4557 | 49 / 102 | First ITCM unit complete (element set functions 0x01FF9098-0x01FF9924) |
 | 2026-10-26 | 5565f52 | 66012 / 720836 bytes (9.16 %; fuzzy 10.86 %, linked 4.36 %) | 792 / 4557 | 49 / 104 | ITCM animation sampling unit (10 of 11 functions) |
+| 2026-10-26 | 8e32e70 | 66420 / 720836 bytes (9.21 %; fuzzy 10.92 %, linked 4.41 %) | 797 / 4557 | 50 / 105 | ITCM model unit complete (geometry FIFO send 0x01FF8BEC-0x01FF8D84) |

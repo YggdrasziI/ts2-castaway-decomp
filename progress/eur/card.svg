@@ -8,14 +8,14 @@ text{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,san
 </style>
 <rect class="bg" x="0.5" y="0.5" width="759" height="349" rx="6"/>
 <text class="t b" x="16" y="34">The Sims 2: Castaway (eur)</text>
-<text class="m" x="744" y="34" text-anchor="end">commit 5565f52</text>
+<text class="m" x="744" y="34" text-anchor="end">commit 8e32e70</text>
 <text class="t" x="16" y="60">Code</text>
 <rect class="track" x="186" y="49" width="300" height="12" rx="3"/>
-<rect class="fuzzy" x="186" y="49" width="32.6" height="12" rx="2"/>
-<rect class="perfect" x="186" y="49" width="27.5" height="12" rx="2"/>
-<rect class="linked" x="186" y="49" width="13.1" height="12" rx="2"/>
-<text class="t" x="674" y="60" text-anchor="end">66,012 / 720,836 bytes</text>
-<text class="m" x="744" y="60" text-anchor="end">9.16 %</text>
+<rect class="fuzzy" x="186" y="49" width="32.8" height="12" rx="2"/>
+<rect class="perfect" x="186" y="49" width="27.6" height="12" rx="2"/>
+<rect class="linked" x="186" y="49" width="13.2" height="12" rx="2"/>
+<text class="t" x="674" y="60" text-anchor="end">66,420 / 720,836 bytes</text>
+<text class="m" x="744" y="60" text-anchor="end">9.21 %</text>
 <text class="t" x="16" y="86">Data</text>
 <rect class="track" x="186" y="75" width="300" height="12" rx="3"/>
 <rect class="fuzzy" x="186" y="75" width="95.8" height="12" rx="2"/>
@@ -25,11 +25,11 @@ text{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,san
 <text class="m" x="744" y="86" text-anchor="end">31.94 %</text>
 <text class="t" x="16" y="112">Functions</text>
 <rect class="track" x="186" y="101" width="300" height="12" rx="3"/>
-<rect class="fuzzy" x="186" y="101" width="52.1" height="12" rx="2"/>
-<rect class="perfect" x="186" y="101" width="52.1" height="12" rx="2"/>
-<rect class="linked" x="186" y="101" width="28.7" height="12" rx="2"/>
-<text class="t" x="674" y="112" text-anchor="end">792 / 4,557</text>
-<text class="m" x="744" y="112" text-anchor="end">17.38 %</text>
+<rect class="fuzzy" x="186" y="101" width="52.5" height="12" rx="2"/>
+<rect class="perfect" x="186" y="101" width="52.5" height="12" rx="2"/>
+<rect class="linked" x="186" y="101" width="29.0" height="12" rx="2"/>
+<text class="t" x="674" y="112" text-anchor="end">797 / 4,557</text>
+<text class="m" x="744" y="112" text-anchor="end">17.49 %</text>
 <text class="t b" x="16" y="146">Code by region</text>
 <text class="t" x="16" y="172">Game</text>
 <rect class="track" x="186" y="161" width="300" height="12" rx="3"/>
@@ -62,11 +62,11 @@ text{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,san
 <text class="m" x="744" y="276" text-anchor="end">0.00 %</text>
 <text class="t" x="16" y="302">Other</text>
 <rect class="track" x="186" y="291" width="300" height="12" rx="3"/>
-<rect class="fuzzy" x="186" y="291" width="77.6" height="12" rx="2"/>
-<rect class="perfect" x="186" y="291" width="54.0" height="12" rx="2"/>
-<rect class="linked" x="186" y="291" width="44.6" height="12" rx="2"/>
-<text class="t" x="674" y="302" text-anchor="end">3,068 / 17,040 bytes</text>
-<text class="m" x="744" y="302" text-anchor="end">18.00 %</text>
+<rect class="fuzzy" x="186" y="291" width="84.8" height="12" rx="2"/>
+<rect class="perfect" x="186" y="291" width="61.2" height="12" rx="2"/>
+<rect class="linked" x="186" y="291" width="51.8" height="12" rx="2"/>
+<text class="t" x="674" y="302" text-anchor="end">3,476 / 17,040 bytes</text>
+<text class="m" x="744" y="302" text-anchor="end">20.40 %</text>
 <rect class="linked" x="16" y="322" width="12" height="12" rx="2"/>
 <text class="m" x="34" y="332">linked from source</text>
 <rect class="perfect" x="166" y="322" width="12" height="12" rx="2"/>
