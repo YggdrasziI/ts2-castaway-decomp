@@ -18,3 +18,4 @@
 | 2026-10-26 | 26b91b1 | 67712 / 720836 bytes (9.39 %; fuzzy 11.34 %, linked 4.41 %) | 803 / 4557 | 50 / 106 | Pool draw order sort added to the ITCM pool drawing unit |
 | 2026-10-26 | 03ab275 | 69748 / 720836 bytes (9.68 %; fuzzy 11.62 %, linked 4.70 %) | 811 / 4557 | 51 / 107 | ITCM transform set unit (complete) |
 | 2026-10-26 | 46faa29 | 71276 / 720836 bytes (9.89 %; fuzzy 11.84 %, linked 4.91 %) | 816 / 4557 | 52 / 107 | ITCM VRAM transfer unit (complete) |
+| 2026-10-26 | 2212dff | 73880 / 720836 bytes (10.25 %; fuzzy 12.01 %, linked 5.33 %) | 825 / 4557 | 56 / 109 | Whole ITCM delinked: start of the ITCM (EA, NitroSDK DMA and IRQ), animation unit complete |
