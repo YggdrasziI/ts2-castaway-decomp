@@ -67,6 +67,15 @@ default: add one here only once a unit of this ROM proves it with mwccarm.
   not move them across (`func_01ff9f00`, 74.6 % -> 98.4 %).
 - Stack slots of local objects follow their declaration order: declare them so that
   the offsets match (`func_02097f1c`).
+- A local object that the original keeps below the call temporaries (lowest stack
+  slot), or temporaries in the reverse order of named locals: write the
+  computation as an inline helper returning the object by value
+  (`func_mul(a, b)` for a matrix product, `func_scale(v, t)` for a vector), whose
+  locals take the lowest slots (`func_01ffa838`, `func_01ffa364`).
+- Loop locals one register off around a call result: declare the other locals
+  without initializer before the one initialised by the call, then assign them
+  (`func_01ffa838`, 99.5 % -> 100 %). Two pointers swapped: swap their
+  declarations (`func_01ffa538`).
 - Results that the original computes in reverse order before one constructor call
   (z, y, x, then `stm`) come from locals assigned in that order and passed to the
   constructor (`func_020983ac`, 91.7 % -> 100 %).

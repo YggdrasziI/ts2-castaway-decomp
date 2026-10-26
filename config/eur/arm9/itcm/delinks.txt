@@ -17,3 +17,7 @@ src/game/unit_01FF9098.cpp:
 
 src/game/unit_01FF9924.cpp:
     .text       start:0x01ff9924 end:0x01ffa2d0
+
+src/game/unit_01FFA2D0.cpp:
+    complete
+    .text       start:0x01ffa2d0 end:0x01ffaac4
