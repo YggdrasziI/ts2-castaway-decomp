@@ -5,7 +5,7 @@
  *
  * Bounds: hypothesis. Before 0x02097B6C lie fixed-point helpers (hardware square
  * root, arc cosine table); 0x02098094 starts unit_02098094.cpp (4x4 matrix). Real file name unknown.
- * Not complete: func_02097f78 does not match yet (comment above it).
+ * Not complete: func_02097f78 at 63.59 % (comment above it).
  */
 
 #include "game/unk_matrix.h"
@@ -106,22 +106,22 @@ Unk02097b6c Unk02097b6c::func_02097f1c(int z, int y, int x) {
     return r;
 }
 
-/* 51.49 %: same products, but the original computes the table indices of c, b,
+/* 63.59 %: same products, but the original computes the table indices of c, b,
  * then a, loads sin b, cos c, sin c, sin a, cos b, cos a, and schedules the nine
- * elements in another order. Local orders, index locals and int / short types were
- * tried. */
+ * elements in another order. Writing sb * sc and sb * cc inside each element
+ * (no locals) and this load order gave the best score; the 720 load orders,
+ * index locals, int / short types, commuted products, element locals and a
+ * product helper were tried. */
 Unk02097b6c Unk02097b6c::func_02097f78(int a, int b, int c) {
+    short sa = func_sin(a);
     short sc = func_sin(c);
     short cc = func_cos(c);
     short sb = func_sin(b);
     short cb = func_cos(b);
-    short sa = func_sin(a);
     short ca = func_cos(a);
-    int sbcc = (sb * cc) >> 12;
-    int sbsc = (sb * sc) >> 12;
 
-    return Unk02097b6c(((sa * sbsc) >> 12) + ((ca * cc) >> 12), ((ca * sbsc) >> 12) + ((-sa * cc) >> 12),
+    return Unk02097b6c(((sa * ((sb * sc) >> 12)) >> 12) + ((ca * cc) >> 12), ((ca * ((sb * sc) >> 12)) >> 12) + ((-sa * cc) >> 12),
                        (cb * sc) >> 12, (sa * cb) >> 12, (ca * cb) >> 12, -sb,
-                       ((sa * sbcc) >> 12) + ((ca * -sc) >> 12), ((ca * sbcc) >> 12) + ((sa * sc) >> 12),
+                       ((sa * ((sb * cc) >> 12)) >> 12) + ((ca * -sc) >> 12), ((ca * ((sb * cc) >> 12)) >> 12) + ((sa * sc) >> 12),
                        (cb * cc) >> 12);
 }
