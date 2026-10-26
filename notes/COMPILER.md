@@ -100,6 +100,16 @@ Only 0x02080114-0x02085EEC (MSL / runtime) has `.exceptix` entries: that code is
 built with C++ exception tables, the game and the other libraries are not (or have no
 function that needs one). CRI middleware (twewy's `libs/cri`) is absent: only 8-byte or mid-function hits.
 
+## Runtime: software floating point
+
+The game is built with `-fp soft`: mwccarm 2.0/sp1p5 turns `float` operations into
+calls to runtime functions. A probe (`(float)s / 4096.0f`, `> 0`, `* 4096.0f`,
+`+ 0.5f`, `- 0.5f`, `(int)`) emits `_fflt`, `_fdiv`, `_fgr`, `_fmul`, `_fadd`,
+`_fsub` and `_ffix`, in the same order and with the same arguments as the calls of
+0x020709E8 to 0x020886E4, 0x02087EF8, 0x02087E90, 0x0208882C, 0x02087268,
+0x02088D18 and 0x020885E8, which are named so in `symbols.txt`. They sit in the
+MSL / runtime region; their source file is unknown.
+
 ## Candidates
 
 Available in `tools/mwccarm/`: 1.2 (base, b56, sp2, sp2p3, sp3, sp4), 2.0 (base, sp1,
