@@ -24,3 +24,4 @@
 | 2026-10-26 | 1ef3246 | 78400 / 720836 bytes (10.88 %; fuzzy 13.04 %, linked 5.33 %) | 865 / 4557 | 56 / 114 | Pool object resource unit (14 / 15 functions at 100 %) |
 | 2026-10-26 | 53a6001 | 78984 / 720836 bytes (10.96 %; fuzzy 13.25 %, linked 5.33 %) | 870 / 4557 | 56 / 115 | Pool effect unit (5 / 7 functions and the data at 100 %) |
 | 2026-10-26 | a634537 | 81608 / 720836 bytes (11.32 %; fuzzy 13.75 %, linked 5.33 %) | 887 / 4557 | 56 / 117 | Game state (6 / 7 functions and its vtable data at 100 %) and item catalog (11 / 12) units |
+| 2026-10-26 | a7745f8 | 82032 / 720836 bytes (11.38 %; fuzzy 13.81 %, linked 5.33 %) | 893 / 4557 | 56 / 118 | Game state id 1 unit (6 / 6 functions and its data at 100 %, waiting on the first base vtable copy to link) |
