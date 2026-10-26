@@ -14,28 +14,9 @@
 
 #include "game/unk_matset.h"
 #include "game/unk_blocks.h"
+#include "game/unk_texture.h"
 
 typedef unsigned char u8;
-
-/* Declarations of unit_0208C050.cpp, reduced to what this file uses. */
-class Unk0208c050 {
-public:
-    u32 func_0208c110();
-    int func_0208c134();
-
-    int texOffset;
-    int unk04[9];
-    s16 refs;
-};
-
-class Unk020c7f48 {
-public:
-    void func_0208caa8(int id);
-    Unk0208c050 *func_0208cc70(int id);
-    int func_0208ccc0(int key);
-};
-
-Unk020c7f48 *func_0208c578();
 
 extern "C" {
 void func_02099b84(const void *src, void *dest, u32 size);
