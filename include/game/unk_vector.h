@@ -48,6 +48,7 @@ struct Unk02098ff0Base {
 
 class Unk02098ff0 : public Unk02098ff0Base {
 public:
+    Unk02098ff0() {}
     Unk02098ff0(int x, int y, int z) {
         this->x = x;
         this->y = y;
