@@ -15,6 +15,7 @@
  */
 
 #include "game/unk_matrix.h"
+#include "game/unk_matset.h"
 
 typedef unsigned short u16;
 typedef unsigned long u32;
@@ -31,41 +32,6 @@ public:
     u32 size;
 };
 
-/* Sub-object of the pool records (0x18 bytes), built by func_0208adc0. */
-struct Unk0208adc0 {
-    int unk0[3];
-    int unk0c[3];
-};
-
-/* The 0x24-byte argument of func_01ff924c. */
-struct Unk0208bd58Arg {
-    Unk0208bd58Arg() {
-        unk0 = 0;
-        unk4 = 0;
-        unk8 = 0;
-        unk0c = 0;
-        unk10 = 0;
-        unk14 = 0;
-        unk18 = 0;
-        unk1c = 0;
-        unk1e = 0;
-        unk20 = 0x1000;
-        unk22 = 0x1000;
-    }
-
-    int unk0;
-    int unk4;
-    int unk8;
-    int unk0c;
-    int unk10;
-    int unk14;
-    int unk18;
-    u16 unk1c;
-    u16 unk1e;
-    u16 unk20;
-    u16 unk22;
-};
-
 struct Unk0208b554Item;
 
 extern "C" {
@@ -73,10 +39,7 @@ void func_0208ac48(Unk0208b554Item *item, void *data);
 Unk0208adc0 *func_0208ad18(Unk0208b554Item *item);
 void func_0208ad60(Unk0208b554Item *item);
 void func_0208ad80(Unk0208b554Item *item);
-void func_0208adc0(Unk0208adc0 *obj);
-void func_0208ade4(Unk0208adc0 *obj);
-void func_0208b25c(Unk0208bd58Arg *arg, u32 value);
-void func_01ff924c(Unk0208adc0 *obj, Unk0208bd58Arg *arg, int value);
+void func_01ff924c(Unk0208adc0 *obj, Unk0208af38 *arg, int value);
 void func_02099afc(int id);
 void func_02099b28(void);
 void func_02099b90(u32 data, void *dest, u32 size);
@@ -85,23 +48,11 @@ int func_02077c60(int a, int b);
 
 /* One pooled object (0x40 bytes). */
 struct Unk0208b554Item {
-    Unk0208b554Item() {
-        unk0 = 0;
-        unk4 = 0;
-        unk8 = 0;
-        unk0c = 0;
-        unk10 = 0;
-        unk14 = 0;
-        unk18 = 0;
-        unk1c = 0;
-        func_0208adc0(&unk20);
-        unk38 = 0;
-        flags = 0;
-        index = -1;
-    }
+    Unk0208b554Item()
+        : unk0(0), unk4(0), unk8(0), unk0c(0), unk10(0), unk14(0), unk18(0), unk1c(0), unk38(0), flags(0),
+          index(-1) {}
     ~Unk0208b554Item() {
         func_0208ad80(this);
-        func_0208ade4(&unk20);
     }
 
     int unk0;
@@ -120,12 +71,6 @@ struct Unk0208b554Item {
 
 /* A 0x84-byte record of the two record arrays. */
 struct Unk0208b554Record {
-    Unk0208b554Record() {
-        func_0208adc0(&unk4);
-    }
-    ~Unk0208b554Record() {
-        func_0208ade4(&unk4);
-    }
 
     int unk0;
     Unk0208adc0 unk4;
@@ -409,13 +354,13 @@ void Unk020c7d38::func_0208bd58(int index, u16 value) {
         flags |= 2;
         unk24[index] = value;
     }
-    Unk0208bd58Arg arg;
+    Unk0208af38 arg;
     Unk0208b554Item *item = &items[index];
     u32 level = ((u32)value << 6) >> 16;
     if (level > 0x3f) {
         level = 0x3f;
     }
-    func_0208b25c(&arg, level);
+    arg.func_0208b25c(level);
     func_01ff924c(func_0208ad18(item), &arg, 0x3f000000);
 }
 
