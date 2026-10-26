@@ -197,6 +197,22 @@ default: add one here only once a unit of this ROM proves it with mwccarm.
   scratch script) found 100 % for `func_02092a34` where full permutations are too
   many.
 
+- `p = new T(n)` where the original keeps the `operator new` result in a
+  callee-saved register (`movs r4, r0`), calls the "constructor" and stores r4
+  (not the call's return value): the called function is not the constructor but
+  an initializer returning `*this`, called by an inline constructor
+  (`T(u32 n) { init(n); }`). Same code at the callee, and the caller ignores its
+  return value (`func_0208c5c0` 84.75 % -> 100 %, `func_0208a1f8` 99.6 % ->
+  100 %). `-Cpp_exceptions on` also keeps the pointer but adds exception tables
+  the ROM does not have.
+- A lookup inlined in some functions but called out of line (and emitted after
+  it) by another: two functions with the same body. The out-of-line one is an
+  `inline` function defined after its caller; the inlined one is defined in the
+  class body (used by `contains` / `get`). The two copies can need different
+  local forms: without a `base` pointer local the inlined copies match
+  (`func_0208ccc0` 97.4 % -> 100 %, `func_0208cf6c` 99.4 % -> 100 %,
+  `func_0208a4c8` 96.7 % -> 100 %).
+
 ## Data layout
 
 - A dsd symbol inside a static object (here `data_020c806c`, the object + 4 that
@@ -352,8 +368,3 @@ default: add one here only once a unit of this ROM proves it with mwccarm.
   `unit_0208F16C.cpp`). objdiff does not pair these sections with the original
   `.data` (`data_<addr>` symbols), so `.data` scores low although the bytes are
   right; it only shows once the file links as `complete`.
-- `p = new T(n)` where the original keeps the `operator new` result in a
-  callee-saved register (`movs r4, r0`), calls the constructor and stores r4:
-  mwccarm stores the constructor's return value (`cmp r0, #0` ... `str r0`) with
-  every 2.0 service pack, with `T` a template, with an inline constructor and with
-  a local copy (`func_0208c5c0`, 84.75 %).
