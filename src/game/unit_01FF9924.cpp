@@ -1,5 +1,5 @@
 /*
- * ITCM unit 0x01FF9924-0x01FFA1E0: drawing of the object pool (Unk020c7d38,
+ * ITCM unit 0x01FF9924-0x01FFA2D0: drawing of the object pool (Unk020c7d38,
  * include/game/unk_pool.h). func_01ff9924 fills the back record array: for each
  * object in use, its model, a copy of its element set, its world matrix (from the
  * object's angles and position, optionally followed by one of the pool's frames)
@@ -7,14 +7,16 @@
  * record arrays and the light rows and starts sending the records; func_01ff9f00
  * loads one record's matrix and the four lights into the geometry engine and
  * sends its model with func_01ff8c64, whose callback func_01ffa180 sends the
- * next one.
+ * next one. func_01ffa1e0 sorts the drawing order by priority (unk24), then by
+ * object index.
  *
  * Bounds: hypothesis. Before 0x01FF9924 lies unit_01FF9098.cpp (element set);
- * 0x01FFA1E0 after is called by func_01ff9924 and not yet decompiled. The camera
+ * 0x01FFA2D0 after works on the transform set (Unk0208be3c). The camera
  * fields of the pool (0x54-0x158) have the layout of Unk020899a4
  * (include/game/unk_camera.h) and are read through it. The functions keep C
  * linkage and their addresses as names. No data. Real file name unknown.
- * Not complete: func_01ff9924 is at 84.41 % (comment above it).
+ * Not complete: func_01ff9924 84.41 %, func_01ffa1e0 95.22 % (comments above
+ * them).
  */
 
 #include "game/unk_pool.h"
@@ -300,5 +302,34 @@ void func_01ffa180(Unk020c7d38 *pool) {
     } else {
         pool->flags &= ~1;
     }
+}
+
+/*
+ * 95.22 %: register allocation (the original keeps the count in lr, i in r1, best
+ * in r2 and loads unk24 before unk20). Tried: the comparison as an inline
+ * helper, nested ifs or reversed, int / u16 indices, swap forms, loop variable
+ * declarations.
+ */
+void func_01ffa1e0(Unk020c7d38 *pool) {
+    int i;
+    for (i = 0; i < pool->count; i++) {
+        pool->unk20[i] = i;
+    }
+    for (i = 0; i < pool->count; i++) {
+        int j = i;
+        int best = i;
+        for (; j < pool->count; j++) {
+            u16 a = pool->unk20[best];
+            u16 b = pool->unk20[j];
+            if (pool->unk24[a] > pool->unk24[b] ||
+                (pool->unk24[a] == pool->unk24[b] && pool->items[a].index > pool->items[b].index)) {
+                best = j;
+            }
+        }
+        u16 t = pool->unk20[i];
+        pool->unk20[i] = pool->unk20[best];
+        pool->unk20[best] = t;
+    }
+    pool->flags &= ~2;
 }
 }
