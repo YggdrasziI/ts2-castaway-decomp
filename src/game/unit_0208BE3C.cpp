@@ -13,23 +13,13 @@
 
 #include "game/unk_file.h"
 #include "game/unk_matrix.h"
+#include "game/unk_quat.h"
 
 class Unk02095d1c : public Unk0209487c {
 public:
     Unk02095d1c(void *data);
     ~Unk02095d1c();
     int func_02095d70();
-};
-
-class Unk020988d8 {
-public:
-    Unk020988d8() {}
-    void func_020988d8();
-
-    int x;
-    int y;
-    int z;
-    int w;
 };
 
 extern "C" {

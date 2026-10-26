@@ -1,6 +1,6 @@
 /*
- * Unit 0x020988D8-0x02098BC8: a quaternion (Unk020988d8: x, y, z, w in 20.12 fixed
- * point): identity, norm, rotation matrix, spherical interpolation.
+ * Unit 0x020988D8-0x02098BC8: a quaternion (Unk020988d8, include/game/unk_quat.h:
+ * x, y, z, w in 20.12 fixed point): identity, norm, rotation matrix, spherical interpolation.
  *
  * Bounds: hypothesis. Before 0x020988D8 lies unit_020987D8.cpp (a plane); 0x02098BC8
  * starts unit_02098BC8.cpp (a rectangle). The matrix and interpolation functions
@@ -11,6 +11,7 @@
  */
 
 #include "game/unk_matrix.h"
+#include "game/unk_quat.h"
 
 typedef unsigned short u16;
 
@@ -20,25 +21,6 @@ extern "C" const short data_020af1e8[];
 static inline int func_sin(u16 index) {
     return data_020af1e8[(index >> 4) * 2];
 }
-
-class Unk020988d8 {
-public:
-    Unk020988d8(int x, int y, int z, int w) {
-        this->x = x;
-        this->y = y;
-        this->z = z;
-        this->w = w;
-    }
-    void func_020988d8();
-    int func_020988f4() const;
-    Unk02097b6c func_02098934() const;
-    Unk020988d8 func_02098a5c(const Unk020988d8 &o, int t) const;
-
-    int x;
-    int y;
-    int z;
-    int w;
-};
 
 void Unk020988d8::func_020988d8() {
     x = 0;
