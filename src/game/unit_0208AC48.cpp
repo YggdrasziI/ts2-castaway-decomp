@@ -14,16 +14,20 @@
 #include "game/unk_poolitem.h"
 #include "game/unk_model.h"
 
+class Unk0208a0a8 {
+public:
+    Unk02089f38 *func_0208a4c8(int key);
+};
+
 extern "C" {
-Unk02089f38 *func_0208a4c8(void *library, void *key);
 void func_01ff9624(Unk0208adc0 *set);
 void func_01ff97bc(Unk0208adc0 *set);
 void func_01ff9838(Unk0208adc0 *set);
 }
 
-extern void *data_020c7d24;
+extern Unk0208a0a8 *data_020c7d24;
 
-void Unk0208b554Item::func_0208ac48(void *key) {
+void Unk0208b554Item::func_0208ac48(int key) {
     flags |= 1;
     this->key = key;
     func_0208ad80();
@@ -31,7 +35,7 @@ void Unk0208b554Item::func_0208ac48(void *key) {
 
 Unk02089f38 *Unk0208b554Item::func_0208ac64() {
     if (flags & 1) {
-        model = func_0208a4c8(data_020c7d24, key);
+        model = data_020c7d24->func_0208a4c8(key);
         if (model != 0) {
             model->func_0208a084();
             set.func_0208af70(*model->func_0208a050());

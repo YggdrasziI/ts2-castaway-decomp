@@ -20,6 +20,7 @@ typedef unsigned long u32;
 class Unk0208a0a8 {
 public:
     Unk0208a0a8();
+    static void func_0208ab3c(Unk0208a0a8 *library);
 
     int unk[4];
 };
@@ -50,7 +51,6 @@ extern "C" void func_0207b4cc();
 extern "C" void func_0207bbd4();
 extern "C" int OS_EnableInterrupts();
 extern "C" void func_0207cf0c();
-extern "C" void func_0208ab3c();
 extern "C" void func_0208dac8();
 void func_020916a4();
 extern "C" void func_02095134(int x);
@@ -132,7 +132,7 @@ void func_02096b8c() {
     func_020916a4();
     func_0208dac8();
     data_020c7f78 = new Unk0208a0a8;
-    func_0208ab3c();
+    Unk0208a0a8::func_0208ab3c(data_020c7f78);
     *(volatile u32 *)0x4000580 = 0xbfff0000;
     func_02096a74(0x6c3, 0xe80, 0x1555, 0x333, 0xc8000);
 }

@@ -18,7 +18,7 @@ struct Unk0208b554Item {
     ~Unk0208b554Item() {
         func_0208ad80();
     }
-    void func_0208ac48(void *key);
+    void func_0208ac48(int key);
     Unk02089f38 *func_0208ac64();
     Unk0208adc0 *func_0208ad18();
     void func_0208ad38(int value);
@@ -32,7 +32,7 @@ struct Unk0208b554Item {
     int unk0c;
     int unk10;
     int unk14;
-    void *key;
+    int key;
     Unk02089f38 *model;
     Unk0208adc0 set;
     int unk38;

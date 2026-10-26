@@ -112,6 +112,9 @@ src/game/unit_02089F38.cpp:
     complete
     .text       start:0x02089f38 end:0x0208a0a8
 
+src/game/unit_0208A0A8.cpp:
+    .text       start:0x0208a0a8 end:0x0208ac48
+
 src/game/unit_0208AC48.cpp:
     complete
     .text       start:0x0208ac48 end:0x0208adc0

@@ -89,7 +89,7 @@ public:
     void func_0208b744();
     void func_0208b99c(u32 count, u32 size);
     void func_0208b9dc();
-    int func_0208bbf4(void *data);
+    int func_0208bbf4(int key);
     void func_0208bc68(int index, bool used);
     bool func_0208bcd0(int index);
     Unk0208b554Item *func_0208bcfc(int index);
@@ -257,7 +257,7 @@ void Unk020c7d38::func_0208b9dc() {
     active.func_0209a164();
 }
 
-int Unk020c7d38::func_0208bbf4(void *data) {
+int Unk020c7d38::func_0208bbf4(int key) {
     if (count >= capacity) {
         return -1;
     }
@@ -265,7 +265,7 @@ int Unk020c7d38::func_0208bbf4(void *data) {
         func_0208b744();
     }
     int index = count;
-    items[index].func_0208ac48(data);
+    items[index].func_0208ac48(key);
     count++;
     unk38[index] = 0;
     func_0208bc68(index, true);
