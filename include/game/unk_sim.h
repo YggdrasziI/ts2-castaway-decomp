@@ -12,6 +12,7 @@
 #include "game/unk_blockfile.h"
 #include "game/unk_xform.h"
 #include "game/unk_anim.h"
+#include "game/unk_animinst.h"
 #include "game/unk_texture.h"
 #include "game/unk_model.h"
 #include "game/unk_palset.h"
@@ -87,11 +88,6 @@ struct Unk0202071c {
     u32 value;
 };
 
-/* A played animation (func_02063d84 returns its sampler). */
-struct Unk02063d84 {
-    int unk0;
-    Unk020897c0 *anim;
-};
 
 struct Unk02058788;
 
