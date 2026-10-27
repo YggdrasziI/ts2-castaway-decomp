@@ -488,6 +488,18 @@ default: add one here only once a unit of this ROM proves it with mwccarm.
 - An inline `operator==` taking its operand by value copies it to the stack as
   halfword blocks, then compares field by field (`func_0206ea00`, cell compare).
 
+- Stack temporaries filled with halfword block copies of a member struct, with no
+  constructor call, come from an inline function taking the struct by value
+  (`o->func_set(unk204, 4, key, v)` with `void func_set(Unk0206bcf0Cell c, ...)
+  { cell = c; ... }`): `func_0206e424` 81.3 % -> 94.6 %. The same holds for a
+  returned struct used once: `item->func_14().func_moved(d)` (`func_0206e134`,
+  88.1 % -> 99.9 %), and for a member of a returned struct given to a `const &`
+  helper (`func_tileAt(layer, o->func_14().xy)`, `func_0206da24`).
+- A check repeated on a local (`func_02059418(&c) && c.xy.x >= 0 && c.xy.y >= 0`)
+  written in an inline helper taking the cell by `const &` lets the original keep
+  the coordinates in registers for the next comparison (`func_0206ea00`,
+  95.4 % -> 98.7 %).
+
 ## Control flow
 
 - A two-way test whose original keeps the `== 0` branch conditional (`ldreq`,

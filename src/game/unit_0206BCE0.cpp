@@ -154,6 +154,10 @@ public:
 
 struct Unk0206bcf0Xy {
     Unk0206bcf0Xy() {}
+    Unk0206bcf0Xy(s16 x, s16 y) {
+        this->x = x;
+        this->y = y;
+    }
 
     bool operator==(Unk0206bcf0Xy o) const {
         return x == o.x && y == o.y;
@@ -176,6 +180,10 @@ struct Unk0206bcf0Cell {
 
     bool operator==(Unk0206bcf0Cell o) const {
         return pos == o.pos && xy == o.xy;
+    }
+
+    Unk0206bcf0Cell func_moved(Unk0206bcf0Xy d) const {
+        return Unk0206bcf0Cell(pos.unk3, pos.unk2, pos.unk0, xy.x + d.x, xy.y + d.y);
     }
 
     Unk020593e4 pos;
@@ -482,6 +490,11 @@ struct Unk02007340 {
 
 /* The kinds of objects of data_020be184 created by func_0206e424. */
 struct Unk02007340K0c {
+    void func_set(Unk0206bcf0Cell c, Unk02058eb8 *p) {
+        cell = c;
+        unk28 = p;
+    }
+
     u8 unk0[0x20];
     Unk0206bcf0Cell cell;
     Unk02058eb8 *unk28;
@@ -495,6 +508,13 @@ struct Unk02007340K06 {
 };
 
 struct Unk02007340K0e {
+    void func_set(Unk0206bcf0Cell c, int type, int key, int value) {
+        cell = c;
+        this->type = type;
+        this->key = key;
+        this->value = value;
+    }
+
     u8 unk0[0x22];
     Unk0206bcf0Cell cell;
     int type;
@@ -507,6 +527,10 @@ struct Unk02007340K0e {
 };
 
 struct Unk02007340K11 {
+    void func_set(Unk0206bcf0Cell c) {
+        cell = c;
+    }
+
     u8 unk0[0x24];
     int unk24;
     u8 unk28[8];
@@ -831,6 +855,7 @@ public:
     bool func_isPaused() const {
         return unk22c & 1;
     }
+
 };
 
 static Unk0206bcf0 *data_020c4780;
@@ -845,8 +870,12 @@ static inline int func_index(int x, int y, u32 w) {
     return y * w + x;
 }
 
-static inline u32 *func_tileAt(Unk02056ed0 *l, const Unk0206bcf0Xy *p) {
-    return &l->tiles[func_index(p->x, p->y, l->info->width)];
+static inline u32 *func_tileAt(Unk02056ed0 *l, const Unk0206bcf0Xy &p) {
+    return &l->tiles[func_index(p.x, p.y, l->info->width)];
+}
+
+static inline bool func_isPlaced(const Unk0206bcf0Cell &c) {
+    return func_02059418(&c) && c.xy.x >= 0 && c.xy.y >= 0;
 }
 
 static inline bool func_isWater(u32 tile) {
@@ -1541,7 +1570,7 @@ void Unk0206bcf0::func_0206d9c4(Unk0206bcf0Ray ray) {
     func_0206da24(&unk204);
 }
 
-/* 98.41 %: stack slots and registers of the entry and the cell copies. */
+/* 98.79 %: stack slots and registers of the entry and the cell copies. */
 void Unk0206bcf0::func_0206da24(Unk0206bcf0Cell *cell) {
     Unk020c3ba4 *world = &data_020c3ba4;
     Unk02058788 *map = func_02058788(world, world->map);
@@ -1560,14 +1589,10 @@ void Unk0206bcf0::func_0206da24(Unk0206bcf0Cell *cell) {
             func_0205f098(&ctx);
             for (Unk0206bcf0Item *o = func_0205fb4c(data_020c3fd4, 0x12d2c5be, &ctx, map->unk24); o != 0; o = o->next) {
                 Unk0206bcf0Cell c = o->func_14();
-                if (!func_02059418(&c)) {
+                if (!func_isPlaced(c)) {
                     continue;
                 }
-                if (c.xy.x < 0 || c.xy.y < 0) {
-                    continue;
-                }
-                Unk0206bcf0Cell c2 = o->func_14();
-                u32 *p = func_tileAt(layer, &c2.xy);
+                u32 *p = func_tileAt(layer, o->func_14().xy);
                 if (p == 0) {
                     continue;
                 }
@@ -1632,7 +1657,7 @@ void Unk0206bcf0::func_0206ddb4() {
     sel = data_020d6240.menu->selected;
     map = func_02058788(world, world->map);
     Unk02056ed0 *layer = func_02056ed0(map, &unk204);
-    tile = func_tileAt(layer, &unk204.xy);
+    tile = func_tileAt(layer, unk204.xy);
     sound = false;
     if (unk20c != 1 || sel == 0) {
         Unk020c43a8 *p = &data_020c43a8;
@@ -1727,15 +1752,12 @@ void Unk0206bcf0::func_0206e104(int v) {
     }
 }
 
-/* 88.09 %: the stack layout of the copied offset and cells differs. */
+/* 99.88 %: the stack slots of the rotation, the offset and the moved cell
+ * are in another order. */
 bool Unk0206bcf0::func_0206e134(Unk0206bcf0Item *item) {
     if (func_0205d340(item->def, 0x2539c423)) {
-        Unk0206bcf0Xy size;
-        size.x = item->def->unk0;
-        size.y = item->def->unk2;
-        Unk0206bcf0Xy d = func_020619a8(item, size, item->func_1c());
-        Unk0206bcf0Cell c = item->func_14();
-        Unk0206bcf0Cell to(c.pos.unk3, c.pos.unk2, c.pos.unk0, c.xy.x + d.x, c.xy.y + d.y);
+        Unk0206bcf0Cell to = item->func_14().func_moved(
+            func_020619a8(item, Unk0206bcf0Xy(item->def->unk0, item->def->unk2), item->func_1c()));
         return func_02057ed8(func_02058788(&data_020c3ba4, data_020c3ba4.map), &to) != 0;
     }
     return false;
@@ -1816,9 +1838,8 @@ void Unk0206bcf0::func_0206e40c() {
     unk20c = 0;
 }
 
-/* 81.27 %: the original copies unk204 into the objects through stack
- * temporaries (halfword blocks) and keeps &data_020c43a8 in r5 with one
- * fewer saved register; the source form of these copies is not found yet. */
+/* 94.65 %: the original's frame is 8 bytes larger (a second copy of the
+ * kind 4 in case 3), and the tile index / tile array registers are swapped. */
 void Unk0206bcf0::func_0206e424() {
     Unk020c43a8 *p;
     int sel;
@@ -1844,8 +1865,7 @@ void Unk0206bcf0::func_0206e424() {
         if (o == 0) {
             return;
         }
-        o->cell = unk204;
-        o->unk28 = unk210;
+        o->func_set(unk204, unk210);
         func_02007e48(&p->unk3c8, o);
         break;
     }
@@ -1887,12 +1907,7 @@ void Unk0206bcf0::func_0206e424() {
         if (o == 0) {
             return;
         }
-        Unk0206bcf0Cell cell;
-        cell = unk204;
-        o->cell = cell;
-        o->type = 4;
-        o->key = entries[sel].unk4;
-        o->value = v;
+        o->func_set(unk204, 4, entries[sel].unk4, v);
         o->unk38 = 0;
         o->unk40 = 0;
         o->unk44 = 0;
@@ -1921,9 +1936,7 @@ void Unk0206bcf0::func_0206e424() {
             v = 0;
         }
         o->unk24 = func_02067b70(&data_020c43a8);
-        Unk0206bcf0Cell cell;
-        cell = unk204;
-        o->cell = cell;
+        o->func_set(unk204);
         o->unk38 += func_02077b3c(v * 100, 0x989680);
         o->unk34 += 0x14;
         o->unk30 += func_02077b3c(v * func_020667d4(p, 2), 0x4c4b40);
@@ -1963,8 +1976,8 @@ void Unk0206bcf0::func_0206e424() {
     }
 }
 
-/* 95.35 %: the cell comparison reloads the tile coordinates that the
- * original keeps in r1 / r2, and the registers of the object loop differ. */
+/* 98.74 %: the store of 1 to data_020c409c + 0x20 uses r1 for the address
+ * where the original uses r0. */
 void Unk0206bcf0::func_0206ea00(int map, int flag) {
     Unk020c7d38 *pool;
     Unk020c3ba4 *world;
@@ -2019,7 +2032,7 @@ void Unk0206bcf0::func_0206ea00(int map, int flag) {
     if (!func_020573a4(layers, &cell, old)) {
         func_020577a4(layers, &cell);
     }
-    if (func_02059418(&cell) && cell.xy.x >= 0 && cell.xy.y >= 0) {
+    if (func_isPlaced(cell)) {
         Unk020c43a8 *p = &data_020c43a8;
         p->func_10(cell);
         func_020667f8(&data_020c43a8, 0);
@@ -2042,7 +2055,7 @@ void Unk0206bcf0::func_0206ea00(int map, int flag) {
         for (Unk0206bcf0Item *item = func_0205fb4c(data_020c3fd4, 0x12d2c5be, &ctx, map); item != 0;
              item = item->next) {
             Unk0206bcf0Cell c = item->func_14();
-            if (!func_02059418(&c) || c.xy.x < 0 || c.xy.y < 0) {
+            if (!func_isPlaced(c)) {
                 continue;
             }
             if (!(c == here)) {
