@@ -34,3 +34,4 @@
 | 2026-10-27 | a37ac53 | 97812 / 720836 bytes (13.57 %; fuzzy 17.65 %, linked 5.62 %) | 1005 / 4557 | 59 / 126 | Camera controller unit written (19 / 21 functions at 100 %) |
 | 2026-10-27 | a983432 | 102436 / 720836 bytes (14.21 %; fuzzy 18.68 %, linked 5.62 %) | 1033 / 4557 | 59 / 127 | Sim unit written (28 / 32 functions at 100 %) |
 | 2026-10-27 | 7c036e4 | 112724 / 720836 bytes (15.64 %; fuzzy 20.63 %, linked 5.62 %) | 1098 / 4557 | 59 / 128 | Player unit written (65 / 75 functions at 100 %) |
+| 2026-10-27 | 1528692 | 113068 / 720836 bytes (15.69 %; fuzzy 20.70 %, linked 5.62 %) | 1104 / 4557 | 59 / 130 | Outfit unit written (6 / 7 functions at 100 %) |
