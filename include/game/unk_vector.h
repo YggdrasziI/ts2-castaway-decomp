@@ -28,6 +28,7 @@ struct Unk02098e70Base {
 
 class Unk02098e70 : public Unk02098e70Base {
 public:
+    Unk02098e70() {}
     Unk02098e70(int v);
     Unk02098e70(int x, int y);
     int func_02098e84() const;

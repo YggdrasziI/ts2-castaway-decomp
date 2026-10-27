@@ -443,6 +443,17 @@ default: add one here only once a unit of this ROM proves it with mwccarm.
 
 ## C++ classes
 
+- A large function stops inlining after a while, even with `inline` helpers:
+  the remaining calls go to out-of-line copies that mwccarm emits right after
+  that function, in order of first use (`func_0206a120`: the plane assignment
+  `_ZN11Unk020987d8aSERKS_`, two helpers and the implicit constructors of two
+  records sit at 0x0206A7DC-0x0206A850). Code that the original inlined there
+  (a camera getter, vector copies) must be written out, or it becomes such a
+  call too. Splitting the body into `static inline` functions changed the stack
+  layout to the original's (locals in ascending declaration order).
+- A camera record copied as a block (`ldm` / `stm` from a stack temporary) comes
+  from a wrapper struct around the vector with its own constructor
+  (`Unk0206a07cVec`, `func_0206a07c` 37.9 % -> 100 %).
 - mwccarm emits a C1 and a C2 copy of every constructor (and D1 / D2 of a
   destructor); a derived class calls its base through C2 and D2, and the linker
   drops the copies nobody calls. Two identical constructors in a row in the original

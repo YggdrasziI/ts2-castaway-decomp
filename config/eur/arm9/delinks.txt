@@ -22,6 +22,9 @@ src/game/unit_0205D6E0.c:
     complete
     .text       start:0x0205d6e0 end:0x0205d6fc
 
+src/game/unit_02069EA8.cpp:
+    .text       start:0x02069ea8 end:0x0206b4d4
+
 src/game/unit_0206B4D4.cpp:
     complete
     .text       start:0x0206b4d4 end:0x0206b630

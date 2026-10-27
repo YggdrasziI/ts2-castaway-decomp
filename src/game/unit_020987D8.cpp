@@ -8,18 +8,7 @@
  * file name unknown.
  */
 
-#include "game/unk_vector.h"
-
-class Unk020987d8 {
-public:
-    Unk020987d8();
-    Unk020987d8(const Unk02098ff0 &normal, const Unk02098ff0 &point);
-    Unk02098ff0 func_02098824(const Unk02098ff0 &origin, const Unk02098ff0 &dir) const;
-    int func_020988c0(const Unk02098ff0 &point) const;
-
-    Unk02098ff0 normal;
-    int d;
-};
+#include "game/unk_plane.h"
 
 Unk020987d8::Unk020987d8() : normal(0, 0x1000, 0) {
     d = 0;
