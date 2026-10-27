@@ -31,3 +31,4 @@
 | 2026-10-27 | 90457db | 94956 / 720836 bytes (13.17 %; fuzzy 16.79 %, linked 5.52 %) | 978 / 4557 | 57 / 123 | Timed queue unit (11 / 11 functions, complete) |
 | 2026-10-27 | 2dd78e6 | 95288 / 720836 bytes (13.22 %; fuzzy 16.84 %, linked 5.57 %) | 983 / 4557 | 58 / 124 | Sorted set unit (5 / 5 functions, complete) |
 | 2026-10-27 | 2118f87 | 95636 / 720836 bytes (13.27 %; fuzzy 16.89 %, linked 5.62 %) | 986 / 4557 | 59 / 125 | Main-screen object entry unit (3 / 3 functions, complete) |
+| 2026-10-27 | a37ac53 | 97812 / 720836 bytes (13.57 %; fuzzy 17.65 %, linked 5.62 %) | 1005 / 4557 | 59 / 126 | Camera controller unit written (19 / 21 functions at 100 %) |
