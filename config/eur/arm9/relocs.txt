@@ -13252,11 +13252,11 @@ from:0x020618f0 kind:load to:0x020c3ba4 module:main
 from:0x0206194c kind:arm_call to:0x020a0b8c module:main
 from:0x020619a4 kind:load to:0x020d6240 module:main
 from:0x02061b9c kind:arm_call to:0x02099c78 module:main
-from:0x02061bb0 kind:load to:0x020bc4a4 module:main
+from:0x02061bb0 kind:load to:0x020bc49c add:0x8 module:main
 from:0x02061bc0 kind:arm_call to:0x02099858 module:main
 from:0x02061c00 kind:load to:0x0205afc8 module:main
 from:0x02061c18 kind:arm_call to:0x02099c78 module:main
-from:0x02061c30 kind:load to:0x020bc4c4 module:main
+from:0x02061c30 kind:load to:0x020bc4bc add:0x8 module:main
 from:0x02061c40 kind:arm_call to:0x02099858 module:main
 from:0x02061cb4 kind:arm_call to:0x0209585c module:main
 from:0x02061d04 kind:load to:0x0205afc8 module:main

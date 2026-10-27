@@ -17,6 +17,7 @@
 #include "game/unk_model.h"
 #include "game/unk_palset.h"
 #include "game/unk_camctl.h"
+#include "game/unk_texanim.h"
 
 typedef signed char s8;
 
@@ -98,6 +99,7 @@ struct Unk020c3ba4 {
     Unk02058788 *maps[0x29];
     s8 map;
     Unk0206fac8 *palettes;
+    Unk020705e4 *texanims;
 };
 
 /* A body part (0x2C bytes). */

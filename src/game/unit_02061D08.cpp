@@ -20,7 +20,7 @@
  * addresses.
  */
 
-#include "game/unk_script.h"
+#include "game/unk_objscript.h"
 
 typedef signed char s8;
 
@@ -151,35 +151,12 @@ public:
     u16 unk6;
 };
 
-/* The script runner of an object (0x10 bytes). */
-class Unk02099c78 {
-public:
-    void func_02099ce0(int key);
-
-    u8 unk0[0x10];
-};
-
-class Unk02061d08Runner;
 class Unk0205d6b8;
 
 extern "C" {
-void func_02061c04(Unk02061d08Runner *r, Unk02061d08Item *item);
-void func_02061c34(Unk02061d08Runner *r);
 void func_0205d6b8(Unk0205d6b8 *p, Unk02099c0c *node);
 void func_0205d6dc(Unk0205d6b8 *p);
 }
-
-class Unk02061d08Runner {
-public:
-    Unk02061d08Runner(Unk02061d08Item *item) {
-        func_02061c04(this, item);
-    }
-    ~Unk02061d08Runner() {
-        func_02061c34(this);
-    }
-
-    Unk02099c78 vm;
-};
 
 /* The parameter reader of func_02062620 (0x18 bytes). */
 class Unk0205d6b8 {
@@ -606,9 +583,9 @@ u16 func_020621d0(Unk02099c0c *node) {
         if (node->func_02099c0c(&script, 0x67f8d0e1)) {
             Unk0205f098 list;
             for (Unk02061d08Item *item = func_0205fb4c(data_020c3fd4, key, &list, -1); item != 0;) {
-                Unk02061d08Runner runner(item);
+                Unk02061c04 runner(item);
                 if (item->def->script->func_020957ec(script)) {
-                    runner.vm.func_02099ce0(script);
+                    runner.func_02099ce0(script);
                 }
                 item = item->next;
             }

@@ -680,3 +680,24 @@ default: add one here only once a unit of this ROM proves it with mwccarm.
   before the test; `key == 0 || f(key)` branches instead (`func_0206344c`).
 - A function-local static array is named `<name>$<n>` in the object; name it
   after its address (`data_020bc4f0`) so the symbol is `data_020bc4f0$1323`.
+- A derived destructor that is only `bx lr` (no call to the base destructor):
+  the base's empty virtual destructor is inline in the shared header
+  (`include/game/unk_vm.h`); the base's own file still emits its out-of-line
+  D1 / D0 with its vtable (`unit_02060ADC.cpp`, `unit_02099C78.cpp`).
+- Once the derived constructors are compiled, they call the base-object
+  constructor `C2`; the `C1` alias at the same address is then dropped from the
+  link, so the symbol is named `C2` (`_ZN11Unk02099c78C2EP11Unk020956f8`).
+- `delete a[i]; a[i] = 0;` in a loop gave another register allocation than
+  the original; an explicit `if (a[i] != 0) delete a[i];` matches
+  (`func_02060b98`, 96.2 % -> 100 %).
+- `movs r0, r5` before storing a parameter into a field and testing it: store
+  then test the field (`e->anim = anim; if (e->anim == 0)`), not the
+  parameter (`func_02061298`, 93.7 % -> 100 %).
+- A by-value argument read back from the stack (`ldr r2, [sp, #0x1c]` after
+  `push {r0-r3}`) is a one-word struct, not an `int`
+  (`Unk020680d4Dir`, `func_020619a8`, 98.4 % -> 100 %).
+- Stack slots follow the order of appearance of locals, temporaries of an
+  initializer going below the later named locals: to put the last local at the
+  bottom, declare it early without an initializer (`Unk02098ff0 pos; ...
+  pos = f();`), and keep the earlier results named (`func_020613f0`,
+  99.6 % -> 100 %).
