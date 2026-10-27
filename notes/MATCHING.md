@@ -298,6 +298,10 @@ default: add one here only once a unit of this ROM proves it with mwccarm.
   only: it costs a reload after a loop elsewhere, and it did not help the same
   pattern in `func_020949b8` (`unit_02094824.cpp`). Not a compiler option: every
   2.0 service pack and `-opt noloop` / `nocse` / `nostrength` give the same code.
+  Same fix for `groupCount` in `func_020606a0` (`unit_02060274.cpp`, 89 % ->
+  100 %). A flag halfword tested, then read again for its update with no store
+  between (`ldrsh; tst; ...; ldrsh; orr; strh`), also matched with `volatile`
+  (`func_020606e0`, 98.8 % -> 99.7 %), hypothesis too.
 - A subexpression of the loop counter that the original recomputes at every
   iteration (`mov r2, r7, lsl #4; add r2, r2, #0x10`), where mwccarm makes it a
   running sum (`add r8, r8, #0x10`) whatever the counter type or expression form:
@@ -588,6 +592,12 @@ default: add one here only once a unit of this ROM proves it with mwccarm.
 - `switch` case bodies come out in source order while the tests stay in value
   order: an original that tests 4 then 8 but places the case 8 body first was
   `switch (v) { case 8: ...; case 4: ...; }` (`func_02092788`, 68 % -> 94 %).
+  Again in `func_020608d8` (`case 4` body before `case 2`, 82 % -> 98 %).
+- A walk to the end of a list that reads `p->next` twice per step (`ldr r1,
+  [r1, #8]; ldr r0, [r1, #8]`) is `for (p = head; p->next != 0; p = p->next) {}`;
+  `while (head->next != 0) head = head->next;` keeps the loaded value
+  (`func_020602b0`, 96.1 % -> 99.0 %). A list loop with no test before its first
+  pass is a `do { ... } while (f != 0);`.
 - Variadic functions: mwccarm's `va_start(ap, fmt)` is
   `ap = (char *)((u32)&fmt & ~3) + 4` after the `push {r0-r3}` of the prologue; no
   header in the project defines it, so the unit defines the macro

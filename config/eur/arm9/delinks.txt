@@ -22,6 +22,13 @@ src/game/unit_0205D6E0.c:
     complete
     .text       start:0x0205d6e0 end:0x0205d6fc
 
+src/game/unit_02060274.cpp:
+    .text       start:0x02060274 end:0x02060adc
+    .init       start:0x020ae1ac end:0x020ae1d8
+    .ctor       start:0x020b6e84 end:0x020b6e88
+    .data       start:0x020bc364 end:0x020bc410
+    .bss        start:0x020c4090 end:0x020c40c0
+
 src/game/unit_02060ADC.cpp:
     complete
     .text       start:0x02060adc end:0x02061d08

@@ -22,6 +22,7 @@
 #include "game/unk_sim.h"
 #include "game/unk_objanim.h"
 #include "game/unk_objscript.h"
+#include "game/unk_objres.h"
 
 class Unk02095d1c;
 class Unk0205ed20;
@@ -114,12 +115,6 @@ public:
     Unk02060d78 *temps[4];
 };
 
-/* The archive of the scene objects (data_020c409c). */
-struct Unk020c409c {
-    u8 unk0[0x18];
-    Unk02093648 *archive;
-};
-
 /* The model library of unit_0208A0A8.cpp: only the function used here. */
 class Unk0208a0a8 {
 public:
@@ -189,7 +184,6 @@ bool func_02061ab4(Unk02061d08Item *item, const Unk020680d4Cell *cell);
 }
 
 extern Unk020c3ba4 data_020c3ba4;
-extern Unk020c409c data_020c409c;
 extern Unk020d6240 data_020d6240;
 extern Unk0208a0a8 *data_020c7d24;
 
@@ -515,7 +509,7 @@ Unk020680d4Vec func_020613f0(Unk02060d78 *e, const char *name, Unk020680d4Vec of
 }
 
 void func_020615f0(Unk02060d78 *e, Unk020615f0Def *def) {
-    Unk02093648 *archive = data_020c409c.archive;
+    Unk02093648 *archive = data_020c409c.resources;
     e->flags &= ~1;
     e->owner = &data_020c4390;
     bool load = false;
@@ -571,7 +565,7 @@ void func_02061838(Unk02060d78 *e, u32 texanim) {
     if (texanim == 0) {
         return;
     }
-    Unk02093648 *archive = data_020c409c.archive;
+    Unk02093648 *archive = data_020c409c.resources;
     data_020c3ba4.texanims->func_02070688(archive, texanim, data_020c7d38.func_0208bcfc(e->index));
     e->texanim = texanim;
 }
@@ -580,7 +574,7 @@ void func_0206189c(Unk02060d78 *e) {
     if (e->texanim == 0) {
         return;
     }
-    Unk02093648 *archive = data_020c409c.archive;
+    Unk02093648 *archive = data_020c409c.resources;
     data_020c3ba4.texanims->func_0207072c(archive, e->texanim, data_020c7d38.func_0208bcfc(e->index));
     e->texanim = 0;
 }
