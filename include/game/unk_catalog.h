@@ -29,6 +29,15 @@ public:
     int next;
 };
 
+/* A 0x10C-byte member of the game states (constructor 0x02069FEC; its other
+ * functions are still called by their dsd names). */
+class Unk02069fec {
+public:
+    Unk02069fec();
+
+    unsigned char unk0[0x10c];
+};
+
 struct Unk020081dc {
     int parts[6];
     int unk18;

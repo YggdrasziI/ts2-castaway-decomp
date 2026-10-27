@@ -142,7 +142,6 @@ void func_0205e3f0(Unk0205fd7c *node);
 void func_0205e4d0(Unk0205fd7c *node);
 void func_0205dce4(Unk0205fd7c *node);
 void func_0205d974(Unk0205fd7c *node);
-void func_02069fec(void *p);
 void func_0206a120(void *p);
 void func_0206af98(void *p, int mode);
 void func_0206c290(Unk020d6240 *system);
@@ -180,11 +179,10 @@ public:
     int idle;
     int step;
     int music;
-    u8 unk20[1];
+    Unk02069fec unk20;
 };
 
 Unk02071d94::Unk02071d94() : Unk0206fab0(3), catalog(0), scene(0), idle(3), step(0), music(-1) {
-    func_02069fec(unk20);
 }
 
 Unk02071d94::~Unk02071d94() {
@@ -210,7 +208,7 @@ void Unk02071d94::func_02071e04() {
             func_0205e3f0(n);
         }
     }
-    func_0206a120(unk20);
+    func_0206a120(&unk20);
     func_02064cfc(&data_020c43a8, -1, catalog);
     func_02065db8(&data_020c43a8);
     Unk02041b10 *o = (Unk02041b10 *)operator new(0x35b4);
@@ -263,7 +261,7 @@ void Unk02071d94::func_02071fdc(int dt) {
     func_02060cdc(data_020c40cc);
     func_02065b80(&data_020c43a8, dt);
     func_0205899c(data_020c3ba4);
-    func_0206af98(unk20, (scene->flags & 0x100) ? 7 : 6);
+    func_0206af98(&unk20, (scene->flags & 0x100) ? 7 : 6);
     func_01ff9924(pool);
     while (func_01ff9ee8(pool)) {
         func_0207a748();

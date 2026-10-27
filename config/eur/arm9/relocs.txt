@@ -14489,7 +14489,7 @@ from:0x0206bd20 kind:arm_call to:0x02069fec module:main
 from:0x0206bd38 kind:arm_call to:0x02055118 module:main
 from:0x0206bd54 kind:arm_call to:0x020593e4 module:main
 from:0x0206bdb0 kind:load to:0x020bc8fc add:0x8 module:main
-from:0x0206bdb4 kind:load to:0x020bc8e8 module:main
+from:0x0206bdb4 kind:load to:0x020bc8e0 add:0x8 module:main
 from:0x0206bdb8 kind:load to:0x020c4780 module:main
 from:0x0206bdd4 kind:arm_call to:0x02055158 module:main
 from:0x0206bde0 kind:load to:0x020c4780 module:main

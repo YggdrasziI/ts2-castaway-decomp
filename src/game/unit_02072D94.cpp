@@ -193,7 +193,6 @@ void func_0205e3f0(Unk0205fd7c *node);
 void func_0205e4d0(Unk0205fd7c *node);
 void func_0205dce4(Unk0205fd7c *node);
 void func_0205d974(Unk0205fd7c *node);
-void func_02069fec(void *p);
 void func_0206a120(void *p);
 void func_0206af98(void *p, int mode);
 void func_0206c290(Unk020d6240 *system);
@@ -236,7 +235,7 @@ public:
     u8 changed;
     Unk02093648 *archive;
     Unk02047a8c *screen;
-    u8 unk20[0x10c];
+    Unk02069fec unk20;
     s8 unk12c;
     u8 unk12d[0x2f];
     int nextId;
@@ -246,7 +245,6 @@ public:
 };
 
 Unk02072d94::Unk02072d94() : Unk0206fab0(2), phase(0), changed(0), archive(0), screen(0) {
-    func_02069fec(unk20);
     unk12c = -1;
     nextId = 2;
     unk160 = 0;
@@ -281,7 +279,7 @@ void Unk02072d94::func_02071e04() {
         func_0205e3f0(n);
     }
     func_020732c4(true);
-    func_0206a120(unk20);
+    func_0206a120(&unk20);
     func_020a37e8(func_020a2994(), 1);
     func_020a35f0(func_020a2994(), 0x6eede0dd, 0);
     func_020a27f4(func_020a2994());
@@ -307,7 +305,7 @@ void Unk02072d94::func_02071fdc(int dt) {
     func_02060cdc(data_020c40cc);
     func_0205899c(data_020c3ba4);
     func_0205fde4(data_020c3fd4);
-    func_0206af98(unk20, unk160 ? 6 : 7);
+    func_0206af98(&unk20, unk160 ? 6 : 7);
     func_01ff9924(pool);
     while (func_01ff9ee8(pool)) {
         func_0207a748();
