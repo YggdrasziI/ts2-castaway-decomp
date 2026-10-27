@@ -30,6 +30,7 @@
 #include "game/unk_camera.h"
 #include "game/unk_queue.h"
 #include "game/unk_sortedset.h"
+#include "game/unk_icon.h"
 
 typedef signed char s8;
 
@@ -443,14 +444,6 @@ public:
     u8 unk0[0xa1c];
 };
 
-class Unk0206b4d4 {
-public:
-    Unk0206b4d4();
-    ~Unk0206b4d4();
-
-    int unk0;
-};
-
 class Unk020717b8 {
 public:
     Unk020717b8(u32 count);
@@ -671,7 +664,6 @@ void func_020a4c4c(Unk020a4c4c *save);
 bool func_020a5cb0();
 void func_020a10dc(Unk020d6240 *system, int dt);
 void func_020a15a8(Unk020d6240 *system, int dt);
-void func_0206b5e4(Unk0206b4d4 *p);
 void func_020553dc(Unk02055118 *p);
 void func_020559cc(Unk02055118 *p);
 void func_02055220(Unk02055118 *p, int a, int b);
@@ -1022,7 +1014,7 @@ void Unk0206bcf0::func_02071fdc(int dt) {
     p = &data_020c43a8;
     touched = 0;
     func_020a10dc(system, dt);
-    func_0206b5e4(unk170);
+    unk170->func_0206b5e4();
     if (unk164 != 0) {
         if (unk22c & 0x20) {
             if ((unk144 != 0 && func_020a1524(unk144)) || (unk144 == 0 && func_020a1524(unk11c))) {
