@@ -661,3 +661,9 @@ default: add one here only once a unit of this ROM proves it with mwccarm.
   in our object file listing; set its dsd name back and read the real one from
   the `check symbols` error ("Possible name: @52"). A made-up `@<n>` name was
   not caught by the check, so never guess it (`unit_02064224.cpp`).
+- A parameter whose register later holds a derived value was reassigned:
+  `key = func_0209a3c4(key, ...)` instead of a new `hash` local
+  (`func_02064074`, 96.9 % -> 100 %).
+- Relocations of a static initializer into the middle of its object (second
+  table, counts) are `to:<object> add:<offset>`; the dsd symbols inside the
+  object leave `symbols.txt`, or `.bss` scores low (`unit_02063CD0.cpp`).

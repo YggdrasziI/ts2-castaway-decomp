@@ -21756,8 +21756,8 @@ from:0x020ae1f8 kind:load to:0x020c40cc module:main
 from:0x020ae1fc kind:load to:0x02060b10 module:main
 from:0x020ae200 kind:load to:0x020c40c0 module:main
 from:0x020ae250 kind:load to:0x020c417c module:main
-from:0x020ae254 kind:load to:0x020c427c module:main
-from:0x020ae258 kind:load to:0x020c437c module:main
+from:0x020ae254 kind:load to:0x020c417c add:0x100 module:main
+from:0x020ae258 kind:load to:0x020c417c add:0x200 module:main
 from:0x020ae25c kind:load to:0x020c417c module:main
 from:0x020ae268 kind:arm_call to:0x02064224 module:main
 from:0x020ae278 kind:arm_call to:0x02085b54 module:main
