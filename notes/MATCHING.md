@@ -457,6 +457,24 @@ default: add one here only once a unit of this ROM proves it with mwccarm.
   added at the end of the file put their strings last (`unit_0206BCE0.cpp`,
   `.data` 82.9 % -> 100 % once sorted).
 
+- A constructor that builds two members through one base register (`add r5, r4,
+  #0x150`, then `r5 + 0x58`, `r5 + 0x90`) owns a sub-struct starting there; here
+  the 0x98-byte block written to the save as one piece (`unit_02064984.cpp`,
+  constructor 96.2 % -> 100 %).
+- A record whose constructor and destructor keep C names (`func_020647b0`,
+  `func_020647ec`): inline members calling them (`T() { func_020647b0(this); }`)
+  give the calls and make the class non-POD, so `a = T();` and `a = *b;` copy
+  member by member (one `ldm` / `stm` per array, `ldr` / `str` per word) as in
+  the original (`func_02064984`, `func_020670fc`).
+- Fields of an array element written as `p->a[i].f` (base `p + i * size`, field
+  offsets from `p`) instead of through an element pointer local (offsets from the
+  element): `func_02067d0c` 93.5 % -> 100 %, `func_02065eb8`, `func_02066884`. A
+  reference local (`T &r = p->a[i];`) gives the pointer stepped by the element
+  size instead (`func_0206562c` 98.0 % -> 100 %).
+- Counters kept on the stack get slots in declaration order: declared without a
+  value next to the other locals and set later (`int needs; ... needs = 0;`),
+  they take the original slots (`func_02064e10`).
+
 ## C++ classes
 
 - A large function stops inlining after a while, even with `inline` helpers:
@@ -587,6 +605,17 @@ default: add one here only once a unit of this ROM proves it with mwccarm.
   original's `sub r1, id, #lo; cmp r1, #n; ... tst mask, r2, lsl r1` is the
   explicit bit test `u32 i = id - lo; if (i <= n && (mask & (1 << i)))`
   (`func_02071fdc`, 78.7 % -> 95.3 %).
+
+- A hash switch whose first test is one key alone (`cmp; beq <loop end>`) before
+  the binary search of the others is `if (h == key) continue;` ahead of the
+  `switch`; with three cases left, mwccarm tests them one by one. Signed
+  comparisons (`bgt` / `bge`) in the search mean an `int` operand: `switch ((int)
+  hash)` for a `u32` value (`func_02067d0c` 93.5 % -> 100 %, `func_02067878`).
+- `cmp r0, #0; movne r1, #1; moveq r1, #0` on the result of a `bool` function
+  is an `if (f()) a = 1; else a = 0;`; `a = f() ? 1 : 0` is folded to a move
+  (`func_02067778`).
+- `mov r2, #0` reused for an earlier store, then `orr r2, r2, #1` before a
+  halfword store: `x = 0; x |= 1;` (`func_02064984`).
 
 ## ARM / Thumb
 
