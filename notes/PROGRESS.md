@@ -38,3 +38,4 @@
 | 2026-10-27 | 2d11c66 | 114220 / 720836 bytes (15.85 %; fuzzy 20.86 %, linked 5.78 %) | 1118 / 4557 | 60 / 131 | Icon set unit (14 / 14 functions, complete) |
 | 2026-10-27 | 2db45d2 | 114532 / 720836 bytes (15.89 %; fuzzy 20.90 %, linked 5.82 %) | 1128 / 4557 | 61 / 132 | Object animation archive unit (10 / 10 functions, complete) |
 | 2026-10-27 | 58d8e07 | 115796 / 720836 bytes (16.06 %; fuzzy 21.10 %, linked 5.82 %) | 1141 / 4557 | 61 / 133 | Played animation unit written (13 / 14 functions at 100 %) |
+| 2026-10-27 | 962673d | 123932 / 720836 bytes (17.19 %; fuzzy 22.23 %, linked 6.95 %) | 1186 / 4557 | 62 / 134 | Action handler unit (45 / 45 functions, complete) |
