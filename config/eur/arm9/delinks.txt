@@ -22,6 +22,9 @@ src/game/unit_0205D6E0.c:
     complete
     .text       start:0x0205d6e0 end:0x0205d6fc
 
+src/game/unit_020647B0.cpp:
+    .text       start:0x020647b0 end:0x02064984
+
 src/game/unit_02064984.cpp:
     .text       start:0x02064984 end:0x020680d4
     .rodata     start:0x020af010 end:0x020af1ac

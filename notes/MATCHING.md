@@ -19,6 +19,12 @@ default: add one here only once a unit of this ROM proves it with mwccarm.
 
 ## Registers and stack
 
+- A global address loaded once into a callee-saved register (`ldr r4, =db` then
+  `mov r0, r4` before each call) comes from a local (`u8 *db = data_020c3fc4;`);
+  a test written in an inline helper (`return f(db, id) != -1;`) keeps the
+  original `movne` / `moveq` / `cmp` that the same test written inline folds
+  (`func_020648dc` 85 % -> 100 %).
+
 - A key search where the original keeps a byte offset (`i * 12`) next to the
   walked pointer: indexing the member array directly (`unk3c[i]`) instead of a local
   copy of it, and reusing the frame and index locals of the searches before, gave
