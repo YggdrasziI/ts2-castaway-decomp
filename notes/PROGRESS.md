@@ -30,3 +30,4 @@
 | 2026-10-27 | 356948b | 92848 / 720836 bytes (12.88 %; fuzzy 16.56 %, linked 5.33 %) | 965 / 4557 | 56 / 121 | Main game state unit written (46 / 56 functions and its data at 100 %; holds the first base vtable copy the other states wait on) |
 | 2026-10-27 | 90457db | 94956 / 720836 bytes (13.17 %; fuzzy 16.79 %, linked 5.52 %) | 978 / 4557 | 57 / 123 | Timed queue unit (11 / 11 functions, complete) |
 | 2026-10-27 | 2dd78e6 | 95288 / 720836 bytes (13.22 %; fuzzy 16.84 %, linked 5.57 %) | 983 / 4557 | 58 / 124 | Sorted set unit (5 / 5 functions, complete) |
+| 2026-10-27 | 2118f87 | 95636 / 720836 bytes (13.27 %; fuzzy 16.89 %, linked 5.62 %) | 986 / 4557 | 59 / 125 | Main-screen object entry unit (3 / 3 functions, complete) |
