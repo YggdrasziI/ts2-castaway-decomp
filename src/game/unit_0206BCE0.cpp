@@ -29,6 +29,7 @@
 #include "game/unk_palset.h"
 #include "game/unk_camera.h"
 #include "game/unk_queue.h"
+#include "game/unk_sortedset.h"
 
 typedef signed char s8;
 
@@ -81,15 +82,10 @@ struct Unk020a4c60 {
     int version;
 };
 
-struct Unk020d60c8Unk4 {
-    u8 unk0[0x1400];
-    int unk1400;
-};
-
 /* The game settings (data_020d60c8): fields used here. */
 struct Unk020d60c8 {
     Unk020a4c4c *save;
-    Unk020d60c8Unk4 *unk4;
+    Unk0206b630 *unk4;
     u8 unk8[0x134];
     int unk13c;
     u8 unk140[0x1c];
@@ -742,8 +738,6 @@ void func_0205501c(void *p, Unk020a4c4c *save);
 void func_0205507c(void *p, Unk020a4c4c *save);
 void func_02054b30(void *p);
 void func_02054ab4(void *p);
-void func_0206b73c(Unk020d60c8Unk4 *p, Unk020a4c4c *save);
-void func_0206b75c(Unk020d60c8Unk4 *p, Unk020a4c4c *save);
 void func_02058ce8(Unk020c3ba4 *world, Unk020a4c4c *save);
 void func_02058dd4(Unk020c3ba4 *world, Unk020a4c4c *save);
 void func_0205ffa4(void *p, Unk020a4c4c *save);
@@ -2324,7 +2318,7 @@ void Unk0206bcf0::func_0206f6fc() {
     header->version = 7;
     func_020a1994(&data_020d6298, save);
     func_0205501c(data_020bfc9c, save);
-    func_0206b73c(data_020d60c8.unk4, save);
+    data_020d60c8.unk4->func_0206b73c(save);
     unkc->func_0206bbdc(save);
     func_02058ce8(&data_020c3ba4, save);
     func_0205ffa4(data_020c3fd4, save);
@@ -2335,7 +2329,7 @@ void Unk0206bcf0::func_0206f6fc() {
 void Unk0206bcf0::func_0206f7e4() {
     func_02054b30(data_020bfc9c);
     func_02054ab4(data_020bfc9c);
-    data_020d60c8.unk4->unk1400 = 0;
+    data_020d60c8.unk4->count = 0;
     Unk020a4c4c *save = data_020d60c8.save;
     save->unkc = 0;
     func_020a4d2c(save, 2);
@@ -2348,7 +2342,7 @@ void Unk0206bcf0::func_0206f7e4() {
     unk220 = data_020d6298.func_hour() >= 6;
     data_020c3ba4.palettes->func_0207001c(!unk220);
     func_0205507c(data_020bfc9c, save);
-    func_0206b75c(data_020d60c8.unk4, save);
+    data_020d60c8.unk4->func_0206b75c(save);
     unkc->func_0206bc48(save);
     func_02058dd4(&data_020c3ba4, save);
     func_02060080(data_020c3fd4, save);
