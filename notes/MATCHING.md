@@ -203,6 +203,11 @@ default: add one here only once a unit of this ROM proves it with mwccarm.
   differently than reading the member of the call (`func_0202071c(clock).hour`):
   try both forms (`func_02071fdc` of `unit_0206BCE0.cpp`, 98.4 % -> 99.0 %).
 
+- A member read through an inline function is not merged with an earlier read
+  of the same member: the original's reload of `unkc` before `unkc->flags`
+  (`func_0206f0ec`, 98.8 % -> 100 %) and of `unk22c` (`func_02071fdc`) come from
+  inline accessors (`bool func_busy() const { return unkc->flags & 0x40; }`).
+
 ## Inlining and emission order
 
 - A member the original reads twice (a flag test, then the whole word in an

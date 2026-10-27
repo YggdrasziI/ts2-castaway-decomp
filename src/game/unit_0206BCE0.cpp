@@ -393,6 +393,10 @@ struct Unk020c4770Obj {
 
 /* data_020c4770: a list of objects. */
 struct Unk020c4770 {
+    bool func_busy() const {
+        return unkc->flags & 0x40;
+    }
+
     u8 unk0[0xc];
     Unk020c4770Obj *unkc;
 };
@@ -823,6 +827,10 @@ public:
     int unk224;
     int unk228;
     int unk22c;
+
+    bool func_isPaused() const {
+        return unk22c & 1;
+    }
 };
 
 static Unk0206bcf0 *data_020c4780;
@@ -981,9 +989,8 @@ void *func_0206c2a4(Unk020d6240 *system) {
 }
 
 /*
- * 99.25 %: the touched point's stack slot comes below the two clock reads (it is
- * above them in the original), and the pie menu and the touch flag swap r5 / r6;
- * the second read of unk22c at the start is folded into the first.
+ * 99.39 %: the touched point's stack slot comes below the two clock reads (it is
+ * above them in the original), and the pie menu and the touch flag swap r5 / r6.
  */
 void Unk0206bcf0::func_02071fdc(int dt) {
     if ((unk144 != 0 || unk21c != 0 || unk16c != 0 || unk140 != 0 || func_020a5cb0()) && dt == 0) {
@@ -1053,7 +1060,7 @@ void Unk0206bcf0::func_02071fdc(int dt) {
             unk11c->func_08();
         }
     }
-    if (!(unk22c & 1)) {
+    if (!func_isPaused()) {
         if (unk144 != 0) {
             if (unk22c & 0x10) {
                 if (func_020a1524(unk11c)) {
@@ -1483,7 +1490,6 @@ bool Unk0206bcf0::func_0206d6dc() {
     return k == 0 || k == 0x4000 || k == 0xc000;
 }
 
-/* 99.18 %: register allocation of the entry count and the definition. */
 void Unk0206bcf0::func_0206d858(Unk0206bcf0Point *pt, Unk0206bcf0Item *item) {
     if (item == 0) {
         return;
@@ -1491,8 +1497,8 @@ void Unk0206bcf0::func_0206d858(Unk0206bcf0Point *pt, Unk0206bcf0Item *item) {
     if (!func_0206d630(item)) {
         return;
     }
-    Unk0205cf00 *def = item->def;
     int n = 0;
+    Unk0205cf00 *def = item->def;
     if (func_0206e134(item)) {
         entries[0].textId = 0x9db;
         entries[0].unk4 = item->unk2c;
@@ -1614,14 +1620,20 @@ void Unk0206bcf0::func_0206dd24() {
     unk20c = 0;
 }
 
-/* 98.66 %: register allocation around the object kind. */
+/* 99.02 %: world / map / x registers rotate, and kind + info is added the
+ * other way round (index forms tried). */
 void Unk0206bcf0::func_0206ddb4() {
-    Unk020c3ba4 *world = &data_020c3ba4;
-    int sel = data_020d6240.menu->selected;
-    Unk02058788 *map = func_02058788(world, world->map);
+    int sel;
+    Unk020c3ba4 *world;
+    u32 *tile;
+    bool sound;
+    Unk02058788 *map;
+    world = &data_020c3ba4;
+    sel = data_020d6240.menu->selected;
+    map = func_02058788(world, world->map);
     Unk02056ed0 *layer = func_02056ed0(map, &unk204);
-    u32 *tile = func_tileAt(layer, &unk204.xy);
-    bool sound = false;
+    tile = func_tileAt(layer, &unk204.xy);
+    sound = false;
     if (unk20c != 1 || sel == 0) {
         Unk020c43a8 *p = &data_020c43a8;
         if (func_02057f90(map, &unk204)) {
@@ -2116,7 +2128,6 @@ void Unk0206bcf0::func_0206f0d8() {
     func_02066d1c(&data_020c43a8);
 }
 
-/* 98.81 %: the original reloads data_020c4770.unkc before reading its flags. */
 bool Unk0206bcf0::func_0206f0ec(int type, int b, int c) {
     if (unk144 != 0 || unk14c.unk0 != 0) {
         return false;
@@ -2126,7 +2137,7 @@ bool Unk0206bcf0::func_0206f0ec(int type, int b, int c) {
     if (b) {
         func_02007d94(q);
     }
-    if (!b || q->unkc == 0 || !(q->unkc->flags & 0x40)) {
+    if (!b || q->unkc == 0 || !q->func_busy()) {
         bool flag = false;
         if (type == 4 && unk11c->unk1278) {
             flag = true;
