@@ -647,3 +647,13 @@ default: add one here only once a unit of this ROM proves it with mwccarm.
   `unit_0208F16C.cpp`). objdiff does not pair these sections with the original
   `.data` (`data_<addr>` symbols), so `.data` scores low although the bytes are
   right; it only shows once the file links as `complete`.
+- A search loop that returns from inside and ends on `cmp r2, #0x10; bne` is
+  written `for (int i = 0; i != 16; i++)`; `i < 16` gives `blt` and an unsigned
+  counter `blo` (`func_020644cc`). Short loops over a member array ending on
+  `blo` take a `u32` counter (`func_020643c4`, `func_020643ec`).
+- An element pointer `e = &a[i]` that the original recomputes (`add r3, r4, r7`)
+  after a call is only a short-lived local: use it for the first statements and
+  write `a[i].f` after (`func_020644cc`, 99.1 % -> 100 %).
+- In a `complete` file, `check symbols` looks the string literals up by name:
+  rename their `data_<addr>` symbols to the object's `@<n>` names (`... local`,
+  exact `byte[N]` length), as printed in the error ("Possible name: @241").
