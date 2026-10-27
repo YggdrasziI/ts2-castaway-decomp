@@ -28,6 +28,7 @@
 #include "game/unk_vector.h"
 #include "game/unk_palset.h"
 #include "game/unk_camera.h"
+#include "game/unk_queue.h"
 
 typedef signed char s8;
 
@@ -454,14 +455,6 @@ public:
     int unk0;
 };
 
-class Unk0206b8cc {
-public:
-    Unk0206b8cc(int count);
-    ~Unk0206b8cc();
-
-    u8 unk0[0x14];
-};
-
 class Unk020717b8 {
 public:
     Unk020717b8(u32 count);
@@ -699,7 +692,6 @@ void func_0206b4c8(Unk02069fec *p);
 void func_0206af98(Unk02069fec *p, int mode);
 bool func_020693d8(void *p, Unk0206bcf0Ray *ray);
 void func_0205fa30(void *list, Unk0206bcf0Ray ray, Unk0205f098 *out);
-void func_0206bae4(Unk0206b8cc *p);
 void func_0205f998(void *list);
 void func_02060cdc(void *p);
 void func_0205899c(Unk020c3ba4 *world);
@@ -752,8 +744,6 @@ void func_02054b30(void *p);
 void func_02054ab4(void *p);
 void func_0206b73c(Unk020d60c8Unk4 *p, Unk020a4c4c *save);
 void func_0206b75c(Unk020d60c8Unk4 *p, Unk020a4c4c *save);
-void func_0206bbdc(Unk0206b8cc *p, Unk020a4c4c *save);
-void func_0206bc48(Unk0206b8cc *p, Unk020a4c4c *save);
 void func_02058ce8(Unk020c3ba4 *world, Unk020a4c4c *save);
 void func_02058dd4(Unk020c3ba4 *world, Unk020a4c4c *save);
 void func_0205ffa4(void *p, Unk020a4c4c *save);
@@ -1255,7 +1245,7 @@ void Unk0206bcf0::func_02071fdc(int dt) {
             }
         }
         if (!(unk22c & 4)) {
-            func_0206bae4(unkc);
+            unkc->func_0206bae4();
         }
         func_0205f998(data_020c3fd4);
         func_02060cdc(data_020c40cc);
@@ -2335,7 +2325,7 @@ void Unk0206bcf0::func_0206f6fc() {
     func_020a1994(&data_020d6298, save);
     func_0205501c(data_020bfc9c, save);
     func_0206b73c(data_020d60c8.unk4, save);
-    func_0206bbdc(unkc, save);
+    unkc->func_0206bbdc(save);
     func_02058ce8(&data_020c3ba4, save);
     func_0205ffa4(data_020c3fd4, save);
     func_02067594(&data_020c43a8, save);
@@ -2359,7 +2349,7 @@ void Unk0206bcf0::func_0206f7e4() {
     data_020c3ba4.palettes->func_0207001c(!unk220);
     func_0205507c(data_020bfc9c, save);
     func_0206b75c(data_020d60c8.unk4, save);
-    func_0206bc48(unkc, save);
+    unkc->func_0206bc48(save);
     func_02058dd4(&data_020c3ba4, save);
     func_02060080(data_020c3fd4, save);
     func_02064cdc(&data_020c43a8);

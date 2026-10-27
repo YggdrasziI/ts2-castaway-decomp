@@ -502,6 +502,16 @@ default: add one here only once a unit of this ROM proves it with mwccarm.
 
 ## Control flow
 
+- A loop whose first test is duplicated before the body (`ldr; cmp; beq` then the
+  test again at the bottom) comes from a `for` whose condition holds every exit
+  test, `for (n = 4; n > 0 && (node = head) != 0 && time >= node->time; n--)`, or
+  from `for (node = head; node != 0; node = head) { if (...) break; ... }`; the same
+  tests as `while (a && b)` or as `return`s inside the body give a jump to a
+  bottom test (`unit_0206B77C.cpp`, 68.8 % / 79.5 % -> 100 %).
+- A member read early, before stores it could alias (`ldrh r2, [r4, #0x10]` ahead
+  of the other node fields), is a local taken before those stores:
+  `u16 now = time;` placed after the null tests (taken before them it lost
+  points) (`func_0206b998`, 93.5 % -> 100 %).
 - A two-way test whose original keeps the `== 0` branch conditional (`ldreq`,
   `biceq`, `streq`, `bxeq`) and the other one after it did not move with any
   `if` / `else` order on an `int` parameter; a `bool` parameter gave it
