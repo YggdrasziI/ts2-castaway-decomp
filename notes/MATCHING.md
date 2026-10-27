@@ -198,6 +198,11 @@ default: add one here only once a unit of this ROM proves it with mwccarm.
   pointer; declared as returning the struct by value, the result is copied
   (`ldmia` / `stmia` x 3) (`func_02072398`, 78.6 % -> 99.3 %).
 
+- A struct returned through a hidden pointer and read once: `T t; t = f();`
+  (declaration, then assignment) or `T t = f();` give other stack slots and score
+  differently than reading the member of the call (`func_0202071c(clock).hour`):
+  try both forms (`func_02071fdc` of `unit_0206BCE0.cpp`, 98.4 % -> 99.0 %).
+
 ## Inlining and emission order
 
 - A member the original reads twice (a flag test, then the whole word in an
@@ -426,6 +431,11 @@ default: add one here only once a unit of this ROM proves it with mwccarm.
   assignment is a block copy; the vector class's own `operator=` copies field by
   field (`func_020732c4`, 87.3 % -> 93.3 %).
 
+- String literals land in the `.data` sections in the order of the functions
+  that use them in the source: keep the definitions in address order. Functions
+  added at the end of the file put their strings last (`unit_0206BCE0.cpp`,
+  `.data` 82.9 % -> 100 % once sorted).
+
 ## C++ classes
 
 - mwccarm emits a C1 and a C2 copy of every constructor (and D1 / D2 of a
@@ -467,6 +477,12 @@ default: add one here only once a unit of this ROM proves it with mwccarm.
   for a `&C::f` in a dead branch (`if (0)`, or after a `return`) and drops the
   code. Its place in `.data` tells which function held it.
 
+- A virtual call on a global object (`data_020c43a8.func_14()`) is made direct by
+  mwccarm; the original's call through the vtable comes from a local pointer
+  (`Unk020c43a8 *p = &data_020c43a8; p->func_14()`).
+- An inline `operator==` taking its operand by value copies it to the stack as
+  halfword blocks, then compares field by field (`func_0206ea00`, cell compare).
+
 ## Control flow
 
 - A two-way test whose original keeps the `== 0` branch conditional (`ldreq`,
@@ -505,6 +521,11 @@ default: add one here only once a unit of this ROM proves it with mwccarm.
 - A `u16` local shifted in a loop is masked again after every shift (`lsl #0xf`,
   `lsr #0x10`); the original's plain `lsr` comes from a `u32` local set from
   `(u16)param` (`func_02091eb4`, 92.4 % -> 100 %).
+
+- A test of a small set of ids written as a `switch` gives a compare tree. The
+  original's `sub r1, id, #lo; cmp r1, #n; ... tst mask, r2, lsl r1` is the
+  explicit bit test `u32 i = id - lo; if (i <= n && (mask & (1 << i)))`
+  (`func_02071fdc`, 78.7 % -> 95.3 %).
 
 ## ARM / Thumb
 

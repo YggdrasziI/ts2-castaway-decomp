@@ -16,7 +16,8 @@
  * and the first copy of the base vtable (to 0x020BC918). `.bss`: the instance
  * pointer. Real file name unknown.
  *
- * Work in progress: only part of the file is written so far.
+ * Not complete: every function is written; the ones below 100 % carry a
+ * comment with the remaining difference.
  */
 
 #include "game/unk_catalog.h"
@@ -26,6 +27,7 @@
 #include "game/unk_script.h"
 #include "game/unk_vector.h"
 #include "game/unk_palset.h"
+#include "game/unk_camera.h"
 
 typedef signed char s8;
 
@@ -44,8 +46,15 @@ public:
     int func_0201c208();
     void func_0201c2c4(int x, int y);
 
-    u8 unk0[0x148];
+    bool func_busy() const {
+        return (flags & 8) || (flags & 4) || (flags & 2);
+    }
+
+    u8 unk0[0x140];
+    u32 flags;
+    u8 unk144[4];
     int selected;
+    u16 unk14c;
 };
 
 
@@ -82,6 +91,8 @@ struct Unk020d60c8 {
     Unk020d60c8Unk4 *unk4;
     u8 unk8[0x134];
     int unk13c;
+    u8 unk140[0x1c];
+    u8 unk15c;
 };
 
 /* The clock (data_020d6298). */
@@ -95,8 +106,35 @@ struct Unk020d6298 {
 };
 
 struct Unk0206bcf0Point {
+    Unk0206bcf0Point() {}
+
     int x;
     int y;
+};
+
+/* A ray from the camera through the touched point (position, direction). */
+/* Only the implicit assignment of a struct holding the vector gives the
+ * original block copies (ldm / stm); the casts to it are a workaround. */
+struct Unk0206bcf0RayVec {
+    Unk0206bcf0RayVec() {}
+
+    Unk02098ff0 v;
+};
+
+struct Unk0206bcf0Ray {
+    Unk0206bcf0RayVec pos;
+    Unk0206bcf0RayVec dir;
+};
+
+/* The time read by func_0202071c. */
+struct Unk0202071c {
+    Unk0202071c() {}
+
+    int func_hour() const {
+        return (value & 0x7c0) >> 6;
+    }
+
+    u32 value;
 };
 
 /* The first half of a map cell (constructor 0x020593E4). */
@@ -228,9 +266,9 @@ struct Unk0205fd7c {
     Unk0205fd7c *next;
 };
 
-/* The list given to func_0206cfcc. */
-struct Unk0205f10c {
-    int unk0;
+/* A list of scene objects (constructor 0x0205F098, destructor 0x0205F0A8). */
+struct Unk0205f098 {
+    Unk0206bcf0Item *head;
     int count;
 };
 
@@ -250,10 +288,7 @@ public:
     int unk4;
 };
 
-struct Unk0205f098 {
-    int unk0;
-    int unk4;
-};
+
 
 class Unk020c43a8 {
 public:
@@ -264,7 +299,9 @@ public:
     virtual void func_10(Unk0206bcf0Cell cell);
     virtual Unk0206bcf0Cell func_14();
 
-    u8 unk4[0x3c4];
+    u8 unk4[8];
+    void *unkc;
+    u8 unk10[0x3b8];
     u8 unk3c8[0xc];
     int unk3d4;
 };
@@ -418,6 +455,7 @@ public:
     Unk020717b8(u32 count);
     ~Unk020717b8();
     void func_020718c0(const Unk02098ff0 &pos, const u32 *attr);
+    void func_02071a60();
 
     u8 unk0[0x18];
 };
@@ -513,6 +551,15 @@ extern Unk0208a0a8 *data_020c7d24;
 
 void func_02096dac(int a, int b, int c, int d, int e, int f);
 void func_02097a38();
+bool func_02097298(int button);
+int *func_02097a4c();
+
+class Unk0208db14 {
+public:
+    static Unk0208db14 *func_0208dbe8();
+    static Unk0208db14 *func_0208dbf8();
+    void func_0208e4ec();
+};
 
 class Unk0206bcf0;
 
@@ -551,11 +598,11 @@ void func_02054a70(void *p);
 void func_02055198(Unk02055118 *p);
 void func_02007204(void *p);
 void func_0200726c(void *p);
-void func_020543d4(void *p);
+int func_020543d4(void *p);
 Unk02058788 *func_02058788(Unk020c3ba4 *world, int index);
 Unk020589ac *func_020589ac(Unk020c3ba4 *world, int index);
 Unk02056ed0 *func_02056ed0(Unk02058788 *map, const Unk0206bcf0Cell *cell);
-bool func_0205809c(Unk02058788 *map, Unk0206bcf0Cell *cell, Unk0206bcf0Cell *to);
+bool func_0205809c(Unk02058788 *map, Unk0206bcf0Cell *cell, Unk0206bcf0Ray *ray);
 bool func_02057f90(Unk02058788 *map, const Unk0206bcf0Cell *cell);
 bool func_02057ed8(Unk02058788 *map, const Unk0206bcf0Cell *cell);
 bool func_02059418(const Unk0206bcf0Cell *cell);
@@ -563,7 +610,7 @@ bool func_0206757c(Unk020c43a8 *p, int mask);
 void *func_02054dc4(void *p, Unk0205cf00 *def, int a);
 void func_02054d94(void *p, Unk020547f8 *out, int *key, int a, int b);
 Unk0205cf00 *func_0205f6f8(void *db, u32 key);
-void func_0205f10c(Unk0205f10c *list, Unk0206bcf0Item **out, int count);
+void func_0205f10c(Unk0205f098 *list, Unk0206bcf0Item **out, int count);
 Unk0206bcf0Item *func_0205fb4c(void *list, u32 key, Unk0205f098 *ctx, int a);
 void func_0205f098(Unk0205f098 *ctx);
 void func_0205f0a8(Unk0205f098 *ctx);
@@ -604,6 +651,41 @@ void func_0205ff28(void *list, u32 key);
 void func_0205fea0(void *list, u32 key);
 void func_02059224(Unk02058eb8 *p);
 void func_020a4c4c(Unk020a4c4c *save);
+bool func_020a5cb0();
+void func_020a10dc(Unk020d6240 *system, int dt);
+void func_020a15a8(Unk020d6240 *system, int dt);
+void func_0206b5e4(Unk0206b4d4 *p);
+void func_020553dc(Unk02055118 *p);
+void func_020559cc(Unk02055118 *p);
+void func_02055220(Unk02055118 *p, int a, int b);
+void func_02065b80(Unk020c43a8 *p, int dt);
+bool func_020a0744(void *input, int index);
+bool func_020a075c(void *input, int index);
+bool func_020a078c(void *input, int index);
+Unk0206bcf0Point func_020a07bc(void *input, int index);
+void func_02065eb8(Unk020c43a8 *p);
+void func_0206622c(Unk020c43a8 *p);
+int func_02007dec(void *list);
+void func_0206b30c(Unk02069fec *p, int a, int b);
+void func_0206b4c8(Unk02069fec *p);
+void func_0206af98(Unk02069fec *p, int mode);
+bool func_020693d8(void *p, Unk0206bcf0Ray *ray);
+void func_0205fa30(void *list, Unk0206bcf0Ray ray, Unk0205f098 *out);
+void func_0206bae4(Unk0206b8cc *p);
+void func_0205f998(void *list);
+void func_02060cdc(void *p);
+void func_0205899c(Unk020c3ba4 *world);
+void func_02052e8c(Unk020bfc3c *p);
+bool func_020a14d8(Unk020d6240 *system);
+Unk0202071c func_0202071c(Unk020d6298 *clock);
+bool func_020a19cc(Unk020d6298 *clock, int step);
+void func_020a194c(Unk020d6298 *clock, int step);
+void func_02059cb0(Unk020599a0 *p, bool on);
+void func_02059d10(Unk020599a0 *p, bool on);
+void func_01ff9924(Unk020c7d38 *pool);
+void func_01ff9dbc(Unk020c7d38 *pool);
+void func_0207c224();
+void func_01ffadf8(Unk020916a4 *manager);
 void func_02053100(Unk020bfc3c *p);
 Unk0205fd7c *func_0205fd7c(void *list, int map);
 void func_0205e4d0(Unk0205fd7c *node);
@@ -660,8 +742,8 @@ void *func_02058518(Unk020c3ba4 *world, int a, int b);
 void func_02056b80(void *p);
 void func_020585e0(Unk020c3ba4 *world, int a);
 void func_02065db8(Unk020c43a8 *p);
-void *func_0206cfa8();
-void func_0206cfb8();
+void *func_0206cfa8(Unk020d6240 *system);
+int func_0206cfb8(Unk0206bcf0 *state);
 void func_0207a748();
 bool func_01ff9ee8(Unk020c7d38 *pool);
 }
@@ -673,13 +755,13 @@ public:
     void func_02071e04();
     void func_02072224();
     void func_02071fdc(int dt);
-    int func_0206cfcc(Unk0205f10c *list, bool extra);
-    void func_0206d0ec(Unk0206bcf0Point *pt, Unk0206bcf0Point *pt2);
+    int func_0206cfcc(Unk0205f098 *list, bool extra);
+    void func_0206d0ec(Unk0206bcf0Point *pt, Unk0206bcf0Ray *ray);
     void func_0206d3dc(u32 *tile, int *n);
     bool func_0206d630(Unk0206bcf0Item *item);
     bool func_0206d6dc();
     void func_0206d858(Unk0206bcf0Point *pt, Unk0206bcf0Item *item);
-    void func_0206d9c4(Unk0206bcf0Cell cell);
+    void func_0206d9c4(Unk0206bcf0Ray ray);
     void func_0206da24(Unk0206bcf0Cell *cell);
     void func_0206dd24();
     void func_0206ddb4();
@@ -720,8 +802,7 @@ public:
     Unk02069fec unk10;
     Unk0201e300 *unk11c;
     Unk0206bcf0Point unk120;
-    Unk0206bcf0Point unk128;
-    u8 unk130[0x10];
+    Unk0206bcf0Ray unk128;
     Unk0206bcf0Obj *unk140;
     Unk0206bcf0Obj *unk144;
     Unk0206bcf0Obj *unk148;
@@ -745,6 +826,63 @@ public:
 };
 
 static Unk0206bcf0 *data_020c4780;
+
+#define DELETE(p)  \
+    if (p != 0) {  \
+        delete p;  \
+        p = 0;     \
+    }
+
+static inline int func_index(int x, int y, u32 w) {
+    return y * w + x;
+}
+
+static inline u32 *func_tileAt(Unk02056ed0 *l, const Unk0206bcf0Xy *p) {
+    return &l->tiles[func_index(p->x, p->y, l->info->width)];
+}
+
+static inline bool func_isWater(u32 tile) {
+    bool w = true;
+    u32 k = tile & 0xc000;
+    if (k != 0x4000 && k != 0xc000) {
+        w = false;
+    }
+    return w;
+}
+
+static inline bool func_owns(void *db, Unk0205cf00 *def) {
+    return func_02054dc4(db, def, 0) != 0;
+}
+
+static inline bool func_has(void *db, u32 key) {
+    return func_02054dc4(db, func_0205f6f8(data_020c3fc4, key), 0) != 0;
+}
+
+static inline bool func_isSetA(int id) {
+    bool r = false;
+    u32 i = id - 7;
+    if (i <= 0x16 && (0x600801 & (1 << i))) {
+        r = true;
+    }
+    return r;
+}
+
+static inline bool func_isSetB(int id) {
+    bool r = false;
+    u32 i = id - 0x27;
+    if (i <= 0x1b && (0xa30c303 & (1 << i))) {
+        r = true;
+    }
+    return r;
+}
+
+static inline bool func_isKept(int id) {
+    bool r = true;
+    if (!func_isSetA(id) && !func_isSetB(id)) {
+        r = false;
+    }
+    return r;
+}
 
 Unk0206bcf0 *func_0206bce0() {
     return data_020c4780;
@@ -789,12 +927,6 @@ void Unk0206bcf0::func_02071e04() {
     func_02097a38();
     unk22c = 0x80;
 }
-
-#define DELETE(p)  \
-    if (p != 0) {  \
-        delete p;  \
-        p = 0;     \
-    }
 
 void Unk0206bcf0::func_02072224() {
     Unk020c7d38 *pool = &data_020c7d38;
@@ -848,40 +980,317 @@ void *func_0206c2a4(Unk020d6240 *system) {
     return data_020d6240.unk8;
 }
 
-void *func_0206cfa8() {
+/*
+ * 99.25 %: the touched point's stack slot comes below the two clock reads (it is
+ * above them in the original), and the pie menu and the touch flag swap r5 / r6;
+ * the second read of unk22c at the start is folded into the first.
+ */
+void Unk0206bcf0::func_02071fdc(int dt) {
+    if ((unk144 != 0 || unk21c != 0 || unk16c != 0 || unk140 != 0 || func_020a5cb0()) && dt == 0) {
+        return;
+    }
+    Unk020c7d38 *pool;
+    Unk020d6240 *system;
+    Unk0201b6d4 *menu;
+    Unk020c43a8 *p;
+    int touched;
+    void *input;
+    pool = &data_020c7d38;
+    system = func_020a18e4();
+    input = data_020d6240.input;
+    menu = data_020d6240.menu;
+    p = &data_020c43a8;
+    touched = 0;
+    func_020a10dc(system, dt);
+    func_0206b5e4(unk170);
+    if (unk164 != 0) {
+        if (unk22c & 0x20) {
+            if ((unk144 != 0 && func_020a1524(unk144)) || (unk144 == 0 && func_020a1524(unk11c))) {
+                unk164->func_08();
+                unk22c &= ~0x20;
+            }
+        } else if (func_020a1524(unk164)) {
+            if (unk144 == 0) {
+                unk11c->func_08();
+            }
+            delete unk164;
+            unk164 = 0;
+            func_0206f560(false);
+            func_0206f578(false);
+            func_0206f548(false);
+            func_02097a38();
+        }
+    }
+    if (unk148 != 0) {
+        if (unk22c & 0x100) {
+            if (func_020a1524(unk11c)) {
+                unk11c->flags &= ~8;
+                unk148->func_08();
+                unk22c &= ~0x100;
+            }
+        } else if (func_020a1524(unk148)) {
+            delete unk148;
+            unk148 = 0;
+            func_0206f578(false);
+            func_0206f548(false);
+            func_02097a38();
+            if (next == 0) {
+                unk11c->func_08();
+            }
+        }
+    }
+    if (unk21c != 0) {
+        if (unk22c & 0x200) {
+            if (func_020a1524(unk11c)) {
+                unk21c->func_08();
+                unk22c &= ~0x200;
+            }
+        } else if (func_020a1524(unk21c)) {
+            func_0206f548(false);
+            delete unk21c;
+            unk21c = 0;
+            unk11c->flags &= ~0x10;
+            unk11c->func_08();
+        }
+    }
+    if (!(unk22c & 1)) {
+        if (unk144 != 0) {
+            if (unk22c & 0x10) {
+                if (func_020a1524(unk11c)) {
+                    unk144->func_08();
+                    unk22c &= ~0x10;
+                }
+            } else {
+                if (dt) {
+                    func_020553dc(&unk14c);
+                }
+                if (func_020a1524(unk144)) {
+                    unk11c->func_08();
+                    if (unk14c.unk0 == 0) {
+                        func_02055198(&unk14c);
+                        delete unk144;
+                        unk144 = 0;
+                        func_0206f560(false);
+                        func_0206f578(false);
+                        func_02097a38();
+                    } else if (!func_isKept(unk14c.unk0)) {
+                        func_020559cc(&unk14c);
+                    }
+                }
+            }
+        }
+        if (unk140 != 0) {
+            if (dt) {
+                func_020553dc(&unk14c);
+            }
+            if (unk22c & 0x40) {
+                if (func_020a1524(unk11c)) {
+                    unk140->func_08();
+                    unk22c &= ~0x40;
+                }
+            } else if (func_020a1524(unk140)) {
+                unk11c->func_08();
+                if (unk14c.unk0 == 0) {
+                    delete unk140;
+                    unk140 = 0;
+                    func_0206f578(false);
+                    func_0206f560(false);
+                    func_02097a38();
+                } else if (!func_isKept(unk14c.unk0)) {
+                    func_020559cc(&unk14c);
+                }
+            }
+        }
+        if (unk16c != 0) {
+            if (dt) {
+                func_020553dc(&unk14c);
+            }
+            if (unk22c & 0x800) {
+                if (func_020a1524(unk11c)) {
+                    unk16c->func_08();
+                    unk22c &= ~0x800;
+                }
+            } else if (func_020a1524(unk16c)) {
+                unk11c->func_08();
+                if (unk14c.unk0 == 0) {
+                    delete unk16c;
+                    unk16c = 0;
+                    func_0206f578(false);
+                    func_0206f560(false);
+                    func_02097a38();
+                } else if (!func_isKept(unk14c.unk0)) {
+                    func_02055220(&unk14c, 0, 0);
+                    func_020559cc(&unk14c);
+                }
+            }
+        }
+        func_02065b80(p, dt);
+        if (func_020a0744(func_0206cfa8(func_020a18e4()), 6) && !(unk22c & 0x2000)) {
+            func_0206f258(0);
+        }
+        if (!(unk22c & 2) && !(unk22c & 8)) {
+            func_02065eb8(p);
+            func_0206622c(p);
+        }
+        if (!(unk22c & 4) && !(unk22c & 8) && !(unk11c->flags & 4) && func_02007dec(&p->unk3c8) < 4) {
+            if (func_0206cfb8(this)) {
+                touched |= 1;
+            }
+            if (func_020a078c(input, 1)) {
+                func_0206b30c(&unk10, 0, 0);
+            }
+            if (!(touched & 1) && func_020a075c(input, 1)) {
+                Unk0206bcf0Point pt;
+                pt = func_020a07bc(input, 1);
+                unk120 = pt;
+                int *screen = func_02097a4c();
+                Unk020899a4 *camera = (Unk020899a4 *)&data_020c7d38.unk54;
+                Unk02098ff0 dir = camera->func_02089cac(screen[0] << 12, screen[1] << 12);
+                dir.func_02099048(0xa000);
+                unk128.pos = (const Unk0206bcf0RayVec &)camera->pos;
+                unk128.dir = (const Unk0206bcf0RayVec &)dir;
+                bool hit = false;
+                if (p->unkc != 0 && func_020693d8(p->unkc, &unk128)) {
+                    hit = true;
+                }
+                Unk0205f098 list;
+                func_0205f098(&list);
+                func_0205fa30(data_020c3fd4, unk128, &list);
+                func_0206dd24();
+                if (list.count != 0) {
+                    if (!hit && list.count == 1) {
+                        func_0206d858(&unk120, list.head);
+                    } else if (func_0206cfcc(&list, hit && func_0206d6dc()) == 1) {
+                        if (hit) {
+                            func_0206dd24();
+                        } else {
+                            int id = entries[0].unk4;
+                            func_0206dd24();
+                            if (id != 0) {
+                                Unk0206bcf0Item *item = func_0205fbf4(data_020c3fd4, id);
+                                if (item != 0) {
+                                    func_0206d858(&unk120, item);
+                                }
+                            }
+                        }
+                    }
+                }
+                if (unk20c == 0) {
+                    if (hit) {
+                        func_0206d0ec(&unk120, &unk128);
+                    } else {
+                        func_0206d9c4(unk128);
+                    }
+                }
+                func_0205f0a8(&list);
+            }
+            if (!menu->func_busy()) {
+                if (menu->unk14c & 8) {
+                    func_0206b4c8(&unk10);
+                    bool ok = menu->selected >= 0 && menu->selected < 10;
+                    if (ok) {
+                        switch (unk20c) {
+                        case 1:
+                            func_0206ddb4();
+                            break;
+                        case 2:
+                            func_0206df74();
+                            break;
+                        case 3:
+                            func_0206dfdc();
+                            break;
+                        case 4:
+                            func_0206e40c();
+                            break;
+                        }
+                    } else {
+                        unk20c = 0;
+                    }
+                    func_02097a38();
+                }
+            } else {
+                func_0206b30c(&unk10, 0, 0);
+            }
+            if (func_02097298(2)) {
+                func_0206f0ec(0, 1, 0);
+            }
+            if ((data_020d60c8.unk15c && func_02097298(6)) || (!data_020d60c8.unk15c && func_02097298(10))) {
+                func_0206f0ec(4, 1, 0);
+            }
+        }
+        if (!(unk22c & 4)) {
+            func_0206bae4(unkc);
+        }
+        func_0205f998(data_020c3fd4);
+        func_02060cdc(data_020c40cc);
+        func_0205899c(&data_020c3ba4);
+        func_0205fde4(data_020c3fd4);
+        func_02052e8c(&data_020bfc3c);
+    }
+    if (!menu->func_busy() && func_020a14d8(func_020a18e4())) {
+        func_0206af98(&unk10, -1);
+    }
+    if (!(unk22c & 2) || (unk224 > 0 && unk21c == 0)) {
+        int step = 1;
+        if (unk224 > 0) {
+            int v = unk224;
+            if (v > 10) {
+                v = 10;
+            }
+            step = v * 15;
+            unk224 -= step / 15;
+            if (unk224 <= 0) {
+                unk11c->flags &= ~0x40;
+            }
+        }
+        Unk020d6298 *clock = &data_020d6298;
+        Unk0202071c t = func_0202071c(clock);
+        int hour = t.func_hour();
+        if (unk224 > 0 || (p->unk3d4 == 0 && unk144 == 0) || !func_020a19cc(clock, step)) {
+            func_020a194c(clock, step);
+            Unk0202071c t2 = func_0202071c(clock);
+            if (hour != t2.func_hour()) {
+                func_0206f0d8();
+            }
+            func_0206f96c();
+        }
+    }
+    func_02059cb0(unk214, (unk22c & 1) != 0);
+    func_02059d10(unk214, (unk22c & 1) != 0);
+    unk218->func_02071a60();
+    if (dt) {
+        func_01ff9924(pool);
+        while (func_01ff9ee8(pool)) {
+            func_0207a748();
+        }
+        *(volatile u32 *)0x4000540 = 3;
+        func_0207c224();
+        func_01ffaac4(func_0208c578());
+        data_020c3ba4.palettes->func_0207005c();
+        func_01ff9dbc(pool);
+        Unk0208db14::func_0208dbe8()->func_0208e4ec();
+        Unk0208db14::func_0208dbf8()->func_0208e4ec();
+        func_01ffadf8(Unk020916a4::func_02091820());
+        func_01ffadf8(Unk020916a4::func_02091830());
+        if (unk22c & 0x1000) {
+            unk22c &= ~0x1000;
+        } else {
+            func_020a15a8(system, dt);
+        }
+        func_0205f7f8(data_020c3fc4);
+    }
+    unk228++;
+}
+
+void *func_0206cfa8(Unk020d6240 *system) {
     return data_020d6240.input;
 }
 
-void func_0206cfb8() {
-    func_020543d4(data_020bfc68);
+int func_0206cfb8(Unk0206bcf0 *state) {
+    return func_020543d4(data_020bfc68);
 }
 
-static inline int func_index(int x, int y, u32 w) {
-    return y * w + x;
-}
-
-static inline u32 *func_tileAt(Unk02056ed0 *l, const Unk0206bcf0Xy *p) {
-    return &l->tiles[func_index(p->x, p->y, l->info->width)];
-}
-
-static inline bool func_isWater(u32 tile) {
-    bool w = true;
-    u32 k = tile & 0xc000;
-    if (k != 0x4000 && k != 0xc000) {
-        w = false;
-    }
-    return w;
-}
-
-static inline bool func_owns(void *db, Unk0205cf00 *def) {
-    return func_02054dc4(db, def, 0) != 0;
-}
-
-static inline bool func_has(void *db, u32 key) {
-    return func_02054dc4(db, func_0205f6f8(data_020c3fc4, key), 0) != 0;
-}
-
-int Unk0206bcf0::func_0206cfcc(Unk0205f10c *list, bool extra) {
+int Unk0206bcf0::func_0206cfcc(Unk0205f098 *list, bool extra) {
     Unk0206bcf0Item *items[10];
     int n = 0;
     func_0205f10c(list, items, list->count);
@@ -909,7 +1318,9 @@ int Unk0206bcf0::func_0206cfcc(Unk0205f10c *list, bool extra) {
     return n;
 }
 
-void Unk0206bcf0::func_0206d0ec(Unk0206bcf0Point *pt, Unk0206bcf0Point *pt2) {
+/* 96.76 %: the load of the tile layer and the mov r1, #0x20 are scheduled
+ * differently. */
+void Unk0206bcf0::func_0206d0ec(Unk0206bcf0Point *pt, Unk0206bcf0Ray *ray) {
     if (!func_0206d6dc()) {
         return;
     }
@@ -1036,6 +1447,7 @@ bool Unk0206bcf0::func_0206d630(Unk0206bcf0Item *item) {
     return false;
 }
 
+/* 99.63 %: the loop index and the database pointer swap registers. */
 bool Unk0206bcf0::func_0206d6dc() {
     int i;
     u8 *db;
@@ -1071,6 +1483,7 @@ bool Unk0206bcf0::func_0206d6dc() {
     return k == 0 || k == 0x4000 || k == 0xc000;
 }
 
+/* 99.18 %: register allocation of the entry count and the definition. */
 void Unk0206bcf0::func_0206d858(Unk0206bcf0Point *pt, Unk0206bcf0Item *item) {
     if (item == 0) {
         return;
@@ -1111,17 +1524,18 @@ void Unk0206bcf0::func_0206d858(Unk0206bcf0Point *pt, Unk0206bcf0Item *item) {
     unk20c = 3;
 }
 
-void Unk0206bcf0::func_0206d9c4(Unk0206bcf0Cell cell) {
+void Unk0206bcf0::func_0206d9c4(Unk0206bcf0Ray ray) {
     Unk02058788 *map = func_02058788(&data_020c3ba4, data_020c3ba4.map);
     if (map == 0) {
         return;
     }
-    if (!func_0205809c(map, &unk204, &cell)) {
+    if (!func_0205809c(map, &unk204, &ray)) {
         return;
     }
     func_0206da24(&unk204);
 }
 
+/* 98.41 %: stack slots and registers of the entry and the cell copies. */
 void Unk0206bcf0::func_0206da24(Unk0206bcf0Cell *cell) {
     Unk020c3ba4 *world = &data_020c3ba4;
     Unk02058788 *map = func_02058788(world, world->map);
@@ -1200,6 +1614,7 @@ void Unk0206bcf0::func_0206dd24() {
     unk20c = 0;
 }
 
+/* 98.66 %: register allocation around the object kind. */
 void Unk0206bcf0::func_0206ddb4() {
     Unk020c3ba4 *world = &data_020c3ba4;
     int sel = data_020d6240.menu->selected;
@@ -1300,6 +1715,7 @@ void Unk0206bcf0::func_0206e104(int v) {
     }
 }
 
+/* 88.09 %: the stack layout of the copied offset and cells differs. */
 bool Unk0206bcf0::func_0206e134(Unk0206bcf0Item *item) {
     if (func_0205d340(item->def, 0x2539c423)) {
         Unk0206bcf0Xy size;
@@ -1388,6 +1804,262 @@ void Unk0206bcf0::func_0206e40c() {
     unk20c = 0;
 }
 
+/* 81.27 %: the original copies unk204 into the objects through stack
+ * temporaries (halfword blocks) and keeps &data_020c43a8 in r5 with one
+ * fewer saved register; the source form of these copies is not found yet. */
+void Unk0206bcf0::func_0206e424() {
+    Unk020c43a8 *p;
+    int sel;
+    Unk02056ed0 *layer;
+    int i;
+    u32 *tiles;
+    sel = data_020d6240.menu->selected;
+    p = &data_020c43a8;
+    if (unk204.pos.unk3 == -1) {
+        return;
+    }
+    layer = func_02056ed0(func_02058788(&data_020c3ba4, data_020c3ba4.map), &unk204);
+    i = func_index(unk204.xy.x, unk204.xy.y, layer->info->width);
+    tiles = layer->tiles;
+    switch (entries[sel].unk8) {
+    case 0:
+    case 1: {
+        u32 k = tiles[i] & 0xc000;
+        if (k != 0 && k != 0x8000) {
+            return;
+        }
+        Unk02007340K0c *o = (Unk02007340K0c *)func_02007340(data_020be184, 0xc);
+        if (o == 0) {
+            return;
+        }
+        o->cell = unk204;
+        o->unk28 = unk210;
+        func_02007e48(&p->unk3c8, o);
+        break;
+    }
+    case 2: {
+        if (!func_isWater(tiles[i])) {
+            return;
+        }
+        if (!func_has(data_020bfc9c, 0xab8dd75e)) {
+            return;
+        }
+        Unk0205cf00 *def = func_0205f6f8(data_020c3fc4, 0x936f2a);
+        if (func_0205465c(data_020bfc68, def, 0)) {
+            def = func_0205f6f8(data_020c3fc4, func_0205d1b4(def, 0x798b86ac));
+            func_0206bce0()->func_0206f3e8(def, 1, 1, 1);
+        }
+        Unk02007340K06 *o = (Unk02007340K06 *)func_02007340(data_020be184, 6);
+        if (o == 0) {
+            return;
+        }
+        func_02006754(o, 0, 3, 0x5e691f68, 0);
+        o->cell = unk204;
+        o->flags |= 0x10;
+        func_02007e48(&p->unk3c8, o);
+        break;
+    }
+    case 3: {
+        if ((tiles[i] & 0xc000) != 0xc000) {
+            return;
+        }
+        Unk0205cf00 *def = func_0205f6f8(data_020c3fc4, entries[sel].unk4);
+        if (!func_owns(data_020bfc9c, def)) {
+            return;
+        }
+        int v = def->script->func_0209599c(0xef2746ec);
+        if (v == -1) {
+            return;
+        }
+        Unk02007340K0e *o = (Unk02007340K0e *)func_02007340(data_020be184, 0xe);
+        if (o == 0) {
+            return;
+        }
+        Unk0206bcf0Cell cell;
+        cell = unk204;
+        o->cell = cell;
+        o->type = 4;
+        o->key = entries[sel].unk4;
+        o->value = v;
+        o->unk38 = 0;
+        o->unk40 = 0;
+        o->unk44 = 0;
+        func_02007e48(&p->unk3c8, o);
+        break;
+    }
+    case 4: {
+        if (!func_isWater(tiles[i])) {
+            return;
+        }
+        Unk02007340K11 *o = (Unk02007340K11 *)func_02007340(data_020be184, 0x11);
+        if (o == 0) {
+            return;
+        }
+        int v;
+        if ((tiles[i] & 0xc000) == 0xc000) {
+            if (data_020c3ba4.map == 0xf) {
+                v = 0x4c4b40;
+            } else {
+                v = 0x632ea0 - func_0206647c(&data_020c43a8, 3);
+            }
+        } else {
+            v = 0x4c4b40 - func_0206647c(&data_020c43a8, 3);
+        }
+        if (v < 0) {
+            v = 0;
+        }
+        o->unk24 = func_02067b70(&data_020c43a8);
+        Unk0206bcf0Cell cell;
+        cell = unk204;
+        o->cell = cell;
+        o->unk38 += func_02077b3c(v * 100, 0x989680);
+        o->unk34 += 0x14;
+        o->unk30 += func_02077b3c(v * func_020667d4(p, 2), 0x4c4b40);
+        func_02007e48(&p->unk3c8, o);
+        break;
+    }
+    case 5: {
+        u32 k = tiles[i] & 0xc000;
+        if (k != 0 && k != 0x4000 && k != 0xc000) {
+            return;
+        }
+        if (!func_0206f0ec(0, 1, 0)) {
+            return;
+        }
+        func_02029128(unk144, 1);
+        break;
+    }
+    case 6:
+        if (tiles[i] & 0xc000) {
+            return;
+        }
+        if (!func_0206f0ec(1, 1, 0)) {
+            return;
+        }
+        func_02029128(unk144, 1);
+        break;
+    case 7:
+        if (func_0206757c(p, 0x20)) {
+            return;
+        }
+        if (!func_0206f0ec(0xe, 1, 0)) {
+            return;
+        }
+        func_02029128(unk144, 1);
+        func_02028eec(unk144, 0xe, func_0205f6f8(data_020c3fc4, func_0209a32c("build/data/objects/help", 0, 0)), 0);
+        break;
+    }
+}
+
+/* 95.35 %: the cell comparison reloads the tile coordinates that the
+ * original keeps in r1 / r2, and the registers of the object loop differ. */
+void Unk0206bcf0::func_0206ea00(int map, int flag) {
+    Unk020c7d38 *pool;
+    Unk020c3ba4 *world;
+    Unk020c7f48 *tex;
+    int old;
+    Unk020589ac *info;
+    void *layers;
+    pool = &data_020c7d38;
+    while (func_01ff9ee8(pool)) {
+        func_0207a748();
+    }
+    world = &data_020c3ba4;
+    func_0206dd24();
+    old = world->map;
+    if (old == map) {
+        return;
+    }
+    func_02053100(&data_020bfc3c);
+    if (old != -1) {
+        func_0206f610();
+        for (Unk0205fd7c *n = func_0205fd7c(data_020c3fd4, old); n != 0; n = n->next) {
+            func_0205e4d0(n);
+            func_02007e10(&n->unk4);
+            func_02007e38(&n->unk4);
+        }
+        func_020585e0(world, old);
+        func_0205fde4(data_020c3fd4);
+        func_0205f7f8(data_020c3fc4);
+    }
+    func_02065e80(&data_020c43a8);
+    func_0205a548(unk214);
+    func_02054a70(data_020bfc80);
+    if (map == -1) {
+        return;
+    }
+    info = func_020589ac(world, map);
+    layers = func_02058518(world, map, 1);
+    func_0206ef04(map);
+    func_02056c7c(layers);
+    func_020585a0(world, map);
+    tex = func_0208c578();
+    data_020c409c[0x20] = 0;
+    for (Unk0205fd7c *n = func_0205fd7c(data_020c3fd4, map); n != 0;) {
+        func_0205e3f0(n);
+        n = n->next;
+        func_01ffaac4(tex);
+        world->palettes->func_0207005c();
+        func_0205f7f8(data_020c3fc4);
+    }
+    data_020c409c[0x20] = 1;
+    Unk0206bcf0Cell cell;
+    if (!func_020573a4(layers, &cell, old)) {
+        func_020577a4(layers, &cell);
+    }
+    if (func_02059418(&cell) && cell.xy.x >= 0 && cell.xy.y >= 0) {
+        Unk020c43a8 *p = &data_020c43a8;
+        p->func_10(cell);
+        func_020667f8(&data_020c43a8, 0);
+    }
+    func_02065db8(&data_020c43a8);
+    func_0206a120(&unk10);
+    func_020a18e4();
+    if (!func_020a1524(unk11c) && unk224 <= 0) {
+        func_020a1494(func_020a18e4(), 2, 0x10);
+        func_020a11f8(func_020a18e4(), 2, 0);
+        unk22c |= 0x1000;
+    }
+    func_02058cd8(world, map, 1);
+    func_0206f5f4();
+    if (flag) {
+        Unk020c43a8 *p = &data_020c43a8;
+        Unk0206bcf0Cell here = p->func_14();
+        Unk0205f098 ctx;
+        func_0205f098(&ctx);
+        for (Unk0206bcf0Item *item = func_0205fb4c(data_020c3fd4, 0x12d2c5be, &ctx, map); item != 0;
+             item = item->next) {
+            Unk0206bcf0Cell c = item->func_14();
+            if (!func_02059418(&c) || c.xy.x < 0 || c.xy.y < 0) {
+                continue;
+            }
+            if (!(c == here)) {
+                continue;
+            }
+            Unk0205cf00 *def = item->def;
+            int y = item->func_0c().y + 0x8000;
+            if (def != 0 && func_0205d340(def, 0x350465a)) {
+                Unk02007c98 *o = func_02007c98(data_020be184, 0x1c, 2);
+                if (o != 0) {
+                    func_02001318(o, item, 0, map, 0, y, 1, 0);
+                    func_02007e48(&item->unk4, o);
+                    func_02007e48(&data_020c4770, o->unk18);
+                }
+            } else {
+                Unk02007340 *o = func_02007340(data_020be184, 0x1a);
+                if (o != 0) {
+                    func_02001318(o, item, 0, map, 0, y, 1, 0);
+                    func_02007e48(&data_020c4770, o);
+                }
+            }
+            break;
+        }
+        func_0205f0a8(&ctx);
+    }
+    func_0205a484(unk214);
+    func_02059c10(unk214, !(info->unk8 & 8));
+}
+
 void Unk0206bcf0::func_0206ef04(int map) {
     Unk020c3ba4 *world = &data_020c3ba4;
     int id = func_0209a3c4(func_020589ac(world, map)->unk4, "lot.ambient.nitro_xml");
@@ -1444,6 +2116,7 @@ void Unk0206bcf0::func_0206f0d8() {
     func_02066d1c(&data_020c43a8);
 }
 
+/* 98.81 %: the original reloads data_020c4770.unkc before reading its flags. */
 bool Unk0206bcf0::func_0206f0ec(int type, int b, int c) {
     if (unk144 != 0 || unk14c.unk0 != 0) {
         return false;
@@ -1703,255 +2376,4 @@ void Unk0206bcf0::func_0206fa30() {
     func_02065db8(&data_020c43a8);
     func_02020fb8(unk11c);
     func_0205fea0(data_020c3fd4, 0xd528485d);
-}
-
-void Unk0206bcf0::func_0206e424() {
-    Unk020c43a8 *p;
-    int sel;
-    Unk02056ed0 *layer;
-    int i;
-    u32 *tiles;
-    sel = data_020d6240.menu->selected;
-    p = &data_020c43a8;
-    if (unk204.pos.unk3 == -1) {
-        return;
-    }
-    layer = func_02056ed0(func_02058788(&data_020c3ba4, data_020c3ba4.map), &unk204);
-    i = func_index(unk204.xy.x, unk204.xy.y, layer->info->width);
-    tiles = layer->tiles;
-    switch (entries[sel].unk8) {
-    case 0:
-    case 1: {
-        u32 k = tiles[i] & 0xc000;
-        if (k != 0 && k != 0x8000) {
-            return;
-        }
-        Unk02007340K0c *o = (Unk02007340K0c *)func_02007340(data_020be184, 0xc);
-        if (o == 0) {
-            return;
-        }
-        o->cell = unk204;
-        o->unk28 = unk210;
-        func_02007e48(&p->unk3c8, o);
-        break;
-    }
-    case 2: {
-        if (!func_isWater(tiles[i])) {
-            return;
-        }
-        if (!func_has(data_020bfc9c, 0xab8dd75e)) {
-            return;
-        }
-        Unk0205cf00 *def = func_0205f6f8(data_020c3fc4, 0x936f2a);
-        if (func_0205465c(data_020bfc68, def, 0)) {
-            def = func_0205f6f8(data_020c3fc4, func_0205d1b4(def, 0x798b86ac));
-            func_0206bce0()->func_0206f3e8(def, 1, 1, 1);
-        }
-        Unk02007340K06 *o = (Unk02007340K06 *)func_02007340(data_020be184, 6);
-        if (o == 0) {
-            return;
-        }
-        func_02006754(o, 0, 3, 0x5e691f68, 0);
-        o->cell = unk204;
-        o->flags |= 0x10;
-        func_02007e48(&p->unk3c8, o);
-        break;
-    }
-    case 3: {
-        if ((tiles[i] & 0xc000) != 0xc000) {
-            return;
-        }
-        Unk0205cf00 *def = func_0205f6f8(data_020c3fc4, entries[sel].unk4);
-        if (!func_owns(data_020bfc9c, def)) {
-            return;
-        }
-        int v = def->script->func_0209599c(0xef2746ec);
-        if (v == -1) {
-            return;
-        }
-        Unk02007340K0e *o = (Unk02007340K0e *)func_02007340(data_020be184, 0xe);
-        if (o == 0) {
-            return;
-        }
-        Unk0206bcf0Cell cell;
-        cell = unk204;
-        o->cell = cell;
-        o->type = 4;
-        o->key = entries[sel].unk4;
-        o->value = v;
-        o->unk38 = 0;
-        o->unk40 = 0;
-        o->unk44 = 0;
-        func_02007e48(&p->unk3c8, o);
-        break;
-    }
-    case 4: {
-        if (!func_isWater(tiles[i])) {
-            return;
-        }
-        Unk02007340K11 *o = (Unk02007340K11 *)func_02007340(data_020be184, 0x11);
-        if (o == 0) {
-            return;
-        }
-        int v;
-        if ((tiles[i] & 0xc000) == 0xc000) {
-            if (data_020c3ba4.map == 0xf) {
-                v = 0x4c4b40;
-            } else {
-                v = 0x632ea0 - func_0206647c(&data_020c43a8, 3);
-            }
-        } else {
-            v = 0x4c4b40 - func_0206647c(&data_020c43a8, 3);
-        }
-        if (v < 0) {
-            v = 0;
-        }
-        o->unk24 = func_02067b70(&data_020c43a8);
-        Unk0206bcf0Cell cell;
-        cell = unk204;
-        o->cell = cell;
-        o->unk38 += func_02077b3c(v * 100, 0x989680);
-        o->unk34 += 0x14;
-        o->unk30 += func_02077b3c(v * func_020667d4(p, 2), 0x4c4b40);
-        func_02007e48(&p->unk3c8, o);
-        break;
-    }
-    case 5: {
-        u32 k = tiles[i] & 0xc000;
-        if (k != 0 && k != 0x4000 && k != 0xc000) {
-            return;
-        }
-        if (!func_0206f0ec(0, 1, 0)) {
-            return;
-        }
-        func_02029128(unk144, 1);
-        break;
-    }
-    case 6:
-        if (tiles[i] & 0xc000) {
-            return;
-        }
-        if (!func_0206f0ec(1, 1, 0)) {
-            return;
-        }
-        func_02029128(unk144, 1);
-        break;
-    case 7:
-        if (func_0206757c(p, 0x20)) {
-            return;
-        }
-        if (!func_0206f0ec(0xe, 1, 0)) {
-            return;
-        }
-        func_02029128(unk144, 1);
-        func_02028eec(unk144, 0xe, func_0205f6f8(data_020c3fc4, func_0209a32c("build/data/objects/help", 0, 0)), 0);
-        break;
-    }
-}
-
-void Unk0206bcf0::func_0206ea00(int map, int flag) {
-    Unk020c7d38 *pool;
-    Unk020c3ba4 *world;
-    Unk020c7f48 *tex;
-    int old;
-    Unk020589ac *info;
-    void *layers;
-    pool = &data_020c7d38;
-    while (func_01ff9ee8(pool)) {
-        func_0207a748();
-    }
-    world = &data_020c3ba4;
-    func_0206dd24();
-    old = world->map;
-    if (old == map) {
-        return;
-    }
-    func_02053100(&data_020bfc3c);
-    if (old != -1) {
-        func_0206f610();
-        for (Unk0205fd7c *n = func_0205fd7c(data_020c3fd4, old); n != 0; n = n->next) {
-            func_0205e4d0(n);
-            func_02007e10(&n->unk4);
-            func_02007e38(&n->unk4);
-        }
-        func_020585e0(world, old);
-        func_0205fde4(data_020c3fd4);
-        func_0205f7f8(data_020c3fc4);
-    }
-    func_02065e80(&data_020c43a8);
-    func_0205a548(unk214);
-    func_02054a70(data_020bfc80);
-    if (map == -1) {
-        return;
-    }
-    info = func_020589ac(world, map);
-    layers = func_02058518(world, map, 1);
-    func_0206ef04(map);
-    func_02056c7c(layers);
-    func_020585a0(world, map);
-    tex = func_0208c578();
-    data_020c409c[0x20] = 0;
-    for (Unk0205fd7c *n = func_0205fd7c(data_020c3fd4, map); n != 0;) {
-        func_0205e3f0(n);
-        n = n->next;
-        func_01ffaac4(tex);
-        world->palettes->func_0207005c();
-        func_0205f7f8(data_020c3fc4);
-    }
-    data_020c409c[0x20] = 1;
-    Unk0206bcf0Cell cell;
-    if (!func_020573a4(layers, &cell, old)) {
-        func_020577a4(layers, &cell);
-    }
-    if (func_02059418(&cell) && cell.xy.x >= 0 && cell.xy.y >= 0) {
-        Unk020c43a8 *p = &data_020c43a8;
-        p->func_10(cell);
-        func_020667f8(&data_020c43a8, 0);
-    }
-    func_02065db8(&data_020c43a8);
-    func_0206a120(&unk10);
-    func_020a18e4();
-    if (!func_020a1524(unk11c) && unk224 <= 0) {
-        func_020a1494(func_020a18e4(), 2, 0x10);
-        func_020a11f8(func_020a18e4(), 2, 0);
-        unk22c |= 0x1000;
-    }
-    func_02058cd8(world, map, 1);
-    func_0206f5f4();
-    if (flag) {
-        Unk020c43a8 *p = &data_020c43a8;
-        Unk0206bcf0Cell here = p->func_14();
-        Unk0205f098 ctx;
-        func_0205f098(&ctx);
-        for (Unk0206bcf0Item *item = func_0205fb4c(data_020c3fd4, 0x12d2c5be, &ctx, map); item != 0;
-             item = item->next) {
-            Unk0206bcf0Cell c = item->func_14();
-            if (!func_02059418(&c) || c.xy.x < 0 || c.xy.y < 0) {
-                continue;
-            }
-            if (!(c == here)) {
-                continue;
-            }
-            Unk0205cf00 *def = item->def;
-            int y = item->func_0c().y + 0x8000;
-            if (def != 0 && func_0205d340(def, 0x350465a)) {
-                Unk02007c98 *o = func_02007c98(data_020be184, 0x1c, 2);
-                if (o != 0) {
-                    func_02001318(o, item, 0, map, 0, y, 1, 0);
-                    func_02007e48(&item->unk4, o);
-                    func_02007e48(&data_020c4770, o->unk18);
-                }
-            } else {
-                Unk02007340 *o = func_02007340(data_020be184, 0x1a);
-                if (o != 0) {
-                    func_02001318(o, item, 0, map, 0, y, 1, 0);
-                    func_02007e48(&data_020c4770, o);
-                }
-            }
-            break;
-        }
-        func_0205f0a8(&ctx);
-    }
-    func_0205a484(unk214);
-    func_02059c10(unk214, !(info->unk8 & 8));
 }
