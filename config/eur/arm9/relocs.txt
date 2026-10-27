@@ -13624,9 +13624,9 @@ from:0x02064154 kind:arm_call to:0x02093c58 module:main
 from:0x02064160 kind:load to:0x020bc50c module:main
 from:0x020641ac kind:arm_call to:0x020a3a70 module:main
 from:0x020641b4 kind:arm_call to:0x02099858 module:main
-from:0x02064240 kind:load to:0x020bc5b0 module:main
+from:0x02064240 kind:load to:0x020bc5a8 add:0x8 module:main
 from:0x02064260 kind:arm_call to:0x020642cc module:main
-from:0x0206426c kind:load to:0x020bc5b0 module:main
+from:0x0206426c kind:load to:0x020bc5a8 add:0x8 module:main
 from:0x0206427c kind:arm_call to:0x020897b4 module:main
 from:0x02064290 kind:arm_call to:0x02099840 module:main
 from:0x020642a0 kind:arm_call to:0x02093648 module:main

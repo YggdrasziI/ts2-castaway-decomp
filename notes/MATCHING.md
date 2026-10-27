@@ -657,3 +657,7 @@ default: add one here only once a unit of this ROM proves it with mwccarm.
 - In a `complete` file, `check symbols` looks the string literals up by name:
   rename their `data_<addr>` symbols to the object's `@<n>` names (`... local`,
   exact `byte[N]` length), as printed in the error ("Possible name: @241").
+- The chain node of a static object (`.bss`, 12 bytes before it) has no name
+  in our object file listing; set its dsd name back and read the real one from
+  the `check symbols` error ("Possible name: @52"). A made-up `@<n>` name was
+  not caught by the check, so never guess it (`unit_02064224.cpp`).
