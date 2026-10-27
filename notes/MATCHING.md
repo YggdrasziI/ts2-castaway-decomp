@@ -208,6 +208,22 @@ default: add one here only once a unit of this ROM proves it with mwccarm.
   (`func_0206f0ec`, 98.8 % -> 100 %) and of `unk22c` (`func_02071fdc`) come from
   inline accessors (`bool func_busy() const { return unkc->flags & 0x40; }`).
 
+- A loop over a member array whose element pointer the original sets after the
+  first test (`ldmle` exit, then `add r9, r10, #0x24`) is written with
+  `T *part = &p->parts[i];` inside the body; a pointer set before the loop moves
+  the `add` ahead of the test (`func_0206961c`, 95.8 % -> 100 %).
+- A local pointer to a global object (`Unk020c7d38 *pool = &data_020c7d38;`)
+  gives the original's single literal load kept in a register; calling through
+  the global reloads it at each call (`unit_020680D4.cpp`, five functions).
+- Stack slots of matrix and vector temporaries follow their creation order
+  (descending addresses): a named local takes a slot ahead of all temporaries.
+  When the original places a value among the temporaries, write it as one;
+  `f(a(), b())` through an inline wrapper evaluates `b()` first while keeping the
+  slots in source order (`func_add` in `func_0206869c`, 98.9 % -> 100 %).
+- Minimum / maximum per component: the original `cmp lo, t; movle t, lo` is
+  `lo > t ? t : lo`, and `cmp hi, t; movge t, hi` is `hi < t ? t : hi`
+  (`func_020693d8`, 88 % -> 99.4 % over 16 forms).
+
 ## Inlining and emission order
 
 - A member the original reads twice (a flag test, then the whole word in an
@@ -510,6 +526,13 @@ default: add one here only once a unit of this ROM proves it with mwccarm.
   written in an inline helper taking the cell by `const &` lets the original keep
   the coordinates in registers for the next comparison (`func_0206ea00`,
   95.4 % -> 98.7 %).
+
+- A 4-byte struct returned by value comes back in r0 when it is a plain struct
+  and through the hidden result pointer when it has a constructor: the clock value
+  of `func_0202071c` needs `Unk0202071c() {}` (`func_020695f0`, 46 % -> 100 %).
+- A virtual function taking a one-word struct by value and storing it in a member:
+  `this->dir.v = dir.v;` keeps the spilled argument in its register; the struct
+  assignment re-reads it from the stack (`func_18`, 83.6 % -> 100 %).
 
 ## Control flow
 
