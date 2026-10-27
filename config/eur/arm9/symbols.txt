@@ -5236,8 +5236,8 @@ data_020bc480 kind:data(any) addr:0x020bc480
 data_020bc488 kind:data(any) addr:0x020bc488
 data_020bc4a4 kind:data(any) addr:0x020bc4a4
 data_020bc4c4 kind:data(any) addr:0x020bc4c4
-data_020bc4dc kind:data(any) addr:0x020bc4dc
-data_020bc4f0 kind:data(any) addr:0x020bc4f0
+@1019 kind:data(byte[19]) addr:0x020bc4dc local
+data_020bc4f0$1323 kind:data(word[2]) addr:0x020bc4f0 local
 @426 kind:data(byte[17]) addr:0x020bc4f8 local
 @537 kind:data(byte[18]) addr:0x020bc50c local
 @98 kind:data(byte[39]) addr:0x020bc520 local

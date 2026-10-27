@@ -667,3 +667,16 @@ default: add one here only once a unit of this ROM proves it with mwccarm.
 - Relocations of a static initializer into the middle of its object (second
   table, counts) are `to:<object> add:<offset>`; the dsd symbols inside the
   object leave `symbols.txt`, or `.bss` scores low (`unit_02063CD0.cpp`).
+- Fields stored from many locals after some of them are loaded early (out of
+  the store order) come from an inline setter whose arguments are evaluated
+  right to left: `o->func_set(key, id, v, c, d, e, f, g, h, x, y)`
+  (`func_02063590`, 93.3 % -> 100 %; `func_02063934` / `func_02063b94`, the
+  context word read before the two virtual calls, 79-85 % -> 100 %).
+- A small struct returned by a virtual call and passed by value to an inline
+  setter: an extra stack copy of it means the setter stores it into a field of
+  the struct type (`this->rot = rot`), not its `int` member (`func_020632ec`,
+  89.0 % -> 100 %).
+- `bool ok = true; if (key != 0) ok = f(key); if (ok)` gives the `mov r0, #1`
+  before the test; `key == 0 || f(key)` branches instead (`func_0206344c`).
+- A function-local static array is named `<name>$<n>` in the object; name it
+  after its address (`data_020bc4f0`) so the symbol is `data_020bc4f0$1323`.
