@@ -8,36 +8,36 @@ text{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,san
 </style>
 <rect class="bg" x="0.5" y="0.5" width="759" height="349" rx="6"/>
 <text class="t b" x="16" y="34">The Sims 2: Castaway (eur)</text>
-<text class="m" x="744" y="34" text-anchor="end">commit 2db45d2</text>
+<text class="m" x="744" y="34" text-anchor="end">commit 58d8e07</text>
 <text class="t" x="16" y="60">Code</text>
 <rect class="track" x="186" y="49" width="300" height="12" rx="3"/>
-<rect class="fuzzy" x="186" y="49" width="62.7" height="12" rx="2"/>
-<rect class="perfect" x="186" y="49" width="47.7" height="12" rx="2"/>
+<rect class="fuzzy" x="186" y="49" width="63.3" height="12" rx="2"/>
+<rect class="perfect" x="186" y="49" width="48.2" height="12" rx="2"/>
 <rect class="linked" x="186" y="49" width="17.5" height="12" rx="2"/>
-<text class="t" x="674" y="60" text-anchor="end">114,532 / 720,836 bytes</text>
-<text class="m" x="744" y="60" text-anchor="end">15.89 %</text>
+<text class="t" x="674" y="60" text-anchor="end">115,796 / 720,836 bytes</text>
+<text class="m" x="744" y="60" text-anchor="end">16.06 %</text>
 <text class="t" x="16" y="86">Data</text>
 <rect class="track" x="186" y="75" width="300" height="12" rx="3"/>
-<rect class="fuzzy" x="186" y="75" width="96.9" height="12" rx="2"/>
-<rect class="perfect" x="186" y="75" width="96.9" height="12" rx="2"/>
+<rect class="fuzzy" x="186" y="75" width="97.9" height="12" rx="2"/>
+<rect class="perfect" x="186" y="75" width="97.9" height="12" rx="2"/>
 <rect class="linked" x="186" y="75" width="94.4" height="12" rx="2"/>
-<text class="t" x="674" y="86" text-anchor="end">54,292 / 168,052 bytes</text>
-<text class="m" x="744" y="86" text-anchor="end">32.31 %</text>
+<text class="t" x="674" y="86" text-anchor="end">54,856 / 168,052 bytes</text>
+<text class="m" x="744" y="86" text-anchor="end">32.64 %</text>
 <text class="t" x="16" y="112">Functions</text>
 <rect class="track" x="186" y="101" width="300" height="12" rx="3"/>
-<rect class="fuzzy" x="186" y="101" width="74.3" height="12" rx="2"/>
-<rect class="perfect" x="186" y="101" width="74.3" height="12" rx="2"/>
+<rect class="fuzzy" x="186" y="101" width="75.1" height="12" rx="2"/>
+<rect class="perfect" x="186" y="101" width="75.1" height="12" rx="2"/>
 <rect class="linked" x="186" y="101" width="34.0" height="12" rx="2"/>
-<text class="t" x="674" y="112" text-anchor="end">1,128 / 4,557</text>
-<text class="m" x="744" y="112" text-anchor="end">24.75 %</text>
+<text class="t" x="674" y="112" text-anchor="end">1,141 / 4,557</text>
+<text class="m" x="744" y="112" text-anchor="end">25.04 %</text>
 <text class="t b" x="16" y="146">Code by region</text>
 <text class="t" x="16" y="172">Game</text>
 <rect class="track" x="186" y="161" width="300" height="12" rx="3"/>
-<rect class="fuzzy" x="186" y="161" width="38.3" height="12" rx="2"/>
-<rect class="perfect" x="186" y="161" width="24.7" height="12" rx="2"/>
+<rect class="fuzzy" x="186" y="161" width="39.1" height="12" rx="2"/>
+<rect class="perfect" x="186" y="161" width="25.4" height="12" rx="2"/>
 <rect class="linked" x="186" y="161" width="2.0" height="12" rx="2"/>
-<text class="t" x="674" y="172" text-anchor="end">43,508 / 528,100 bytes</text>
-<text class="m" x="744" y="172" text-anchor="end">8.24 %</text>
+<text class="t" x="674" y="172" text-anchor="end">44,680 / 528,100 bytes</text>
+<text class="m" x="744" y="172" text-anchor="end">8.46 %</text>
 <text class="t" x="16" y="198">Engine block (owner unproven)</text>
 <rect class="track" x="186" y="187" width="300" height="12" rx="3"/>
 <rect class="fuzzy" x="186" y="187" width="297.8" height="12" rx="2"/>
@@ -62,11 +62,11 @@ text{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,san
 <text class="m" x="744" y="276" text-anchor="end">0.00 %</text>
 <text class="t" x="16" y="302">Other</text>
 <rect class="track" x="186" y="291" width="300" height="12" rx="3"/>
-<rect class="fuzzy" x="186" y="291" width="207.3" height="12" rx="2"/>
-<rect class="perfect" x="186" y="291" width="176.5" height="12" rx="2"/>
+<rect class="fuzzy" x="186" y="291" width="208.9" height="12" rx="2"/>
+<rect class="perfect" x="186" y="291" width="178.1" height="12" rx="2"/>
 <rect class="linked" x="186" y="291" width="152.2" height="12" rx="2"/>
-<text class="t" x="674" y="302" text-anchor="end">10,024 / 17,040 bytes</text>
-<text class="m" x="744" y="302" text-anchor="end">58.83 %</text>
+<text class="t" x="674" y="302" text-anchor="end">10,116 / 17,040 bytes</text>
+<text class="m" x="744" y="302" text-anchor="end">59.37 %</text>
 <rect class="linked" x="16" y="322" width="12" height="12" rx="2"/>
 <text class="m" x="34" y="332">linked from source</text>
 <rect class="perfect" x="166" y="322" width="12" height="12" rx="2"/>

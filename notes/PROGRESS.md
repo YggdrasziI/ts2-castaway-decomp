@@ -37,3 +37,4 @@
 | 2026-10-27 | 1528692 | 113068 / 720836 bytes (15.69 %; fuzzy 20.70 %, linked 5.62 %) | 1104 / 4557 | 59 / 130 | Outfit unit written (6 / 7 functions at 100 %) |
 | 2026-10-27 | 2d11c66 | 114220 / 720836 bytes (15.85 %; fuzzy 20.86 %, linked 5.78 %) | 1118 / 4557 | 60 / 131 | Icon set unit (14 / 14 functions, complete) |
 | 2026-10-27 | 2db45d2 | 114532 / 720836 bytes (15.89 %; fuzzy 20.90 %, linked 5.82 %) | 1128 / 4557 | 61 / 132 | Object animation archive unit (10 / 10 functions, complete) |
+| 2026-10-27 | 58d8e07 | 115796 / 720836 bytes (16.06 %; fuzzy 21.10 %, linked 5.82 %) | 1141 / 4557 | 61 / 133 | Played animation unit written (13 / 14 functions at 100 %) |
