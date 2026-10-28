@@ -741,3 +741,21 @@ default: add one here only once a unit of this ROM proves it with mwccarm.
   bottom, declare it early without an initializer (`Unk02098ff0 pos; ...
   pos = f();`), and keep the earlier results named (`func_020613f0`,
   99.6 % -> 100 %).
+- A function returning a struct, bound to a `const &` local, keeps the result
+  in place and works through a pointer to it; a by-value local copies it to a
+  second stack slot (`func_0205e038`, 80.1 % -> 95.7 %; `func_0205e1b8`).
+- An inline accessor prevents the hoisting or CSE of the fields it reads: a
+  loop end reloaded at each test is `i < block->func_end()`
+  (`func_0205e038`); a field read again after a call is `q->func_busy()`
+  (`func_0205ed20`).
+- `for (i = 0; i < count; i++) { if (i >= max) break; ... }` for a loop with
+  two bounds where the second test sits inside the body (`func_0205f10c`).
+- Dead stores of default values before the real ones come from an inline
+  constructor (`Unk0206b998Req() : ... order(100) {}`), not an aggregate
+  initializer, which copies a `.rodata` template (`func_0205e1b8`).
+- `dir.v = d.v` rather than `dir = d` lets the stored value stay in its
+  register for the next use (`func_18`, 96.8 % -> 100 %).
+- Small structs copied to the stack before their fields are used were passed
+  by value to an inline member (`c.func_add(rel)`, `r.func_sub(p)`); a jump
+  table instead of a compare chain needs the empty `case 0: break;`
+  (`func_0205eed4`, 65.3 % -> 99.8 %).

@@ -14,6 +14,8 @@ class Unk0206bcf0Item;
 
 /* A request given to Unk0206b8cc::func_0206b998. */
 struct Unk0206b998Req {
+    Unk0206b998Req() : item(0), key(0), delay(0), order(100) {}
+
     Unk0206bcf0Item *item;
     int key;
     u16 delay;

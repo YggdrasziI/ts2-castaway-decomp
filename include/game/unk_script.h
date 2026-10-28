@@ -37,6 +37,8 @@ struct Unk02099c78Var {
 
 /* Block 0x404: instruction runs, sorted by key. */
 struct Unk02099c78Block {
+    int func_end() const { return start + count; }
+
     int unk0;
     short start;
     short count;
