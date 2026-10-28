@@ -33,6 +33,17 @@ default: add one here only once a unit of this ROM proves it with mwccarm.
   `while (f()) { if (i >= n) break; ... }`; `while (f() && i < n)` jumps to a
   bottom test instead (`func_0205f328`, 92.0 % -> 97.9 %, with the call result
   kept in a local so a store lands after the next call).
+- Locals of one branch that take lower callee-saved registers than the
+  function's result in the original are declared at the top of the function,
+  before the result (`int id; int dirKey; int found = 0;`, `func_0205b7e0`,
+  99.1 % -> 99.8 %); a local declared later takes a higher register.
+- `int n = a - f(); n /= k;` keeps the difference in the register of the
+  original where `(a - f()) / k` picks another one (`func_0205c680`,
+  98.7 % -> 100 %).
+- An argument loaded before a boolean argument is computed (`ldr r1, [sp]`
+  between the tests) comes from an inline member that forwards both
+  (`void set(u32 i, bool v) { p->f(i, v); }`) or from a local copy of the
+  argument; written as a direct call the load comes after (`func_0205bfb4`).
 - Two fields copied one by one after a compare that read the first one, with
   the first field read again (`ldr; ldr; cmp; ...; ldr; str`), come from an
   inline member copy (`void set(const T &o) { key = o.key; index = o.index; }`);
@@ -385,6 +396,18 @@ default: add one here only once a unit of this ROM proves it with mwccarm.
 
 ## Data layout
 
+- A table filled by a static initializer with both fields stored at run time
+  (hash from a call, then a function pointer) has an element type with an
+  inline constructor (`Entry(const char *name, Func f) : key(hash(name)),
+  func(f) {}`); an aggregate initializer `{hash(name), f}` keeps the constant
+  pointers in `.data` and stores only the hashes. The first element is
+  addressed from the start of the `.bss` block that also holds the chain node
+  of the registered global (`str r0, [r2, #0x38]`), the others by their own
+  address: dsd makes one symbol per element; drop them and write the
+  relocations as `to:<table> add:<offset>` (`unit_0205AF94.cpp`).
+- A callback stored in a table of `u16 (*)(Node *)` that returns a constant
+  without the `lsl` / `lsr` truncation is declared `int` and cast in the table
+  (`func_0205bc88`, `func_0205c548`).
 - A dsd symbol inside a static object (here `data_020c806c`, the object + 4 that
   one function returns) makes `.bss` score 3 %: drop the symbol and write the
   relocation as `to:<object> add:0x4` (`unit_02097434.cpp`).
