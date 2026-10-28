@@ -1,27 +1,36 @@
 /*
- * Unit 0x0205D4D8-0x0205D6E0: the first half of the parameter reader
- * Unk0205d6b8 (six values, one per index given by func_02067878). A level
- * word of the script (-5 to 5) maps to a signed amount from a table; the
- * reader is filled from the "Food" value block of a script, or from the runs
- * of a script, or from the parameters of a script step.
+ * Unit 0x0205D4D8-0x0205D8D8: the parameter reader Unk0205d6b8 (six values,
+ * one per index given by func_02067878). A level word of the script (-5 to
+ * 5) maps to a signed amount from a table; the reader is filled from the
+ * "Food" value block of a script, or from the runs of a script, or from the
+ * parameters of a script step, and a value is set from a key / level pair.
+ * Then a set membership count.
  *
  * Bounds: hypothesis. The functions before 0x0205D4D8 work on the object
- * definition record (unit_0205C700.cpp). func_0205d6e0 (unit_0205D6E0.c,
- * clears the six values) and the functions after it up to 0x0205D8D8
- * (unit_0205D6FC.cpp) most likely belong to the same source file; this unit
- * stops at 0x0205D6E0 to keep that file. `.data`: the amount table, the
- * "Food" string, then two strings and a table of pointers to them that no
- * code reads (0x020BC2A0-0x020BC2B8). Delinked alone, that unreferenced range
- * would be dropped by the dead-stripping link, so it stays in this unit's
- * `.data`; compiled, data_020bc2b0 is dropped too (not linked as complete
- * until a form that keeps it is found). Real file name unknown.
+ * definition record (unit_0205C700.cpp); the scene object class
+ * (unit_0205D8D8.cpp) follows. `.data`: the amount table, the "Food" string,
+ * then two strings and a table of pointers to them that no code reads
+ * (0x020BC2A0-0x020BC2B8). Real file name unknown.
  *
  * All functions keep C linkage: other files call them by their addresses.
  */
 
 #include "game/unk_script.h"
+#include "game/unk_sortedset.h"
 
-class Unk02099c0c;
+struct Unk02099c0cPair;
+
+/* The parameters of a script step (unit_02099C0C.cpp). */
+class Unk02099c0c {
+public:
+    Unk02099c0c(Unk02099c0cPair *pairs, int count) : unk0(0), unk4(0), pairs(pairs), count(count) {}
+    bool func_02099c0c(int *value, int key);
+
+    int unk0;
+    s16 unk4;
+    Unk02099c0cPair *pairs;
+    int count;
+};
 
 /* The parameter reader (0x18 bytes). */
 struct Unk0205d6b8 {
@@ -33,6 +42,7 @@ int data_020bc284[5] = {5, 10, 15, 20, 30};
 extern "C" {
 
 u32 func_0209a32c(const u32 *str, u32 last, u32 end);
+int func_02067878(u32 hash);
 void func_0205d6e0(Unk0205d6b8 *p);
 void func_0205d72c(Unk0205d6b8 *p, Unk020956f8 *script, int key);
 void func_0205d7f0(Unk0205d6b8 *p, Unk02099c0c *node);
@@ -109,6 +119,75 @@ Unk0205d6b8 *func_0205d6b8(Unk0205d6b8 *p, Unk02099c0c *node) {
 }
 
 void func_0205d6dc(Unk0205d6b8 *p) {}
+
+void func_0205d6e0(Unk0205d6b8 *p) {
+    int i;
+    for (i = 0; i < 6; i++) {
+        p->values[i] = 0;
+    }
+}
+
+int func_0205d6fc(Unk0205d6b8 *p, int i) {
+    return p->values[i];
+}
+
+int func_0205d704(Unk0205d6b8 *p) {
+    for (int i = 0; i < 6; i++) {
+        if (p->values[i] != 0) {
+            return i;
+        }
+    }
+    return 6;
+}
+
+void func_0205d72c(Unk0205d6b8 *p, Unk020956f8 *script, int key) {
+    Unk02099c78Block *block = script->func_020957ec(key);
+    if (block == 0) {
+        return;
+    }
+    Unk02099c78Op *ops = script->func_02095794();
+    for (int i = 0; i < block->count; i++) {
+        Unk02099c78Op op = ops[block->start + i];
+        if (op.arg == 0x196aaa23) {
+            Unk02099c0c node((Unk02099c0cPair *)&script->func_02095ab0()[op.a], op.b);
+            func_0205d7f0(p, &node);
+        }
+    }
+}
+
+void func_0205d7f0(Unk0205d6b8 *p, Unk02099c0c *node) {
+    Unk02099c78Value v;
+    if (!node->func_02099c0c(&v.unk4, 0x7e5d2b3f)) {
+        return;
+    }
+    if (!node->func_02099c0c(&v.unk0, 0x18a7f0fa)) {
+        return;
+    }
+    func_0205d858(p, v.unk0, v.unk4);
+}
+
+void func_0205d858(Unk0205d6b8 *p, int key, int value) {
+    int i = func_02067878(key);
+    if (i == 6) {
+        return;
+    }
+    int v;
+    int level = func_0205d514(value);
+    if (level != 0) {
+        v = func_0205d4d8(level);
+    } else if (value >= -100 && value <= 100) {
+        v = value;
+    }
+    p->values[i] = v;
+}
+
+int func_0205d8b0(int value, Unk0206b630 *set) {
+    int n = 0;
+    if (set->func_0206b6bc(value)) {
+        n++;
+    }
+    return n;
+}
 
 }
 

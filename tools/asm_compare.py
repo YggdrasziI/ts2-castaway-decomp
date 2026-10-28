@@ -8,8 +8,8 @@ report) and prints the original (left) and our build (right) side by side:
   '<' only in the original           '>' only in our build
 
 Usage:
-  python tools/asm_compare.py unit_0205D6E0 func_0205d6e0
-  python tools/asm_compare.py src/game/unit_0205D6E0 func_0205d6e0
+  python tools/asm_compare.py unit_0205D4D8 func_0205d6e0
+  python tools/asm_compare.py src/game/unit_0205D4D8 func_0205d6e0
   python tools/asm_compare.py --objects <original.o> <ours.o> func_0205d6e0
 
 Needs `objdiff.json` (`ninja objdiff`) and a built unit (`ninja`); with --objects any
@@ -38,7 +38,7 @@ MARKS = {
 
 
 def unit_name(short):
-    """Full objdiff unit name from a short one (unit_0205D6E0 -> src/game/unit_0205D6E0)."""
+    """Full objdiff unit name from a short one (unit_0205D4D8 -> src/game/unit_0205D4D8)."""
     with open(os.path.join(ROOT, "objdiff.json"), encoding="utf-8") as f:
         names = [u["name"] for u in json.load(f)["units"]]
     if short in names:
