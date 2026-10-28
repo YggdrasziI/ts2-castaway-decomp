@@ -1868,15 +1868,15 @@ func_0205d72c kind:function(arm,size=0xc4) addr:0x0205d72c
 func_0205d7f0 kind:function(arm,size=0x68) addr:0x0205d7f0
 func_0205d858 kind:function(arm,size=0x58) addr:0x0205d858
 func_0205d8b0 kind:function(arm,size=0x28) addr:0x0205d8b0
-func_0205d8d8 kind:function(arm,size=0xc) addr:0x0205d8d8
-func_0205d8e4 kind:function(arm,size=0xc) addr:0x0205d8e4
-func_0205d8f0 kind:function(arm,size=0x84) addr:0x0205d8f0
-func_0205d974 kind:function(arm,size=0x8c) addr:0x0205d974
-func_0205da00 kind:function(arm,size=0x88) addr:0x0205da00
+_ZN15Unk02061d08ItemnaEm kind:function(arm,size=0xc) addr:0x0205d8d8
+_ZN15Unk02061d08ItemdaEPv kind:function(arm,size=0xc) addr:0x0205d8e4
+_ZN15Unk02061d08ItemnwEm kind:function(arm,size=0x84) addr:0x0205d8f0
+_ZN15Unk02061d08ItemdlEPv kind:function(arm,size=0x8c) addr:0x0205d974
+_ZN15Unk02061d08ItemC1Ev kind:function(arm,size=0x88) addr:0x0205da00
 func_0205da88 kind:function(arm,size=0xa0) addr:0x0205da88
-func_0205db28 kind:function(arm,size=0x9c) addr:0x0205db28
+_ZN15Unk02061d08ItemC1EP11Unk020a4c4c kind:function(arm,size=0x9c) addr:0x0205db28
 func_0205dbc4 kind:function(arm,size=0x120) addr:0x0205dbc4
-func_0205dce4 kind:function(arm,size=0x60) addr:0x0205dce4
+_ZN15Unk02061d08ItemD1Ev kind:function(arm,size=0x60) addr:0x0205dce4
 func_0205dd44 kind:function(arm,size=0x4) addr:0x0205dd44
 func_0205dd48 kind:function(arm,size=0x4) addr:0x0205dd48
 func_0205dd4c kind:function(arm,size=0xa4) addr:0x0205dd4c
@@ -1930,7 +1930,7 @@ func_0205f780 kind:function(arm,size=0x58) addr:0x0205f780
 func_0205f7d8 kind:function(arm,size=0x10) addr:0x0205f7d8
 func_0205f7e8 kind:function(arm,size=0x10) addr:0x0205f7e8
 func_0205f7f8 kind:function(arm,size=0x14) addr:0x0205f7f8
-func_0205f80c kind:function(arm,size=0x38) addr:0x0205f80c
+_ZN11Unk020c3fd4C1Ev kind:function(arm,size=0x38) addr:0x0205f80c
 func_0205f844 kind:function(arm,size=0xf0) addr:0x0205f844
 func_0205f934 kind:function(arm,size=0x5c) addr:0x0205f934
 func_0205f990 kind:function(arm,size=0x8) addr:0x0205f990
@@ -2944,14 +2944,14 @@ func_02085750 kind:function(arm,size=0xc) addr:0x02085750
 func_0208575c kind:function(arm,size=0x48) addr:0x0208575c
 func_020857a4 kind:function(arm,size=0x14) addr:0x020857a4
 __cxa_vec_new kind:function(arm,size=0xb8) addr:0x020857b8
-func_02085870 kind:function(arm,size=0xbc) addr:0x02085870
+__cxa_vec_newinit kind:function(arm,size=0xbc) addr:0x02085870
 __cxa_vec_ctor kind:function(arm,size=0xb0) addr:0x0208592c
 func_020859dc kind:function(arm,size=0x48) addr:0x020859dc
 func_02085a24 kind:function(arm,size=0x48) addr:0x02085a24
 __cxa_vec_cleanup kind:function(arm,size=0x48) addr:0x02085a6c
 func_02085ab4 kind:function(arm,size=0x14) addr:0x02085ab4
 __cxa_vec_delete kind:function(arm,size=0x34) addr:0x02085ac8
-func_02085afc kind:function(arm,size=0x38) addr:0x02085afc
+__cxa_vec_delete2 kind:function(arm,size=0x38) addr:0x02085afc
 func_02085b34 kind:function(arm,size=0x4) addr:0x02085b34
 func_02085b38 kind:function(arm,size=0x4) addr:0x02085b38
 func_02085b3c kind:function(arm,size=0x18) addr:0x02085b3c
@@ -4482,7 +4482,7 @@ __sinit_020ad2ec kind:function(arm,size=0x2c) addr:0x020ad2ec
 __sinit_020ad318 kind:function(arm,size=0xe18) addr:0x020ad318
 __sinit_020ae130 kind:function(arm,size=0x3c) addr:0x020ae130
 __sinit_020ae16c kind:function(arm,size=0x2c) addr:0x020ae16c
-__sinit_020ae198 kind:function(arm,size=0x14) addr:0x020ae198
+__sinit_unit_0205F80C.cpp kind:function(arm,size=0x14) addr:0x020ae198 local
 __sinit_unit_02060274.cpp kind:function(arm,size=0x2c) addr:0x020ae1ac local
 __sinit_unit_02060ADC.cpp kind:function(arm,size=0x2c) addr:0x020ae1d8 local
 __sinit_unit_02063CD0.cpp kind:function(arm,size=0x5c) addr:0x020ae204 local
@@ -4617,7 +4617,7 @@ data_020b6de0 kind:data(any) addr:0x020b6de0
 .p__sinit_020ad318 kind:data(word) addr:0x020b6e74
 .p__sinit_020ae130 kind:data(word) addr:0x020b6e78
 .p__sinit_020ae16c kind:data(word) addr:0x020b6e7c
-.p__sinit_020ae198 kind:data(word) addr:0x020b6e80
+.p__sinit_unit_0205F80C.cpp kind:data(word) addr:0x020b6e80 local
 .p__sinit_unit_02060274.cpp kind:data(word) addr:0x020b6e84 local
 .p__sinit_unit_02060ADC.cpp kind:data(word) addr:0x020b6e88 local
 .p__sinit_unit_02063CD0.cpp kind:data(word) addr:0x020b6e8c local

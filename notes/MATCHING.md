@@ -24,6 +24,10 @@ default: add one here only once a unit of this ROM proves it with mwccarm.
   a test written in an inline helper (`return f(db, id) != -1;`) keeps the
   original `movne` / `moveq` / `cmp` that the same test written inline folds
   (`func_020648dc` 85 % -> 100 %).
+- A loop counter and a pointer from a call swapped between two callee-saved
+  registers: declare the counter (or the list cursor) before the local that
+  takes the call's result (`int j; int *count = f(); for (j = 0; ...)`,
+  `func_02060080` and `func_0205ffa4`, 99.0 % -> 100 %).
 
 - A key search where the original keeps a byte offset (`i * 12`) next to the
   walked pointer: indexing the member array directly (`unk3c[i]`) instead of a local
@@ -302,6 +306,16 @@ default: add one here only once a unit of this ROM proves it with mwccarm.
   100 %). A flag halfword tested, then read again for its update with no store
   between (`ldrsh; tst; ...; ldrsh; orr; strh`), also matched with `volatile`
   (`func_020606e0`, 98.8 % -> 99.7 %), hypothesis too.
+- A global field read twice in a row with no store between (`ldrsb r1, [r0,
+  #0xfc]; ldrsb r5, [r0, #0xfc]`, one call argument and one local kept for a
+  later call) matched with a `volatile` read of the local's copy
+  (`func_0205fde4`, `unit_0205F80C.cpp`, 98.6 % -> 100 %), hypothesis.
+- A flag set with `bic` then `orr` of the same mask, and a flag tested then
+  read again for its update (`ldr; tst; ldr; bic; str`), come from inline
+  member helpers: `void set(u32 mask, bool on) { flags &= ~mask; if (on)
+  flags |= mask; }` and `bool test(u32 mask) const { return (flags & mask) !=
+  0; }` (`func_02060080`, 95.0 % -> 99.7 %). A bitfield gives `lsl` / `lsr`
+  tests instead, `(flags & ~mask) | (on ? mask : 0)` folds to one `orr`.
 - A subexpression of the loop counter that the original recomputes at every
   iteration (`mov r2, r7, lsl #4; add r2, r2, #0x10`), where mwccarm makes it a
   running sum (`add r8, r8, #0x10`) whatever the counter type or expression form:
@@ -487,6 +501,13 @@ default: add one here only once a unit of this ROM proves it with mwccarm.
 
 ## C++ classes
 
+- `new T[n]` with a class `operator new[]` and a non-trivial constructor calls
+  the class operator, then `__cxa_vec_newinit(p, n, size, 8, ctor, dtor)` only
+  when it returned a block; `delete[] p` with a class `operator delete[]` calls
+  `__cxa_vec_delete2(p, size, 8, dtor, dealloc)`; `new T(arg)` with a class
+  `operator new` calls the constructor only when it returned an object, and
+  `delete p` with a non-virtual destructor calls it, then the class `operator
+  delete` (`unit_0205F80C.cpp`; the names come from the compiler's output).
 - A large function stops inlining after a while, even with `inline` helpers:
   the remaining calls go to out-of-line copies that mwccarm emits right after
   that function, in order of first use (`func_0206a120`: the plane assignment

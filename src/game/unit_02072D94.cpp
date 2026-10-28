@@ -108,10 +108,14 @@ struct Unk020af1ac {
     u32 b;
 };
 
-/* A node of the list returned by func_0205fd7c. */
-struct Unk0205fd7c {
+/* A scene object, from the lists of func_0205fd7c. */
+class Unk02061d08Item {
+public:
+    static void operator delete(void *p);
+    ~Unk02061d08Item();
+
     u8 unk0[0x40];
-    Unk0205fd7c *next;
+    Unk02061d08Item *next;
 };
 
 class Unk0208db14 {
@@ -180,7 +184,7 @@ void func_02058688(void *p);
 void func_0205899c(void *p);
 void func_02056b80(void *p);
 void func_02056c7c(void *p);
-Unk0205fd7c *func_0205fd7c(void *list, int type);
+Unk02061d08Item *func_0205fd7c(void *list, int type);
 void func_0205fde4(void *list);
 void func_0205f998(void *list);
 void func_0205f9e4(void *list);
@@ -189,10 +193,8 @@ void *func_0205f6f8(void *db, u32 key);
 Unk0205fae8 *func_0205fae8(void *list, void *item, Unk0205f098 *ctx);
 void func_0205f098(Unk0205f098 *ctx);
 void func_0205f0a8(Unk0205f098 *ctx);
-void func_0205e3f0(Unk0205fd7c *node);
-void func_0205e4d0(Unk0205fd7c *node);
-void func_0205dce4(Unk0205fd7c *node);
-void func_0205d974(Unk0205fd7c *node);
+void func_0205e3f0(Unk02061d08Item *node);
+void func_0205e4d0(Unk02061d08Item *node);
 void func_0206a120(void *p);
 void func_0206af98(void *p, int mode);
 void func_0206c290(Unk020d6240 *system);
@@ -275,7 +277,7 @@ void Unk02072d94::func_02071e04() {
     void *p = func_02058518(data_020c3ba4, 0x27, 1);
     func_02056b80(p);
     func_02056c7c(p);
-    for (Unk0205fd7c *n = func_0205fd7c(data_020c3fd4, 0x27); n != 0; n = n->next) {
+    for (Unk02061d08Item *n = func_0205fd7c(data_020c3fd4, 0x27); n != 0; n = n->next) {
         func_0205e3f0(n);
     }
     func_020732c4(true);
@@ -338,14 +340,11 @@ void Unk02072d94::func_02072224() {
         func_0207a748();
     }
     func_0205f9e4(data_020c3fd4);
-    for (Unk0205fd7c *n = func_0205fd7c(data_020c3fd4, 0x27); n != 0;) {
-        Unk0205fd7c *cur = n;
+    for (Unk02061d08Item *n = func_0205fd7c(data_020c3fd4, 0x27); n != 0;) {
+        Unk02061d08Item *cur = n;
         n = n->next;
         func_0205e4d0(cur);
-        if (cur != 0) {
-            func_0205dce4(cur);
-            func_0205d974(cur);
-        }
+        delete cur;
     }
     func_020585e0(data_020c3ba4, 0x27);
     func_0205fde4(data_020c3fd4);
