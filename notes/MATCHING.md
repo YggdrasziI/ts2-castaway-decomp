@@ -28,6 +28,15 @@ default: add one here only once a unit of this ROM proves it with mwccarm.
   registers: declare the counter (or the list cursor) before the local that
   takes the call's result (`int j; int *count = f(); for (j = 0; ...)`,
   `func_02060080` and `func_0205ffa4`, 99.0 % -> 100 %).
+- A loop whose entry test is only the first half of its condition
+  (`f(); beq out; top: cmp i, n; bge out; ...; f(); bne top`) is
+  `while (f()) { if (i >= n) break; ... }`; `while (f() && i < n)` jumps to a
+  bottom test instead (`func_0205f328`, 92.0 % -> 97.9 %, with the call result
+  kept in a local so a store lands after the next call).
+- Two fields copied one by one after a compare that read the first one, with
+  the first field read again (`ldr; ldr; cmp; ...; ldr; str`), come from an
+  inline member copy (`void set(const T &o) { key = o.key; index = o.index; }`);
+  written inline the compare's load is reused (`func_0205f184`, 75 % -> 80 %).
 
 - A key search where the original keeps a byte offset (`i * 12`) next to the
   walked pointer: indexing the member array directly (`unk3c[i]`) instead of a local
