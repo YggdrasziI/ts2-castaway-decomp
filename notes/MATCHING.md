@@ -778,3 +778,16 @@ default: add one here only once a unit of this ROM proves it with mwccarm.
 - mwccarm puts a small uninitialized global before a larger one built by a
   static initializer in `.bss`, whatever the definition order; no form found
   for the reverse order (`unit_0205C700.cpp`).
+- An 8-byte entry loaded with `ldmia` and stored to the stack before a call
+  that receives its two words in r1 / r2: a local copy of the struct passed
+  as two `int` arguments (`Value v = values[i]; f(p, v.unk0, v.unk4)`), not
+  the struct by value, which spills the arguments on entry (`func_0205d858`,
+  62.3 % -> 100 %; `func_0205d608`).
+- Stores of a stack object after the call that computes one of its fields:
+  an inline constructor taking the computed values
+  (`Unk02099c0c node(pairs, count)`), not field assignments
+  (`func_0205d72c`, 67.0 % -> 99.9 %).
+- A delinked `.data` range that no relocation reaches is dropped by the
+  `-dead` link (a delinked unit's section is kept only when referenced): keep
+  such bytes in the range of a neighbouring unit whose data is used
+  (`unit_0205D4D8.cpp`, 0x020BC2A0-0x020BC2B8).

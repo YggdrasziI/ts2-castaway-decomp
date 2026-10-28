@@ -5220,10 +5220,11 @@ data_020bc23c kind:data(any) addr:0x020bc23c
 data_020bc250 kind:data(any) addr:0x020bc250
 @423 kind:data(byte[16]) addr:0x020bc25c local
 @424 kind:data(byte[24]) addr:0x020bc26c local
-data_020bc284 kind:data(any) addr:0x020bc284
-data_020bc298 kind:data(any) addr:0x020bc298
+data_020bc284 kind:data(word[5]) addr:0x020bc284
+@101 kind:data(byte[8]) addr:0x020bc298 local
 data_020bc2a0 kind:data(any) addr:0x020bc2a0
 data_020bc2a8 kind:data(any) addr:0x020bc2a8
+data_020bc2b0 kind:data(word[2]) addr:0x020bc2b0
 _ZTV15Unk02061d08Item kind:data(word[14]) addr:0x020bc2b8
 @327 kind:data(byte[58]) addr:0x020bc328 local
 @846 kind:data(byte[53]) addr:0x020bc364 local

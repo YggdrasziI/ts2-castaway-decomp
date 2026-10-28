@@ -25,9 +25,17 @@ src/game/unit_0205C700.cpp:
     .data       start:0x020bc25c end:0x020bc284
     .bss        start:0x020c3f7c end:0x020c3fb8
 
+src/game/unit_0205D4D8.cpp:
+    .text       start:0x0205d4d8 end:0x0205d6e0
+    .data       start:0x020bc284 end:0x020bc2b8
+
 src/game/unit_0205D6E0.c:
     complete
     .text       start:0x0205d6e0 end:0x0205d6fc
+
+src/game/unit_0205D6FC.cpp:
+    complete
+    .text       start:0x0205d6fc end:0x0205d8d8
 
 src/game/unit_0205D8D8.cpp:
     .text       start:0x0205d8d8 end:0x0205f16c
