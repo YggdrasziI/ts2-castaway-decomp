@@ -31,8 +31,8 @@ Unk02099c78::Unk02099c78(Unk020956f8 *res) {
     unk8 = p->varCount;
 }
 
-void Unk02099c78::func_02099ce0(int key) {
-    func_02099d04(res->func_020957ec(key), 0x100);
+int Unk02099c78::func_02099ce0(int key) {
+    return func_02099d04(res->func_020957ec(key), 0x100);
 }
 
 int Unk02099c78::func_02099d04(Unk02099c78Block *block, int budget) {

@@ -13,9 +13,9 @@
  * the strings before it are used by the code before 0x0205D6E0. Real file
  * name unknown.
  *
- * Not complete: func_0205e038, func_0205e87c and func_0205eed4 are not at
- * 100 % (comments above them). The compiler also emits a deleting destructor
- * that the original does not have.
+ * Not complete: func_0205e87c and func_0205eed4 are not at 100 % (comments
+ * above them). The compiler also emits a deleting destructor that the
+ * original does not have.
  *
  * Functions other than the constructors, destructor, operators and virtual
  * functions keep C linkage: other files call them by their addresses.
@@ -558,11 +558,6 @@ bool func_0205e00c(Unk02061d08Item *item, int index, Unk020c43a8 *p) {
     return func_0205cf28(item->def, index, item, p);
 }
 
-/*
- * 98.67 %: the original loads block->start once for the loop counter and the
- * first end test; the inline end accessor (needed to reload the end at each
- * test) loads it twice. Loop forms and declaration orders tried.
- */
 void func_0205e038(Unk02061d08Item *item, Unk02099c78Block *block, Unk020c43a8 *p) {
     const Unk020615f0Def &d = func_0205c8b4(item->def, block);
     if (p != 0) {
@@ -583,7 +578,7 @@ void func_0205e038(Unk02061d08Item *item, Unk02099c78Block *block, Unk020c43a8 *
     func_02061930(item->visible);
     func_020615f0(item->visible, (Unk020615f0Def *)&d);
     Unk02099c78Value *values = item->def->script->func_02095ab0();
-    for (int i = block->start; i < block->func_end(); i++) {
+    for (int i = block->func_start(); i < block->func_end(); i++) {
         if (values[i].unk0 == 0x56b7749d) {
             item->key = values[i].unk4;
             break;

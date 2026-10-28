@@ -28,7 +28,7 @@ public:
     virtual ~Unk02099c78() {}
     virtual int vfunc_14(int arg, Unk02099c78Call *call) = 0;
 
-    void func_02099ce0(int key);
+    int func_02099ce0(int key);
     int func_02099d04(Unk02099c78Block *block, int budget);
     int func_02099fd0(int index, int a, int b);
     bool func_0209a034(int index);

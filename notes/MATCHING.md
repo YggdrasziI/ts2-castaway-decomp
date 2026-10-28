@@ -745,9 +745,14 @@ default: add one here only once a unit of this ROM proves it with mwccarm.
   in place and works through a pointer to it; a by-value local copies it to a
   second stack slot (`func_0205e038`, 80.1 % -> 95.7 %; `func_0205e1b8`).
 - An inline accessor prevents the hoisting or CSE of the fields it reads: a
-  loop end reloaded at each test is `i < block->func_end()`
-  (`func_0205e038`); a field read again after a call is `q->func_busy()`
-  (`func_0205ed20`).
+  loop over a script block that loads `start` once at the entry and reloads
+  `start` and `count` at each test is
+  `for (i = block->func_start(); i < block->func_end(); i++)` (both
+  accessors; with `func_end()` alone `start` is loaded twice):
+  `func_0205e038`, 98.7 % -> 100 %, `func_0205d134`, 96.5 % -> 100 %. A loop
+  whose body calls functions reloads the fields by itself: plain
+  `block->start + block->count` (`func_0205c8b4`). A field read again after
+  a call is `q->func_busy()` (`func_0205ed20`).
 - `for (i = 0; i < count; i++) { if (i >= max) break; ... }` for a loop with
   two bounds where the second test sits inside the body (`func_0205f10c`).
 - Dead stores of default values before the real ones come from an inline
@@ -759,3 +764,17 @@ default: add one here only once a unit of this ROM proves it with mwccarm.
   by value to an inline member (`c.func_add(rel)`, `r.func_sub(p)`); a jump
   table instead of a compare chain needs the empty `case 0: break;`
   (`func_0205eed4`, 65.3 % -> 99.8 %).
+- The bodies of a `switch` are laid out in source order, not by case value:
+  read the order of the case bodies in the original and write the cases in
+  that order (`func_0205c8b4`, 95.6 % -> 99.2 %).
+- Loops that reload a field at each outer iteration go through inline
+  accessors (`def->func_tile(i)`, `def->func_width()`), and a counter shared
+  by all the cases of a switch is one local declared at the top of the
+  function, not one per case (register allocation; `func_0205c758`,
+  78.3 % -> 100 %).
+- A field the original never stores before the loop is not initialized in
+  the source (`d.unk24` in `func_0205c8b4`): an extra `= 0` adds a store and
+  moves the stack slots.
+- mwccarm puts a small uninitialized global before a larger one built by a
+  static initializer in `.bss`, whatever the definition order; no form found
+  for the reverse order (`unit_0205C700.cpp`).
