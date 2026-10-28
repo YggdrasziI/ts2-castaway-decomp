@@ -1769,7 +1769,7 @@ func_02059828 kind:function(arm,size=0xbc) addr:0x02059828
 func_020598e4 kind:function(arm,size=0x5c) addr:0x020598e4
 func_02059940 kind:function(arm,size=0x60) addr:0x02059940
 _ZN11Unk020599a0C1Ev kind:function(arm,size=0x1c8) addr:0x020599a0
-func_02059b68 kind:function(arm,size=0x4) addr:0x02059b68
+_ZN17Unk020599a0EffectD1Ev kind:function(arm,size=0x4) addr:0x02059b68
 _ZN11Unk020599a0D1Ev kind:function(arm,size=0xa4) addr:0x02059b6c
 func_02059c10 kind:function(arm,size=0x4c) addr:0x02059c10
 func_02059c5c kind:function(arm,size=0x54) addr:0x02059c5c
@@ -1781,8 +1781,8 @@ func_0205a548 kind:function(arm,size=0x80) addr:0x0205a548
 func_0205a5c8 kind:function(arm,size=0x104) addr:0x0205a5c8
 func_0205a6cc kind:function(arm,size=0x11c) addr:0x0205a6cc
 func_0205a7e8 kind:function(arm,size=0x55c) addr:0x0205a7e8
-func_0205ad44 kind:function(arm,size=0x24) addr:0x0205ad44
-func_0205ad68 kind:function(arm,size=0x54) addr:0x0205ad68
+_ZN18Unk020599a0WeatherC1Ev kind:function(arm,size=0x24) addr:0x0205ad44
+_ZN17Unk020599a0EffectC1Ev kind:function(arm,size=0x54) addr:0x0205ad68
 func_0205adbc kind:function(arm,size=0x54) addr:0x0205adbc
 func_0205ae10 kind:function(arm,size=0xd0) addr:0x0205ae10
 func_0205aee0 kind:function(arm,size=0xb4) addr:0x0205aee0
@@ -5136,7 +5136,7 @@ data_020bbba0 kind:data(any) addr:0x020bbba0
 data_020bbbb4 kind:data(any) addr:0x020bbbb4
 data_020bbbe0 kind:data(any) addr:0x020bbbe0
 data_020bbc0c kind:data(any) addr:0x020bbc0c
-data_020bbc24 kind:data(any) addr:0x020bbc24
+@434 kind:data(byte[56]) addr:0x020bbc24 local
 @2050 kind:data(byte[16]) addr:0x020bbc5c local
 @2051 kind:data(byte[16]) addr:0x020bbc6c local
 @2052 kind:data(byte[20]) addr:0x020bbc7c local

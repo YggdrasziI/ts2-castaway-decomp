@@ -18,6 +18,10 @@ src/game/unit_0201B6D4.cpp:
     .data       start:0x020b8908 end:0x020b8a7c
     .bss        start:0x020be384 end:0x020be3ac
 
+src/game/unit_020599A0.cpp:
+    .text       start:0x020599a0 end:0x0205af94
+    .data       start:0x020bbc24 end:0x020bbc5c
+
 src/game/unit_0205AF94.cpp:
     .text       start:0x0205af94 end:0x0205c700
     .init       start:0x020ad318 end:0x020ae130

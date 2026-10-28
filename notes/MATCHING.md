@@ -254,6 +254,9 @@ default: add one here only once a unit of this ROM proves it with mwccarm.
   `lo > t ? t : lo`, and `cmp hi, t; movge t, hi` is `hi < t ? t : hi`
   (`func_020693d8`, 88 % -> 99.4 % over 16 forms).
 
+- A `bool` field passed to a `bool` parameter is passed as loaded; a test
+  or a cast in between adds a normalization (`func_0205a5c8`).
+
 ## Inlining and emission order
 
 - A member the original reads twice (a flag test, then the whole word in an
@@ -614,6 +617,18 @@ default: add one here only once a unit of this ROM proves it with mwccarm.
 - A virtual function taking a one-word struct by value and storing it in a member:
   `this->dir.v = dir.v;` keeps the spilled argument in its register; the struct
   assignment re-reads it from the stack (`func_18`, 83.6 % -> 100 %).
+
+- A fixed-point product rounded with `+ 0x800` before the shift is a
+  separate inline (`func_fxmulr` in `unit_020599A0.cpp`): the shared
+  `func_fxmul` of `include/game/unk_vector.h` does not round; the guarded
+  divide is `func_fxdiv` there.
+- Color stores with the alpha written late: a constructor that sets only
+  `r`, `g`, `b`, then `c.a = 0xff` where the original stores it
+  (`func_0205ae10`).
+- A state test `state == a || state == b` that the original materializes
+  as a bool and follows with `&& state != b`: a `const` inline member
+  returning the test (`p->func_fadingIn() && p->state != 1`) comes closest
+  (`func_02059d10`, 94.1 % -> 96.0 %, still not matching).
 
 ## Control flow
 
