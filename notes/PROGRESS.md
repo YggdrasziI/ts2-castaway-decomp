@@ -48,3 +48,4 @@
 | 2026-10-28 | 566fd71 | 139308 / 720836 bytes (19.33 %; fuzzy 25.14 %, linked 7.60 %) | 1341 / 4557 | 63 / 141 | Object definition record unit written (20 / 23 functions at 100 %) |
 | 2026-10-28 | 945434c | 140304 / 720836 bytes (19.46 %; fuzzy 25.28 %, linked 7.67 %) | 1352 / 4557 | 64 / 141 | Parameter reader units written (11 / 11 functions at 100 %, one unit complete) |
 | 2026-10-28 | 0868e43 | 148772 / 720836 bytes (20.64 %; fuzzy 26.61 %, linked 7.67 %) | 1399 / 4557 | 64 / 142 | Script command table unit written (47 / 49 functions at 100 %) |
+| 2026-10-28 | 2da285d | 152200 / 720836 bytes (21.11 %; fuzzy 27.38 %, linked 7.60 %) | 1415 / 4557 | 62 / 142 | Parameter reader units merged; weather effects unit written (16 / 18 functions at 100 %) |
