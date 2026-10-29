@@ -273,9 +273,8 @@ struct Unk020a07d4Timer {
 };
 
 /*
- * A base of the screens owned by Unk0203c188Owner (vtable 0x020B9604; its
- * constructor 0x0203C188 and destructors 0x0203C1B8 to 0x0203C1E8 are in a
- * file not yet decompiled). Its inline slots are emitted by every file that
+ * A base of the screens owned by Unk0203c188Owner (vtable 0x020B9604,
+ * unit_0203C188.cpp). Its inline slots are emitted by every file that
  * needs them and the first copies are kept far away: func_34 and func_28 to
  * func_24 at 0x02023884-0x020238EC, func_40 at 0x0202227C. They are declared
  * non-inline here, so the derived files do not emit copies that would clash

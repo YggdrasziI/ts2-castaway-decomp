@@ -8531,7 +8531,7 @@ from:0x0203c150 kind:arm_call to:0x0202fdb0 module:main
 from:0x0203c158 kind:arm_call to:0x020a00a0 module:main
 from:0x0203c160 kind:load to:0x020b95a4 module:main
 from:0x0203c164 kind:load to:0x020b95a8 module:main
-from:0x0203c1b4 kind:load to:0x020b9604 module:main
+from:0x0203c1b4 kind:load to:0x020b95fc add:0x8 module:main
 from:0x0203c1c0 kind:arm_call to:0x020a07d4 module:main
 from:0x0203c1d4 kind:arm_call to:0x020a07d4 module:main
 from:0x0203c1dc kind:arm_call to:0x02099858 module:main
