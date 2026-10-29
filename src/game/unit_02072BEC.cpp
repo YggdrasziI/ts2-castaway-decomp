@@ -1,7 +1,7 @@
 /*
  * Unit 0x02072BEC-0x02072D94: Unk02072bec, a game state (base Unk0206fab0,
  * include/game/unk_catalog.h, id 1). func_02072c38 sets the screens up and
- * creates its 0x144-byte screen object (func_020471b0), func_02072cd8 runs one
+ * creates its 0x144-byte screen object (unit_020471B0.cpp), func_02072cd8 runs one
  * frame and asks for state 2 when the screen is over, func_02072d60 deletes the
  * screen object.
  *
@@ -26,14 +26,16 @@ struct Unk020d6240 {
     void *unk8;
 };
 
-/* The screen object, built by func_020471b0. */
+/* The screen object of unit_020471B0.cpp. */
 class Unk020471b0 {
 public:
+    Unk020471b0();
     virtual ~Unk020471b0();
     virtual void func_08();
 
     unsigned char unk4[0x138];
     int unk13c;
+    int unk140;
 };
 
 class Unk0208db14 {
@@ -56,7 +58,6 @@ void func_020a14e0(Unk020d6240 *system, int a);
 void func_020a15a8(Unk020d6240 *system, int dt);
 bool func_020a1280(Unk020d6240 *system, int a, int b);
 int func_020a0b8c(void *p, Unk020471b0 *screen);
-Unk020471b0 *func_020471b0(void *mem);
 void func_0206c290(Unk020d6240 *system);
 void func_0207c224();
 void func_01ffadf8(Unk020916a4 *manager);
@@ -85,11 +86,7 @@ void Unk02072bec::func_02071e04() {
     func_020a0cd8(&data_020d6240);
     func_020a1138(func_020a18e4(), 2, 1);
     func_020a14e0(func_020a18e4(), 0);
-    Unk020471b0 *o = (Unk020471b0 *)operator new(0x144);
-    if (o != 0) {
-        o = func_020471b0(o);
-    }
-    screen = o;
+    screen = new Unk020471b0();
     if (mode == 1) {
         screen->unk13c = 0x1074;
     }

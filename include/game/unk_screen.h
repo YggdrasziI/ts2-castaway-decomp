@@ -1,9 +1,10 @@
 /*
- * The screens built on two archive layouts (unit_02047A8C.cpp,
- * unit_0204A9F8.cpp): their empty base, the layout and name list classes of
- * the engine, their show / hide timer and what they use of the button and
- * panel widgets (unit_02050640.cpp, unit_02051704.cpp). Layouts come from the
- * code; all names are placeholders.
+ * The screens built on two archive layouts (unit_020471B0.cpp,
+ * unit_02047A8C.cpp, unit_0204A9F8.cpp): their empty base, the layout and
+ * name list classes of the engine, their show / hide timer and what they use
+ * of the button, panel and animated sprite widgets (unit_02050640.cpp,
+ * unit_02051704.cpp, unit_0204F798.cpp). Layouts come from the code; all
+ * names are placeholders.
  */
 #ifndef GAME_UNK_SCREEN_H
 #define GAME_UNK_SCREEN_H
@@ -78,6 +79,30 @@ public:
     void func_18(bool show);
 
     u8 unk34[0x28];
+};
+
+class Unk0204f798 : public Unk020b9e88 {
+public:
+    Unk0204f798();
+    ~Unk0204f798();
+    void func_0204f8a0(int n);
+    void func_0204f8f4(Unk020a7c90 *sprite);
+    void func_18(bool show);
+    void func_14(int x, int y);
+    void func_08();
+    void func_0204fdcc(bool loop);
+    Unk02098bc8 *func_10();
+
+    Unk02098bc8 rect;
+    unsigned int capacity;
+    unsigned int count;
+    Unk020a7c90 **sprites;
+    int flags;
+    int counter;
+    int delay;
+    int step;
+    int first;
+    int last;
 };
 
 typedef void *(*Unk020a9d58Text)(u32 id, void *user);

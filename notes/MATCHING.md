@@ -328,6 +328,12 @@ default: add one here only once a unit of this ROM proves it with mwccarm.
   the vector (`struct Vec { Unk02098ff0 v; }`), assigned by an inline member
   (`pos = (const Vec &)p;`); with `Unk02098ff0` members the copy is field by
   field (`func_0204a254`, 95.2 % -> 100 %).
+- A lookup through a layout held by pointer (`func_020aa040(top, 4,
+  func_020a7b50(&names, hash))`) whose pointer the original loads after the
+  inner call: write the nested call in place; an inline helper taking the
+  layout as a parameter loads it first and keeps it in a callee-saved
+  register (`func_020471b0`, 85.4 % -> 98.8 %; with layouts held by value the
+  helper is fine, `unit_02047A8C.cpp`).
 - A call whose last argument register already holds a field loaded for an
   earlier test (no `mov r2, #n` before the `bl`): the call passes that field
   (`func_0205f10c(&list, items, list.count)`).
