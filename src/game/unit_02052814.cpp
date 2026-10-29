@@ -12,8 +12,8 @@
  * with the constructor 0x02052814, which opens the range: the code before it
  * (0x02051DA0-0x02052814) is a class with vtable data_020BA10C, whose `.data`
  * ends at 0x020BA1BC where this file's strings start. 0x02053204 starts a file
- * factory and two resource file classes (vtables 0x020BA238-0x020BA288), with
- * no call to or from this code; they are left out. `.data` is the strings,
+ * factory (unit_02053204.cpp), with no call to or from this code. `.data` is
+ * the strings,
  * `.bss` the destructor chain node and the object. Real file name unknown.
  *
  * Functions other than the constructors and destructors keep C linkage: other

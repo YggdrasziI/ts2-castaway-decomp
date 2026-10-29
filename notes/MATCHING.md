@@ -615,6 +615,19 @@ default: add one here only once a unit of this ROM proves it with mwccarm.
 
 ## C++ classes
 
+- Destructor order at the end of a file: an implicit (or inline) virtual
+  destructor is emitted D0, then D1 (`unit_02095BF4.cpp`, `unit_02053204.cpp`);
+  D1, then D0 comes from a destructor declared in the class and defined
+  (`~T() {}`) at the end of the file (`unit_02053408.cpp`: with the implicit one
+  the link put D0 first and `check symbols` failed).
+- A switch whose original jump table covers ids that an earlier test already
+  excludes (`if (id < 0) return 0x10;`, then `sub r0, r1, =0xFFFEFEF7`): the
+  source lists those negative cases too, written `(int)0xfffefef7` and so on
+  (`unit_02053204.cpp`, 100 %).
+- A function returning one of several new objects with a single return and a
+  separate `return 0` is a switch assigning a local, with `default: return 0;`;
+  returning from each case gives conditional `ldmeq` exits (`unit_02053204.cpp`,
+  83.9 % -> 100 %).
 - `new T[n]` with a class `operator new[]` and a non-trivial constructor calls
   the class operator, then `__cxa_vec_newinit(p, n, size, 8, ctor, dtor)` only
   when it returned a block; `delete[] p` with a class `operator delete[]` calls
