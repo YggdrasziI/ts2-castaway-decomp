@@ -72,3 +72,4 @@
 | 2026-10-29 | 55cc8dc | 196092 / 720836 bytes (27.20 %; fuzzy 35.68 %, linked 9.05 %) | 1762 / 4556 | 69 / 164 | Paged screen unit written (35 / 38 functions at 100 %) |
 | 2026-10-29 | 4f5b00d | 200680 / 720836 bytes (27.84 %; fuzzy 37.36 %, linked 9.05 %) | 1785 / 4556 | 69 / 166 | Menu screen unit written (23 / 27 functions at 100 %) |
 | 2026-10-29 | 457ca18 | 202028 / 720836 bytes (28.03 %; fuzzy 37.68 %, linked 9.05 %) | 1801 / 4556 | 69 / 167 | Small screen unit written (16 / 19 functions at 100 %) |
+| 2026-10-29 | a2d8ccd | 204852 / 720836 bytes (28.42 %; fuzzy 37.68 %, linked 9.05 %) | 1808 / 4556 | 69 / 167 | Screen open / close tests matched (7 functions) |
