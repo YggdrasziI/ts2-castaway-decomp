@@ -18,10 +18,13 @@ class Unk0208be3c;
 class Unk0209a11c {
 public:
     Unk0209a11c();
+    Unk0209a11c(u32 size);
     ~Unk0209a11c();
     void func_0209a164();
     bool func_0209a188(u32 index);
     void func_0209a1c4(u32 index, bool value);
+    void func_0209a27c(u32 start, u32 count, bool value);
+    void func_0209a2c4(u32 word, u32 index);
 
     u32 *bits;
     u32 size;

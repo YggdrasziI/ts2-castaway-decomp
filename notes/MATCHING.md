@@ -741,6 +741,10 @@ default: add one here only once a unit of this ROM proves it with mwccarm.
 - An element pointer `e = &a[i]` that the original recomputes (`add r3, r4, r7`)
   after a call is only a short-lived local: use it for the first statements and
   write `a[i].f` after (`func_020644cc`, 99.1 % -> 100 %).
+- With `-str reuse`, identical string literals of one file share one copy: two
+  copies of the same string in `.data` belong to two files, which bounds the
+  split between their users ("lot.lot.nitro_lot" at 0x020BB9C8 and 0x020BBBA0,
+  `unit_020582E0.cpp`).
 - In a `complete` file, `check symbols` looks the string literals up by name:
   rename their `data_<addr>` symbols to the object's `@<n>` names (`... local`,
   exact `byte[N]` length), as printed in the error ("Possible name: @241").
