@@ -49,6 +49,15 @@ default: add one here only once a unit of this ROM proves it with mwccarm.
   inline member copy (`void set(const T &o) { key = o.key; index = o.index; }`);
   written inline the compare's load is reused (`func_0205f184`, 75 % -> 80 %).
 
+- Two nested loops over a footprint with a running bit counter: declaring
+  `int bit = 0; int x; int y;` before the loops, in that order, gave the
+  original registers (`func_02059534`, 97.7 % -> 100 %); the other five
+  orders did not.
+- Bounds tests that share one `return false` block in the original (`beq` /
+  `bgt` to the same exit, last test `ble` into the body) come from one
+  combined `if (a || b || c) return false;`; separate `if`s give conditional
+  returns after each test (`func_02059710`, 71 % -> 82 %).
+
 - A key search where the original keeps a byte offset (`i * 12`) next to the
   walked pointer: indexing the member array directly (`unk3c[i]`) instead of a local
   copy of it, and reusing the frame and index locals of the searches before, gave
