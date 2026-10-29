@@ -414,6 +414,20 @@ default: add one here only once a unit of this ROM proves it with mwccarm.
   gets the original slots only through an inline `mul` returning by value
   around the out-of-line `void m.mul(a, b)`; named locals for the factors are
   laid out in another order (`func_02089d48`, 99.9 % -> 100 %).
+- A state set tested as `i <= n` then `tst mask, 1 << i`, with each result kept
+  as a bool (`mov r3, #0` ... `movne r3, #1; cmp r3, #0`) and the `||` of two
+  sets kept as a bool too: an inline `func_bit(u32 i, u32 n, u32 mask)
+  { return i <= n && (mask & (1 << i)) != 0; }` called from a second inline
+  that stores its result in a local, combined in a third inline (`return
+  a(s) || b(s);`). A `switch` gives compare chains; one inline level gives no
+  bools (`func_020559cc`, 31.7 % -> 100 %).
+- A struct returned by value and passed by address (`f(&d)`) is copied to a
+  second stack slot when written `T d = g();`; binding it to a const
+  reference (`const T &d = g(); f((T *)&d);`) matches (`func_02055cb8`,
+  70.2 % -> 100 %).
+- A call nested in an argument list is evaluated after the other arguments
+  (`g(h(x), loop ? 1 : 2)` computes the select first); a local for the call's
+  result keeps the original order (`func_02055c60`, 62.4 % -> 100 %).
 
 ## Data layout
 
@@ -554,6 +568,12 @@ default: add one here only once a unit of this ROM proves it with mwccarm.
 - Two `.data` tables whose order does not follow their definitions (in either
   order) are one object: a struct holding both (`data_020bb9f0`: 37 link masks,
   then an unused table of orders, `unit_02055EF8.cpp`).
+- A function-local static with a dynamic initializer takes 8 bytes of `.bss`:
+  a guard word (`_ZGV<name>$<n>`) and the value. A reference static
+  (`static T &p = *f();`) puts the guard first, as the original does; a
+  pointer static (`static T *p = f();`) puts the value first. Name the static
+  after the address of its value (`data_020c3b24`), so the symbols are
+  `_ZGVdata_020c3b24$882` and `data_020c3b24$882` (`unit_02055118.cpp`).
 
 ## C++ classes
 
