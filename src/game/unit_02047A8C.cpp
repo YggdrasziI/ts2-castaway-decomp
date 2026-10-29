@@ -425,18 +425,11 @@ void Unk02047a8c::func_08() {
     }
 }
 
-/*
- * 95.81 %: the original tests the state loaded for the inline check (r1) and
- * builds the bool in r0; here the state local is copied after the test
- * (`mov r1, r0`). Same in func_10. Not solved by re-reading the field or by
- * a switch.
- */
 bool Unk02047a8c::func_0c() {
-    int state = fade.state;
     if (fade.func_shown()) {
         return true;
     }
-    if (state == 0) {
+    if (fade.func_opening()) {
         return false;
     }
     func_020492d8();
@@ -448,13 +441,11 @@ bool Unk02047a8c::func_0c() {
     return false;
 }
 
-/* 95.45 %: the same state copy as func_0c. */
 bool Unk02047a8c::func_10() {
-    int state = fade.state;
     if (fade.func_hidden()) {
         return true;
     }
-    if (state == 3) {
+    if (fade.func_closing()) {
         return false;
     }
     fade.func_duration(0x14);
@@ -535,12 +526,7 @@ void Unk02047a8c::func_02049418() {
     flags &= ~1;
 }
 
-/*
- * 99.94 %: registers only; the slide state and the bool of its first test
- * swap r2 / r3.
- */
 void Unk02047a8c::func_38(bool active) {
-    int state;
     if (fade.func_hidden() | !active) {
         return;
     }
@@ -555,8 +541,7 @@ void Unk02047a8c::func_38(bool active) {
     button818.func_08();
     button710.func_08();
     button794.func_08();
-    state = slide.state;
-    if (state == 1) {
+    if (slide.func_opened()) {
         func_020a7cf0(imageFrame, false);
         Unk0201d70c *g = (Unk0201d70c *)operator new(0xac);
         if (g != 0) {
@@ -568,7 +553,7 @@ void Unk02047a8c::func_38(bool active) {
         func_020a122c(func_020a18e4());
         func_020a6980(image, 0xd6b07342);
     } else if (guide != 0 && fade.func_shown()) {
-        if (Unk020a07d4Timer::func_shown(state) && guide->func_14()) {
+        if (slide.func_shown() && guide->func_14()) {
             slide.state = 3;
             func_020a1494(func_020a18e4(), 1, 0x10);
             func_020a11f8(func_020a18e4(), 1, 1);

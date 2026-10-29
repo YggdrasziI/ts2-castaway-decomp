@@ -272,19 +272,11 @@ bool Unk0204a9f8::func_28() {
     return fade.func_shown();
 }
 
-/*
- * 94.35 % (func_10 92.95 %): the original loads the state once, materializes
- * the inline test from it and compares the same register again; here the
- * local is a copy of that load (`mov r1, r0`). Without the local the state is
- * reloaded; tried: int / static / outer-class helpers, a pointer to the timer,
- * an inline close method, `if (!=)` and returning the test.
- */
 bool Unk0204a9f8::func_0c() {
-    int state = fade.state;
     if (fade.func_shown()) {
         return true;
     }
-    if (state == 0) {
+    if (fade.func_opening()) {
         return false;
     }
     func_0204b418();
@@ -294,11 +286,10 @@ bool Unk0204a9f8::func_0c() {
 }
 
 bool Unk0204a9f8::func_10() {
-    int state = fade.state;
     if (fade.func_hidden()) {
         return true;
     }
-    if (state == 3) {
+    if (fade.func_closing()) {
         return false;
     }
     fade.func_duration(0x14);

@@ -130,16 +130,11 @@ void Unk020471b0::func_08() {
     }
 }
 
-/*
- * 95.81 %: the state-load copy of the other screens (unit_02047A8C.cpp,
- * func_0c); same in func_10 (95.45 %).
- */
 bool Unk020471b0::func_0c() {
-    int state = fade.state;
     if (fade.func_shown()) {
         return true;
     }
-    if (state == 0) {
+    if (fade.func_opening()) {
         return false;
     }
     func_020476e4();
@@ -152,11 +147,10 @@ bool Unk020471b0::func_0c() {
 }
 
 bool Unk020471b0::func_10() {
-    int state = fade.state;
     if (fade.func_hidden()) {
         return true;
     }
-    if (state == 3) {
+    if (fade.func_closing()) {
         return false;
     }
     fade.func_duration(0xf);

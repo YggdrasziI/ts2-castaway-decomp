@@ -165,8 +165,16 @@ struct Unk020a07d4Timer {
         return state == 2 || state == 1;
     }
 
-    static inline bool func_shown(int state) {
-        return state == 2 || state == 1;
+    inline bool func_opening() const {
+        return state == 0;
+    }
+
+    inline bool func_opened() const {
+        return state == 1;
+    }
+
+    inline bool func_closing() const {
+        return state == 3;
     }
 
     inline bool func_moving() const {

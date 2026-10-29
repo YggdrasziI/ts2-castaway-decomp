@@ -792,6 +792,14 @@ default: add one here only once a unit of this ROM proves it with mwccarm.
   `if (func_hidden() && func_shown()) return;` (the slider update of
   `unit_02051DA0.cpp`, 93.7 % -> 100 %; with the state in a local, mwccarm
   folds the impossible test away).
+  The same holds for a pair followed by a single value
+  (`cmp r1, #2; cmpne r1, #1; movne r0, #0` then `cmp r1, #0` on the same
+  register): two `const` inline members,
+  `if (fade.func_shown()) return true; if (fade.func_opening()) return false;`.
+  A state local gives a copy (`mov r1, r0`), a field read reloads it, and a
+  static helper taking the state folds the bool (`func_0c` / `func_10` of
+  the three screens 0x020471B0-0x0204BEEC, 92.9-95.8 % -> 100 %; the slide
+  tests of `Unk02047a8c::func_38`, 99.94 % -> 100 %).
 
 ## Control flow
 
