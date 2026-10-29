@@ -149,6 +149,12 @@ default: add one here only once a unit of this ROM proves it with mwccarm.
 - Reusing a dead local for a new value changes the coloring where no declaration
   order does: in `func_0201c2d8` the top of the items goes into `w` (no longer
   needed) instead of its own variable (98.8 % -> 100 %).
+- A value kept for the whole function in a stack slot just above the spilled
+  parameters, below every local: it is a parameter reassigned
+  (`file = archive->func_02093e9c(file);`), not a new local, which takes the
+  highest slot (`func_02052a74`, 99.85 % -> 99.99 %). The data tree reads of the
+  same function take their slots in expansion order once written as inline
+  helpers (`func_named`, `func_value`), after the caller's named nodes (100 %).
 - A bool argument built from a flag: `(flags & 1) != 0` and `(flags & 1) ? 1 : 0`
   give the same `movne` / `moveq` but different loop registers around the call
   (`func_0201be00`, 99.7 % -> 100 %).

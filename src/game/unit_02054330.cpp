@@ -12,8 +12,8 @@
  * Bounds: hypothesis. The constructor 0x02054330 opens the range; it is the
  * only function of the static initializer 0x020AD1FC, which comes before that
  * of the inventory lists (0x020AD210, code from 0x02054734). The code before
- * 0x02054330 belongs to the unit whose initializer is 0x020AD1D0. `.data` is
- * the sound name, `.bss` the object. Real file name unknown.
+ * 0x02054330 (from 0x0205359C) has no static initializer and is not delinked
+ * yet. `.data` is the sound name, `.bss` the object. Real file name unknown.
  *
  * Functions other than the constructor keep C linkage: other files call them
  * by their addresses.
