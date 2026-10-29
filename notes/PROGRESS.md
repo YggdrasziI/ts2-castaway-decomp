@@ -51,3 +51,4 @@
 | 2026-10-28 | 2da285d | 152200 / 720836 bytes (21.11 %; fuzzy 27.38 %, linked 7.60 %) | 1415 / 4557 | 62 / 142 | Parameter reader units merged; weather effects unit written (16 / 18 functions at 100 %) |
 | 2026-10-29 | 8167947 | 152356 / 720836 bytes (21.14 %; fuzzy 27.56 %, linked 7.60 %) | 1418 / 4557 | 62 / 144 | Object groups unit written (3 / 7 functions at 100 %) |
 | 2026-10-29 | d340d6f | 153176 / 720836 bytes (21.25 %; fuzzy 27.75 %, linked 7.60 %) | 1428 / 4557 | 62 / 145 | Map cell and tile layer unit written (10 / 14 functions at 100 %) |
+| 2026-10-29 | c52b08a | 156252 / 720836 bytes (21.68 %; fuzzy 28.18 %, linked 8.02 %) | 1453 / 4557 | 63 / 145 | World unit written, complete (25 / 25 functions) |
