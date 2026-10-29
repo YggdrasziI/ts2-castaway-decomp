@@ -218,4 +218,32 @@ public:
     int valuesY[2];
 };
 
+/* The gauge widget of unit_0205007C.cpp (0x60 bytes); its implicit D1 is the far copy 0x0201EB6C. */
+class Unk0205007c : public Unk020b9e88 {
+public:
+    Unk0205007c();
+    void func_0205012c(Unk020a7c90 *sprite);
+    void func_14(int x, int y);
+    void func_18(bool show);
+    void func_020501a8(int v);
+    void func_020501f8(int v);
+    void func_08();
+    void func_02050580();
+    void func_02050600(int min, int max);
+    bool func_0205060c();
+
+    Unk02098bc8 *func_10() {
+        return &rect;
+    }
+
+    Unk020a7c90 *sprite;
+    Unk02098bc8 rect;
+    int value;
+    int target;
+    int min;
+    int max;
+    int counter;
+    int delay;
+};
+
 #endif

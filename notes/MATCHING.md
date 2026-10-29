@@ -683,6 +683,16 @@ default: add one here only once a unit of this ROM proves it with mwccarm.
   #0x150`, then `r5 + 0x58`, `r5 + 0x90`) owns a sub-struct starting there; here
   the 0x98-byte block written to the save as one piece (`unit_02064984.cpp`,
   constructor 96.2 % -> 100 %).
+- Two reads of the same global through a getter, both spilled before the
+  calls that use them (`func_020a18e4()->archive` to sp+0x10 and sp+0xc):
+  two locals read first (`a = f()->x; b = f()->x; b->g(a->h(k));`), not the
+  nested calls (`unit_0203ECD4.cpp`, constructor 95.6 % -> 97.2 %).
+- An `if (b) x &= ~8; else x |= 8;` whose original predicates the `bic`
+  (`addne; ldrhne; bicne; bne`) is written `if (!b) x |= 8; else x &= ~8;`
+  (`unit_0203ECD4.cpp`, 97.2 % -> 99.4 %).
+- A table element compared with a field read before the loop gives
+  `cmp element, field` when the element is a local (`int v = t[i]; if (v ==
+  p->f)`); written inline, `cmp field, element` (`func_0203f9c8`).
 - A run of `s = get(); set(s); use(s);` blocks where the last one reuses a
   register freed by a dead local (`add r1, r4, #k; mov r4, r0`): one local
   per block instead of one reused variable gives that reuse

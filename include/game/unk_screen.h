@@ -95,6 +95,7 @@ public:
     void func_020508ac(u32 hash);
     void func_02050914(u32 count);
     void func_02050968(Unk020a7c90 *sprite);
+    Unk020a7c90 *func_02050a40(int index);
     void func_02050a64(bool toggle, bool lock);
     void func_02050aac(bool on);
     void func_02050ad0(u32 sound);
