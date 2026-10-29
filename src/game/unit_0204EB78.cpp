@@ -11,35 +11,13 @@
  * 0x0204EE14 starts unit_0204EE14.cpp. No data. Real file name unknown.
  */
 
-#include "game/unk_widget.h"
+#include "game/unk_screen.h"
 
 extern "C" {
 void func_020a69ac(Unk020a7c90 *s, int palette);
 void func_020a9184(Unk020a7c90 *s, int scale);
 void func_020a9198(Unk020a7c90 *s, int scale);
 }
-
-class Unk0204eb78 {
-public:
-    Unk0204eb78();
-    ~Unk0204eb78();
-    void func_0204ebd4(int mode);
-    void func_0204ebdc(Unk020a7c90 *arrow);
-    void func_0204ebe4(Unk020a7c90 *sprite);
-    void func_0204ec10(Unk020a7c90 *blink);
-    bool func_0204ec18();
-    void func_0204ec2c(int target);
-    void func_0204ec44();
-
-    Unk020a7c90 *sprite;
-    Unk020a7c90 *blink;
-    Unk020a7c90 *arrow;
-    Unk02098bc8 rect;
-    short value;
-    short target;
-    int mode;
-    int counter;
-};
 
 Unk0204eb78::Unk0204eb78()
     : sprite(0), blink(0), arrow(0), rect(0, 0, 0, 0), value(-1), target(0x100), mode(0), counter(0) {}

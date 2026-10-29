@@ -1,10 +1,11 @@
 /*
- * The screens built on archive layouts (unit_020450D4.cpp to
- * unit_0204A9F8.cpp): their empty base, the base of the pages, the layout and
- * name list classes of the engine, their show / hide timer and what they use
- * of the button, panel and animated sprite widgets (unit_02050640.cpp,
- * unit_02051704.cpp, unit_0204F798.cpp). Layouts come from the code; all
- * names are placeholders.
+ * The screens built on archive layouts (unit_02043FBC.cpp to
+ * unit_0204A9F8.cpp): their empty base, the owner and the base of the pages,
+ * the layout and name list classes of the engine, their show / hide timer and
+ * what they use of the button, panel and animated sprite widgets
+ * (unit_02050640.cpp, unit_02051704.cpp, unit_0204F798.cpp) and of the sprite
+ * meter (unit_0204EB78.cpp). Layouts come from the code; all names are
+ * placeholders.
  */
 #ifndef GAME_UNK_SCREEN_H
 #define GAME_UNK_SCREEN_H
@@ -105,6 +106,29 @@ public:
     int last;
 };
 
+/* A scaled sprite meter (unit_0204EB78.cpp). */
+class Unk0204eb78 {
+public:
+    Unk0204eb78();
+    ~Unk0204eb78();
+    void func_0204ebd4(int mode);
+    void func_0204ebdc(Unk020a7c90 *arrow);
+    void func_0204ebe4(Unk020a7c90 *sprite);
+    void func_0204ec10(Unk020a7c90 *blink);
+    bool func_0204ec18();
+    void func_0204ec2c(int target);
+    void func_0204ec44();
+
+    Unk020a7c90 *sprite;
+    Unk020a7c90 *blink;
+    Unk020a7c90 *arrow;
+    Unk02098bc8 rect;
+    short value;
+    short target;
+    int mode;
+    int counter;
+};
+
 typedef void *(*Unk020a9d58Text)(u32 id, void *user);
 
 extern "C" {
@@ -186,23 +210,95 @@ struct Unk020a07d4Timer {
     int state;
 };
 
-/*
- * The owner of the pages (a window of unit_0206BCE0.cpp): the slot the pages
- * call and the next page.
- */
-class Unk02044234 {
+class Unk020465bc;
+
+/* An object the owner deletes once the system no longer lists it. */
+class Unk02044234Child {
 public:
+    virtual ~Unk02044234Child();
+};
+
+/*
+ * A key sequence of the owner (unit_02043FBC.cpp): up to five masks of
+ * released buttons to enter in order while L and R are held (button indices
+ * of unit_020970E0.cpp); slot 0 runs once the sequence is complete.
+ */
+class Unk02044088 {
+public:
+    Unk02044088() {
+        count = 0;
+        index = 0;
+    }
+
+    virtual void func_00() = 0;
+
+    void func_02044088(int a, int b, int c, int d, int e);
+    bool func_02044118(int keys);
+
+    int keys[5];
+    int count;
+    int index;
+};
+
+/* The owner's sequence: adds 100 to each of the player's six motives. */
+class Unk020441c8 : public Unk02044088 {
+public:
+    virtual void func_00();
+};
+
+/*
+ * The owner of the pages (0x22C bytes, vtable 0x020B97BC, unit_02043FBC.cpp),
+ * a window of unit_0206BCE0.cpp: a show / hide timer, six motive meters, a
+ * panel with a back button and the text of the page, and the current page,
+ * replaced when a page sets nextPage.
+ */
+class Unk02044234 : public Unk020a07d4 {
+public:
+    Unk02044234(int page);
     virtual ~Unk02044234();
     virtual void func_08();
-    virtual void func_0c();
-    virtual void func_10();
-    virtual void func_14();
+    virtual bool func_0c(short a);
+    virtual bool func_10();
+    virtual bool func_14();
     virtual void func_18();
+    virtual void func_1c() {
+        flags &= ~4;
+    }
+    virtual bool func_20() {
+        return false;
+    }
+    virtual void func_24() {}
+    virtual bool func_28();
+    virtual bool func_2c();
+    virtual bool func_30();
+    virtual bool func_34() {
+        return false;
+    }
+    virtual void func_38(bool active);
+    virtual bool func_3c(bool done);
 
-    u8 unk4[0x38];
+    void func_02044a44();
+    void func_02044a94();
+    void func_02044f24();
+    void func_02045050();
+
+    Unk020a07d4Timer fade;
+    Unk020441c8 sequence;
+    u32 flags;
+    u8 unk30;
+    int unk34;
+    int page;
     int nextPage;
     int unk40;
     u8 unk44;
+    Unk020465bc *current;
+    Unk02044234Child *unk4c;
+    Unk020a9d58 *layout50;
+    Unk020a9d58 *layout54;
+    Unk02050640 button;
+    Unk020a7c90 *text;
+    Unk02051704 panel;
+    Unk0204eb78 meters[6];
 };
 
 /*
