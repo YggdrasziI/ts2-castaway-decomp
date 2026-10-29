@@ -244,7 +244,9 @@ public:
     virtual void func_4c();
     virtual void func_50();
 
+    void func_020468d4();
     void func_02046920();
+    void func_02046960();
     void func_02046a94(Unk020a9d58 *layout, Unk020a7af4 *names);
 
     int unk4;

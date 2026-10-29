@@ -34,6 +34,10 @@ src/game/unit_02046104.cpp:
     .text       start:0x02046104 end:0x020465bc
     .data       start:0x020b9928 end:0x020b9984
 
+src/game/unit_020465BC.cpp:
+    .text       start:0x020465bc end:0x02046b7c
+    .data       start:0x020b9984 end:0x020b99e0
+
 src/game/unit_02046B7C.cpp:
     .text       start:0x02046b7c end:0x020471b0
     .data       start:0x020b99e0 end:0x020b9a3c
