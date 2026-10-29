@@ -31,6 +31,34 @@ Out of scope: a port, game assets, any redistribution of game files, the ARM7 bi
 Game files: 12 `ROM_Euro/Source/Archives/*.nitro_archive` and one `sound_data.sdat`;
 their format is EA's own (`nitro_map`, `nitro_xml`, `nitro_lot` names in the ARM9).
 
+## Other versions
+
+The project knows three versions; only `eur` is enabled. The others stay in
+`DISABLED_VERSIONS` (`tools/configure.py`, which refuses them) until the owner decides
+to support them.
+
+| Name | Release | Game code / maker | ROM SHA-1 | Difference from `eur` | Status |
+|---|---|---|---|---|---|
+| `eur` | The Sims 2: Castaway (Europe) | `YS2P` / `69` | `035eb8f2…` | — | enabled, reference version |
+| `kor` | The Sims 2: Castaway (Korea) | `YS2K` / `69` | `4a194671d7a65c79d907a230d4ebef1caef79ae0` | separate build: ARM9 main 0xBDD00 bytes (0x2E0 shorter), `.bss` 0x020BDD00-0x020D6E80; game files under `ROM_KR` | disabled |
+| `jpn` | The Sims 2: Survival (Japan) | `YS2J` / `13` | `47acce00e05694a9048273b8a92c14e43a6002f1` | separate build: same ARM9 main size and `.bss` as `kor`, different bytes; game files under `ROM_JP` | disabled |
+
+All three are revision 0 (header 0x1E) and 64 MiB, with the same internal title
+`SIMSCASTAWAY`, the same NitroSDK version word (`0x03027532`), ITCM 0x30C0 and DTCM
+0x60 + 0x20 bytes, no overlays, and the same ARM7 binary (SHA-1
+`1a685cfcd0c8857f720c67f0f2d0c2a26979de22`). Their section bounds, functions and
+compiler have not been analysed (`dsd init` not run).
+
+Model (after `Yotona/twewy`):
+
+- `tools/configure.py`: `VERSIONS` and `DISABLED_VERSIONS`; the compiler gets
+  `REGION_<NAME>` (`REGION_EUR`, `REGION_KOR`, `REGION_JPN`) for `#if` in the
+  shared sources, used only where a version differs.
+- Per version: `extract/baserom_ts2c_<name>.nds`, `config/<name>/` (only
+  `build.sha1` while disabled; `arm9/` from `dsd init` once enabled),
+  `progress/<name>/`, a CI matrix entry and its ROM in the build repository.
+- The scripts in `tools/` take `--version` (default `eur`).
+
 ## Toolchain
 
 Evidence and the candidate analysis go in `notes/COMPILER.md`.
@@ -103,7 +131,8 @@ Evidence and the candidate analysis go in `notes/COMPILER.md`.
 README.md SPEC.md LICENSE
 config/eur/               build.sha1, build_nobios.sha1, arm9/ (dsd configs:
                           config.yaml, delinks.txt, symbols.txt, relocs.txt; itcm/, dtcm/)
-extract/                  baserom_ts2c_eur.nds and dsd extraction (git-ignored)
+config/kor/  config/jpn/  build.sha1 only (disabled versions)
+extract/                  baserom_ts2c_<name>.nds and dsd extraction (git-ignored)
 build/                    build output (git-ignored)
 src/  include/  libs/     sources and headers (game, SDK, MSL), when added
 tools/                    configure.py and scripts (progress badges, report diff)

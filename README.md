@@ -12,6 +12,8 @@ It builds the following versions:
 Name | Description       | SHA1 Hash of input ROM(s)
 ---- | ----------------- | ------------------------------------------
 eur  | Europe Revision 0 (`YS2P`) | `035eb8f242d3c83acb478b313e1b135c6aebc76d`
+kor  | Korea Revision 0 (`YS2K`), not supported yet | `4a194671d7a65c79d907a230d4ebef1caef79ae0`
+jpn  | Japan Revision 0 (`YS2J`, The Sims 2: Survival), not supported yet | `47acce00e05694a9048273b8a92c14e43a6002f1`
 
 The default version is `eur`, i.e. the Europe Revision 0 ROM.
 
@@ -21,6 +23,8 @@ Progress
 | Release | Game code | Progress |
 |---|---|---|
 | The Sims 2: Castaway (Europe) | `YS2P` | [![Fuzzy](progress/eur/fuzzy.svg)](notes/PROGRESS.md) [![Perfect](progress/eur/perfect.svg)](notes/PROGRESS.md) [![Linked](progress/eur/linked.svg)](notes/PROGRESS.md) |
+| The Sims 2: Castaway (Korea) | `YS2K` | not supported yet |
+| The Sims 2: Survival (Japan) | `YS2J` | not supported yet |
 
 [![Progress card](progress/eur/card.svg)](notes/PROGRESS.md)
 

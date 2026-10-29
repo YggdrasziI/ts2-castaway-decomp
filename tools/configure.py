@@ -16,8 +16,16 @@ from get_platform import Platform, get_platform
 # Game Versions
 VERSIONS = [
     "eur",  # YS2P, rev 0
+    "kor",  # YS2K, rev 0
+    "jpn",  # YS2J, rev 0 (The Sims 2: Survival)
 ]
 DEFAULT_VERSION = VERSIONS.index("eur")
+
+# Versions set aside until they are configured (no config/<version>/arm9 yet)
+DISABLED_VERSIONS = [
+    "kor",
+    "jpn",
+]
 
 DEFAULT_WIBO_PATH = "./wibo"
 
@@ -49,6 +57,9 @@ parser.add_argument(
     default=VERSIONS[DEFAULT_VERSION],
 )
 args = parser.parse_args()
+
+if args.version in DISABLED_VERSIONS:
+    sys.exit(f"Version '{args.version}' is disabled until it is configured (DISABLED_VERSIONS)")
 
 # Config
 GAME = "ts2c"
