@@ -81,3 +81,4 @@
 | 2026-10-29 | c1dfb2a | 213808 / 720836 bytes (29.66 %; fuzzy 39.45 %, linked 9.65 %) | 1897 / 4556 | 70 / 174 | Page owner unit complete; screens' abstract root (page vtables 100 %) |
 | 2026-10-29 | 5e8cb8c | 219792 / 720836 bytes (30.49 %; fuzzy 40.75 %, linked 9.65 %) | 1921 / 4556 | 70 / 175 | Outfit screen unit (24 / 25 functions, constructor 98.34 %) |
 | 2026-10-29 | e0c081d | 223740 / 720836 bytes (31.04 %; fuzzy 41.90 %, linked 9.65 %) | 1939 / 4556 | 70 / 176 | Save slot screen unit (18 / 19 functions, constructor 98.64 %) |
+| 2026-10-29 | e624b23 | 225700 / 720836 bytes (31.31 %; fuzzy 42.38 %, linked 9.65 %) | 1956 / 4556 | 70 / 177 | Needs screen unit (17 / 18 functions, constructor 99.39 %) |
