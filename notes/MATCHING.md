@@ -757,6 +757,12 @@ default: add one here only once a unit of this ROM proves it with mwccarm.
 
 ## Control flow
 
+- Two compares joining at one conditional store (`ble` to `cmp r0, #0x10`, else
+  `cmp r0, #0x8` and `b`, then a shared `movgt` / `strgt`) are an `if` / `else`
+  with the same body in both branches, merged by the compiler; a ternary limit
+  (`counter > (low ? 16 : 8)`) puts the limit in a register instead. The `if`
+  tests the condition of the fall-through branch (`if (value > 0x19)` for
+  `ble`) (`func_0204ec44`, 96.6 % -> 100 %).
 - A loop whose first test is duplicated before the body (`ldr; cmp; beq` then the
   test again at the bottom) comes from a `for` whose condition holds every exit
   test, `for (n = 4; n > 0 && (node = head) != 0 && time >= node->time; n--)`, or
