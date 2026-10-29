@@ -83,3 +83,4 @@
 | 2026-10-29 | e0c081d | 223740 / 720836 bytes (31.04 %; fuzzy 41.90 %, linked 9.65 %) | 1939 / 4556 | 70 / 176 | Save slot screen unit (18 / 19 functions, constructor 98.64 %) |
 | 2026-10-29 | e624b23 | 225700 / 720836 bytes (31.31 %; fuzzy 42.38 %, linked 9.65 %) | 1956 / 4556 | 70 / 177 | Needs screen unit (17 / 18 functions, constructor 99.39 %) |
 | 2026-10-29 | cac5945 | 226052 / 720836 bytes (31.36 %; fuzzy 42.43 %, linked 9.70 %) | 1963 / 4556 | 71 / 179 | Screen base unit complete (7 / 7 functions) |
+| 2026-10-29 | b93194b | 230040 / 720836 bytes (31.91 %; fuzzy 43.90 %, linked 9.70 %) | 1984 / 4556 | 71 / 179 | Item list screen unit (21 / 26 functions, constructor 98.43 %) |
