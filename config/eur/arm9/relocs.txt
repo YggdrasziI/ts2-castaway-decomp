@@ -11488,8 +11488,8 @@ from:0x02051e38 kind:arm_call to:0x02098e7c module:main
 from:0x02051e58 kind:arm_call to:0x02098be0 module:main
 from:0x02051e70 kind:arm_call to:0x02098be0 module:main
 from:0x02051e88 kind:arm_call to:0x02098be0 module:main
-from:0x02051ea4 kind:load to:0x020b9e88 module:main
-from:0x02051ea8 kind:load to:0x020ba10c module:main
+from:0x02051ea4 kind:load to:0x020b9e80 add:0x8 module:main
+from:0x02051ea8 kind:load to:0x020ba104 add:0x8 module:main
 from:0x02051eb8 kind:arm_call to:0x02099858 module:main
 from:0x02051ee0 kind:arm_call to:0x020a7ca4 module:main
 from:0x02051eec kind:arm_call to:0x020a7cc0 module:main

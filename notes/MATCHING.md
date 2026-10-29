@@ -19,6 +19,18 @@ default: add one here only once a unit of this ROM proves it with mwccarm.
 
 ## Registers and stack
 
+- A clamped parameter whose register is reused by a later index (`sub r6, r1,
+  #1` into the register of the clamped time): reuse the parameter for that
+  index (`t = count - 1; if (i + 1 < t) t = i + 1;`), not a new local
+  (`func_sample` of `unit_02051DA0.cpp`).
+- A flag tested twice (`ands r3, r0, #8`, then `cmp r3, #0`) and a value kept in
+  one register across a dead-zone clamp: test `flags & 8` directly in both `if`s
+  rather than through an `int` local (`Unk02051da0::func_0c`, 99.5 % -> 99.8 %).
+- A point copied to a member as `ldr ldr str str` rather than interleaved: an
+  inline helper that reads both fields before the stores
+  (`func_set(last, p)`); plain assignment, a base-class cast and field-by-field
+  statements interleave (`Unk02051da0::func_0c`, 96.8 % -> 99.5 %, x / y registers
+  still swapped).
 - A global address loaded once into a callee-saved register (`ldr r4, =db` then
   `mov r0, r4` before each call) comes from a local (`u8 *db = data_020c3fc4;`);
   a test written in an inline helper (`return f(db, id) != -1;`) keeps the
@@ -615,6 +627,12 @@ default: add one here only once a unit of this ROM proves it with mwccarm.
 
 ## C++ classes
 
+- Base fields set again before the members are constructed (stores between
+  the inline base constructor and the first member constructor call): a base
+  constructor argument with a constant value, `Base(true)` doing
+  `if (shown) { timer = duration; state = 2; }`; the derived fields then go in
+  the initializer list, in declaration order, where scalar inits fall between
+  the member constructor calls (`Unk02051da0::Unk02051da0`, 25 % -> 100 %).
 - Destructor order at the end of a file: an implicit (or inline) virtual
   destructor is emitted D0, then D1 (`unit_02095BF4.cpp`, `unit_02053204.cpp`);
   D1, then D0 comes from a destructor declared in the class and defined
@@ -721,6 +739,11 @@ default: add one here only once a unit of this ROM proves it with mwccarm.
   as a bool and follows with `&& state != b`: a `const` inline member
   returning the test (`p->func_fadingIn() && p->state != 1`) comes closest
   (`func_02059d10`, 94.1 % -> 96.0 %, still not matching).
+  When the second test is also a pair (`cmp r1, #2; cmpne r1, #1` on the same
+  register, no reload, no bool), two `const` inline members do it:
+  `if (func_hidden() && func_shown()) return;` (the slider update of
+  `unit_02051DA0.cpp`, 93.7 % -> 100 %; with the state in a local, mwccarm
+  folds the impossible test away).
 
 ## Control flow
 
