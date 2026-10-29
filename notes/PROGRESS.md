@@ -77,3 +77,4 @@
 | 2026-10-29 | ee3567b | 206208 / 720836 bytes (28.61 %; fuzzy 38.07 %, linked 9.05 %) | 1823 / 4556 | 69 / 170 | Page 1 unit written (7 / 8 functions at 100 %) |
 | 2026-10-29 | 7b35431 | 207960 / 720836 bytes (28.85 %; fuzzy 38.64 %, linked 9.05 %) | 1849 / 4556 | 69 / 173 | Pages 0, 2 and 3 written (26 / 29 functions at 100 %) |
 | 2026-10-29 | 6abea0a | 209432 / 720836 bytes (29.05 %; fuzzy 38.84 %, linked 9.05 %) | 1867 / 4556 | 69 / 173 | Page base unit written (18 / 18 functions at 100 %) |
+| 2026-10-29 | 224fb3d | 209432 / 720836 bytes (29.05 %; fuzzy 38.84 %, linked 9.05 %) | 1867 / 4556 | 69 / 173 | Page base inline slots named (page vtables 97.7 %) |
