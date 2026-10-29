@@ -4,38 +4,22 @@
  * to a range; the knob follows the touch inside the track's hit rectangle, with a
  * dead zone, horizontally or vertically.
  *
- * The base class Unk020b9e88 (vtable 0x020B9E88) has only inline or pure
- * virtuals: every file of its derived widgets (from 0x0204F858) emits its vtable,
- * and the one kept is the first (0x020B9E80). Its inline update (a show / hide
- * state machine that moves the widget along two keyframe tracks) is emitted here
- * as the derived override, with the same code as the base's 0x0204FDE8.
+ * The inline update of the widget base Unk020b9e88 (game/unk_widget.h: a show /
+ * hide state machine that moves the widget along two keyframe tracks) is emitted
+ * here as the derived override, with the same code as the base's 0x0204FDE8.
  *
  * Bounds: hypothesis. The previous widget (vtable 0x020BA054) ends with its update
  * 0x02051AF4 at 0x02051DA0, the constructor of this class; 0x02052814 starts
  * unit_02052814.cpp. `.data` is the vtable of this class, then the unused copy of
  * the base vtable. Real file name unknown.
  *
- * The base's slots 7 to 20 point to functions of far files (0x02017150 to
- * 0x02031028) whose signatures are unknown: they are declared here under slot
- * names, so the vtables do not match (the base vtable copy is not emitted) and the
- * file cannot be complete.
+ * The base's slots 7 to 20 are not named yet (see game/unk_widget.h): the
+ * vtables do not match and the file cannot be complete.
  */
 
-#include "game/unk_rect.h"
-#include "game/unk_vector.h"
+#include "game/unk_widget.h"
 
 typedef unsigned char u8;
-
-/* A sprite: only the size slots of its vtable are used here. */
-class Unk020a7c90 {
-public:
-    virtual void func_00();
-    virtual void func_04();
-    virtual void func_08();
-    virtual void func_0c();
-    virtual int func_10();
-    virtual int func_14();
-};
 
 /* The touch input. */
 class Unk020a0774;
@@ -49,146 +33,10 @@ struct Unk020d6240 {
 extern Unk020d6240 data_020d6240;
 
 extern "C" {
-void func_020a7c90(Unk020a7c90 *s, int x);
-int func_020a7ca4(Unk020a7c90 *s);
-void func_020a7cac(Unk020a7c90 *s, int y);
-int func_020a7cc0(Unk020a7c90 *s);
-void func_020a7cf0(Unk020a7c90 *s, bool show);
 bool func_020a075c(Unk020a0774 *input, int index);
 bool func_020a078c(Unk020a0774 *input, int index);
 Unk02098e70 func_020a07bc(Unk020a0774 *input, int index);
 }
-
-/* A keyframe track: values in 20.12 fixed point, sampled over a duration. */
-struct Unk020b9e88Track {
-    int *values;
-    int count;
-};
-
-class Unk020b9e88 {
-public:
-    /*
-     * The derived constructors reset the timer and the state after the base
-     * fields and before their members: here a constant argument (hypothesis).
-     */
-    Unk020b9e88(bool shown) {
-        trackX = 0;
-        trackY = 0;
-        timer = 0;
-        duration = 0x3c;
-        state = 5;
-        keysX.values = valuesX;
-        keysX.count = 2;
-        keysY.values = valuesY;
-        keysY.count = 2;
-        if (shown) {
-            timer = duration;
-            state = 2;
-        }
-    }
-    virtual ~Unk020b9e88() {}
-
-    static inline int func_sample(const Unk020b9e88Track *track, int t, int max) {
-        if (t > max) {
-            t = max;
-        }
-        if (t < 0) {
-            t = 0;
-        }
-        int pos = func_fxdiv(t << 12, func_fxdiv(max << 12, (track->count - 1) << 12));
-        int i = pos >> 12;
-        t = track->count - 1;
-        if (i + 1 < t) {
-            t = i + 1;
-        }
-        int frac = pos & 0xfff;
-        if (t == i || frac == 0) {
-            return track->values[i];
-        }
-        int a = track->values[i];
-        return a + func_fxmul(track->values[t] - a, frac);
-    }
-
-    inline void func_update() {
-        switch (state) {
-        case 0:
-            timer++;
-            if (timer >= duration) {
-                timer = duration;
-                state = 1;
-            }
-            break;
-        case 3:
-            timer--;
-            if (timer <= 0) {
-                timer = 0;
-                state = 4;
-            }
-            break;
-        case 4:
-            state = 5;
-            break;
-        case 1:
-            state = 2;
-            break;
-        }
-        if (func_hidden() && func_shown()) {
-            return;
-        }
-        Unk020b9e88Track *track = trackX;
-        if (track != 0) {
-            int x = func_sample(track, timer, duration);
-            func_14(x, func_10()->y);
-        }
-        track = trackY;
-        if (track != 0) {
-            int y = func_sample(track, timer, duration);
-            func_14(func_10()->x, y);
-        }
-    }
-
-    inline bool func_hidden() const {
-        return state == 5 || state == 4;
-    }
-
-    inline bool func_shown() const {
-        return state == 2 || state == 1;
-    }
-
-    virtual void func_08() {
-        func_update();
-    }
-    virtual bool func_0c(bool done) {
-        return done;
-    }
-    virtual Unk02098bc8 *func_10() = 0;
-    virtual void func_14(int x, int y) = 0;
-    virtual void func_18(bool show) = 0;
-    virtual void func_1c();
-    virtual void func_20();
-    virtual void func_24();
-    virtual void func_28();
-    virtual void func_2c();
-    virtual void func_30();
-    virtual void func_34();
-    virtual void func_38();
-    virtual void func_3c();
-    virtual void func_40();
-    virtual void func_44();
-    virtual void func_48();
-    virtual void func_4c();
-    virtual void func_50();
-
-    Unk020b9e88Track *trackX;
-    Unk020b9e88Track *trackY;
-    short timer;
-    short duration;
-    int state;
-    Unk020b9e88Track keysX;
-    Unk020b9e88Track keysY;
-    int valuesX[2];
-    int valuesY[2];
-};
 
 class Unk02051da0 : public Unk020b9e88 {
 public:

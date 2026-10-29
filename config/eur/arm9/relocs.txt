@@ -11462,15 +11462,15 @@ from:0x020516a4 kind:arm_call to:0x0209201c module:main
 from:0x020516d8 kind:arm_call to:0x02091840 module:main
 from:0x020516f8 kind:arm_call to:0x0209201c module:main
 from:0x02051778 kind:arm_call to:0x02098be0 module:main
-from:0x020517a4 kind:load to:0x020b9e88 module:main
-from:0x020517a8 kind:load to:0x020ba054 module:main
+from:0x020517a4 kind:load to:0x020b9e80 add:0x8 module:main
+from:0x020517a8 kind:load to:0x020ba04c add:0x8 module:main
 from:0x020517bc kind:arm_call to:0x02051880 module:main
 from:0x020517c4 kind:arm_call to:0x02051924 module:main
-from:0x020517d0 kind:load to:0x020ba054 module:main
+from:0x020517d0 kind:load to:0x020ba04c add:0x8 module:main
 from:0x020517e4 kind:arm_call to:0x02051880 module:main
 from:0x020517ec kind:arm_call to:0x02051924 module:main
 from:0x020517f4 kind:arm_call to:0x02099858 module:main
-from:0x02051800 kind:load to:0x020ba054 module:main
+from:0x02051800 kind:load to:0x020ba04c add:0x8 module:main
 from:0x02051820 kind:arm_call to:0x0209984c module:main
 from:0x02051894 kind:arm_call to:0x02099864 module:main
 from:0x020518c4 kind:arm_call to:0x0209984c module:main
