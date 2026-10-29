@@ -464,6 +464,13 @@ default: add one here only once a unit of this ROM proves it with mwccarm.
   `p->head == 0` and copying it to a local only after the early branch gives
   the original registers; copying it before the test swaps two registers
   (`func_020548b0`, 99.2 % -> 100 %).
+- A `frame != 0` test materialized (`movne r0, #1; moveq r0, #0; cmp r0, #0`)
+  before `&&`: an inline helper returning `int` (`return frame != 0;`) keeps
+  it; the same helper returning `bool`, a `bool` local, `(bool)`, `? :` or
+  `if` / `else` assignments are all folded (`func_020543d4`, 98.1 % -> 100 %).
+  The `!= -1` helper of `func_0205465c` needed the database pointer as a local
+  taken before the previous call (`ldr r6, =db` ahead of the `bl`), passed to
+  the helper (92.1 % -> 100 %).
 - A class with user-declared constructors is copied member by member
   (`ldr` / `str` pairs); deriving it from a plain struct that holds the members
   gives the block copy (`ldm` / `stm`) of the original (`unit_02098E70.cpp`, 0 % ->

@@ -1635,7 +1635,7 @@ func_02053bd8 kind:function(arm,size=0xc) addr:0x02053bd8
 func_02053be4 kind:function(arm,size=0x14) addr:0x02053be4
 func_02053bf8 kind:function(arm,size=0x300) addr:0x02053bf8
 func_02053ef8 kind:function(arm,size=0x438) addr:0x02053ef8
-func_02054330 kind:function(arm,size=0x30) addr:0x02054330
+_ZN11Unk020bfc68C1Ev kind:function(arm,size=0x30) addr:0x02054330
 func_02054360 kind:function(arm,size=0x74) addr:0x02054360
 func_020543d4 kind:function(arm,size=0x288) addr:0x020543d4
 func_0205465c kind:function(arm,size=0xd8) addr:0x0205465c
@@ -4473,7 +4473,7 @@ __sinit_020ad0d8 kind:function(arm,size=0xb4) addr:0x020ad0d8
 __sinit_020ad18c kind:function(arm,size=0x1c) addr:0x020ad18c
 __sinit_020ad1a8 kind:function(arm,size=0x28) addr:0x020ad1a8
 __sinit_020ad1d0 kind:function(arm,size=0x2c) addr:0x020ad1d0
-__sinit_020ad1fc kind:function(arm,size=0x14) addr:0x020ad1fc
+__sinit_unit_02054330.cpp kind:function(arm,size=0x14) addr:0x020ad1fc local
 __sinit_unit_02054734.cpp kind:function(arm,size=0x34) addr:0x020ad210 local
 __sinit_unit_02054AB4.cpp kind:function(arm,size=0x5c) addr:0x020ad244 local
 __sinit_unit_02055EF8.cpp kind:function(arm,size=0x4c) addr:0x020ad2a0 local
@@ -4608,7 +4608,7 @@ data_020b6de0 kind:data(any) addr:0x020b6de0
 .p__sinit_020ad18c kind:data(word) addr:0x020b6e54
 .p__sinit_020ad1a8 kind:data(word) addr:0x020b6e58
 .p__sinit_020ad1d0 kind:data(word) addr:0x020b6e5c
-.p__sinit_020ad1fc kind:data(word) addr:0x020b6e60
+.p__sinit_unit_02054330.cpp kind:data(word) addr:0x020b6e60 local
 .p__sinit_unit_02054734.cpp kind:data(word) addr:0x020b6e64 local
 .p__sinit_unit_02054AB4.cpp kind:data(word) addr:0x020b6e68 local
 .p__sinit_unit_02055EF8.cpp kind:data(word) addr:0x020b6e6c local
@@ -5019,7 +5019,7 @@ data_020ba214 kind:data(any) addr:0x020ba214
 data_020ba238 kind:data(any) addr:0x020ba238
 data_020ba258 kind:data(any) addr:0x020ba258
 data_020ba270 kind:data(any) addr:0x020ba270
-data_020ba288 kind:data(any) addr:0x020ba288
+@246 kind:data(byte[24]) addr:0x020ba288 local
 @111 kind:data(byte[31]) addr:0x020ba2a0 local
 @118 kind:data(byte[28]) addr:0x020ba2c0 local
 @737 kind:data(byte[1]) addr:0x020ba2dc local
