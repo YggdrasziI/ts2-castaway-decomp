@@ -103,6 +103,13 @@ default: add one here only once a unit of this ROM proves it with mwccarm.
   inside the store copies k before the increment; `dst[k] = ...; k++;` with k
   declared in the outer loop's init, `for (int i = 0, k = 0; ...)`, gives the
   original's registers (`func_01ff8fd8`, 98.96 % -> 100 %).
+- A float rounding of a small pixel constant done at run time (`mov r0, #0x1000;
+  bl _fflt; ... _fadd; _ffix`): the value is a local int set once
+  (`int countX = 1;`) and converted with
+  `(int)(v > 0 ? v * 4096 + 0.5f : v * 4096 - 0.5f)`; the optimizer propagates it
+  without folding the float operations, whereas a literal or an inline function
+  with a literal argument folds them all (`func_02053ef8`, 76.6 % -> 91.5 %).
+  `v * 4096.0f` gives an `_fmul` instead of the `lsl` / `_fflt` pair.
 - Temporaries built inside an inline helper (a view matrix computed by
   `static inline Unk02098094 f(...)`, a product returned by an inline
   `func_mul`) get the lowest stack slots, below the caller's own temporaries;
