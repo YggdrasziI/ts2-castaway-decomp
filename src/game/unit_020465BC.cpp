@@ -10,8 +10,8 @@
  * unit_02046B7C.cpp. `.data` is the vtable with its header. Real file name
  * unknown.
  *
- * `.data` does not match: five slots of the vtable point to the functions of
- * other files that the page base declares under slot names.
+ * `.data` does not match: slot 12 of the vtable points to a function of an
+ * unknown root class (0x0201D6CC, see include/game/unk_screen.h).
  */
 
 #include "game/unk_screen.h"

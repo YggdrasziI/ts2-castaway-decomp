@@ -334,6 +334,11 @@ default: add one here only once a unit of this ROM proves it with mwccarm.
   Declaring them inline in the base made the kept copies match and raised
   the `.data` of every derived file (the page base `Unk020465bc`, slots 7,
   8, 9 and 13 in `unit_020450D4.cpp`, pages' `.data` 79.5 % -> 88.6 %).
+  A file that only calls such slots virtually (the pages' owner) also emits
+  them, each right next to the first function that calls it: slots of a
+  base found inside an unrelated file, reading the base's layout, are the
+  base's inline virtuals too (slots 5, 10, 11 and 17, 0x02044830-0x02044EC0,
+  `.data` 88.6 % -> 97.7 %).
 - A lookup through a layout held by pointer (`func_020aa040(top, 4,
   func_020a7b50(&names, hash))`) whose pointer the original loads after the
   inner call: write the nested call in place; an inline helper taking the

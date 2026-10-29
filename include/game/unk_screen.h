@@ -207,12 +207,14 @@ public:
 
 /*
  * The base of the pages built by Unk02044234 (vtable 0x020B998C, functions
- * 0x020465BC-0x02046B7C). Its inline slots 7, 8, 9 and 13 are emitted by
- * every page; the kept copies are those of the first page,
- * unit_020450D4.cpp. Slots 5, 10, 11, 12 and 17 point to functions of other
- * files (0x0201D6CC, 0x02044830 to 0x02044EC0) whose classes are unknown:
- * they are declared here non-inline under slot names, so the vtables do not
- * match there.
+ * 0x020465BC-0x02046B7C). Its inline slots are emitted by every file that
+ * needs them and the first copy is kept: slots 5, 10, 11 and 17 in the
+ * owner's file (0x02044830 to 0x02044EC0, each next to the owner function
+ * that first calls it), slots 7, 8, 9 and 13 in the first page,
+ * unit_020450D4.cpp. Slot 12 is 0x0201D6CC, `return func_28() &&
+ * !func_14();`, shared by the vtables of many screens: a function of an
+ * unknown root class, declared here non-inline, so the vtables do not match
+ * there.
  */
 class Unk020465bc : public Unk020a07d4 {
 public:
@@ -221,7 +223,9 @@ public:
     virtual void func_08();
     virtual bool func_0c(short a);
     virtual bool func_10();
-    virtual bool func_14();
+    virtual bool func_14() {
+        return (flags & 4) != 0;
+    }
     virtual void func_18();
     virtual void func_1c() {
         flags &= ~4;
@@ -230,8 +234,12 @@ public:
         return false;
     }
     virtual void func_24() {}
-    virtual bool func_28();
-    virtual bool func_2c();
+    virtual bool func_28() {
+        return fade.func_shown();
+    }
+    virtual bool func_2c() {
+        return fade.func_hidden();
+    }
     virtual bool func_30();
     virtual bool func_34() {
         return true;
@@ -239,7 +247,13 @@ public:
     virtual void func_38(bool active);
     virtual bool func_3c(bool done);
     virtual void func_40();
-    virtual void func_44(bool a);
+    virtual void func_44(bool a) {
+        if (a) {
+            flags |= 8;
+        } else {
+            flags &= ~8;
+        }
+    }
     virtual void func_48();
     virtual void func_4c();
     virtual void func_50();
