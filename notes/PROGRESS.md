@@ -54,3 +54,4 @@
 | 2026-10-29 | c52b08a | 156252 / 720836 bytes (21.68 %; fuzzy 28.18 %, linked 8.02 %) | 1453 / 4557 | 63 / 145 | World unit written, complete (25 / 25 functions) |
 | 2026-10-29 | 34d9d19 | 161508 / 720836 bytes (22.41 %; fuzzy 29.42 %, linked 8.02 %) | 1487 / 4556 | 63 / 146 | Lot unit written (34 / 39 functions at 100 %) |
 | 2026-10-29 | 72dd10b | 161876 / 720836 bytes (22.46 %; fuzzy 29.42 %, linked 8.02 %) | 1490 / 4556 | 63 / 146 | Tile flag functions matched with a u32 tile index (13 / 14 functions at 100 %) |
+| 2026-10-29 | 313b944 | 165152 / 720836 bytes (22.91 %; fuzzy 29.92 %, linked 8.02 %) | 1505 / 4556 | 63 / 147 | Survival guide animation unit written (15 / 16 functions at 100 %) |
