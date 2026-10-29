@@ -78,7 +78,7 @@ public:
     void func_02050bb4(short a, short b, short c, short d);
     void func_02050bf0(short a, short b, short c, short d, short e, short f);
     void func_02050c48(short a, short b, short c);
-    void func_02050c64(short a, short b, short c);
+    void func_02050c64(int a, int b, int c);
     void func_02050c80(short a, short b);
     void func_02050c94(short a, short b);
     bool func_0c(bool done);
@@ -311,7 +311,7 @@ void Unk02050640::func_02050c48(short a, short b, short c) {
     unk71 = c;
 }
 
-void Unk02050640::func_02050c64(short a, short b, short c) {
+void Unk02050640::func_02050c64(int a, int b, int c) {
     unk74 = a;
     unk75 = b;
     unk76 = c;

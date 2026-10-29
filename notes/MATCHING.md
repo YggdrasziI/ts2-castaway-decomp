@@ -736,6 +736,13 @@ default: add one here only once a unit of this ROM proves it with mwccarm.
 
 ## C++ classes
 
+- A virtual call on a global object that the compiler would devirtualize
+  (`bl _ZN...func_14Ev` instead of `ldr [vtable, #0x14]; blx`) goes through a
+  pointer in the source (`Unk020c43a8 *player = &data_020c43a8;`).
+- Arguments passed to a member without the `lsl #16 / asr #16` a `short`
+  parameter needs mean the parameter is wider: the button setter
+  0x02050C64 takes `int`s (its callee code is the same either way).
+
 - Base fields set again before the members are constructed (stores between
   the inline base constructor and the first member constructor call): a base
   constructor argument with a constant value, `Base(true)` doing
@@ -863,6 +870,26 @@ default: add one here only once a unit of this ROM proves it with mwccarm.
   tests of `Unk02047a8c::func_38`, 99.94 % -> 100 %).
 
 ## Control flow
+
+- A switch whose binary search starts from the middle of the keys sorted as
+  signed values switches on an `int`: with a `u32` table the cases are sorted
+  unsigned and the pivot and literal order change (`func_0c` of
+  `unit_0203C2E8.cpp`, 98.0 % -> 100 %, with `case (int)0x...:`).
+- A jump table whose first case only leads to the default code has that case
+  in the source next to `default:` (`case 0x800000: default:`; the text
+  callback of `unit_0203C2E8.cpp`, 96.5 % -> 100 %).
+- A mirrored index kept in its own decrementing register (`mov r7, #3` ...
+  `sub r7, r7, #1`) next to the column counter is a second loop variable,
+  `for (int col = 0, c = 3; col < 4; col++, c--)`; `3 - col` is recomputed with
+  `rsb` each pass. Pointers stepped after the compare come from `n++` in the
+  same header (`func_38` of `unit_0203C2E8.cpp`, 91.6 % -> 98.6 %).
+- A value read once, compared and used as an index before a store to a global
+  (`ldrsh; cmp; ldr [table, r0, lsl #2]; movle / movgt; str`) is read before
+  the store in the source: set the result first (`if (c <= 5) s = 0x19; else
+  s = 0x13;`), then store `table[c]`; the reverse order reloads it after the
+  store (`func_3c` of `unit_0203C2E8.cpp`).
+- `cmp r0, #0; movne r0, #1; moveq r0, #0; cmp r0, #0` after a call returning
+  a pointer is an inline helper returning `ptr != 0` as `bool`.
 
 - Early exits that all return a saved parameter (`movs r4, r1` at the top,
   `mov r0, r4` in each exit) return that parameter in the source, even on paths

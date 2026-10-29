@@ -203,8 +203,8 @@ public:
     virtual bool func_3c();
     virtual bool func_40();
     virtual bool func_44();
-    virtual void func_48();
-    virtual void func_4c();
+    virtual bool func_48();
+    virtual bool func_4c();
     virtual bool func_50();
 
     Unk020b9e88Track *trackX;

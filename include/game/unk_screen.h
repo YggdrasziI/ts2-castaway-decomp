@@ -95,13 +95,15 @@ public:
     void func_020508ac(u32 hash);
     void func_02050914(u32 count);
     void func_02050968(Unk020a7c90 *sprite);
+    int func_02050a24();
     Unk020a7c90 *func_02050a40(int index);
     void func_02050a64(bool toggle, bool lock);
     void func_02050aac(bool on);
     void func_02050ad0(u32 sound);
+    void func_02050bb4(short a, short b, short c, short d);
     void func_02050bf0(short a, short b, short c, short d, short e, short f);
     void func_02050c48(short a, short b, short c);
-    void func_02050c64(short a, short b, short c);
+    void func_02050c64(int a, int b, int c);
     void func_02050c80(short a, short b);
     void func_02050c94(short a, short b);
     void func_020514f0();
@@ -135,6 +137,7 @@ public:
     void func_020518a8(unsigned int count);
     void func_020518fc(Unk020b9e88 *child);
     Unk020a7c90 *func_02051ad0(int index);
+    void func_02051ae8(Unk020a7c90 *sprite, int index);
     void func_08();
     Unk02098bc8 *func_10();
     void func_14(int x, int y);
