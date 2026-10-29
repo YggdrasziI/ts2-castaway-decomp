@@ -56,3 +56,4 @@
 | 2026-10-29 | 72dd10b | 161876 / 720836 bytes (22.46 %; fuzzy 29.42 %, linked 8.02 %) | 1490 / 4556 | 63 / 146 | Tile flag functions matched with a u32 tile index (13 / 14 functions at 100 %) |
 | 2026-10-29 | 313b944 | 165152 / 720836 bytes (22.91 %; fuzzy 29.92 %, linked 8.02 %) | 1505 / 4556 | 63 / 147 | Survival guide animation unit written (15 / 16 functions at 100 %) |
 | 2026-10-29 | 676cbb2 | 166880 / 720836 bytes (23.15 %; fuzzy 30.16 %, linked 8.26 %) | 1524 / 4556 | 64 / 148 | Inventory server unit complete (19 functions) |
+| 2026-10-29 | aa43956 | 168876 / 720836 bytes (23.43 %; fuzzy 30.43 %, linked 8.54 %) | 1541 / 4556 | 66 / 150 | Inventory lists and bulb object units complete (12 and 4 functions) |
