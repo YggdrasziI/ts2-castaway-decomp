@@ -634,6 +634,16 @@ default: add one here only once a unit of this ROM proves it with mwccarm.
   pointer static (`static T *p = f();`) puts the value first. Name the static
   after the address of its value (`data_020c3b24`), so the symbols are
   `_ZGVdata_020c3b24$882` and `data_020c3b24$882` (`unit_02055118.cpp`).
+- A namespace-scope `const` object with a constructor
+  (`static const Unk02098bc8 r(...);`) goes to `.data`, not `.bss` nor
+  `.rodata`: its storage is reserved with its static size and filled by the
+  static initializer (the text field rectangle 0x020B9BC4 of
+  `unit_0204D698.cpp`).
+- Several `static const` tables of one file are emitted in an order that does
+  not follow the declarations. When the original keeps them in address order,
+  declare one two-dimensional array (`static const u32 t[11][29];`), drop the
+  inner dsd symbols and rewrite their relocations as offsets from the array
+  (`add:0x74`) (`unit_0204D698.cpp`).
 
 ## C++ classes
 

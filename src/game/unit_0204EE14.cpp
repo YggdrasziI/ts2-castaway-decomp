@@ -71,7 +71,7 @@ public:
     void func_00() {
         func_update();
     }
-    bool func_04();
+    bool func_04(bool locked);
     void func_08();
     void func_0c(int objPriority);
     void func_0204f4a0(int mode, const u32 *name);
@@ -109,7 +109,7 @@ Unk0204ee14::~Unk0204ee14() {
     func_08();
 }
 
-bool Unk0204ee14::func_04() {
+bool Unk0204ee14::func_04(bool locked) {
     return 0;
 }
 

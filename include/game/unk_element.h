@@ -78,7 +78,7 @@ public:
     virtual void func_00() {
         func_update();
     }
-    virtual bool func_04() = 0;
+    virtual bool func_04(bool locked) = 0;
     virtual void func_08() = 0;
     virtual void func_0c(int priority) = 0;
     virtual Unk02098bc8 *func_10() = 0;

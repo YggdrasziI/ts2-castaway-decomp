@@ -22,6 +22,14 @@ src/game/unit_0204BEEC.cpp:
     .text       start:0x0204beec end:0x0204d698
     .data       start:0x020b9b2c end:0x020b9bc4
 
+src/game/unit_0204D698.cpp:
+    .text       start:0x0204d698 end:0x0204eb78
+    .init       start:0x020ad1a8 end:0x020ad1d0
+    .rodata     start:0x020aea74 end:0x020aef70
+    .ctor       start:0x020b6e58 end:0x020b6e5c
+    .data       start:0x020b9bc4 end:0x020b9d8c
+    .bss        start:0x020bfc2c end:0x020bfc30
+
 src/game/unit_0204EB78.cpp:
     complete
     .text       start:0x0204eb78 end:0x0204ee14
