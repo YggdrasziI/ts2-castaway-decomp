@@ -265,6 +265,14 @@ default: add one here only once a unit of this ROM proves it with mwccarm.
 
 - A `bool` field passed to a `bool` parameter is passed as loaded; a test
   or a cast in between adds a normalization (`func_0205a5c8`).
+- `mla` where `smlabb` was expected for a row index (`y * width + x` with `s16`
+  coordinates): compute the index in `u32` through an inline helper taking
+  `u32 x, u32 y` (`unit_02055EF8.cpp`, tile access of a layer).
+- An object pointer loaded before the argument calls (`ldr r5, [r4, #0x104]`
+  ahead of the calls that build the arguments): read it into a loop-local
+  first (`Unk020705e4 *texanim = world->texanim; texanim->f(...)`).
+- A field read before a block of stores to the same object stays in a register
+  only when it is read into a local first (`int map = w->map;`).
 
 ## Inlining and emission order
 
@@ -542,6 +550,9 @@ default: add one here only once a unit of this ROM proves it with mwccarm.
 - Counters kept on the stack get slots in declaration order: declared without a
   value next to the other locals and set later (`int needs; ... needs = 0;`),
   they take the original slots (`func_02064e10`).
+- Two `.data` tables whose order does not follow their definitions (in either
+  order) are one object: a struct holding both (`data_020bb9f0`: 37 link masks,
+  then an unused table of orders, `unit_02055EF8.cpp`).
 
 ## C++ classes
 
@@ -709,6 +720,11 @@ default: add one here only once a unit of this ROM proves it with mwccarm.
   (`func_02067778`).
 - `mov r2, #0` reused for an earlier store, then `orr r2, r2, #1` before a
   halfword store: `x = 0; x |= 1;` (`func_02064984`).
+- A main loop that loads the cursor at the top and returns on null is
+  `for (;;) { cur = ...; if (cur == 0) return; ... }`.
+- A sorted insertion without conditional execution: write the end test before
+  the advance, `else if (it->next == 0) { append } else it = it->next;`
+  (`func_02056070`).
 
 ## ARM / Thumb
 
