@@ -13,8 +13,10 @@
  * Functions other than the constructors and destructor keep C linkage:
  * other files call them by their addresses.
  *
- * Not complete: func_020596b8, func_02059710, func_02059828 and
- * func_020598e4 are not at 100 % (comments above them).
+ * Not complete: func_02059710 is not at 100 % (comment above it).
+ *
+ * The tile index is computed in u32 (func_tile takes u32 coordinates): with
+ * int coordinates mwccarm uses smlabb where the original has mla.
  */
 
 typedef unsigned long u32;
@@ -56,7 +58,7 @@ public:
     Unk02056ed0();
     ~Unk02056ed0();
 
-    u32 *func_tile(int x, int y) {
+    u32 *func_tile(u32 x, u32 y) {
         return &tiles[y * info->width + x];
     }
 
@@ -178,9 +180,6 @@ void func_02059600(Unk02056ed0 *layer, const Unk020593e4Xy *pos, const Unk020593
     }
 }
 
-/* 96.82 %: the original indexes the tile with mla, ours with smlabb (the
- * coordinates and the width are shorts; tried: int locals, direct indexing,
- * a width local, a tiles local). */
 void func_020596b8(Unk02056ed0 *layer, const Unk020593e4Xy *pos, u32 bit) {
     if (!func_02059940(layer, pos)) {
         return;
@@ -196,7 +195,8 @@ void func_020596b8(Unk02056ed0 *layer, const Unk020593e4Xy *pos, u32 bit) {
  * bounds-check width on the stack for the message and the start column in a
  * register. The single `return false` of the bounds tests comes from the
  * combined condition (71 % with separate tests). Tried: width / info locals,
- * the test and message forms, nested tests, declaration orders. */
+ * the test and message forms, nested tests, declaration orders, u32 loop
+ * counters, a pointer to the tile, the message index written out. */
 bool func_02059710(Unk02056ed0 *layer, const Unk020593e4Xy *pos, const Unk020593e4Xy *size, u32 flags, u32 mask) {
     if (!pos->func_valid() || pos->x + size->x > layer->info->width || pos->y + size->y > layer->info->height) {
         return false;
@@ -218,8 +218,6 @@ bool func_02059710(Unk02056ed0 *layer, const Unk020593e4Xy *pos, const Unk020593
     return true;
 }
 
-/* 98.51 %: row and row-end registers swapped (r12 / lr); tried: a mask
- * local, flags inverted in place, x / y declared before the loops. */
 void func_02059828(Unk02056ed0 *layer, const Unk020593e4Xy *pos, const Unk020593e4Xy *size, u32 flags) {
     if (!pos->func_valid()) {
         return;
@@ -237,7 +235,6 @@ void func_02059828(Unk02056ed0 *layer, const Unk020593e4Xy *pos, const Unk020593
     }
 }
 
-/* 96.96 %: smlabb instead of mla, as in func_020596b8. */
 void func_020598e4(Unk02056ed0 *layer, const Unk020593e4Xy *pos, u32 bit) {
     if (!func_02059940(layer, pos)) {
         return;

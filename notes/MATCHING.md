@@ -267,7 +267,8 @@ default: add one here only once a unit of this ROM proves it with mwccarm.
   or a cast in between adds a normalization (`func_0205a5c8`).
 - `mla` where `smlabb` was expected for a row index (`y * width + x` with `s16`
   coordinates): compute the index in `u32` through an inline helper taking
-  `u32 x, u32 y` (`unit_02055EF8.cpp`, tile access of a layer).
+  `u32 x, u32 y` (`unit_02055EF8.cpp`, tile access of a layer; `func_020596b8`
+  96.8 %, `func_020598e4` 97.0 % and `func_02059828` 98.5 % -> 100 %).
 - An object pointer loaded before the argument calls (`ldr r5, [r4, #0x104]`
   ahead of the calls that build the arguments): read it into a loop-local
   first (`Unk020705e4 *texanim = world->texanim; texanim->f(...)`).
