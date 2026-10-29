@@ -10,7 +10,10 @@
  * class with vtable 0x020B95B4; 0x0203C2E8 starts the screen with vtable
  * 0x020B9658, the first code to call this constructor. func_0203c254 is put
  * here because it sits before that constructor; other screens call it.
- * `.data` is the vtable with its header (pure slots 3, 4, 14 and 15 are null).
+ * `.data` is data_020b95f8, set by the static initializer 0x020AD18C
+ * (`.init` / `.ctor`), then the vtable with its header (pure slots 3, 4, 14
+ * and 15 are null). The word belongs here rather than to the previous file:
+ * mwccarm puts the const object before the vtable of its own file.
  * Real file name unknown.
  *
  * The inline slots of the class are kept in far files (see the header):
@@ -29,7 +32,14 @@ struct Unk020d6240 {
     Unk02093648 *archive;
 };
 
+/* A 16-entry table and its length (unit_020B8888.cpp). */
+struct Unk020be374 {
+    int *table;
+    int count;
+};
+
 extern Unk020d6240 data_020d6240;
+extern Unk020be374 data_020be37c;
 
 extern "C" {
 Unk020d6240 *func_020a18e4();
@@ -37,6 +47,12 @@ int func_020a0b8c(void *list, void *object);
 void func_020a0b0c(void *list, void *object);
 void func_0203c254(int value, int index, int main);
 }
+
+/*
+ * Set by the static initializer and never read: a const object with a
+ * dynamic initializer, which mwccarm puts in `.data` before the vtable.
+ */
+extern const int data_020b95f8 = data_020be37c.count;
 
 Unk0203c188::Unk0203c188(Unk0203c188Owner *owner) : flags(0) {
     this->owner = owner;

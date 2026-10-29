@@ -19,6 +19,10 @@ default: add one here only once a unit of this ROM proves it with mwccarm.
 
 ## Registers and stack
 
+- Two results of consecutive calls kept in r5 / r6 the wrong way round:
+  declare the later one first without an initializer (`u32 height;` before
+  `Unk020a7c90 *font = ...;`, then `height = ...;`)
+  (`Unk0203b3b8::func_0203bc24`, 99.7 % -> 100 %).
 - Stack arguments read with `ldrsh` and stored as bytes: the parameters are
   `short`, not `signed char` (which reads `ldrsb`); the register ones follow
   (`Unk02050640::func_02050bf0`, 91.8 % -> 100 %).
@@ -537,6 +541,14 @@ default: add one here only once a unit of this ROM proves it with mwccarm.
 
 ## Data layout
 
+- A word in `.data` (value 0) that only a static initializer writes from
+  another unit's object (`ldr`, `str`): a namespace-scope `const` object
+  with a dynamic initializer (`extern const int x = obj.count;`, `extern`
+  for external linkage); without `const` mwccarm puts it in `.bss`, even as
+  a one-element array. mwccarm lays it out before the vtable of its file
+  whatever the definition order, so a word just after one class's vtable
+  belongs to the next file when that file's `.data` starts with a vtable
+  (`data_020b95f8`, moved into `unit_0203C188.cpp`).
 - A table filled by a static initializer with both fields stored at run time
   (hash from a call, then a function pointer) has an element type with an
   inline constructor (`Entry(const char *name, Func f) : key(hash(name)),
@@ -871,6 +883,13 @@ default: add one here only once a unit of this ROM proves it with mwccarm.
 
 ## Control flow
 
+- `sub r0, id, #K` then `cmp r0, #1` / `cmp r0, #2` with each body after its
+  own compare: an `if` / `else if` chain on a local `u32 k = id - K`; a
+  `switch (id - K)` with two cases puts both compares first (the text
+  callback of `unit_0203B3B8.cpp`, 69.0 % -> 99.8 % -> 100 %).
+- `cmp #0; beq <case 0 body placed last>; cmp #1; <case 1 conditionalized>`:
+  a `switch` with `case 0:` and `case 1:` bodies, not `if (== 0) else if
+  (== 1)` (constructor of `unit_0203B3B8.cpp`, 97.5 % -> 98.3 %).
 - A switch whose binary search starts from the middle of the keys sorted as
   signed values switches on an `int`: with a `u32` table the cases are sorted
   unsigned and the pivot and literal order change (`func_0c` of
