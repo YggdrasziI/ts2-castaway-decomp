@@ -1,6 +1,6 @@
 /*
- * The screens built on two archive layouts (unit_020471B0.cpp,
- * unit_02047A8C.cpp, unit_0204A9F8.cpp): their empty base, the layout and
+ * The screens built on archive layouts (unit_02046B7C.cpp to
+ * unit_0204A9F8.cpp): their empty base, the base of the pages, the layout and
  * name list classes of the engine, their show / hide timer and what they use
  * of the button, panel and animated sprite widgets (unit_02050640.cpp,
  * unit_02051704.cpp, unit_0204F798.cpp). Layouts come from the code; all
@@ -184,6 +184,56 @@ struct Unk020a07d4Timer {
     short timer;
     short duration;
     int state;
+};
+
+/* The owner of the pages (unit_0206BCE0.cpp names it): only the next page. */
+class Unk02044234 {
+public:
+    u8 unk0[0x3c];
+    int nextPage;
+};
+
+/*
+ * The base of the pages built by Unk02044234 (vtable 0x020B998C, functions
+ * 0x020465BC-0x02046B7C). Slots 5, 7 to 13 and 17 point to functions of
+ * other files (0x0201D6CC, 0x02044830 to 0x02045594) whose classes are
+ * unknown: they are declared here non-inline under slot names, so the
+ * derived vtables do not match there.
+ */
+class Unk020465bc : public Unk020a07d4 {
+public:
+    Unk020465bc(Unk02044234 *owner);
+    virtual ~Unk020465bc();
+    virtual void func_08();
+    virtual bool func_0c(short a);
+    virtual bool func_10();
+    virtual bool func_14();
+    virtual void func_18();
+    virtual void func_1c();
+    virtual bool func_20();
+    virtual void func_24();
+    virtual bool func_28();
+    virtual bool func_2c();
+    virtual bool func_30();
+    virtual bool func_34();
+    virtual void func_38(bool active);
+    virtual bool func_3c(bool done);
+    virtual void func_40();
+    virtual void func_44(bool a);
+    virtual void func_48();
+    virtual void func_4c();
+    virtual void func_50();
+
+    void func_02046920();
+    void func_02046a94(Unk020a9d58 *layout, Unk020a7af4 *names);
+
+    int unk4;
+    u16 flags;
+    short unka;
+    Unk02044234 *owner;
+    Unk020a07d4Timer fade;
+    Unk02051704 panel18;
+    Unk02050640 button74;
 };
 
 #endif
