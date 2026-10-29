@@ -11,7 +11,7 @@
  * func_40 (0x020471AC) ends the file before unit_020471B0.cpp. `.data` is
  * this class's vtable with its header. Real file name unknown.
  *
- * `.data` does not match: nine slots of the vtable point to the functions of
+ * `.data` does not match: five slots of the vtable point to the functions of
  * other files that the page base declares under slot names (see
  * include/game/unk_screen.h).
  */

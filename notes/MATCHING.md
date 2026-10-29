@@ -328,6 +328,12 @@ default: add one here only once a unit of this ROM proves it with mwccarm.
   the vector (`struct Vec { Unk02098ff0 v; }`), assigned by an inline member
   (`pos = (const Vec &)p;`); with `Unk02098ff0` members the copy is field by
   field (`func_0204a254`, 95.2 % -> 100 %).
+- Slots of a base vtable that point to short functions placed at the end of
+  the first derived file (after its own inline slots) are inline virtuals of
+  the base: every derived file emits them and the first copy is kept.
+  Declaring them inline in the base made the kept copies match and raised
+  the `.data` of every derived file (the page base `Unk020465bc`, slots 7,
+  8, 9 and 13 in `unit_020450D4.cpp`, pages' `.data` 79.5 % -> 88.6 %).
 - A lookup through a layout held by pointer (`func_020aa040(top, 4,
   func_020a7b50(&names, hash))`) whose pointer the original loads after the
   inner call: write the nested call in place; an inline helper taking the
@@ -910,6 +916,13 @@ default: add one here only once a unit of this ROM proves it with mwccarm.
 
 ## Unsolved patterns
 
+- Name lookups whose `u16` index is truncated through r1 in the original
+  (`mov r1, r0, lsl #16; mov r2, r1, lsr #16`) and through r0 here, or the
+  reverse, in long constructors that chain `func_020aa040(layout, type,
+  func_020a7b50(&names, hash))`: which lookups get r1 follows no visible rule
+  (not the repeated hashes, not a fixed period). A `u16` local, a cast and a
+  sprite local change nothing (the screen and page constructors
+  0x020450D4-0x0204A9F8, 98.9-99.9 %).
 - mwccarm gives such vtable copies (and other multiply-defined objects) symbol
   binding 13. While the first copy is still assembly, dsd emits it as a global or
   weak symbol: a global one clashes ("Multiply-defined") and a weak one loses to

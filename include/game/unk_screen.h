@@ -1,5 +1,5 @@
 /*
- * The screens built on archive layouts (unit_020455A0.cpp to
+ * The screens built on archive layouts (unit_020450D4.cpp to
  * unit_0204A9F8.cpp): their empty base, the base of the pages, the layout and
  * name list classes of the engine, their show / hide timer and what they use
  * of the button, panel and animated sprite widgets (unit_02050640.cpp,
@@ -201,14 +201,18 @@ public:
 
     u8 unk4[0x38];
     int nextPage;
+    int unk40;
+    u8 unk44;
 };
 
 /*
  * The base of the pages built by Unk02044234 (vtable 0x020B998C, functions
- * 0x020465BC-0x02046B7C). Slots 5, 7 to 13 and 17 point to functions of
- * other files (0x0201D6CC, 0x02044830 to 0x02045594) whose classes are
- * unknown: they are declared here non-inline under slot names, so the
- * derived vtables do not match there.
+ * 0x020465BC-0x02046B7C). Its inline slots 7, 8, 9 and 13 are emitted by
+ * every page; the kept copies are those of the first page,
+ * unit_020450D4.cpp. Slots 5, 10, 11, 12 and 17 point to functions of other
+ * files (0x0201D6CC, 0x02044830 to 0x02044EC0) whose classes are unknown:
+ * they are declared here non-inline under slot names, so the vtables do not
+ * match there.
  */
 class Unk020465bc : public Unk020a07d4 {
 public:
@@ -219,13 +223,19 @@ public:
     virtual bool func_10();
     virtual bool func_14();
     virtual void func_18();
-    virtual void func_1c();
-    virtual bool func_20();
-    virtual void func_24();
+    virtual void func_1c() {
+        flags &= ~4;
+    }
+    virtual bool func_20() {
+        return false;
+    }
+    virtual void func_24() {}
     virtual bool func_28();
     virtual bool func_2c();
     virtual bool func_30();
-    virtual bool func_34();
+    virtual bool func_34() {
+        return true;
+    }
     virtual void func_38(bool active);
     virtual bool func_3c(bool done);
     virtual void func_40();
