@@ -55,9 +55,7 @@ public:
     void func_020527f0(int v);
 
     u16 flags;
-    u16 touch;
-    u8 delay;
-    u8 held;
+    Unk020b9e88Touch touch;
     int value;
     int min;
     int max;
@@ -72,7 +70,7 @@ public:
 };
 
 Unk02051da0::Unk02051da0()
-    : Unk020b9e88(true), flags(2), touch(0), delay(0), held(0), value(0), min(0), max(0x1000), offset(0),
+    : Unk020b9e88(true), flags(2), value(0), min(0), max(0x1000), offset(0),
       last(0, 0), deadZone(0x1000), bounds(0, 0, 0, 0), range(0, 0, 0, 0), hit(0, 0, 0, 0), track(0), knob(0) {}
 
 Unk02051da0::~Unk02051da0() {}
@@ -180,7 +178,7 @@ static inline int func_dead(int d, int zone) {
 bool Unk02051da0::func_0c(bool done) {
     Unk02098e70 p = func_020a07bc(data_020d6240.input, 1);
     if (done) {
-        touch = 0;
+        touch.flags = 0;
         flags &= ~4;
         return done;
     }
@@ -195,7 +193,7 @@ bool Unk02051da0::func_0c(bool done) {
         func_set(last, p);
     }
     if ((flags & 2) && !(flags & 4)) {
-        touch = 0;
+        touch.flags = 0;
         return done;
     }
     if (func_020a078c(data_020d6240.input, 1)) {
@@ -204,16 +202,12 @@ bool Unk02051da0::func_0c(bool done) {
         } else {
             in = hit.func_02098bf4(p.x, p.y);
         }
-        if (!(touch & 1) && in) {
+        if (!(touch.flags & 1) && in) {
             func_set(last, p);
-            }
-        if (in) {
-            touch |= 0x10;
-        } else {
-            touch &= ~0x10;
         }
+        touch.func_touched(in);
     } else {
-        touch &= ~0x10;
+        touch.flags &= ~0x10;
         flags &= ~4;
     }
     if (in) {
@@ -237,7 +231,7 @@ bool Unk02051da0::func_0c(bool done) {
         }
         if (d != 0) {
             func_set(last, p);
-            }
+        }
         if (p.x < range.x) {
             p.x = range.x;
         }
@@ -251,36 +245,15 @@ bool Unk02051da0::func_0c(bool done) {
             p.y = range.y + range.h;
         }
     }
-    bool down = (touch & 0x10) != 0;
-    bool was = (touch & 2) != 0;
-    if (down) {
-        if (held < 0xff) {
-            held++;
-        }
-        if (held < delay) {
-            down = false;
-        }
-    } else {
-        held = 0;
-    }
-    touch = 0;
-    if (was && !down) {
-        touch |= 8;
-    }
-    if (down && !was) {
-        touch |= 4;
-    }
-    if (down) {
-        touch |= 3;
-    }
-    if (touch & 1) {
+    touch.func_update();
+    if (touch.flags & 1) {
         if (flags & 8) {
             func_020527f0(func_fxdiv(p.y - range.y, range.h));
         } else {
             func_020527f0(func_fxdiv(p.x - range.x, range.w));
         }
     }
-    return (touch & 1) != 0;
+    return (touch.flags & 1) != 0;
 }
 
 void Unk02051da0::func_08() {

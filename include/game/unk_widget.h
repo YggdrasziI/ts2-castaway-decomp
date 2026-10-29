@@ -1,7 +1,8 @@
 /*
  * The widget base class Unk020b9e88 (vtable 0x020B9E88) shared by the widget units
- * from 0x0204F858 (unit_02051704.cpp, unit_02051DA0.cpp), and the sprite class its
- * widgets hold. Layouts come from the code; all names are placeholders.
+ * from 0x0204F858 (unit_02050640.cpp, unit_02051704.cpp, unit_02051DA0.cpp), their
+ * touch state and the sprite class they hold. Layouts come from the code; all
+ * names are placeholders.
  *
  * The base has only inline or pure virtuals, so every widget file emits its
  * vtable (the kept copy is the first, 0x020B9E80). Its slots 7 to 20 point to
@@ -33,6 +34,57 @@ void func_020a7cac(Unk020a7c90 *s, int y);
 int func_020a7cc0(Unk020a7c90 *s);
 void func_020a7cf0(Unk020a7c90 *s, bool show);
 }
+
+typedef unsigned char u8;
+
+/*
+ * The touch state of a widget: flags (0x10 touched this frame, then 1 held,
+ * 2 held before, 4 pressed, 8 released), a press delay and a hold counter.
+ */
+struct Unk020b9e88Touch {
+    Unk020b9e88Touch() {
+        flags = 0;
+        delay = 0;
+        held = 0;
+    }
+
+    inline void func_touched(bool in) {
+        if (in) {
+            flags |= 0x10;
+        } else {
+            flags &= ~0x10;
+        }
+    }
+
+    inline void func_update() {
+        bool down = (flags & 0x10) != 0;
+        bool was = (flags & 2) != 0;
+        if (down) {
+            if (held < 0xff) {
+                held++;
+            }
+            if (held < delay) {
+                down = false;
+            }
+        } else {
+            held = 0;
+        }
+        flags = 0;
+        if (was && !down) {
+            flags |= 8;
+        }
+        if (down && !was) {
+            flags |= 4;
+        }
+        if (down) {
+            flags |= 3;
+        }
+    }
+
+    u16 flags;
+    u8 delay;
+    u8 held;
+};
 
 /* A keyframe track: values in 20.12 fixed point, sampled over a duration. */
 struct Unk020b9e88Track {
