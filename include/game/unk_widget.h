@@ -6,9 +6,10 @@
  *
  * The base has only inline or pure virtuals, so every widget file emits its
  * vtable (the kept copy is the first, 0x020B9E80). Its slots 7 to 20 point to
- * functions of far files (0x02017150 to 0x02031028) whose signatures are
- * unknown: they are declared here under slot names (non-inline), so the base
- * vtable copy is not emitted and the tail of the widget vtables does not match.
+ * functions of far files (0x02017150 to 0x02031028) not yet decompiled: they
+ * are declared here under slot names (non-inline), with the arguments and
+ * results their callers use, so the base vtable copy is not emitted and the
+ * tail of the widget vtables does not match.
  */
 #ifndef GAME_UNK_WIDGET_H
 #define GAME_UNK_WIDGET_H
@@ -192,16 +193,16 @@ public:
     virtual void func_14(int x, int y) = 0;
     virtual void func_18(bool show) = 0;
     virtual void func_1c();
-    virtual void func_20();
+    virtual void func_20(int x, int y);
     virtual void func_24(int x, int y);
-    virtual void func_28();
-    virtual void func_2c();
+    virtual void func_28(int value);
+    virtual void func_2c(int value);
     virtual void func_30(int value);
     virtual void func_34(int value);
-    virtual void func_38();
+    virtual bool func_38();
     virtual void func_3c();
-    virtual void func_40();
-    virtual void func_44();
+    virtual bool func_40();
+    virtual bool func_44();
     virtual void func_48();
     virtual void func_4c();
     virtual bool func_50();

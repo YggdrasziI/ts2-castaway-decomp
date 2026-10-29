@@ -320,6 +320,18 @@ default: add one here only once a unit of this ROM proves it with mwccarm.
   (`func_0204b984`, 89.4 % -> 98.8 %). An unsigned value calls `_ffltu`
   (0x020887B0, right after `_fflt`).
 
+- Stack slots go down in declaration order: an object at the highest offset
+  that is filled late is declared first, before the objects filled earlier
+  (the ray of `func_0204a254`, declared at the top of its block and set
+  later by an inline member).
+- A struct of two vectors filled with `ldmia` / `stmia` x 3: members that wrap
+  the vector (`struct Vec { Unk02098ff0 v; }`), assigned by an inline member
+  (`pos = (const Vec &)p;`); with `Unk02098ff0` members the copy is field by
+  field (`func_0204a254`, 95.2 % -> 100 %).
+- A call whose last argument register already holds a field loaded for an
+  earlier test (no `mov r2, #n` before the `bl`): the call passes that field
+  (`func_0205f10c(&list, items, list.count)`).
+
 ## Inlining and emission order
 
 - A member the original reads twice (a flag test, then the whole word in an
@@ -868,6 +880,15 @@ default: add one here only once a unit of this ROM proves it with mwccarm.
 - A test that returns a constant on one value and a call otherwise, left as
   a branch (`bne` over `ldr; ldmia`) rather than predicated: a `switch` with
   that `case` and a `default` (`func_0204be78`).
+- An early exit that branches to the shared epilogue (`beq` to the final
+  `mov r0, r9`) instead of a predicated return: nest the rest of the body in
+  `if (cond) { ... } return done;` (`func_0204a254`, 90.3 % -> 95.2 %).
+- A result returned on a branch (`blt` over the success path, then
+  `mvn r0, #0` at the end) instead of a predicated `mvnlt`: write the success
+  path first, `if (r >= 0) { ...; return r; } return -1;` (`func_0204a670`).
+- `orrs` of two tests before an early return: the bitwise form
+  `if (fade.func_hidden() | !active) return;` (`func_38` of
+  `unit_02047A8C.cpp`).
 
 ## ARM / Thumb
 

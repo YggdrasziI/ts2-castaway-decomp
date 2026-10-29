@@ -23,9 +23,7 @@
  * the end of the constructor).
  */
 
-#include "game/unk_archive.h"
-#include "game/unk_widget.h"
-
+#include "game/unk_screen.h"
 
 #define FX32(v) ((int)((v) > 0 ? (v) * 4096 + 0.5f : (v) * 4096 - 0.5f))
 
@@ -43,74 +41,6 @@ struct Unk020d60c8 {
     void *texts;
 };
 
-/* An entry of a name list (8 bytes). */
-struct Unk020a7af4Entry {
-    u32 unk0;
-    u32 unk4;
-};
-
-/* A name list over a caller's buffer, filled when a layout is loaded. */
-class Unk020a7af4 {
-public:
-    Unk020a7af4(Unk020a7af4Entry *entries, int count);
-    ~Unk020a7af4();
-
-    u32 unk0[3];
-};
-
-/* A layout of one screen (0x7C bytes). */
-class Unk020a9d58 {
-public:
-    Unk020a9d58(Unk02093648 *archive, int screen);
-    ~Unk020a9d58();
-
-    u8 unk0[0x7c];
-};
-
-/* The empty base of the screens: an out-of-line destructor and no vtable. */
-class Unk020a07d4 {
-public:
-    ~Unk020a07d4();
-};
-
-class Unk02050640 : public Unk020b9e88 {
-public:
-    Unk02050640();
-    ~Unk02050640();
-    void func_02050838(Unk020a7c90 *sprite, bool flag);
-    void func_020508a4(Unk020a7c90 *icon);
-    void func_02050914(u32 count);
-    void func_02050968(Unk020a7c90 *sprite);
-    void func_02050c48(short a, short b, short c);
-    void func_02050c64(short a, short b, short c);
-    void func_08();
-    bool func_0c(bool done);
-    Unk02098bc8 *func_10();
-    void func_14(int x, int y);
-    void func_18(bool show);
-
-    Unk020b9e88Touch touch;
-    u8 unk38[0x4c];
-};
-
-class Unk02051704 : public Unk020b9e88 {
-public:
-    Unk02051704();
-    ~Unk02051704();
-    void func_02051804(unsigned int count);
-    void func_02051858(Unk020a7c90 *sprite);
-    void func_020518a8(unsigned int count);
-    void func_020518fc(Unk020b9e88 *child);
-    Unk020a7c90 *func_02051ad0(int index);
-    void func_08();
-    Unk02098bc8 *func_10();
-    void func_14(int x, int y);
-    void func_18(bool show);
-
-    u8 unk34[0x28];
-};
-
-typedef void *(*Unk020a9d58Text)(u32 id, void *user);
 typedef void (*Unk020a80bcLoad)(const u16 *src, u32 unk, u32 size);
 
 extern Unk020d6240 data_020d6240;
@@ -119,13 +49,6 @@ extern u8 data_020c4510[];
 extern u8 data_020d62a4[];
 
 extern "C" {
-void func_020aba38(Unk02093648 *archive, u32 hash, Unk020a9d58 *layout, Unk020a7af4 *names);
-void func_020a9db8(Unk020a9d58 *layout, Unk020a9d58Text text, void *user);
-void *func_020a154c(u32 id, void *user);
-u32 func_020a7b50(Unk020a7af4 *names, u32 hash);
-Unk020a7c90 *func_020aa040(Unk020a9d58 *layout, int type, u16 index);
-void func_020aa06c(Unk020a9d58 *layout, bool shown);
-void func_020aa158(Unk020a9d58 *layout);
 void func_020a80bc(Unk020a7c90 *s, Unk020a80bcLoad load);
 void *func_020a80c4(Unk020a7c90 *s);
 void func_020a6980(Unk020a7c90 *s, u32 hash);
@@ -144,63 +67,6 @@ void func_020a25fc(void *handle);
 void DC_FlushRange(const void *start, u32 size);
 void func_020790f0(const void *src, u32 offset, u32 size);
 }
-
-/* A show / hide timer: 0 opening, 1 opened, 2 shown, 3 closing, 4 closed, 5 hidden. */
-struct Unk0204a9f8Fade {
-    Unk0204a9f8Fade() {
-        timer = 0;
-        duration = 0x3c;
-        state = 5;
-    }
-
-    inline void func_step() {
-        switch (state) {
-        case 0:
-            timer++;
-            if (timer >= duration) {
-                timer = duration;
-                state = 1;
-            }
-            break;
-        case 3:
-            timer--;
-            if (timer <= 0) {
-                timer = 0;
-                state = 4;
-            }
-            break;
-        case 4:
-            state = 5;
-            break;
-        case 1:
-            state = 2;
-            break;
-        }
-    }
-
-    inline void func_duration(short duration) {
-        this->duration = duration;
-        if (timer > this->duration) {
-            timer = this->duration;
-        }
-    }
-
-    inline bool func_hidden() const {
-        return state == 5 || state == 4;
-    }
-
-    inline bool func_shown() const {
-        return state == 2 || state == 1;
-    }
-
-    inline bool func_moving() const {
-        return state == 0 || state == 3;
-    }
-
-    short timer;
-    short duration;
-    int state;
-};
 
 class Unk0204a9f8 : public Unk020a07d4 {
 public:
@@ -238,7 +104,7 @@ public:
     void func_0204b984();
     void func_0204bd6c();
 
-    Unk0204a9f8Fade fade;
+    Unk020a07d4Timer fade;
     u32 flags;
     Unk020a9d58 top;
     Unk020a9d58 bottom;
@@ -251,7 +117,7 @@ public:
     Unk02050640 button22c;
     Unk02051704 panel2b0;
     Unk02051704 panel30c;
-    Unk0204a9f8Fade slide;
+    Unk020a07d4Timer slide;
     int page;
     int lastPage;
     Unk02050640 previous;

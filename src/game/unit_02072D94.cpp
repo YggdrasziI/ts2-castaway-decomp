@@ -4,9 +4,9 @@
  * function (0x0C) that func_02073000 calls every frame, set by func_020734a8,
  * which also raises the "phase changed" flag (0x14) for the first frame of the
  * new phase. func_02072e40 opens "ROM_Euro/source/archives/screens.nitro_archive",
- * builds the 0x8DC-byte screen object (func_02047a8c) and places three pairs of
+ * builds the 0x8DC-byte screen object (unit_02047A8C.cpp) and places three pairs of
  * scene objects (keys data_020af1ac, height from the game settings); the phases
- * read the screen's result (func_0204a880) and pick the next state
+ * read the screen's result (its func_0204a880) and pick the next state
  * (nextId, 0x15C) or the next phase; func_0207319c releases everything.
  *
  * Bounds: hypothesis. 0x02072D94 follows unit_02072BEC.cpp; 0x02073878 is the
@@ -71,9 +71,10 @@ struct Unk0209f8d0 {
     int unk50;
 };
 
-/* The screen object, built by func_02047a8c. */
+/* The screen object of unit_02047A8C.cpp. */
 class Unk02047a8c {
 public:
+    Unk02047a8c(Unk02093648 *archive);
     virtual ~Unk02047a8c();
     virtual void func_08();
     virtual void func_0c();
@@ -81,8 +82,13 @@ public:
     virtual void func_14();
     virtual void func_18();
 
+    int func_0204a670();
+    int func_0204a880();
+    void func_0204a888(int mode);
+
     u8 unk4[0x168];
     int unk16c;
+    u8 unk170[0x76c];
 };
 
 /* A position wrapped in a struct: assigned with a block copy. */
@@ -158,10 +164,6 @@ void func_020a14e0(Unk020d6240 *system, int a);
 void func_020a15a8(Unk020d6240 *system, int dt);
 bool func_020a1280(Unk020d6240 *system, int a, int b);
 int func_020a0b8c(void *p, Unk02047a8c *screen);
-Unk02047a8c *func_02047a8c(void *mem, Unk02093648 *archive);
-int func_0204a880(Unk02047a8c *screen);
-int func_0204a670(Unk02047a8c *screen);
-void func_0204a888(Unk02047a8c *screen, int a);
 int func_0209f0a4(Unk020d60c8 *settings);
 void func_0209f05c(Unk020d60c8 *settings, int a, int b);
 Unk0209f8d0 *func_0209f8d0(Unk020d60c8 *settings, int a);
@@ -264,11 +266,7 @@ void Unk02072d94::func_02071e04() {
     archive = new Unk02093648(data_020bc9c4);
     archive->func_02094df4();
     func_020a14e0(func_020a18e4(), 1);
-    Unk02047a8c *o = (Unk02047a8c *)operator new(0x8dc);
-    if (o != 0) {
-        o = func_02047a8c(o, archive);
-    }
-    screen = o;
+    screen = new Unk02047a8c(archive);
     unk161 = 1;
     func_02064270(data_020c4390);
     func_0206061c(data_020c409c);
@@ -398,7 +396,7 @@ void Unk02072d94::func_02073508() {
     if (changed) {
         unk160 = 0;
     }
-    switch (func_0204a880(screen)) {
+    switch (screen->func_0204a880()) {
     case 0:
         func_020a3734(func_020a2994(), 0xf);
         nextId = 3;
@@ -413,7 +411,7 @@ void Unk02072d94::func_02073508() {
 }
 
 void Unk02072d94::func_02073590() {
-    int r = func_0204a670(screen);
+    int r = screen->func_0204a670();
     if (r == -1) {
         return;
     }
@@ -434,7 +432,7 @@ void Unk02072d94::func_02073630() {
     if (changed) {
         unk160 = 1;
     }
-    switch (func_0204a880(screen)) {
+    switch (screen->func_0204a880()) {
     case -1:
         func_020734a8(&Unk02072d94::func_02073508);
         break;
@@ -467,20 +465,20 @@ void Unk02072d94::func_020736bc() {
         func_0209f850(&data_020d60c8, r->unk4c);
         func_0209f880(&data_020d60c8, r->unk50);
     } else {
-        func_0204a888(screen, 0xb);
+        screen->func_0204a888(0xb);
         func_020734a8(&Unk02072d94::func_02073630);
     }
 }
 
 void Unk02072d94::func_020737b4() {
-    switch (func_0204a880(screen)) {
+    switch (screen->func_0204a880()) {
     case 3:
         if (func_0209feb0(&data_020d60c8, screen->unk16c)) {
-            func_0204a888(screen, 9);
+            screen->func_0204a888(9);
             func_020732c4(false);
             func_020734a8(&Unk02072d94::func_02073630);
         } else {
-            func_0204a888(screen, 0xa);
+            screen->func_0204a888(0xa);
         }
         break;
     case 1:
