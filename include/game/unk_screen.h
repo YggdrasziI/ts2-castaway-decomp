@@ -65,17 +65,26 @@ public:
     virtual bool func_30();
 };
 
+class Unk0209487c;
+
 class Unk02050640 : public Unk020b9e88 {
 public:
     Unk02050640();
     ~Unk02050640();
     void func_02050838(Unk020a7c90 *sprite, bool flag);
     void func_020508a4(Unk020a7c90 *icon);
+    void func_020508ac(u32 hash);
     void func_02050914(u32 count);
     void func_02050968(Unk020a7c90 *sprite);
+    void func_02050a64(bool toggle, bool lock);
+    void func_02050aac(bool on);
     void func_02050ad0(u32 sound);
+    void func_02050bf0(short a, short b, short c, short d, short e, short f);
     void func_02050c48(short a, short b, short c);
     void func_02050c64(short a, short b, short c);
+    void func_02050c80(short a, short b);
+    void func_02050c94(short a, short b);
+    void func_020514f0();
     void func_08();
     bool func_0c(bool done);
     Unk02098bc8 *func_10();
@@ -83,7 +92,17 @@ public:
     void func_18(bool show);
 
     Unk020b9e88Touch touch;
-    u8 unk38[0x48];
+    Unk020b9e88Touch touch2;
+    Unk0209487c *file;
+    Unk020a7c90 *sprite;
+    Unk020a7c90 *icon;
+    u32 spriteCap;
+    u32 spriteCount;
+    Unk020a7c90 **sprites;
+    Unk02098bc8 rect;
+    signed char unk64;
+    signed char unk65[0x14];
+    u32 sound;
     u16 flags;
 };
 

@@ -363,6 +363,23 @@ default: add one here only once a unit of this ROM proves it with mwccarm.
 - A call whose last argument register already holds a field loaded for an
   earlier test (no `mov r2, #n` before the `bl`): the call passes that field
   (`func_0205f10c(&list, items, list.count)`).
+- A loop counter declared at the top of the function (`int i;` then
+  `for (i = 0; ...)`) instead of in the `for` changes which callee-saved
+  register it gets: the hash / bool swap of `func_02043f0c` (98.3 % -> 100 %).
+  Two loops that continue from the same counter (`for (i = 0; i < count;
+  i++) ...; for (i = count; i < 6; i++) ...`) share it the same way
+  (`func_02043b94`).
+- Global pointers the original keeps in callee-saved registers across a loop
+  (`data_020bfc9c`, `&data_020c3fc4`): local copies before the loop
+  (`u8 *inventory = data_020bfc9c;`), and a value computed before a call
+  that the original keeps live goes in its own local (`int count =
+  o.colors.v[k] + 1;`) (`func_02042d2c`, 100 %).
+- An unsigned compare `cmp r0, #1; bls` on `x - 3` of a `signed char` field:
+  `(u8)(signed char)(part - 3) <= 1` (`func_02043b94`).
+- Three stores of a member's fields grouped after the computation of one of
+  them: an inline setter taking the three values (`slider.func_range(0,
+  FX32(n - 1), -0x3000)`), not three assignments (constructor of
+  `Unk02041b10`).
 
 ## Inlining and emission order
 

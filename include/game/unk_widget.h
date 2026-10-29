@@ -200,7 +200,7 @@ public:
     virtual void func_30(int value);
     virtual void func_34(int value);
     virtual bool func_38();
-    virtual void func_3c();
+    virtual bool func_3c();
     virtual bool func_40();
     virtual bool func_44();
     virtual void func_48();

@@ -30,15 +30,17 @@ struct Unk020d6240 {
     Unk02093648 *archive;
 };
 
-/* The object of the scene, built by func_02041b10. */
+/* The outfit screen of unit_02041B10.cpp: only what is used here. */
 class Unk02041b10 {
 public:
+    Unk02041b10(Unk02093648 *archive, Unk020c43a8 *player, Unk020724cc *catalog);
     virtual ~Unk02041b10();
     virtual void func_08();
 
     int unk4;
     int unk8;
     u32 flags;
+    u8 unk10[0x35a4];
 };
 
 struct Unk020c43a8Data {
@@ -126,7 +128,6 @@ void func_020a14e0(Unk020d6240 *system, int a);
 void func_020a15a8(Unk020d6240 *system, int dt);
 int func_020a0b8c(void *p);
 u32 func_020a1f84(void *random);
-Unk02041b10 *func_02041b10(void *mem, Unk02093648 *archive, Unk020c43a8 *owner, Unk020724cc *catalog);
 void func_02064270(void *p);
 void func_020642cc(void *p);
 void func_02060b24(void *p);
@@ -213,11 +214,7 @@ void Unk02071d94::func_02071e04() {
     func_0206a120(&unk20);
     func_02064cfc(&data_020c43a8, -1, catalog);
     func_02065db8(&data_020c43a8);
-    Unk02041b10 *o = (Unk02041b10 *)operator new(0x35b4);
-    if (o != 0) {
-        o = func_02041b10(o, func_020a18e4()->archive, &data_020c43a8, catalog);
-    }
-    scene = o;
+    scene = new Unk02041b10(func_020a18e4()->archive, &data_020c43a8, catalog);
     scene->func_08();
     void *sound = func_020a2994();
     func_020a28d8(sound);
