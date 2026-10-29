@@ -1649,7 +1649,7 @@ func_020548a0 kind:function(arm,size=0x10) addr:0x020548a0
 func_020548b0 kind:function(arm,size=0x19c) addr:0x020548b0
 func_02054a4c kind:function(arm,size=0x24) addr:0x02054a4c
 func_02054a70 kind:function(arm,size=0x30) addr:0x02054a70
-func_02054aa0 kind:function(arm,size=0x14) addr:0x02054aa0
+_ZN11Unk020bfc80D1Ev kind:function(arm,size=0x14) addr:0x02054aa0
 func_02054ab4 kind:function(arm,size=0x7c) addr:0x02054ab4
 func_02054b30 kind:function(arm,size=0x20) addr:0x02054b30
 func_02054b50 kind:function(arm,size=0x30) addr:0x02054b50
@@ -4474,7 +4474,7 @@ __sinit_020ad18c kind:function(arm,size=0x1c) addr:0x020ad18c
 __sinit_020ad1a8 kind:function(arm,size=0x28) addr:0x020ad1a8
 __sinit_020ad1d0 kind:function(arm,size=0x2c) addr:0x020ad1d0
 __sinit_020ad1fc kind:function(arm,size=0x14) addr:0x020ad1fc
-__sinit_020ad210 kind:function(arm,size=0x34) addr:0x020ad210
+__sinit_unit_02054734.cpp kind:function(arm,size=0x34) addr:0x020ad210 local
 __sinit_unit_02054AB4.cpp kind:function(arm,size=0x5c) addr:0x020ad244 local
 __sinit_unit_02055EF8.cpp kind:function(arm,size=0x4c) addr:0x020ad2a0 local
 __sinit_unit_020582E0.cpp kind:function(arm,size=0x2c) addr:0x020ad2ec local
@@ -4609,7 +4609,7 @@ data_020b6de0 kind:data(any) addr:0x020b6de0
 .p__sinit_020ad1a8 kind:data(word) addr:0x020b6e58
 .p__sinit_020ad1d0 kind:data(word) addr:0x020b6e5c
 .p__sinit_020ad1fc kind:data(word) addr:0x020b6e60
-.p__sinit_020ad210 kind:data(word) addr:0x020b6e64
+.p__sinit_unit_02054734.cpp kind:data(word) addr:0x020b6e64 local
 .p__sinit_unit_02054AB4.cpp kind:data(word) addr:0x020b6e68 local
 .p__sinit_unit_02055EF8.cpp kind:data(word) addr:0x020b6e6c local
 .p__sinit_unit_020582E0.cpp kind:data(word) addr:0x020b6e70 local
@@ -5641,7 +5641,7 @@ data_020bfc30 kind:bss addr:0x020bfc30
 data_020bfc3c kind:bss addr:0x020bfc3c
 data_020bfc68 kind:bss addr:0x020bfc68
 data_020bfc80 kind:bss addr:0x020bfc80
-data_020bfc84 kind:bss addr:0x020bfc84
+@41 kind:bss addr:0x020bfc84 local
 @89 kind:bss addr:0x020bfc90 local
 data_020bfc9c kind:bss(size=0x3e84) addr:0x020bfc9c
 _ZGVdata_020c3b24$882 kind:bss addr:0x020c3b20 local

@@ -460,6 +460,10 @@ default: add one here only once a unit of this ROM proves it with mwccarm.
   original's single conditional test (90.1 % -> 100 %). Register order of
   `func_02054fbc` came from `u32 i; u32 hits; int found = 0; i = 0; hits = 0;
   for (; i < n; i++)` (97.7 % -> 100 %).
+- A head pointer tested, then walked twice (count, then search): testing
+  `p->head == 0` and copying it to a local only after the early branch gives
+  the original registers; copying it before the test swaps two registers
+  (`func_020548b0`, 99.2 % -> 100 %).
 - A class with user-declared constructors is copied member by member
   (`ldr` / `str` pairs); deriving it from a plain struct that holds the members
   gives the block copy (`ldm` / `stm`) of the original (`unit_02098E70.cpp`, 0 % ->
