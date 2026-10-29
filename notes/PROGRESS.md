@@ -50,3 +50,4 @@
 | 2026-10-28 | 0868e43 | 148772 / 720836 bytes (20.64 %; fuzzy 26.61 %, linked 7.67 %) | 1399 / 4557 | 64 / 142 | Script command table unit written (47 / 49 functions at 100 %) |
 | 2026-10-28 | 2da285d | 152200 / 720836 bytes (21.11 %; fuzzy 27.38 %, linked 7.60 %) | 1415 / 4557 | 62 / 142 | Parameter reader units merged; weather effects unit written (16 / 18 functions at 100 %) |
 | 2026-10-29 | 8167947 | 152356 / 720836 bytes (21.14 %; fuzzy 27.56 %, linked 7.60 %) | 1418 / 4557 | 62 / 144 | Object groups unit written (3 / 7 functions at 100 %) |
+| 2026-10-29 | d340d6f | 153176 / 720836 bytes (21.25 %; fuzzy 27.75 %, linked 7.60 %) | 1428 / 4557 | 62 / 145 | Map cell and tile layer unit written (10 / 14 functions at 100 %) |
