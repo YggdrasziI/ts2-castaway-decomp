@@ -10977,10 +10977,10 @@ from:0x0204bf98 kind:arm_call to:0x02098bc8 module:main
 from:0x0204c07c kind:arm_call to:0x020905c4 module:main
 from:0x0204c08c kind:arm_call to:0x020908e0 module:main
 from:0x0204c098 kind:arm_call to:0x020905d4 module:main
-from:0x0204c0c0 kind:load to:0x020b9b80 module:main
-from:0x0204c0c4 kind:load to:0x020b9b34 module:main
+from:0x0204c0c0 kind:load to:0x020b9b78 add:0x8 module:main
+from:0x0204c0c4 kind:load to:0x020b9b2c add:0x8 module:main
 from:0x0204c0e8 kind:arm_call to:0x020903f8 module:main
-from:0x0204c0f4 kind:load to:0x020b9b34 module:main
+from:0x0204c0f4 kind:load to:0x020b9b2c add:0x8 module:main
 from:0x0204c118 kind:load to:0x020905c4 module:main
 from:0x0204c128 kind:arm_call to:0x020a18e4 module:main
 from:0x0204c138 kind:arm_call to:0x02093db0 module:main

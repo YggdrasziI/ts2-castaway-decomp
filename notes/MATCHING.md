@@ -757,6 +757,14 @@ default: add one here only once a unit of this ROM proves it with mwccarm.
 
 ## Control flow
 
+- Early exits that all return a saved parameter (`movs r4, r1` at the top,
+  `mov r0, r4` in each exit) return that parameter in the source, even on paths
+  where it is known to be zero: `return false` there gives `mov r0, #0` and
+  predicated exits (`func_04` of `unit_0204BEEC.cpp`, 93.4 % -> 99.4 %).
+- A two-way store left as a branch (`moveq; strheq; beq` then the other store
+  unpredicated) instead of fully predicated: write the `if` with the branch the
+  original falls into first, `if (in) a(); else b();` rather than
+  `if (!in) b(); else a();` (same function, 99.4 % -> 100 %).
 - Two compares joining at one conditional store (`ble` to `cmp r0, #0x10`, else
   `cmp r0, #0x8` and `b`, then a shared `movgt` / `strgt`) are an `if` / `else`
   with the same body in both branches, merged by the compiler; a ternary limit
