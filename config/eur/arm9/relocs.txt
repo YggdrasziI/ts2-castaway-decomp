@@ -11387,17 +11387,17 @@ from:0x020505cc kind:arm_call to:0x020885e8 module:main
 from:0x020505f8 kind:arm_call to:0x020a69ac module:main
 from:0x0205062c kind:arm_call to:0x02099858 module:main
 from:0x020506e4 kind:arm_call to:0x02098bc8 module:main
-from:0x020507ac kind:load to:0x020b9e88 module:main
-from:0x020507b0 kind:load to:0x020b9f9c module:main
+from:0x020507ac kind:load to:0x020b9e80 add:0x8 module:main
+from:0x020507b0 kind:load to:0x020b9f94 add:0x8 module:main
 from:0x020507c8 kind:arm_call to:0x02050990 module:main
 from:0x020507d8 kind:arm_call to:0x020a18e4 module:main
 from:0x020507e4 kind:arm_call to:0x02093c3c module:main
-from:0x020507f0 kind:load to:0x020b9f9c module:main
+from:0x020507f0 kind:load to:0x020b9f94 add:0x8 module:main
 from:0x02050804 kind:arm_call to:0x02050990 module:main
 from:0x02050814 kind:arm_call to:0x020a18e4 module:main
 from:0x02050820 kind:arm_call to:0x02093c3c module:main
 from:0x02050828 kind:arm_call to:0x02099858 module:main
-from:0x02050834 kind:load to:0x020b9f9c module:main
+from:0x02050834 kind:load to:0x020b9f94 add:0x8 module:main
 from:0x02050864 kind:arm_call to:0x020a7ca4 module:main
 from:0x02050870 kind:arm_call to:0x020a7cc0 module:main
 from:0x020508c4 kind:arm_call to:0x020a6980 module:main

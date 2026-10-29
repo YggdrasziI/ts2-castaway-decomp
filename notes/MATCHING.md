@@ -19,6 +19,16 @@ default: add one here only once a unit of this ROM proves it with mwccarm.
 
 ## Registers and stack
 
+- Stack arguments read with `ldrsh` and stored as bytes: the parameters are
+  `short`, not `signed char` (which reads `ldrsb`); the register ones follow
+  (`Unk02050640::func_02050bf0`, 91.8 % -> 100 %).
+- Callee-saved registers swapped between locals: try every declaration order
+  by script; a local initialised by re-reading the field (`int frame = unk64;`
+  next to `int base = unk64;`) rather than by copying the other local can be
+  needed for the order to work (`Unk02050640::func_02051294`, 97.7 % -> 100 %).
+- An `else if (test) A; else B;` whose original conditionalizes B and branches
+  over A: write the branches in that order, not `if (!test) B; else A;`
+  (`Unk02050640::func_0c`, 99.4 % -> 100 %).
 - A clamped parameter whose register is reused by a later index (`sub r6, r1,
   #1` into the register of the clamped time): reuse the parameter for that
   index (`t = count - 1; if (i + 1 < t) t = i + 1;`), not a new local
