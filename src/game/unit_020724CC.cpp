@@ -45,8 +45,7 @@ bool func_0205d340(Unk0205d000 *item, u32 key);
 bool func_0205d2c8(Unk0205d000 *item, u32 key, u32 key2);
 int func_0205d1b4(Unk0205d000 *item, u32 key);
 int func_0205d134(Unk0205d000 *item, u32 key);
-void func_020081dc(Unk020081dc *out, Unk020c43a8 *owner);
-void func_020647ec(Unk020081dc *record);
+Unk020081dc func_020081dc(Unk020c43a8 *owner);
 void func_020647f0(Unk020081dc *record);
 void func_020670fc(Unk020c43a8 *owner, Unk020081dc *record);
 void func_020a20f0(Unk020a20f0 *random);
@@ -97,30 +96,18 @@ int Unk020724cc::func_020726bc(int part) {
     if (part == 8) {
         return otherCount;
     }
-    Unk020081dc r;
-    func_020081dc(&r, owner);
-    int n = counts[r.unk28][part];
-    func_020647ec(&r);
-    return n;
+    return counts[func_020081dc(owner).unk28][part];
 }
 
 int Unk020724cc::func_02072710(int part, int index) {
     if (part == 8) {
         return func_0205d134(others[index], 0x9d5bba8e);
     }
-    Unk020081dc r;
-    func_020081dc(&r, owner);
-    int v = func_0205d134(items[r.unk28][part][index], 0x9d5bba8e);
-    func_020647ec(&r);
-    return v;
+    return func_0205d134(items[func_020081dc(owner).unk28][part][index], 0x9d5bba8e);
 }
 
 int Unk020724cc::func_0207278c(int part, int index) {
-    Unk020081dc r;
-    func_020081dc(&r, owner);
-    int v = func_0205d1b4(items[r.unk28][part][index], 0x2b3e6dd7);
-    func_020647ec(&r);
-    return v;
+    return func_0205d1b4(items[func_020081dc(owner).unk28][part][index], 0x2b3e6dd7);
 }
 
 void Unk020724cc::func_020727e8(int part, int index) {
@@ -128,60 +115,45 @@ void Unk020724cc::func_020727e8(int part, int index) {
         func_020729e8(index);
         return;
     }
-    Unk020081dc r;
-    func_020081dc(&r, owner);
+    Unk020081dc r = func_020081dc(owner);
     if (func_0205d340(items[r.unk28][part][index], 0x291d04a3)) {
-        r.parts[part] = 0;
+        r.parts.v[part] = 0;
     } else {
-        r.parts[part] = items[r.unk28][part][index]->unkc;
+        r.parts.v[part] = items[r.unk28][part][index]->unkc;
     }
     if ((u32)part <= 1) {
-        r.unk1c[part] = func_0205d1b4(items[r.unk28][part][index], 0x2b3e6dd7);
+        r.colors.v[part] = func_0205d1b4(items[r.unk28][part][index], 0x2b3e6dd7);
     }
     func_020670fc(owner, &r);
-    func_020647ec(&r);
 }
 
 bool Unk020724cc::func_020728c4(int part, int index) {
-    Unk020081dc r;
-    func_020081dc(&r, owner);
+    Unk020081dc r = func_020081dc(owner);
     if (part == 8) {
-        bool b = r.unk18 == others[index]->unkc;
-        func_020647ec(&r);
-        return b;
+        return r.unk18 == others[index]->unkc;
     }
-    if (part == 3 && r.parts[part] == 0) {
-        bool b = func_0205d340(items[r.unk28][part][index], 0x291d04a3);
-        func_020647ec(&r);
-        return b;
+    if (part == 3 && r.parts.v[part] == 0) {
+        return func_0205d340(items[r.unk28][part][index], 0x291d04a3);
     }
-    bool b = r.parts[part] == items[r.unk28][part][index]->unkc;
-    func_020647ec(&r);
-    return b;
+    return r.parts.v[part] == items[r.unk28][part][index]->unkc;
 }
 
 void Unk020724cc::func_020729ac() {
-    Unk020081dc r;
-    func_020081dc(&r, owner);
-    r.parts[3] = 0;
+    Unk020081dc r = func_020081dc(owner);
+    r.parts.v[3] = 0;
     func_020670fc(owner, &r);
-    func_020647ec(&r);
 }
 
 void Unk020724cc::func_020729e8(int index) {
-    Unk020081dc r;
-    func_020081dc(&r, owner);
+    Unk020081dc r = func_020081dc(owner);
     r.unk18 = others[index]->unkc;
     func_020670fc(owner, &r);
-    func_020647ec(&r);
 }
 
 void Unk020724cc::func_02072a30(int kind) {
-    Unk020081dc r;
-    func_020081dc(&r, owner);
+    Unk020081dc r = func_020081dc(owner);
     func_02072a78(kind, &r);
     func_020670fc(owner, &r);
-    func_020647ec(&r);
 }
 
 void Unk020724cc::func_02072a78(int kind, Unk020081dc *out) {
@@ -195,13 +167,13 @@ void Unk020724cc::func_02072a78(int kind, Unk020081dc *out) {
         u32 n = counts[out->unk28][part];
         u32 k = func_020a1f84(&random) % n;
         if (part == 3) {
-            out->parts[part] = 0;
+            out->parts.v[part] = 0;
         } else {
-            out->parts[part] = items[out->unk28][part][k]->unkc;
+            out->parts.v[part] = items[out->unk28][part][k]->unkc;
         }
     }
     for (int i = 0; i < 3; i++) {
-        out->unk1c[i] = func_0205d1b4(func_0205f6f8(data_020c3fc4, out->parts[i]), 0x2b3e6dd7);
+        out->colors.v[i] = func_0205d1b4(func_0205f6f8(data_020c3fc4, out->parts.v[i]), 0x2b3e6dd7);
     }
     int n = otherCount;
     int v;
@@ -215,10 +187,8 @@ void Unk020724cc::func_02072a78(int kind, Unk020081dc *out) {
 
 void Unk020724cc::func_02072ba0() {
     func_020729ac();
-    Unk020081dc r;
-    func_020081dc(&r, owner);
+    Unk020081dc r = func_020081dc(owner);
     func_020647f0(&r);
-    r.parts[2] = 0x79a1e22e;
+    r.parts.v[2] = 0x79a1e22e;
     func_020670fc(owner, &r);
-    func_020647ec(&r);
 }

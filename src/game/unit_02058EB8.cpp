@@ -51,17 +51,11 @@ struct Unk020d60c8 {
 /* The random generator (0x9C4 bytes). */
 struct Unk020a20f0;
 
-/* The outfit record (0x2C bytes; constructor 0x020647B0, destructor 0x020647EC). */
-struct Unk020647b0;
-
-extern "C" {
-void func_020647ec(Unk020647b0 *o);
-}
-
-struct Unk020647b0 {
-    ~Unk020647b0() {
-        func_020647ec(this);
-    }
+/* The outfit record (include/game/unk_catalog.h; only the fields used here). */
+class Unk020081dc {
+public:
+    Unk020081dc();
+    ~Unk020081dc();
 
     int parts[6];
     int unk18;
@@ -105,7 +99,7 @@ int func_0205f780(Unk020c3fc4 *db, int key);
 int func_0205d234(Unk0205cf00 *def, int blockKey, int key);
 int func_0205d340(Unk0205cf00 *def, u32 key);
 void *func_02054dc4(void *p, Unk0205cf00 *def, int a);
-Unk020647b0 func_020081dc(Unk020c43a8 *p);
+Unk020081dc func_020081dc(Unk020c43a8 *p);
 int func_02077c60(int a, int b);
 int func_020a20bc(Unk020a20f0 *random, int min, int max);
 void *func_02007340(void *p, int kind);

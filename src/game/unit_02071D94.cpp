@@ -155,8 +155,7 @@ void func_02065e80(Unk020c43a8 *owner);
 void func_02065b80(Unk020c43a8 *owner, int dt);
 void func_020667f8(Unk020c43a8 *owner, int a);
 void func_02066748(Unk020c43a8 *owner, int action, int a, int b, int c, int d);
-void func_020081dc(Unk020081dc *out, Unk020c43a8 *owner);
-void func_020647ec(Unk020081dc *record);
+Unk020081dc func_020081dc(Unk020c43a8 *owner);
 int func_020691c4();
 Unk020897c0 *func_02063d84(void *p);
 void func_0207a748();
@@ -241,11 +240,7 @@ void Unk02071d94::func_02071fdc(int dt) {
             step++;
         }
         if (frame == 0x7f && step == 1) {
-            Unk020081dc r;
-            func_020081dc(&r, &data_020c43a8);
-            bool b = r.unk28 == 1;
-            func_020647ec(&r);
-            if (b) {
+            if (func_020081dc(&data_020c43a8).unk28 == 1) {
                 func_020a2ce8(func_020a2994(), 0xa97ee4ee, 0x7f, 0);
             } else {
                 func_020a2ce8(func_020a2994(), 0x4b4d78fe, 0x7f, 0);
@@ -335,12 +330,8 @@ void Unk02071d94::func_02072398() {
         return;
     }
     idle = func_020a1f84(random) % 3 + 2;
-    Unk020081dc r;
-    func_020081dc(&r, owner);
-    bool b = r.unk28 == 1;
-    func_020647ec(&r);
     int action;
-    if (b) {
+    if (func_020081dc(owner).unk28 == 1) {
         action = func_020a1f84(random) % 3 + 0x3f;
     } else {
         action = (func_020a1f84(random) & 3) + 0x3b;

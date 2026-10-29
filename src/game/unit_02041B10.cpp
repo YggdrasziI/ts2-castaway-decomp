@@ -18,36 +18,6 @@
 
 #define FX32(v) ((int)((v) > 0 ? (v) * 4096 + 0.5f : (v) * 4096 - 0.5f))
 
-/* The outfit record (0x2C bytes; constructor 0x020647B0, destructor 0x020647EC). */
-struct Unk020647b0;
-
-extern "C" {
-void func_020647b0(Unk020647b0 *o);
-void func_020647ec(Unk020647b0 *o);
-}
-
-struct Unk020647b0Parts {
-    int v[6];
-};
-
-struct Unk020647b0Colors {
-    int v[3];
-};
-
-struct Unk020647b0 {
-    Unk020647b0() {
-        func_020647b0(this);
-    }
-    ~Unk020647b0() {
-        func_020647ec(this);
-    }
-
-    Unk020647b0Parts parts;
-    int unk18;
-    Unk020647b0Colors colors;
-    int unk28;
-};
-
 /* The player (data_020c43a8): only the fields used here. */
 class Unk020c43a8 {
 public:
@@ -160,8 +130,8 @@ extern Unk020c3fc4 data_020c3fc4;
 extern u8 data_020bfc9c[];
 
 extern "C" {
-Unk020647b0 func_020081dc(Unk020c43a8 *p);
-void func_020670fc(Unk020c43a8 *p, Unk020647b0 *outfit);
+Unk020081dc func_020081dc(Unk020c43a8 *p);
+void func_020670fc(Unk020c43a8 *p, Unk020081dc *outfit);
 void func_0206702c(Unk020c43a8 *p);
 void func_020664a0(Unk020c43a8 *p, const char *name);
 bool func_02066748(Unk020c43a8 *p, int anim, bool loop, int time, bool hide, int angle);
@@ -235,7 +205,7 @@ public:
     signed char item;
     signed char color;
     int outfit;
-    Unk020647b0 outfits[2];
+    Unk020081dc outfits[2];
     Unk02050640 tabs[6];
     Unk02050640 outfit0;
     Unk02050640 outfit1;
@@ -254,12 +224,11 @@ public:
 };
 
 /*
- * 98.34 %: the icon positions of the tabs swap which register gets the 0x8000
- * add (the original moves r0 into r1 first for the first icon, adds directly
- * for the second); the u16 index truncation goes through the other register;
- * the __cxa_vec_ctor / __cxa_vec_dtor arguments of `outfits` point to the
- * inline Unk020647b0 C1/D1 instead of func_020647b0 / func_020647ec, so the
- * file cannot be complete until the outfit record is a real class.
+ * 98.34 %: the icon positions of the two outfit buttons swap which add goes
+ * through a move (the original moves r0 into r1 before the 0x8000 add of x and
+ * adds 0x4000 to y directly; here the reverse; an inline helper for both calls
+ * gave the same code); one u16 index truncation goes through the other
+ * register.
  */
 Unk02041b10::Unk02041b10(Unk02093648 *archive, Unk020c43a8 *player, Unk020724cc *catalog)
     : flags(0), layout(archive, 0), player(player), catalog(catalog), part(4), item(0), color(0), outfit(3),
@@ -349,7 +318,7 @@ Unk02041b10::Unk02041b10(Unk02093648 *archive, Unk020c43a8 *player, Unk020724cc 
     slider.func_range(0, FX32(this->catalog->func_020726bc(5) - 1), -0x3000);
     panelItems.func_020518fc(&slider);
     for (int i = 0; i < 2; i++) {
-        this->catalog->func_02072a78(i, (Unk020081dc *)&outfits[i]);
+        this->catalog->func_02072a78(i, &outfits[i]);
     }
     func_020670fc(&data_020c43a8, &outfits[outfit]);
 
@@ -433,7 +402,7 @@ void Unk02041b10::func_02042c28() {
     }
     bool first;
     {
-        Unk020647b0 o = func_020081dc(&data_020c43a8);
+        Unk020081dc o = func_020081dc(&data_020c43a8);
         first = o.unk28 == 0;
     }
     if (first) {
@@ -459,7 +428,7 @@ void Unk02041b10::func_02042d2c() {
     func_02054b30(data_020bfc9c);
     func_02054ab4(data_020bfc9c);
     data_020d60c8.collection->unk1400 = 0;
-    Unk020647b0 o = func_020081dc(player);
+    Unk020081dc o = func_020081dc(player);
     Unk0206b630 *collection = data_020d60c8.collection;
     for (int i = 0; i < 2; i++) {
         collection->func_0206b630(o.parts.v[i]);

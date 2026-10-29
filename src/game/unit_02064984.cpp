@@ -61,36 +61,6 @@ public:
     ~Unk02064c24() {}
 };
 
-/* The outfit record (0x2C bytes; constructor 0x020647B0, destructor 0x020647EC). */
-struct Unk020647b0;
-
-extern "C" {
-void func_020647b0(Unk020647b0 *o);
-void func_020647ec(Unk020647b0 *o);
-}
-
-struct Unk020647b0Parts {
-    int v[6];
-};
-
-struct Unk020647b0Colors {
-    int v[3];
-};
-
-struct Unk020647b0 {
-    Unk020647b0() {
-        func_020647b0(this);
-    }
-    ~Unk020647b0() {
-        func_020647ec(this);
-    }
-
-    Unk020647b0Parts parts;
-    int unk18;
-    Unk020647b0Colors colors;
-    int unk28;
-};
-
 /* A need: when the motive crosses `level`, the deltas are added to the rates (0x14 bytes). */
 struct Unk020c43a8Need {
     Unk020c43a8Need() : motive(6), level(0), above(0) {
@@ -153,7 +123,7 @@ struct Unk020c43a8Save {
     int unk160;
     int unk164;
     u8 name[0x40];
-    Unk020647b0 outfit;
+    Unk020081dc outfit;
     u16 unk1d4;
     u16 unk1d6;
     u16 unk1d8;
@@ -348,7 +318,7 @@ void func_02007d30(Unk020c43a8Queue *q);
 void func_02007d94(Unk020c43a8Queue *q);
 void func_02007e38(Unk020c43a8Queue *q);
 void func_02007e48(Unk020c43a8Queue *q, void *o);
-Unk020647b0 func_020081dc(Unk020c43a8 *p);
+Unk020081dc func_020081dc(Unk020c43a8 *p);
 Unk02063d84 *func_02063e2c(u32 key, int mode);
 Unk020897c0 *func_02063d84(Unk02063d84 *a);
 void func_0201cf6c(Unk0201c460 *o, Unk020680d4Vec pos, Unk020680d4Vec offset);
@@ -357,7 +327,7 @@ Unk02098ff0 func_020613a4(int a);
 Unk0208be3cEntry *func_01ffa954(Unk0208be3c *xform, int index);
 int func_01ffa9b0(Unk0208be3c *xform, const char *name);
 
-void func_020684f4(Unk020680d4 *p, Unk020647b0 *outfit);
+void func_020684f4(Unk020680d4 *p, Unk020081dc *outfit);
 void func_020685e0(Unk020680d4 *p);
 void func_0206869c(Unk020680d4 *p, bool place);
 void func_02069124(Unk020680d4 *p, Unk02063d84 *anim, int time, bool hide);
@@ -383,7 +353,7 @@ void func_020667a8(Unk020c43a8 *p, int i);
 int func_020667d4(Unk020c43a8 *p, int i);
 void func_02066d1c(Unk020c43a8 *p);
 Unk02098ff0 func_02066f14(Unk020c43a8 *p);
-void func_020670fc(Unk020c43a8 *p, Unk020647b0 *outfit);
+void func_020670fc(Unk020c43a8 *p, Unk020081dc *outfit);
 void func_02067160(Unk020c43a8 *p, int i, int v);
 int func_0206716c(Unk020c43a8 *p, int i);
 void func_02067178(Unk020c43a8 *p, int hash);
@@ -469,7 +439,7 @@ void func_02064984(Unk020c43a8 *p) {
     p->save.unk164 = -1;
     p->save.unk1d4 = 0;
     p->save.unk1d4 |= 1;
-    p->save.outfit = Unk020647b0();
+    p->save.outfit = Unk020081dc();
     p->save.unk1d6 = 0;
     p->save.unk1d8 = 0;
     p->save.flags1da = 0x40;
@@ -1305,7 +1275,7 @@ void func_0206708c(Unk020c43a8 *p, int kind, Unk020724cc *catalog) {
     func_0206702c(p);
 }
 
-void func_020670fc(Unk020c43a8 *p, Unk020647b0 *outfit) {
+void func_020670fc(Unk020c43a8 *p, Unk020081dc *outfit) {
     p->save.outfit = *outfit;
     if (p->sim == 0) {
         return;

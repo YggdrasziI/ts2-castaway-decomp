@@ -6,8 +6,12 @@
  * first state's implementations. Unk020724cc lists, per value of
  * Unk020081dc::unk28 (2) and per part (6), the items of the database
  * data_020c3fc4 that carry the part keys, and the items of another key.
- * Unk020081dc is the 0x2C-byte record that func_020081dc returns for an object
- * (func_020647ec destroys it). Layouts from the code; all names are placeholders.
+ * Unk020081dc is the 0x2C-byte outfit record that func_020081dc returns for an
+ * object; its constructor (0x020647B0) and destructor (0x020647EC) are out of
+ * line in unit_020647B0.cpp, as the outfit screen passes them to
+ * __cxa_vec_ctor / __cxa_vec_dtor. The parts and colours are wrapped in structs:
+ * the record copies move them as blocks. Layouts from the code; all names are
+ * placeholders.
  */
 #ifndef GAME_UNK_CATALOG_H
 #define GAME_UNK_CATALOG_H
@@ -32,10 +36,22 @@ public:
 };
 
 
-struct Unk020081dc {
-    int parts[6];
+struct Unk020081dcParts {
+    int v[6];
+};
+
+struct Unk020081dcColors {
+    int v[3];
+};
+
+class Unk020081dc {
+public:
+    Unk020081dc();
+    ~Unk020081dc();
+
+    Unk020081dcParts parts;
     int unk18;
-    int unk1c[3];
+    Unk020081dcColors colors;
     int unk28;
 };
 

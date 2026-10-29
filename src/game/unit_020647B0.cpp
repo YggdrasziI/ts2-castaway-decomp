@@ -1,7 +1,7 @@
 /*
  * Unit 0x020647B0-0x02064984: the outfit record Unk020081dc
- * (include/game/unk_catalog.h): its initializer (0x020647B0, every part 0 and
- * every colour -1), its empty release (0x020647EC), the check of the first two
+ * (include/game/unk_catalog.h): its constructor (0x020647B0, every part 0 and
+ * every colour -1), its empty destructor (0x020647EC), the check of the first two
  * parts against their replacement item, and the lookups of the item of a part
  * in the database data_020c3fc4 (part 4 can be replaced by an item named by
  * part 3).
@@ -11,7 +11,8 @@
  * whose constructor and reset call the first two functions. No data of its
  * own. Real file name unknown.
  *
- * The functions keep C linkage: other files call them by their addresses.
+ * The functions other than the constructor and destructor keep C linkage: other
+ * files call them by their addresses.
  *
  * Not complete: func_020647f0 is below 100 % (comment above it).
  */
@@ -34,8 +35,6 @@ int func_0205f6a4(void *db, int id);
 int func_0205d1b4(Unk0205d000 *item, u32 key);
 Unk0205cd6c func_0205cd6c(Unk0205d000 *item, int a);
 
-void func_020647b0(Unk020081dc *o);
-void func_020647ec(Unk020081dc *o);
 void func_020647f0(Unk020081dc *o);
 int func_0206486c(Unk020081dc *o, int i);
 int func_02064894(Unk020081dc *o, int i);
@@ -51,29 +50,29 @@ static inline bool func_isItem(int id) {
     return func_0205f6a4(data_020c3fc4, id) != -1;
 }
 
-void func_020647b0(Unk020081dc *o) {
-    o->unk18 = 0;
-    o->unk28 = 0;
+Unk020081dc::Unk020081dc() {
+    unk18 = 0;
+    unk28 = 0;
     for (int i = 0; i < 6; i++) {
-        o->parts[i] = 0;
+        parts.v[i] = 0;
     }
     for (int i = 0; i < 3; i++) {
-        o->unk1c[i] = -1;
+        colors.v[i] = -1;
     }
 }
 
-void func_020647ec(Unk020081dc *o) {}
+Unk020081dc::~Unk020081dc() {}
 
 /* 98.1 %: the loop counter and `id` are in r8 / r9 swapped; nested tests, a
  * bool local, a database local and declaration orders gave the same code. */
 void func_020647f0(Unk020081dc *o) {
     for (int i = 0; i < 2; i++) {
-        int id = func_0205d1b4(func_0205f6f8(data_020c3fc4, o->parts[i]), 0x2a9ad5eb);
+        int id = func_0205d1b4(func_0205f6f8(data_020c3fc4, o->parts.v[i]), 0x2a9ad5eb);
         if (id != 0 && !func_isItem(id)) {
             id = 0;
         }
         if (id != 0) {
-            o->parts[i] = id;
+            o->parts.v[i] = id;
         }
     }
 }
@@ -95,8 +94,8 @@ int func_020648ac(Unk020081dc *o) {
 
 Unk0205d000 *func_020648dc(Unk020081dc *o, int i) {
     u8 *db = data_020c3fc4;
-    Unk0205d000 *item = func_0205f6f8(db, o->parts[i]);
-    if (i == 4 && o->parts[3] != 0 && func_0205d1b4(func_0205f6f8(db, o->parts[3]), 0x66bd3af8)) {
+    Unk0205d000 *item = func_0205f6f8(db, o->parts.v[i]);
+    if (i == 4 && o->parts.v[3] != 0 && func_0205d1b4(func_0205f6f8(db, o->parts.v[3]), 0x66bd3af8)) {
         int id = func_0205d1b4(item, 0x5e68109b);
         if (id != 0 && func_isItemIn(db, id)) {
             return func_0205f6f8(db, id);

@@ -683,11 +683,15 @@ default: add one here only once a unit of this ROM proves it with mwccarm.
   #0x150`, then `r5 + 0x58`, `r5 + 0x90`) owns a sub-struct starting there; here
   the 0x98-byte block written to the save as one piece (`unit_02064984.cpp`,
   constructor 96.2 % -> 100 %).
-- A record whose constructor and destructor keep C names (`func_020647b0`,
-  `func_020647ec`): inline members calling them (`T() { func_020647b0(this); }`)
-  give the calls and make the class non-POD, so `a = T();` and `a = *b;` copy
-  member by member (one `ldm` / `stm` per array, `ldr` / `str` per word) as in
-  the original (`func_02064984`, `func_020670fc`).
+- A record with an out-of-line constructor and destructor (`Unk020081dc`, C1
+  0x020647B0 / D1 0x020647EC) is non-POD, so `a = T();` and `a = *b;` copy
+  member by member (one `ldm` / `stm` per array wrapped in a struct, `ldr` /
+  `str` per word) as in the original (`func_02064984`, `func_020670fc`). Inline
+  members calling C-named functions gave the same copies but not the
+  `__cxa_vec_ctor` / `__cxa_vec_dtor` arguments of an array of the record. A
+  record returned by value and only read is a temporary
+  (`func_020081dc(o).unk28`); its destructor call on every return path comes
+  by itself.
 - Fields of an array element written as `p->a[i].f` (base `p + i * size`, field
   offsets from `p`) instead of through an element pointer local (offsets from the
   element): `func_02067d0c` 93.5 % -> 100 %, `func_02065eb8`, `func_02066884`. A
