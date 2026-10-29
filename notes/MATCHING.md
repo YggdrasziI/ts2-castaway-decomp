@@ -446,6 +446,20 @@ default: add one here only once a unit of this ROM proves it with mwccarm.
 - A dsd symbol inside a static object (here `data_020c806c`, the object + 4 that
   one function returns) makes `.bss` score 3 %: drop the symbol and write the
   relocation as `to:<object> add:0x4` (`unit_02097434.cpp`).
+- A static object followed by dsd symbols referenced from elsewhere: dsd sizes
+  the object up to the next symbol, which leaves `.bss` at 28 %. Give the object
+  its size (`kind:bss(size=0x3e84)`) and move the other references to it: the
+  BuildInfo autoload list words (0x02000B64, 0x02000B68) are addresses of the
+  load image that fall inside `.bss`, written as `to:data_020bfc9c add:0x1464`
+  / `add:0x147c`; without that the link drops the words and `Check ARM9 main`
+  fails (`unit_02054AB4.cpp`).
+- The `volatile` loop bound fix also matched `func_02054dfc` (a `short` count
+  of a script run, 96.3 % -> 100 %). In `func_02054cf0`, `if (list != 0 &&
+  list->head != 0) { prev = 0; for (n = list->head; ...` tests the head twice;
+  `if (list != 0) { prev = 0; for (n = list->head; n != 0; ...` gives the
+  original's single conditional test (90.1 % -> 100 %). Register order of
+  `func_02054fbc` came from `u32 i; u32 hits; int found = 0; i = 0; hits = 0;
+  for (; i < n; i++)` (97.7 % -> 100 %).
 - A class with user-declared constructors is copied member by member
   (`ldr` / `str` pairs); deriving it from a plain struct that holds the members
   gives the block copy (`ldm` / `stm`) of the original (`unit_02098E70.cpp`, 0 % ->
