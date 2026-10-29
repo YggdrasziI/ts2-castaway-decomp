@@ -11629,7 +11629,7 @@ from:0x020533e0 kind:arm_call to:0x0209498c module:main
 from:0x020533f4 kind:arm_call to:0x0209498c module:main
 from:0x020533fc kind:arm_call to:0x02099858 module:main
 from:0x02053410 kind:arm_call to:0x0209487c module:main
-from:0x0205343c kind:load to:0x020ba270 module:main
+from:0x0205343c kind:load to:0x020ba268 add:0x8 module:main
 from:0x02053458 kind:arm_call to:0x02094d4c module:main
 from:0x02053488 kind:arm_call to:0x02094d4c module:main
 from:0x020534bc kind:arm_call to:0x02094d4c module:main

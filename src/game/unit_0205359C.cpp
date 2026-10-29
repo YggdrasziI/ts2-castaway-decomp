@@ -10,8 +10,8 @@
  * 0x617D8B84) that are not in the inventory yet.
  *
  * Bounds: hypothesis. No static initializer marks this file. Before 0x0205359C
- * come a file factory and two resource file classes (vtables
- * 0x020BA238-0x020BA288), with no call to or from this code; 0x02054330 starts
+ * comes the lot file class (unit_02053408.cpp, which ends with its
+ * destructors), with no call to or from this code; 0x02054330 starts
  * unit_02054330.cpp. `.rodata` is the three key tables (0x020AEF70-0x020AEFA4,
  * only used here; unit_020582E0.cpp follows). Real file name unknown.
  *
