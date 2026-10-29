@@ -1,5 +1,5 @@
 /*
- * The screens built on archive layouts (unit_02046104.cpp to
+ * The screens built on archive layouts (unit_02045BAC.cpp to
  * unit_0204A9F8.cpp): their empty base, the base of the pages, the layout and
  * name list classes of the engine, their show / hide timer and what they use
  * of the button, panel and animated sprite widgets (unit_02050640.cpp,
@@ -186,10 +186,20 @@ struct Unk020a07d4Timer {
     int state;
 };
 
-/* The owner of the pages (unit_0206BCE0.cpp names it): only the next page. */
+/*
+ * The owner of the pages (a window of unit_0206BCE0.cpp): the slot the pages
+ * call and the next page.
+ */
 class Unk02044234 {
 public:
-    u8 unk0[0x3c];
+    virtual ~Unk02044234();
+    virtual void func_08();
+    virtual void func_0c();
+    virtual void func_10();
+    virtual void func_14();
+    virtual void func_18();
+
+    u8 unk4[0x38];
     int nextPage;
 };
 
