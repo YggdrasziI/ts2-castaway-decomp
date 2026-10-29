@@ -1,6 +1,7 @@
 /*
- * The screens built on archive layouts (unit_02043FBC.cpp to
- * unit_0204A9F8.cpp): their empty base, the owner and the base of the pages,
+ * The screens built on archive layouts (unit_0203FA44.cpp to
+ * unit_0204A9F8.cpp): their empty base, the screen base Unk0203c188 and its
+ * owner, the owner and the base of the pages,
  * the layout and name list classes of the engine, their show / hide timer and
  * what they use of the button, panel and animated sprite widgets
  * (unit_02050640.cpp, unit_02051704.cpp, unit_0204F798.cpp) and of the sprite
@@ -63,6 +64,24 @@ public:
     virtual bool func_28() = 0;
     virtual bool func_2c() = 0;
     virtual bool func_30();
+};
+
+/*
+ * The object that owns the screens on Unk0203c188 (it keeps the current one at
+ * 0x24 and builds it with new): only what the screens use.
+ */
+class Unk0203c188Owner {
+public:
+    virtual void func_00();
+    virtual void func_04();
+    virtual void func_08();
+    virtual void func_0c();
+    virtual void func_10();
+    virtual void func_14();
+    virtual void func_18();
+
+    u8 unk4[0xb4];
+    u16 flagsb8;
 };
 
 class Unk0209487c;
@@ -129,6 +148,7 @@ public:
     ~Unk0204f798();
     void func_0204f8a0(int n);
     void func_0204f8f4(Unk020a7c90 *sprite);
+    void func_0204fa10(int first, int last);
     void func_18(bool show);
     void func_14(int x, int y);
     void func_08();
@@ -249,6 +269,37 @@ struct Unk020a07d4Timer {
     short timer;
     short duration;
     int state;
+};
+
+/*
+ * A base of the screens owned by Unk0203c188Owner (vtable 0x020B9604; its
+ * constructor 0x0203C188 and destructors 0x0203C1B8 to 0x0203C1E8 are in a
+ * file not yet decompiled). Its inline slots are emitted by every file that
+ * needs them and the first copies are kept far away: func_34 and func_28 to
+ * func_24 at 0x02023884-0x020238EC, func_40 at 0x0202227C. They are declared
+ * non-inline here, so the derived files do not emit copies that would clash
+ * with them. Slots 3, 4, 14 and 15 are pure (null in the base vtable).
+ */
+class Unk0203c188 : public Unk020a07d4 {
+public:
+    Unk0203c188(Unk0203c188Owner *owner);
+    virtual ~Unk0203c188();
+    virtual void func_08();
+    virtual bool func_14();
+    virtual void func_18();
+    virtual void func_1c();
+    virtual bool func_20();
+    virtual void func_24();
+    virtual bool func_28();
+    virtual bool func_2c();
+    virtual bool func_34();
+    virtual void func_38(bool active) = 0;
+    virtual bool func_3c(bool done) = 0;
+    virtual void func_40(bool a);
+
+    u16 flags;
+    Unk0203c188Owner *owner;
+    Unk020a07d4Timer fade;
 };
 
 class Unk020465bc;

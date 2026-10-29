@@ -683,6 +683,10 @@ default: add one here only once a unit of this ROM proves it with mwccarm.
   #0x150`, then `r5 + 0x58`, `r5 + 0x90`) owns a sub-struct starting there; here
   the 0x98-byte block written to the save as one piece (`unit_02064984.cpp`,
   constructor 96.2 % -> 100 %).
+- A run of `s = get(); set(s); use(s);` blocks where the last one reuses a
+  register freed by a dead local (`add r1, r4, #k; mov r4, r0`): one local
+  per block instead of one reused variable gives that reuse
+  (`unit_0203FA44.cpp`, constructor slot loop; same score, closer code).
 - A record with an out-of-line constructor and destructor (`Unk020081dc`, C1
   0x020647B0 / D1 0x020647EC) is non-POD, so `a = T();` and `a = *b;` copy
   member by member (one `ldm` / `stm` per array wrapped in a struct, `ldr` /
