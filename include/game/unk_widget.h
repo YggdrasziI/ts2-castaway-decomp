@@ -1,6 +1,6 @@
 /*
  * The widget base class Unk020b9e88 (vtable 0x020B9E88) shared by the widget units
- * from 0x0204F858 (unit_0205007C.cpp to unit_02051DA0.cpp), their
+ * from 0x0204F798 (unit_0204F798.cpp to unit_02051DA0.cpp), their
  * touch state and the sprite class they hold. Layouts come from the code; all
  * names are placeholders.
  *

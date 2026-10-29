@@ -11324,13 +11324,13 @@ from:0x0204f768 kind:arm_call to:0x0209f0a4 module:main
 from:0x0204f784 kind:arm_call to:0x02090b08 module:main
 from:0x0204f794 kind:load to:0x020d60c8 module:main
 from:0x0204f80c kind:arm_call to:0x02098be0 module:main
-from:0x0204f850 kind:load to:0x020b9e88 module:main
-from:0x0204f854 kind:load to:0x020b9e2c module:main
+from:0x0204f850 kind:load to:0x020b9e80 add:0x8 module:main
+from:0x0204f854 kind:load to:0x020b9e24 add:0x8 module:main
 from:0x0204f868 kind:arm_call to:0x0204f91c module:main
-from:0x0204f874 kind:load to:0x020b9e2c module:main
+from:0x0204f874 kind:load to:0x020b9e24 add:0x8 module:main
 from:0x0204f888 kind:arm_call to:0x0204f91c module:main
 from:0x0204f890 kind:arm_call to:0x02099858 module:main
-from:0x0204f89c kind:load to:0x020b9e2c module:main
+from:0x0204f89c kind:load to:0x020b9e24 add:0x8 module:main
 from:0x0204f8bc kind:arm_call to:0x0209984c module:main
 from:0x0204f930 kind:arm_call to:0x02099864 module:main
 from:0x0204f974 kind:arm_call to:0x020a7cf0 module:main
