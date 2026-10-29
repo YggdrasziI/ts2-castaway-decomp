@@ -6,6 +6,10 @@ default: add one here only once a unit of this ROM proves it with mwccarm.
 
 ## Loads, constants and literal pools
 
+- A run of word copies from an extern array where the original never merges
+  two loads into `ldm`: declare the array with its size (`extern const int
+  data_020ae7cc[20];` rather than `[]`) (`__sinit_unit_02035FEC.cpp`, 60 % ->
+  100 %).
 - I/O registers written as base + offset after a call (`ldr r0, =0x040000B0`,
   `str r1, [r0, #0x8]`) come from a local pointer to a register struct
   (`volatile Dma *dma = (volatile Dma *)0x040000B0; dma->ctrl = ...`); a cast of
@@ -757,6 +761,12 @@ default: add one here only once a unit of this ROM proves it with mwccarm.
   declare one two-dimensional array (`static const u32 t[11][29];`), drop the
   inner dsd symbols and rewrite their relocations as offsets from the array
   (`add:0x74`) (`unit_0204D698.cpp`).
+- Two objects of one file's `.data` (a pointer, then a `static const` table
+  with a dynamic initializer) addressed from the first one: the static
+  initializer and a function using both load the pointer's address and reach
+  the table at +4, a function using only the table loads the table's own
+  address. mwccarm does this by itself for such a pair; no struct is needed
+  (`data_020b947c` / `data_020b9480` of `unit_02035FEC.cpp`).
 - A pointer global in `.data` with value 0 (not `.bss`): `#pragma
   explicit_zero_data on` around `T *x = 0;`, then `#pragma explicit_zero_data
   reset` (hypothesis: it worked for `data_020b954c` of `unit_02038BCC.cpp`).
