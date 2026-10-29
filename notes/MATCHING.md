@@ -23,6 +23,14 @@ default: add one here only once a unit of this ROM proves it with mwccarm.
   declare the later one first without an initializer (`u32 height;` before
   `Unk020a7c90 *font = ...;`, then `height = ...;`)
   (`Unk0203b3b8::func_0203bc24`, 99.7 % -> 100 %).
+- A local read back from the stack (`ldr r1, [sp, #0x5c]`) where a member was
+  compared: the source compared the local array that was copied into the
+  member (`keys[0] == ...` rather than `key == ...`) (`Unk02038bcc::func_02039a08`,
+  94.0 % -> 94.4 %).
+- A result zeroed before an index computation (`mov r?, #0` first): declare
+  and initialise it before the index block (`int c = 0;` then the index
+  `if` / `else`), not in the branch that reads it (`func_0203b148` of
+  `unit_02038BCC.cpp`).
 - Stack arguments read with `ldrsh` and stored as bytes: the parameters are
   `short`, not `signed char` (which reads `ldrsb`); the register ones follow
   (`Unk02050640::func_02050bf0`, 91.8 % -> 100 %).
@@ -485,6 +493,10 @@ default: add one here only once a unit of this ROM proves it with mwccarm.
   (`func_0201baa4`, 91.2 % -> 99.8 %).
 - A loop that advances a pointer before the counter (`add r9, r9, #0xc` then
   `add r6, r6, #1`) is `for (...; p++, i++)` (`func_0201b964`, 97 % -> 99.9 %).
+- A loop with a start index and a counter (`k = page * 12`, `i` from 0):
+  `int i; int k = page * 12; for (i = 0; k < count && i < 12; k++, i++)`;
+  the declaration order and the header order both pick the registers
+  (`Unk02038bcc::func_0203afd0`, 100 %).
 - `switch` case groups: the return blocks follow the order of the groups in the
   source, and the `default:` block comes first when written first.
 
@@ -745,6 +757,14 @@ default: add one here only once a unit of this ROM proves it with mwccarm.
   declare one two-dimensional array (`static const u32 t[11][29];`), drop the
   inner dsd symbols and rewrite their relocations as offsets from the array
   (`add:0x74`) (`unit_0204D698.cpp`).
+- A pointer global in `.data` with value 0 (not `.bss`): `#pragma
+  explicit_zero_data on` around `T *x = 0;`, then `#pragma explicit_zero_data
+  reset` (hypothesis: it worked for `data_020b954c` of `unit_02038BCC.cpp`).
+- A `static const` table emitted before the key list initializer of another
+  function when the original has it after: define it just before the
+  function that uses it, after the earlier functions (the move fixed the
+  order of `data_020ae8e8` in `unit_02038BCC.cpp`; the rule behind it is not
+  known).
 
 ## C++ classes
 
