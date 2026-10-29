@@ -4,7 +4,7 @@
  * phases (a pointer to member function at 0x0C, set by func_02073c00; the
  * "phase changed" flag at 0x1C is set after the call when the phase moved).
  * func_020738ec opens "ROM_Euro/source/archives/screens.nitro_archive", builds
- * the 0x484-byte screen object (func_0204a9f8, two modes by id) and the 0xAC-byte
+ * the 0x484-byte screen object (unit_0204A9F8.cpp, two page ranges by id) and the 0xAC-byte
  * guide object (func_0201d70c); the phases step the screen through its opening,
  * wait for its result or a timeout (0x190 frames), play
  * "GROUP_SE_COMMON SE_OPEN_SURVIVAL_GUIDE" and close; func_02073a4c picks the
@@ -32,15 +32,21 @@ struct Unk020d6240 {
     void *unk8;
 };
 
-/* The screen object, built by func_0204a9f8. */
+/* The screen object of unit_0204A9F8.cpp. */
 class Unk0204a9f8 {
 public:
+    Unk0204a9f8(Unk02093648 *archive, int first, int last);
     virtual ~Unk0204a9f8();
     virtual void func_08();
     virtual void func_0c();
     virtual void func_10();
     virtual void func_14();
     virtual void func_18();
+
+    void func_0204b79c();
+    void func_0204b7d0();
+    void func_0204b95c();
+    void func_0204b970();
 
     bool func_isOpen() {
         return unk36c == 2 || unk36c == 1;
@@ -61,6 +67,7 @@ public:
     u16 unk3ac;
     u8 unk3ae[0x82];
     u16 unk430;
+    u8 unk432[0x52];
 };
 
 /* The guide object, built by func_0201d70c. */
@@ -106,12 +113,7 @@ void func_020a14e0(Unk020d6240 *system, int a);
 void func_020a15a8(Unk020d6240 *system, int dt);
 bool func_020a1280(Unk020d6240 *system, int a, int b);
 int func_020a0b8c(void *p, void *object);
-Unk0204a9f8 *func_0204a9f8(void *mem, Unk02093648 *archive, int a, int b);
 Unk0201d70c *func_0201d70c(void *mem);
-void func_0204b95c(Unk0204a9f8 *screen);
-void func_0204b7d0(Unk0204a9f8 *screen);
-void func_0204b970(Unk0204a9f8 *screen);
-void func_0204b79c(Unk0204a9f8 *screen);
 void func_0206c290(Unk020d6240 *system);
 void func_0207c224();
 void func_01ffadf8(Unk020916a4 *manager);
@@ -160,17 +162,9 @@ void Unk02073878::func_02071e04() {
     archive->func_02094df4();
     func_020a14e0(func_020a18e4(), 1);
     if (id == 4) {
-        Unk0204a9f8 *o = (Unk0204a9f8 *)operator new(0x484);
-        if (o != 0) {
-            o = func_0204a9f8(o, archive, 0, 6);
-        }
-        screen = o;
+        screen = new Unk0204a9f8(archive, 0, 6);
     } else {
-        Unk0204a9f8 *o = (Unk0204a9f8 *)operator new(0x484);
-        if (o != 0) {
-            o = func_0204a9f8(o, archive, 7, 0xe);
-        }
-        screen = o;
+        screen = new Unk0204a9f8(archive, 7, 0xe);
     }
     screen->func_08();
     Unk0201d70c *g = (Unk0201d70c *)operator new(0xac);
@@ -235,13 +229,13 @@ void Unk02073878::func_02073c54() {
     }
     switch (step) {
     case 0:
-        func_0204b95c(screen);
+        screen->func_0204b95c();
         break;
     case 1:
-        func_0204b7d0(screen);
+        screen->func_0204b7d0();
         break;
     case 5:
-        func_0204b970(screen);
+        screen->func_0204b970();
         if (id == 5 && screen->unk370 == screen->unk374) {
             func_02073c00(&Unk02073878::func_02073e7c);
         } else {
@@ -297,7 +291,7 @@ void Unk02073878::func_02073e34() {
 
 void Unk02073878::func_02073e7c() {
     if (screen->func_isOpen()) {
-        func_0204b79c(screen);
+        screen->func_0204b79c();
     }
     if (screen->unkc & 4) {
         func_02073c00(&Unk02073878::func_02073e34);

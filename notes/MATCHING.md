@@ -310,6 +310,16 @@ default: add one here only once a unit of this ROM proves it with mwccarm.
 - A field read before a block of stores to the same object stays in a register
   only when it is read into a local first (`int map = w->map;`).
 
+- A pointer and a loop index swapped (r6 / r7) in a loop that picks a sprite
+  per slot: declaring the pointer at the top of the function, before the
+  index, matches (`func_0204b984`, 98.8 % -> 100 %).
+- `FX32(x)` of a coordinate that grows with the loop index: the original
+  converts `x << 12` with the index-derived value in a register
+  (`0x100 + i * 0x32` written in the call). A separate `x += 0x32`
+  induction variable is strength-reduced to `x << 12` and spills `x`
+  (`func_0204b984`, 89.4 % -> 98.8 %). An unsigned value calls `_ffltu`
+  (0x020887B0, right after `_fflt`).
+
 ## Inlining and emission order
 
 - A member the original reads twice (a flag test, then the whole word in an
@@ -854,6 +864,10 @@ default: add one here only once a unit of this ROM proves it with mwccarm.
 - A sorted insertion without conditional execution: write the end test before
   the advance, `else if (it->next == 0) { append } else it = it->next;`
   (`func_02056070`).
+
+- A test that returns a constant on one value and a call otherwise, left as
+  a branch (`bne` over `ldr; ldmia`) rather than predicated: a `switch` with
+  that `case` and a `default` (`func_0204be78`).
 
 ## ARM / Thumb
 

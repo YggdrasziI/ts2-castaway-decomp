@@ -193,18 +193,18 @@ public:
     virtual void func_18(bool show) = 0;
     virtual void func_1c();
     virtual void func_20();
-    virtual void func_24();
+    virtual void func_24(int x, int y);
     virtual void func_28();
     virtual void func_2c();
-    virtual void func_30();
-    virtual void func_34();
+    virtual void func_30(int value);
+    virtual void func_34(int value);
     virtual void func_38();
     virtual void func_3c();
     virtual void func_40();
     virtual void func_44();
     virtual void func_48();
     virtual void func_4c();
-    virtual void func_50();
+    virtual bool func_50();
 
     Unk020b9e88Track *trackX;
     Unk020b9e88Track *trackY;
