@@ -10,9 +10,6 @@
  * functions (the shared layout helper 0x02046A94 ends them); the inline
  * func_40 (0x020471AC) ends the file before unit_020471B0.cpp. `.data` is
  * this class's vtable with its header. Real file name unknown.
- *
- * `.data` does not match: slot 12 of the vtable points to a function of an
- * unknown root class (0x0201D6CC, see include/game/unk_screen.h).
  */
 
 #include "game/unk_screen.h"

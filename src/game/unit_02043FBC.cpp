@@ -16,9 +16,9 @@
  * The inline slots 5, 10, 11 and 17 of the page base are kept here, each
  * after the first function that calls it.
  *
- * Not complete although every function and `.data` match: the owner's
- * inline slots are emitted in slot order (func_1c, func_20, func_24,
- * func_34) where the original has func_34 first.
+ * The owner's inline slots come out func_34 first, then func_1c, func_20,
+ * func_24: its new virtuals (func_34, func_38, func_3c) are declared before
+ * the overrides of the root's slots (include/game/unk_screen.h).
  */
 
 #include "game/unk_screen.h"

@@ -339,6 +339,21 @@ default: add one here only once a unit of this ROM proves it with mwccarm.
   base found inside an unrelated file, reading the base's layout, are the
   base's inline virtuals too (slots 5, 10, 11 and 17, 0x02044830-0x02044EC0,
   `.data` 88.6 % -> 97.7 %).
+- A slot shared by many unrelated vtables, with no vtable of its own class
+  anywhere and whose class's only function is an empty base destructor
+  (`bx lr`), belongs to an abstract root: a pure virtual destructor with a
+  body, so only D2 is kept, and an implicit constructor that stores no vptr
+  (mwccarm emits the root vtable in every derived file, nothing references
+  it, the link drops it). The screens' root `Unk020a07d4` (slot 12 =
+  0x0201D6CC): every page vtable 97.7 % -> 100 %. Its slot 12 is an inline
+  virtual kept in a file still in assembly, so it is declared non-inline
+  until then (see "Unsolved patterns").
+- Inline virtuals at the end of a file come out in declaration order, and a
+  new virtual (one the base does not have) declared before the overrides of
+  the base's slots comes out first: the owner's func_34, then func_1c,
+  func_20, func_24 (`unit_02043FBC.cpp`, `check symbols` failed with slot
+  order). With a root that declares the slots, only the new virtuals' order
+  fixes the vtable; the overrides can be declared anywhere.
 - A lookup through a layout held by pointer (`func_020aa040(top, 4,
   func_020a7b50(&names, hash))`) whose pointer the original loads after the
   inner call: write the nested call in place; an inline helper taking the

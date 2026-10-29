@@ -42,7 +42,7 @@ public:
     Unk020471b0();
     virtual ~Unk020471b0();
     virtual void func_08();
-    virtual bool func_0c();
+    virtual bool func_0c(short);
     virtual bool func_10();
     virtual bool func_14();
     virtual void func_18() {
@@ -130,7 +130,7 @@ void Unk020471b0::func_08() {
     }
 }
 
-bool Unk020471b0::func_0c() {
+bool Unk020471b0::func_0c(short) {
     if (fade.func_shown()) {
         return true;
     }

@@ -73,7 +73,7 @@ public:
     Unk0204a9f8(Unk02093648 *archive, int first, int last);
     virtual ~Unk0204a9f8();
     virtual void func_08();
-    virtual bool func_0c();
+    virtual bool func_0c(short);
     virtual bool func_10();
     virtual bool func_14();
     virtual void func_18();
@@ -272,7 +272,7 @@ bool Unk0204a9f8::func_28() {
     return fade.func_shown();
 }
 
-bool Unk0204a9f8::func_0c() {
+bool Unk0204a9f8::func_0c(short) {
     if (fade.func_shown()) {
         return true;
     }

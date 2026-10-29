@@ -156,7 +156,7 @@ public:
     Unk02047a8c(Unk02093648 *archive);
     virtual ~Unk02047a8c();
     virtual void func_08();
-    virtual bool func_0c();
+    virtual bool func_0c(short);
     virtual bool func_10();
     virtual bool func_14();
     virtual void func_18();
@@ -425,7 +425,7 @@ void Unk02047a8c::func_08() {
     }
 }
 
-bool Unk02047a8c::func_0c() {
+bool Unk02047a8c::func_0c(short) {
     if (fade.func_shown()) {
         return true;
     }

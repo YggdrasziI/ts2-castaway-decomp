@@ -37,10 +37,32 @@ public:
     u8 unk0[0x7c];
 };
 
-/* The empty base of the screens: an out-of-line destructor and no vtable. */
+/*
+ * The abstract root of the screens. It has no vtable in the binary and its
+ * only function is the base destructor 0x020A07D4 (`bx lr`): a pure virtual
+ * destructor with a body, an abstract class whose implicit constructor stores
+ * no vptr (the derived constructors store only their own). Slot 12, func_30
+ * (`return func_28() && !func_14();`), is 0x0201D6CC, slot 12 of the screens
+ * that do not override it: an inline function whose kept copy sits after the
+ * inline slots of the first screen (0x0201C598). It is declared non-inline
+ * here: while that copy is assembly, the copies every file would emit clash
+ * with it at link time. The pure slots 2 to 11 are a hypothesis: no copy of
+ * them exists.
+ */
 class Unk020a07d4 {
 public:
-    ~Unk020a07d4();
+    virtual ~Unk020a07d4() = 0;
+    virtual void func_08() = 0;
+    virtual bool func_0c(short a) = 0;
+    virtual bool func_10() = 0;
+    virtual bool func_14() = 0;
+    virtual void func_18() = 0;
+    virtual void func_1c() = 0;
+    virtual bool func_20() = 0;
+    virtual void func_24() = 0;
+    virtual bool func_28() = 0;
+    virtual bool func_2c() = 0;
+    virtual bool func_30();
 };
 
 class Unk02050640 : public Unk020b9e88 {
@@ -256,6 +278,11 @@ class Unk02044234 : public Unk020a07d4 {
 public:
     Unk02044234(int page);
     virtual ~Unk02044234();
+    virtual bool func_34() {
+        return false;
+    }
+    virtual void func_38(bool active);
+    virtual bool func_3c(bool done);
     virtual void func_08();
     virtual bool func_0c(short a);
     virtual bool func_10();
@@ -271,11 +298,6 @@ public:
     virtual bool func_28();
     virtual bool func_2c();
     virtual bool func_30();
-    virtual bool func_34() {
-        return false;
-    }
-    virtual void func_38(bool active);
-    virtual bool func_3c(bool done);
 
     void func_02044a44();
     void func_02044a94();
@@ -307,10 +329,7 @@ public:
  * needs them and the first copy is kept: slots 5, 10, 11 and 17 in the
  * owner's file (0x02044830 to 0x02044EC0, each next to the owner function
  * that first calls it), slots 7, 8, 9 and 13 in the first page,
- * unit_020450D4.cpp. Slot 12 is 0x0201D6CC, `return func_28() &&
- * !func_14();`, shared by the vtables of many screens: a function of an
- * unknown root class, declared here non-inline, so the vtables do not match
- * there.
+ * unit_020450D4.cpp. Slot 12 is the root's func_30 (0x0201D6CC).
  */
 class Unk020465bc : public Unk020a07d4 {
 public:
@@ -336,7 +355,6 @@ public:
     virtual bool func_2c() {
         return fade.func_hidden();
     }
-    virtual bool func_30();
     virtual bool func_34() {
         return true;
     }

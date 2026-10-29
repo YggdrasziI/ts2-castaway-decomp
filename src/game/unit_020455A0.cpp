@@ -10,9 +10,6 @@
  * 0x0204559C); the inline func_40 (0x02045BA8) ends the file before
  * unit_02045BAC.cpp. `.data` is this class's vtable with its header. Real
  * file name unknown.
- *
- * `.data` does not match: slot 12 of the vtable points to a function of an
- * unknown root class (0x0201D6CC, see include/game/unk_screen.h).
  */
 
 #include "game/unk_screen.h"
