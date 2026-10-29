@@ -64,3 +64,4 @@
 | 2026-10-29 | 3dbd0c6 | 177400 / 720836 bytes (24.61 %; fuzzy 31.99 %, linked 8.95 %) | 1611 / 4556 | 68 / 157 | Panel widget unit written (15 / 15 functions at 100 %) |
 | 2026-10-29 | 3d31301 | 181160 / 720836 bytes (25.13 %; fuzzy 32.59 %, linked 8.95 %) | 1637 / 4556 | 68 / 158 | Button widget unit written (27 / 28 functions at 100 %) |
 | 2026-10-29 | ddd10e9 | 182636 / 720836 bytes (25.34 %; fuzzy 32.79 %, linked 8.95 %) | 1649 / 4556 | 68 / 159 | Gauge widget unit written (12 / 12 functions at 100 %) |
+| 2026-10-29 | d91bdd9 | 183368 / 720836 bytes (25.44 %; fuzzy 33.02 %, linked 8.95 %) | 1663 / 4556 | 68 / 160 | Animated sprite widget unit written (15 / 18 functions at 100 %) |
