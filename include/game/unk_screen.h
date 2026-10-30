@@ -68,7 +68,8 @@ public:
 
 /*
  * The object that owns the screens on Unk0203c188 (it keeps the current one at
- * 0x24 and builds it with new): only what the screens use.
+ * 0x24 and builds it with new): the survival guide Unk02027994
+ * (unit_02027994.cpp), only what the screens use.
  */
 class Unk0203c188Owner {
 public:
@@ -97,6 +98,7 @@ public:
     void func_02050968(Unk020a7c90 *sprite);
     int func_02050a24();
     Unk020a7c90 *func_02050a40(int index);
+    void func_02050a4c(int a);
     void func_02050a64(bool toggle, bool lock);
     void func_02050aac(bool on);
     void func_02050ad0(u32 sound);

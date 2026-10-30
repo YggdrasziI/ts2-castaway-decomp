@@ -5,7 +5,7 @@
  * of the player's slot for this object's kind.
  *
  * Bounds: hypothesis. The start is the constructor, after the inline slots of
- * the previous screen (func_02029b7c); the end is the category screen
+ * the survival guide (unit_02027994.cpp); the end is the category screen
  * (unit_0202AEF4.cpp). `.data` holds the current object, this class's vtable
  * with its header and the two page formats. Real file name unknown.
  *

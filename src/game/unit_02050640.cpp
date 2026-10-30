@@ -50,7 +50,7 @@ void func_020a69ac(Unk020a7c90 *s, int palette);
 int func_020a69cc(Unk020a7c90 *s);
 int func_020a7d1c(Unk020a7c90 *s);
 void func_020a7d30(Unk020a7c90 *s, int frame);
-void func_020a8360(Unk020a7c90 *s);
+void func_020a8360(Unk020a7c90 *s, int a);
 }
 
 static inline Unk02093648 *func_archive() {
@@ -70,7 +70,7 @@ public:
     void func_18(bool show);
     int func_02050a24();
     Unk020a7c90 *func_02050a40(int index);
-    void func_02050a4c();
+    void func_02050a4c(int a);
     void func_02050a64(bool toggle, bool lock);
     void func_02050aac(bool on);
     void func_02050ad0(u32 sound);
@@ -219,9 +219,9 @@ Unk020a7c90 *Unk02050640::func_02050a40(int index) {
     return sprites[index];
 }
 
-void Unk02050640::func_02050a4c() {
+void Unk02050640::func_02050a4c(int a) {
     if (sprite != 0) {
-        func_020a8360(sprite);
+        func_020a8360(sprite, a);
     }
 }
 
