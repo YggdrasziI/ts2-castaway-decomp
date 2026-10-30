@@ -5442,7 +5442,7 @@ from:0x020272ac kind:arm_call to:0x0206f578 module:main
 from:0x020272b4 kind:arm_call to:0x02054360 module:main
 from:0x020272bc kind:arm_call to:0x020a7b04 module:main
 from:0x020272c4 kind:arm_call to:0x020a7b04 module:main
-from:0x020272d4 kind:load to:0x020b9180 module:main
+from:0x020272d4 kind:load to:0x020b9178 add:0x8 module:main
 from:0x020272d8 kind:load to:0x020c3ba4 module:main
 from:0x020272dc kind:load to:0x020d6298 module:main
 from:0x020272e0 kind:load to:0x020be414 module:main

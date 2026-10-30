@@ -5,8 +5,8 @@
  * 0x020B91E8). It draws the eight tabs, the back button, the panel and the six
  * need meters, and func_020292e4 builds the page of the current mode.
  *
- * Bounds: hypothesis. The start is the constructor, after the screen ending at
- * func_0202798c; the end is the object text screen (unit_02029B80.cpp). `.data`
+ * Bounds: hypothesis. The start is the constructor, after the transition
+ * (unit_02026F84.cpp); the end is the object text screen (unit_02029B80.cpp). `.data`
  * holds the two sound names and this class's vtable with its header, `.bss` the
  * page to open on data_020be418. Real file name unknown.
  *
