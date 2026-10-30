@@ -156,6 +156,7 @@ public:
     void func_18(bool show);
     void func_14(int x, int y);
     void func_08();
+    Unk020a7c90 *func_0204fda8(int index);
     void func_0204fdcc(bool loop);
     Unk02098bc8 *func_10();
 

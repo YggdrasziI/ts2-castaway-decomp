@@ -10,6 +10,10 @@ default: add one here only once a unit of this ROM proves it with mwccarm.
   two loads into `ldm`: declare the array with its size (`extern const int
   data_020ae7cc[20];` rather than `[]`) (`__sinit_unit_02035FEC.cpp`, 60 % ->
   100 %).
+- A single key passed by address (`func_02054d94(..., &key, 1, 1)`) is a
+  scalar local (`u32 key = 0x798b86ac;`): a one-element array with an
+  initializer is copied from a `.data` literal (`ldr r0, [r0]`)
+  (`Unk02033ee0::func_020354ec`, 97.3 % -> 100 %).
 - I/O registers written as base + offset after a call (`ldr r0, =0x040000B0`,
   `str r1, [r0, #0x8]`) come from a local pointer to a register struct
   (`volatile Dma *dma = (volatile Dma *)0x040000B0; dma->ctrl = ...`); a cast of
@@ -23,6 +27,16 @@ default: add one here only once a unit of this ROM proves it with mwccarm.
 
 ## Registers and stack
 
+- Callee-saved registers rotated over a whole function with a parsing loop
+  in the middle: move the loop into a `static inline` helper taking the
+  output pointer and the field it reads by reference (`const int &id`), the
+  field then read inside after the first store; written in place or with the
+  id by value, the registers rotate (`Unk02033ee0::func_0203577c`,
+  98.1 % -> 100 %).
+- `pager.func_14(0, next.func_10()->y);` gives a `mov r1, r0` before the
+  pager's vtable load in `unit_02033EE0.cpp`; `int y = next.func_10()->y;`
+  first gives the original's direct `ldr r2, [r0, #4]` (98.43 % ->
+  98.98 %), the opposite of the gap of `unit_0203B3B8.cpp`.
 - Two results of consecutive calls kept in r5 / r6 the wrong way round:
   declare the later one first without an initializer (`u32 height;` before
   `Unk020a7c90 *font = ...;`, then `height = ...;`)
