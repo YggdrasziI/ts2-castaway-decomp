@@ -7,7 +7,7 @@
  * values read from the layout. What it shows is unknown.
  *
  * Bounds: hypothesis. The start is the constructor, after the inline slots of
- * Unk0203c188 ending at 0x020238EC; the end is the paint screen
+ * Unk0203c188 in unit_02021CBC.cpp; the end is the paint screen
  * (unit_0202402C.cpp). `.data` holds the vtable with its header. Real file name
  * unknown.
  *

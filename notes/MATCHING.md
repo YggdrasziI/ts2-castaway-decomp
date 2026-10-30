@@ -1222,3 +1222,12 @@ default: add one here only once a unit of this ROM proves it with mwccarm.
   right after the first push.
 - A call argument with no narrowing at the call (`add r1, r0, #2` for a value that
   is not a known short) means the callee takes `int`, even when it stores a short.
+- A kept copy of a base virtual whose class has its key function elsewhere: a plain
+  definition still emits the base vtable (`.data` 76 bytes too long); `inline`
+  keeps the copy, emitted when this file's derived vtable refers to it.
+- A class holding a key as its first member, not deriving from it: `C1` instead of
+  `C2` for the key constructor and no vptr store in the constructor.
+- An argument evaluated before an earlier one (`knob` first): take it in a local,
+  arguments are evaluated left to right.
+- An archive call whose argument loads after the archive: an inline returning the
+  archive makes the load follow it, a direct `f()->archive->g(field)` loads it first.

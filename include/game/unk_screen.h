@@ -283,10 +283,10 @@ struct Unk020a07d4Timer {
 /*
  * A base of the screens owned by Unk0203c188Owner (vtable 0x020B9604,
  * unit_0203C188.cpp). Its inline slots are emitted by every file that
- * needs them and the first copies are kept far away: func_34 and func_28 to
- * func_24 at 0x02023884-0x020238EC, func_40 at 0x0202227C. They are declared
- * non-inline here, so the derived files do not emit copies that would clash
- * with them. Slots 3, 4, 14 and 15 are pure (null in the base vtable).
+ * needs them and the first copies are kept in unit_02021CBC.cpp: func_34 and
+ * func_28 to func_24 at 0x02023884-0x020238EC, func_40 at 0x0202227C. They are
+ * declared non-inline here, so the derived files do not emit copies that would
+ * clash with them. Slots 3, 4, 14 and 15 are pure (null in the base vtable).
  */
 class Unk0203c188 : public Unk020a07d4 {
 public:
