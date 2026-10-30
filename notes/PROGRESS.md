@@ -94,3 +94,4 @@
 | 2026-10-30 | 9696c1f | 257752 / 720836 bytes (35.76 %; fuzzy 53.52 %, linked 9.71 %) | 2144 / 4556 | 71 / 186 | Category screen unit (23 / 25 functions, constructor 89.76 %) |
 | 2026-10-30 | 4c02027 | 260276 / 720836 bytes (36.11 %; fuzzy 54.21 %, linked 9.71 %) | 2164 / 4556 | 71 / 187 | Object text screen unit (20 / 21 functions, constructor 98.96 %) |
 | 2026-10-30 | 847fcaf | 268600 / 720836 bytes (37.26 %; fuzzy 55.41 %, linked 9.71 %) | 2199 / 4556 | 71 / 188 | Survival guide unit (35 / 36 functions, `func_020299ec` 96.22 %) |
+| 2026-10-30 | 4e1ec9a | 270560 / 720836 bytes (37.53 %; fuzzy 55.77 %, linked 9.71 %) | 2221 / 4556 | 71 / 189 | Transition unit (22 / 23 functions, `func_02027644` 99.45 %) |
