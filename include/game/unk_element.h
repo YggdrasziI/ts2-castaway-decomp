@@ -6,9 +6,11 @@
  *
  * Its inline virtuals have kept copies near 0x0204D40C (update, set tracks,
  * shown test). Its slots 7 to 14 and 16 point to functions of far files
- * (0x0201F648 to 0x0202558C) whose signatures are unknown: they are declared
- * here under slot names (non-inline), so the base vtable copy is not emitted
- * and the tail of the derived vtables does not match.
+ * (0x0201F648 to 0x0202558C), kept copies too: slot 7 is in unit_0202402C.cpp,
+ * the others are still assembly. The signatures of slots 7, 9, 10, 12, 13 and
+ * 14 come from the calls of that file. They are declared here under slot names
+ * (non-inline), so the base vtable copy is not emitted and the tail of the
+ * derived vtables does not match.
  */
 #ifndef GAME_UNK_ELEMENT_H
 #define GAME_UNK_ELEMENT_H
@@ -87,14 +89,14 @@ public:
         trackX = x;
         trackY = y;
     }
-    virtual void func_1c();
+    virtual void func_1c(int x, int y);
     virtual void func_20();
-    virtual void func_24();
-    virtual void func_28();
+    virtual void func_24(int duration);
+    virtual void func_28(int duration);
     virtual void func_2c();
-    virtual void func_30();
-    virtual void func_34();
-    virtual void func_38();
+    virtual void func_30(int duration);
+    virtual bool func_34();
+    virtual bool func_38();
     virtual bool func_3c() {
         return state == 1;
     }

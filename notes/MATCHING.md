@@ -1208,3 +1208,17 @@ default: add one here only once a unit of this ROM proves it with mwccarm.
   `-dead` link (a delinked unit's section is kept only when referenced): keep
   such bytes in the range of a neighbouring unit whose data is used
   (`unit_0205D4D8.cpp`, 0x020BC2A0-0x020BC2B8).
+- A derived member object called directly (`drawer.func_1c(0, x)`) devirtualizes,
+  so an inline base virtual gets its kept copy right after the first user. Defined
+  `inline` in that file, it does not emit the base vtable; defined plainly, the
+  first non-inline virtual is the key function and the whole vtable lands in
+  `.data` of that file.
+- Copying an array row by row: `snapshot[i * n + j]` gives a kept running offset
+  in the outer loop; a separate `k += n` counter gets its register order wrong.
+- A search loop written `for (; py >= 0; py--) { if (test) break; }` keeps the
+  original rotated loop; the same test inside the `for` condition does not.
+- An inline `bool pop(short &x, short &y)` in `while (pop(x, y))` gives the
+  `moveq r0, #0` / `mov r0, #1` then `cmp r0, #0` shape, with the jump to the test
+  right after the first push.
+- A call argument with no narrowing at the call (`add r1, r0, #2` for a value that
+  is not a known short) means the callee takes `int`, even when it stores a short.

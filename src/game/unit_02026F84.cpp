@@ -9,7 +9,7 @@
  *
  * Bounds: hypothesis. The start is the two palette load callbacks given to
  * func_020a80bc by the constructor, after the last inline slot func_02026f80 of
- * the paint screen; the end is the survival guide (unit_02027994.cpp). `.data`
+ * the paint screen (unit_0202402C.cpp); the end is the survival guide (unit_02027994.cpp). `.data`
  * holds this class's vtable with its header, `.bss` the instance the callbacks
  * use. Real file name unknown.
  *

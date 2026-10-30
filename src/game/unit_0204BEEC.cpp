@@ -125,8 +125,8 @@ public:
     void func_0204c440();
     void func_0204c4c4(short a, short b, short c, short d);
     void func_0204c500(short a, short b, short c, short d, short e, short f);
-    void func_0204c540(short a, short b, short c);
-    void func_0204c55c(short a, short b);
+    void func_0204c540(int a, int b, int c);
+    void func_0204c55c(int a, int b);
     bool func_04(bool locked);
     void func_00();
     void func_0204cdbc();
@@ -353,13 +353,13 @@ void Unk0204beec::func_0204c500(short a, short b, short c, short d, short e, sho
     look.palettes[5] = f;
 }
 
-void Unk0204beec::func_0204c540(short a, short b, short c) {
+void Unk0204beec::func_0204c540(int a, int b, int c) {
     look.frames[0] = a;
     look.frames[1] = b;
     look.frames[2] = c;
 }
 
-void Unk0204beec::func_0204c55c(short a, short b) {
+void Unk0204beec::func_0204c55c(int a, int b) {
     look.frames[3] = a;
     look.frames[4] = b;
 }
