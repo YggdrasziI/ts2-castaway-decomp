@@ -102,7 +102,7 @@ public:
     void func_02050ad0(u32 sound);
     void func_02050bb4(short a, short b, short c, short d);
     void func_02050bf0(short a, short b, short c, short d, short e, short f);
-    void func_02050c48(short a, short b, short c);
+    void func_02050c48(int a, int b, int c);
     void func_02050c64(int a, int b, int c);
     void func_02050c80(short a, short b);
     void func_02050c94(short a, short b);

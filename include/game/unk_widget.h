@@ -7,7 +7,7 @@
  * The base has only inline or pure virtuals, so every widget file emits its
  * vtable (the kept copy is the first, 0x020B9E80). Its slots 7 to 20 point to
  * functions of far files (0x02017150 to 0x02031028) mostly not yet decompiled
- * (slot 7 is in unit_0202FDDC.cpp): they
+ * (slot 7 is in unit_0202FDDC.cpp, slot 20 in unit_0202AEF4.cpp): they
  * are declared here under slot names (non-inline), with the arguments and
  * results their callers use, so the base vtable copy is not emitted and the
  * tail of the widget vtables does not match.

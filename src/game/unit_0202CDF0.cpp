@@ -6,7 +6,7 @@
  * counts; a press on an ingredient opens that object.
  *
  * Bounds: hypothesis. The start is the constructor, after the inline slots of
- * the previous screen (func_0202cdd8); the end is the paged text screen
+ * the previous screen (unit_0202AEF4.cpp); the end is the paged text screen
  * (unit_0202E0EC.cpp). `.data` holds the current object, this class's vtable
  * with its header and the count format. Real file name unknown.
  *

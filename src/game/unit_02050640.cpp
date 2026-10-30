@@ -77,7 +77,7 @@ public:
     void func_14(int x, int y);
     void func_02050bb4(short a, short b, short c, short d);
     void func_02050bf0(short a, short b, short c, short d, short e, short f);
-    void func_02050c48(short a, short b, short c);
+    void func_02050c48(int a, int b, int c);
     void func_02050c64(int a, int b, int c);
     void func_02050c80(short a, short b);
     void func_02050c94(short a, short b);
@@ -305,7 +305,7 @@ void Unk02050640::func_02050bf0(short a, short b, short c, short d, short e, sho
     }
 }
 
-void Unk02050640::func_02050c48(short a, short b, short c) {
+void Unk02050640::func_02050c48(int a, int b, int c) {
     unk6f = a;
     unk70 = b;
     unk71 = c;
