@@ -7,8 +7,7 @@
  * accept buttons.
  *
  * Bounds: hypothesis. The start is the constructor, after the last inline slot
- * func_02024028 of the screen with vtable 0x020B8EC8; the end is the transition
- * (unit_02026F84.cpp). `.rodata` holds the three local tables, `.data` the file
+ * of unit_020238EC.cpp; the end is the transition (unit_02026F84.cpp). `.rodata` holds the three local tables, `.data` the file
  * names, the vtable with its header and the warning of the fill stack. Real
  * file name unknown.
  *
