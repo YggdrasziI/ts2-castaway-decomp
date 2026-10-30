@@ -90,3 +90,4 @@
 | 2026-10-30 | 1c0de92 | 246196 / 720836 bytes (34.15 %; fuzzy 48.53 %, linked 9.71 %) | 2073 / 4556 | 71 / 181 | Object text screen unit (22 / 23 functions, constructor 98.98 %) |
 | 2026-10-30 | 171eb4d | 250104 / 720836 bytes (34.70 %; fuzzy 50.78 %, linked 9.71 %) | 2092 / 4556 | 71 / 183 | Object detail screen unit (19 / 25 functions, lowest 92.20 %) |
 | 2026-10-30 | 0dff7d9 | 252520 / 720836 bytes (35.03 %; fuzzy 51.80 %, linked 9.71 %) | 2111 / 4556 | 71 / 184 | Paged text screen unit (19 / 21 functions, constructor 98.46 %) |
+| 2026-10-30 | 563e614 | 254272 / 720836 bytes (35.27 %; fuzzy 52.47 %, linked 9.71 %) | 2121 / 4556 | 71 / 185 | Recipe screen unit (10 / 12 functions, constructor 99.81 %) |
