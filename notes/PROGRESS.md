@@ -88,3 +88,4 @@
 | 2026-10-29 | 00b0d91 | 235276 / 720836 bytes (32.64 %; fuzzy 45.78 %, linked 9.71 %) | 2025 / 4556 | 71 / 181 | Object list screen unit (23 / 26 functions, constructor 97.78 %) |
 | 2026-10-29 | 09acf7a | 240568 / 720836 bytes (33.37 %; fuzzy 47.36 %, linked 9.71 %) | 2051 / 4556 | 71 / 181 | Tabbed object list screen unit (26 / 29 functions, constructor 98.62 %) |
 | 2026-10-30 | 1c0de92 | 246196 / 720836 bytes (34.15 %; fuzzy 48.53 %, linked 9.71 %) | 2073 / 4556 | 71 / 181 | Object text screen unit (22 / 23 functions, constructor 98.98 %) |
+| 2026-10-30 | 171eb4d | 250104 / 720836 bytes (34.70 %; fuzzy 50.78 %, linked 9.71 %) | 2092 / 4556 | 71 / 183 | Object detail screen unit (19 / 25 functions, lowest 92.20 %) |
