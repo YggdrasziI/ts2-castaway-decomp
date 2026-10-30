@@ -417,6 +417,11 @@ default: add one here only once a unit of this ROM proves it with mwccarm.
 
 ## Inlining and emission order
 
+- A nested loop with hand-written induction variables can allocate them in the
+  wrong order when they are declared in the `for`. Declaring the inner index
+  and step variable before the outer loop gives the original registers
+  (`Unk0202cdf0::func_0202df0c`, 99.0 % -> 100 %).
+
 - A virtual call on a global object is devirtualized to `bl`. Through an inline
   function returning its address (`func_player()->func_14()`) the call stays
   indirect (`ldr r2, [r2, #0x14]`, `blx r2`) (`Unk0202fddc::func_0203161c`,
