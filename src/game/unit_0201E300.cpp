@@ -1,5 +1,5 @@
 /*
- * Unit 0x0201E300-0x02021CBC: the live mode screen (Unk0201e300, 0x1280 bytes,
+ * Unit 0x0201E2B0-0x02021CBC: the live mode screen (Unk0201e300, 0x1280 bytes,
  * vtable 0x020B8D6C), named by its string "Starting LiveModeBase Screen" and
  * its files under build/data/screens/livemode/; a window of the main game state
  * (unit_0206BCE0.cpp). Six queued object keys, the inventory, survival and
@@ -7,8 +7,9 @@
  * panel with a gauge showing need changes, the clock, clouds, two flying
  * sprites and a sky palette blended by the hour.
  *
- * Bounds: hypothesis. The start is the constructor, after the screen with
- * vtable 0x020B8C00; the end is unit_02021CBC.cpp. `.rodata` holds the key and
+ * Bounds: hypothesis. The start is func_0201e2b0, before the constructor (it
+ * is called only here and follows the inline slots of unit_0201DD90.cpp, so
+ * the file name keeps the constructor's address); the end is unit_02021CBC.cpp. `.rodata` holds the key and
  * need tables of the constructor and two unused constants, `.data` the strings
  * and the vtable with its header, `.bss` the instance and the two blended
  * palettes. Real file name unknown.
@@ -331,6 +332,7 @@ Unk0206bcf0 *func_0206bce0();
 void func_02028eec(Unk02027994 *o, int mode, Unk0205cf00 *def, void *p);
 u32 func_02059cf8(Unk020599a0 *p);
 bool func_0205d340(Unk0205cf00 *def, u32 key);
+int func_0205d134(Unk0205cf00 *def, u32 key);
 void func_02007d94(void *list);
 int func_02007dbc(void *list);
 void func_02054a4c(Unk020bfc80 *p);
@@ -378,6 +380,17 @@ void func_02021888(Unk0201e300 *p);
 Unk0201e300 *data_020be3b0;
 u16 data_020be3b4[0x20];
 u16 data_020be3f4[0x10];
+
+int func_0201e2b0(Unk020548b0Node *n) {
+    int id = 0x76034;
+    if (!func_0205d340(n->def, 0x3d9aefc0)) {
+        id = func_0205d134(n->def, 0x9d5bba8e);
+        if (id == -1) {
+            id = 0;
+        }
+    }
+    return id;
+}
 
 /*
  * 98.47 %: registers of the cloud and need loops; the original reloads the need
