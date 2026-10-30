@@ -31,6 +31,11 @@ default: add one here only once a unit of this ROM proves it with mwccarm.
 
 ## Registers and stack
 
+- A pointer used in a loop body and declared inside the loop can take the counter's
+  register and the other way round. Declaring it at function scope, before the
+  `for`, gave the original allocation (`func_0202171c` in `unit_0201E300.cpp`,
+  98.52 % to 100 %; `func_02021888` and `func_020214cc` improved).
+
 - Callee-saved registers rotated over a whole function with a parsing loop
   in the middle: move the loop into a `static inline` helper taking the
   output pointer and the field it reads by reference (`const int &id`), the
@@ -416,6 +421,13 @@ default: add one here only once a unit of this ROM proves it with mwccarm.
   `Unk02041b10`).
 
 ## Inlining and emission order
+
+- Inline virtual functions called through an object's vtable are emitted right after
+  the first function that calls them, in reverse order of their first call
+  (`func_10`, `func_30`, `func_20` after `func_0201ef54`, which calls `func_20`,
+  `func_30`, `func_10`; `unit_0201E300.cpp`). This order tells a kept copy's slot
+  and the file that keeps it. `#pragma dont_inline on` around one function keeps
+  calls the original did not inline; it also turns off its other inline helpers.
 
 - A nested loop with hand-written induction variables can allocate them in the
   wrong order when they are declared in the `for`. Declaring the inner index

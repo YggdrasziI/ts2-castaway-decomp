@@ -98,3 +98,4 @@
 | 2026-10-30 | 2d4e7fc | 274376 / 720836 bytes (38.06 %; fuzzy 57.41 %, linked 9.71 %) | 2243 / 4556 | 71 / 191 | Paint screen unit (22 / 32 functions, `.text` fuzzy 97.28 %) |
 | 2026-10-30 | db918bb | 275720 / 720836 bytes (38.25 %; fuzzy 57.66 %, linked 9.71 %) | 2260 / 4556 | 71 / 192 | Touch view screen unit (17 / 18 functions, constructor 94.69 %) |
 | 2026-10-30 | ce82fc5 | 280824 / 720836 bytes (38.96 %; fuzzy 58.66 %, linked 9.71 %) | 2286 / 4556 | 71 / 193 | Survival guide map unit (26 / 28 functions, `.text` fuzzy 99.85 %) |
+| 2026-10-30 | 8924d3d | 286440 / 720836 bytes (39.74 %; fuzzy 60.69 %, linked 9.71 %) | 2322 / 4556 | 71 / 194 | Live mode screen unit (36 / 54 functions, `.text` fuzzy 98.91 %) |
