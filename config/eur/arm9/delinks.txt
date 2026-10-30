@@ -18,6 +18,12 @@ src/game/unit_0201B6D4.cpp:
     .data       start:0x020b8908 end:0x020b8a7c
     .bss        start:0x020be384 end:0x020be3ac
 
+src/game/unit_0201E300.cpp:
+    .text       start:0x0201e300 end:0x02021cbc
+    .rodata     start:0x020ae6f4 end:0x020ae784
+    .data       start:0x020b8c18 end:0x020b8dac
+    .bss        start:0x020be3b0 end:0x020be414
+
 src/game/unit_02021CBC.cpp:
     .text       start:0x02021cbc end:0x020238ec
     .rodata     start:0x020ae784 end:0x020ae7a0
