@@ -5,7 +5,7 @@
  * "phase changed" flag at 0x1C is set after the call when the phase moved).
  * func_020738ec opens "ROM_Euro/source/archives/screens.nitro_archive", builds
  * the 0x484-byte screen object (unit_0204A9F8.cpp, two page ranges by id) and the 0xAC-byte
- * guide object (func_0201d70c); the phases step the screen through its opening,
+ * credits screen (Unk0201d70c); the phases step the screen through its opening,
  * wait for its result or a timeout (0x190 frames), play
  * "GROUP_SE_COMMON SE_OPEN_SURVIVAL_GUIDE" and close; func_02073a4c picks the
  * next state (2 or 6) once both objects are done.
@@ -70,15 +70,18 @@ public:
     u8 unk432[0x52];
 };
 
-/* The guide object, built by func_0201d70c. */
+/* The credits screen of unit_0201D70C.cpp. */
 class Unk0201d70c {
 public:
+    Unk0201d70c();
     virtual ~Unk0201d70c();
     virtual void func_08();
     virtual void func_0c();
     virtual void func_10();
     virtual void func_14();
     virtual void func_18();
+
+    u8 unk4[0xa8];
 };
 
 struct Unk020a2994 {
@@ -113,7 +116,6 @@ void func_020a14e0(Unk020d6240 *system, int a);
 void func_020a15a8(Unk020d6240 *system, int dt);
 bool func_020a1280(Unk020d6240 *system, int a, int b);
 int func_020a0b8c(void *p, void *object);
-Unk0201d70c *func_0201d70c(void *mem);
 void func_0206c290(Unk020d6240 *system);
 void func_0207c224();
 void func_01ffadf8(Unk020916a4 *manager);
@@ -167,11 +169,7 @@ void Unk02073878::func_02071e04() {
         screen = new Unk0204a9f8(archive, 7, 0xe);
     }
     screen->func_08();
-    Unk0201d70c *g = (Unk0201d70c *)operator new(0xac);
-    if (g != 0) {
-        g = func_0201d70c(g);
-    }
-    guide = g;
+    guide = new Unk0201d70c;
     if (id == 5) {
         guide->func_08();
         func_020a37e8(func_020a2994(), 1);

@@ -1123,6 +1123,13 @@ default: add one here only once a unit of this ROM proves it with mwccarm.
   copies of the same string in `.data` belong to two files, which bounds the
   split between their users ("lot.lot.nitro_lot" at 0x020BB9C8 and 0x020BBBA0,
   `unit_020582E0.cpp`).
+- A `new` of a class that calls the base copy `...C2Ev` (and `delete` that calls
+  `...D2Ev`) instead of `C1` / `D1`: the object is an empty derived class, with
+  implicit constructor and destructor (`class Line : public Unk02090308 {};`,
+  `unit_0201D70C.cpp`).
+- A sparse `switch` tests its cases in sorted order, and the signedness of the
+  value sets it: an `int` value tests 0xE0343C1B before 0x4CCC5ACE, a `u32` the
+  reverse (`unit_0201D70C.cpp`).
 - In a `complete` file, `check symbols` looks the string literals up by name:
   rename their `data_<addr>` symbols to the object's `@<n>` names (`... local`,
   exact `byte[N]` length), as printed in the error ("Possible name: @241").

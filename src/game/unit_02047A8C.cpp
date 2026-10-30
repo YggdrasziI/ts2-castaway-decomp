@@ -60,15 +60,18 @@ struct Unk0209f8d0 {
     char name[1];
 };
 
-/* The guide object, built by func_0201d70c. */
+/* The credits screen of unit_0201D70C.cpp. */
 class Unk0201d70c {
 public:
+    Unk0201d70c();
     virtual ~Unk0201d70c();
     virtual void func_08();
     virtual void func_0c();
     virtual void func_10();
     virtual bool func_14();
     virtual void func_18();
+
+    u8 unk4[0xa8];
 };
 
 /* A scene object found under the touch point: its definition at 0x28. */
@@ -143,7 +146,6 @@ bool func_020a5208(Unk020d60c8Items *items, int index);
 bool func_020a5248(Unk020d60c8Items *items, int index);
 void *func_020a2994();
 void func_020a2ce8(void *sound, u32 hash, int volume, int unk);
-Unk0201d70c *func_0201d70c(void *mem);
 void func_0205f098(Unk0205f098 *list);
 void func_0205f0a8(Unk0205f098 *list);
 void func_0205f10c(Unk0205f098 *list, Unk0204a254Item **out, int count);
@@ -543,11 +545,7 @@ void Unk02047a8c::func_38(bool active) {
     button794.func_08();
     if (slide.func_opened()) {
         func_020a7cf0(imageFrame, false);
-        Unk0201d70c *g = (Unk0201d70c *)operator new(0xac);
-        if (g != 0) {
-            g = func_0201d70c(g);
-        }
-        guide = g;
+        guide = new Unk0201d70c;
         guide->func_08();
         func_020a1494(func_020a18e4(), 1, 0x10);
         func_020a122c(func_020a18e4());
