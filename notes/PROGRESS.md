@@ -95,3 +95,4 @@
 | 2026-10-30 | 4c02027 | 260276 / 720836 bytes (36.11 %; fuzzy 54.21 %, linked 9.71 %) | 2164 / 4556 | 71 / 187 | Object text screen unit (20 / 21 functions, constructor 98.96 %) |
 | 2026-10-30 | 847fcaf | 268600 / 720836 bytes (37.26 %; fuzzy 55.41 %, linked 9.71 %) | 2199 / 4556 | 71 / 188 | Survival guide unit (35 / 36 functions, `func_020299ec` 96.22 %) |
 | 2026-10-30 | 4e1ec9a | 270560 / 720836 bytes (37.53 %; fuzzy 55.77 %, linked 9.71 %) | 2221 / 4556 | 71 / 189 | Transition unit (22 / 23 functions, `func_02027644` 99.45 %) |
+| 2026-10-30 | 2d4e7fc | 274376 / 720836 bytes (38.06 %; fuzzy 57.41 %, linked 9.71 %) | 2243 / 4556 | 71 / 191 | Paint screen unit (22 / 32 functions, `.text` fuzzy 97.28 %) |
