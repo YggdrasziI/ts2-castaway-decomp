@@ -5,7 +5,7 @@
  * press opens the category. It opens on the page of data_020b92b0.
  *
  * Bounds: hypothesis. The start is the constructor, after the inline slots of
- * the previous screen (func_0202aedc); the end is the recipe screen
+ * the previous screen (unit_02029B80.cpp); the end is the recipe screen
  * (unit_0202CDF0.cpp). `.data` holds the current object, this class's vtable
  * with its header and the three count formats. Real file name unknown.
  *
