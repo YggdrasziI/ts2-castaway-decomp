@@ -99,3 +99,4 @@
 | 2026-10-30 | db918bb | 275720 / 720836 bytes (38.25 %; fuzzy 57.66 %, linked 9.71 %) | 2260 / 4556 | 71 / 192 | Touch view screen unit (17 / 18 functions, constructor 94.69 %) |
 | 2026-10-30 | ce82fc5 | 280824 / 720836 bytes (38.96 %; fuzzy 58.66 %, linked 9.71 %) | 2286 / 4556 | 71 / 193 | Survival guide map unit (26 / 28 functions, `.text` fuzzy 99.85 %) |
 | 2026-10-30 | 8924d3d | 286440 / 720836 bytes (39.74 %; fuzzy 60.69 %, linked 9.71 %) | 2322 / 4556 | 71 / 194 | Live mode screen unit (36 / 54 functions, `.text` fuzzy 98.91 %) |
+| 2026-10-30 | 483532a | 287832 / 720836 bytes (39.93 %; fuzzy 60.88 %, linked 9.89 %) | 2341 / 4556 | 72 / 196 | Keyboard screen unit (complete, 18 functions) |
