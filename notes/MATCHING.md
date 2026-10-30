@@ -10,6 +10,10 @@ default: add one here only once a unit of this ROM proves it with mwccarm.
   two loads into `ldm`: declare the array with its size (`extern const int
   data_020ae7cc[20];` rather than `[]`) (`__sinit_unit_02035FEC.cpp`, 60 % ->
   100 %).
+- A local array of consecutive ids stored word by word (`add r0, r1, #0x1`,
+  `str r0, [sp, ...]`) has a non-constant initializer: `int base = 0xd57;
+  int ids[6] = {base, base + 1, ...};`. Plain constants are copied from
+  `.rodata` with `ldm` / `stm` (`Unk0202fddc::func_020322b4`).
 - A single key passed by address (`func_02054d94(..., &key, 1, 1)`) is a
   scalar local (`u32 key = 0x798b86ac;`): a one-element array with an
   initializer is copied from a `.data` literal (`ldr r0, [r0]`)
@@ -412,6 +416,11 @@ default: add one here only once a unit of this ROM proves it with mwccarm.
   `Unk02041b10`).
 
 ## Inlining and emission order
+
+- A virtual call on a global object is devirtualized to `bl`. Through an inline
+  function returning its address (`func_player()->func_14()`) the call stays
+  indirect (`ldr r2, [r2, #0x14]`, `blx r2`) (`Unk0202fddc::func_0203161c`,
+  97.62 % -> 98.66 %).
 
 - A member the original reads twice (a flag test, then the whole word in an
   expression) where mwccarm keeps the first load in a register: testing the flag

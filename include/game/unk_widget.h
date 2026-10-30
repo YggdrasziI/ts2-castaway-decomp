@@ -6,7 +6,8 @@
  *
  * The base has only inline or pure virtuals, so every widget file emits its
  * vtable (the kept copy is the first, 0x020B9E80). Its slots 7 to 20 point to
- * functions of far files (0x02017150 to 0x02031028) not yet decompiled: they
+ * functions of far files (0x02017150 to 0x02031028) mostly not yet decompiled
+ * (slot 7 is in unit_0202FDDC.cpp): they
  * are declared here under slot names (non-inline), with the arguments and
  * results their callers use, so the base vtable copy is not emitted and the
  * tail of the widget vtables does not match.
@@ -192,7 +193,7 @@ public:
     virtual Unk02098bc8 *func_10() = 0;
     virtual void func_14(int x, int y) = 0;
     virtual void func_18(bool show) = 0;
-    virtual void func_1c();
+    virtual void func_1c(Unk020b9e88Track *x, Unk020b9e88Track *y);
     virtual void func_20(int x, int y);
     virtual void func_24(int x, int y);
     virtual void func_28(int value);

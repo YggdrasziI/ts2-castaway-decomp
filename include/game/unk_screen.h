@@ -137,6 +137,7 @@ public:
     void func_020518a8(unsigned int count);
     void func_020518fc(Unk020b9e88 *child);
     Unk020a7c90 *func_02051ad0(int index);
+    void func_02051adc(Unk020b9e88 *child, int index);
     void func_02051ae8(Unk020a7c90 *sprite, int index);
     void func_08();
     Unk02098bc8 *func_10();
@@ -157,6 +158,7 @@ public:
     void func_14(int x, int y);
     void func_08();
     Unk020a7c90 *func_0204fda8(int index);
+    void func_0204fdb4();
     void func_0204fdcc(bool loop);
     Unk02098bc8 *func_10();
 
