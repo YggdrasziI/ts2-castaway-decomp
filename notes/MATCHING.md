@@ -1271,3 +1271,17 @@ default: add one here only once a unit of this ROM proves it with mwccarm.
   arguments are evaluated left to right.
 - An archive call whose argument loads after the archive: an inline returning the
   archive makes the load follow it, a direct `f()->archive->g(field)` loads it first.
+- A table of string pointers whose strings follow the vtable in source order, in
+  the table's order, is a `static` local of the function that reads it. At file
+  scope the same strings come out sorted by length and before the main `.data`
+  section, which shifts everything. The symbol becomes `<name>$<n> ... local`
+  (`data_020b7ec8$645`, `unit_02013258.cpp`, `.data` 0 word left).
+- A file-scope table defined after a table that points to it needs its `extern`
+  declaration first; the extern-declared tables are emitted after the other
+  definitions (`data_020b7dd8`, `data_020b7e2c`, `unit_02013258.cpp`).
+- Two locals swapped in the registers with every declaration order tried: try
+  `u32` for one of them. `u32 x` for a value only passed on, not `int x`, moved
+  it above the loop counter (`func_14` of `unit_02013258.cpp`, 99.86 % -> 100 %).
+- `bars[index - 1]` after `index - 1 > 0` reuses the difference; `(&bars[index])[-1]`
+  gives the original's `add r0, r9, r1, lsl #2; ldr r0, [r0, #0xd4]`
+  (`func_02013b04`).
