@@ -107,3 +107,4 @@
 | 2026-10-31 | e8937e6 | 295972 / 720836 bytes (41.06 %; fuzzy 63.58 %, linked 10.28 %) | 2419 / 4556 | 76 / 201 | Spear fishing unit (20 / 52 functions, `.text` fuzzy 98.38 %) |
 
 | 2026-10-31 | 0e1f9b1 | 299352 / 720836 bytes (41.53 %; fuzzy 64.05 %, linked 10.75 %) | 2432 / 4556 | 77 / 203 | Instrument microgame unit (complete, 13 functions) |
+| 2026-10-31 | fc0d85f | 299796 / 720836 bytes (41.59 %; fuzzy 64.12 %, linked 10.81 %) | 2436 / 4556 | 78 / 205 | Icon View screen unit (complete, 4 functions) |
