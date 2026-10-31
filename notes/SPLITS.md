@@ -62,6 +62,7 @@ Commands: `python tools/compiler_sweep.py --ref <project> --compilers 2.0/sp1p5
 
 | Unit | Bounds | Content | Status |
 |---|---|---|---|
+| `src/game/unit_020061DC.cpp` | `.text` 0x020061DC-0x02006458, `.data` 0x020B74D0-0x020B7524, `.bss` 0x020BE148-0x020BE15C (hypothesis on the bounds: `.data` is the name and the vtable, `.bss` the guard and the local description) | action "Plant Seed" `Unk02006228`, 9 / 9 functions, complete |
 | `src/game/unit_02006458.cpp` | `.text` 0x02006458-0x020066B4, `.data` 0x020B7524-0x020B7560, `.bss` 0x020BE15C-0x020BE170 (hypothesis on the bounds: `.data` is the name and the vtable, `.bss` the guard and the local description) | action "Play Instrument" `Unk020064a4`, 11 / 11 functions, complete |
 | `src/game/unit_020066B4.cpp` | `.text` 0x020066B4-0x02006CAC, `.data` 0x020B7560-0x020B759C, `.bss` 0x020BE170-0x020BE184 (hypothesis on the bounds: `.data` is the name and the vtable, `.bss` the guard and the local description) | action "Play Microgame" `Unk02006700`, 11 / 11 functions, complete |
 | `src/game/unit_02006CAC.cpp` | `.text` 0x02006CAC-0x02007204, `.data` 0x020B759C-0x020B75D4 (hypothesis on the bounds: after the inline destructors of the file before it, up to the pool; `.data` is the vtable) | base action `Unk020071d4`, 8 / 8 functions, complete |
