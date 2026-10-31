@@ -582,7 +582,7 @@ _ZN11Unk02013f8cC2EPKcmP11Unk02093648ii kind:function(arm,size=0x1d0) addr:0x020
 _ZN11Unk02013f8cD1Ev kind:function(arm,size=0x3c) addr:0x0201415c
 _ZN11Unk02013f8cD0Ev kind:function(arm,size=0x44) addr:0x02014198
 _ZN11Unk02013f8cD2Ev kind:function(arm,size=0x3c) addr:0x020141dc
-_ZN11Unk02013f8c7func_10Ei kind:function(arm,size=0x34) addr:0x02014218
+_ZN11Unk02013f8c7func_10Eb kind:function(arm,size=0x34) addr:0x02014218
 _ZN11Unk02013f8c7func_18Ev kind:function(arm,size=0x8c) addr:0x0201424c
 _ZN11Unk02013f8c7func_14Ev kind:function(arm,size=0x4) addr:0x020142d8
 _ZN11Unk02013f8c7func_1cEv kind:function(arm,size=0x4) addr:0x020142dc
@@ -4142,12 +4142,12 @@ func_020a5b58 kind:function(arm,size=0x94) addr:0x020a5b58
 func_020a5bec kind:function(arm,size=0x4c) addr:0x020a5bec
 func_020a5c38 kind:function(arm,size=0x78) addr:0x020a5c38
 func_020a5cb0 kind:function(arm,size=0x1c) addr:0x020a5cb0
-func_020a5ccc kind:function(arm,size=0x60) addr:0x020a5ccc
+_ZN11Unk020a5cccC2EP11Unk02093648ii kind:function(arm,size=0x60) addr:0x020a5ccc
 func_020a5d2c kind:function(arm,size=0x18) addr:0x020a5d2c
 func_020a5d44 kind:function(arm,size=0x20) addr:0x020a5d44
-func_020a5d64 kind:function(arm,size=0x18) addr:0x020a5d64
+_ZN11Unk020a5cccD2Ev kind:function(arm,size=0x18) addr:0x020a5d64
 func_020a5d7c kind:function(arm,size=0x128) addr:0x020a5d7c
-func_020a5ea4 kind:function(arm,size=0x1c) addr:0x020a5ea4
+_ZN11Unk020a5ccc13func_020a5ea4EP11Unk020a9d58 kind:function(arm,size=0x1c) addr:0x020a5ea4
 func_020a5ec0 kind:function(arm,size=0x30) addr:0x020a5ec0
 func_020a5ef0 kind:function(arm,size=0x38) addr:0x020a5ef0
 func_020a5f28 kind:function(arm,size=0x110) addr:0x020a5f28
@@ -4767,9 +4767,9 @@ data_020b8028 kind:data(any) addr:0x020b8028
 data_020b8038 kind:data(any) addr:0x020b8038
 data_020b8048 kind:data(any) addr:0x020b8048
 data_020b8068 kind:data(any) addr:0x020b8068
-data_020b8084 kind:data(any) addr:0x020b8084
-data_020b8094 kind:data(any) addr:0x020b8094
-data_020b80a8 kind:data(any) addr:0x020b80a8
+@542 kind:data(byte[13]) addr:0x020b8084 local
+@569 kind:data(byte[12]) addr:0x020b8094 local
+_ZTV11Unk02013f8c kind:data(any) addr:0x020b80a0
 data_020b80c8 kind:data(any) addr:0x020b80c8
 data_020b80d8 kind:data(any) addr:0x020b80d8
 data_020b80e0 kind:data(any) addr:0x020b80e0

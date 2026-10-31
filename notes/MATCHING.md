@@ -1081,6 +1081,10 @@ default: add one here only once a unit of this ROM proves it with mwccarm.
   `if (fade.func_hidden() | !active) return;` (`func_38` of
   `unit_02047A8C.cpp`).
 
+- `teq r0, #1; movne r1, #1; moveq r1, #0` for a `bool` argument: `f(g() ^ 1)` with
+  a `bool` `g`, not `f(!g())`, which gives `cmp #0; moveq / movne`
+  (`Unk02013f8c::func_18`, 98 % -> 100 %).
+
 ## ARM / Thumb
 
 (none yet)

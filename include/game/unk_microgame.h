@@ -2,13 +2,19 @@
 #define GAME_UNK_MICROGAME_H
 
 #include "game/unk_archive.h"
+#include "game/unk_screen.h"
 
 /* Base of the game mode classes, constructor 0x020A5CCC. */
 class Unk020a5ccc {
 public:
+    Unk020a5ccc(Unk02093648 *file, int a, int b);
     virtual ~Unk020a5ccc();
     virtual void func_08();
     virtual void func_0c();
+
+    void func_020a5ea4(Unk020a9d58 *layout);
+
+    u8 unk4[0x34];
 };
 
 /* Microgame base, 0xBC bytes, constructor 0x02013F8C. */
@@ -16,12 +22,14 @@ class Unk02013f8c : public Unk020a5ccc {
 public:
     Unk02013f8c(const char *name, u32 hash, Unk02093648 *file, int a, int b);
     virtual ~Unk02013f8c();
-    virtual void func_10(int a);
+    virtual void func_10(bool a);
     virtual void func_14();
     virtual bool func_18();
     virtual void func_1c();
 
-    u8 unk4[0xb8];
+    Unk020a9d58 layout;
+    int timer;
+    const char *name;
 };
 
 #endif
