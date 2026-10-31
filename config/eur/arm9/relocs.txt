@@ -837,7 +837,7 @@ from:0x020066f8 kind:load to:0x020b7560 module:main
 from:0x020066fc kind:load to:0x020be174 module:main
 from:0x02006708 kind:arm_call to:0x020023b8 module:main
 from:0x02006738 kind:arm_call to:0x020593e4 module:main
-from:0x02006750 kind:load to:0x020b7578 module:main
+from:0x02006750 kind:load to:0x020b7570 add:0x8 module:main
 from:0x0200679c kind:arm_call to:0x02002438 module:main
 from:0x020067a4 kind:arm_call to:0x0205e1b8 module:main
 from:0x020067c8 kind:arm_call to:0x0200292c module:main

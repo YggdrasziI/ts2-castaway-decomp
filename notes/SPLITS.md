@@ -62,6 +62,7 @@ Commands: `python tools/compiler_sweep.py --ref <project> --compilers 2.0/sp1p5
 
 | Unit | Bounds | Content | Status |
 |---|---|---|---|
+| `src/game/unit_020066B4.cpp` | `.text` 0x020066B4-0x02006CAC, `.data` 0x020B7560-0x020B759C, `.bss` 0x020BE170-0x020BE184 (hypothesis on the bounds: `.data` is the name and the vtable, `.bss` the guard and the local description) | action "Play Microgame" `Unk02006700`, 11 / 11 functions, complete |
 | `src/game/unit_02006CAC.cpp` | `.text` 0x02006CAC-0x02007204, `.data` 0x020B759C-0x020B75D4 (hypothesis on the bounds: after the inline destructors of the file before it, up to the pool; `.data` is the vtable) | base action `Unk020071d4`, 8 / 8 functions, complete |
 | `src/game/unit_02007204.cpp` | `.text` 0x02007204-0x02007C98, `.bss` 0x020BE184-0x020BE194 (hypothesis on the bounds: after the inline destructors of the file before it, up to the list of actions; `.bss` is the pool object) | pool of 128 action slots and the factory of actions, implicit D1 of `Unk02007c84`, 6 / 6 functions, complete |
 | `src/game/unit_02007C98.cpp` | `.text` 0x02007C98-0x020080C0 (hypothesis on the bounds: after the destructor at 0x02007C84, up to the first action of the next file; it may be one file with the pool code before it; no data of its own) | list of actions of an object, 19 / 19 functions, complete |
