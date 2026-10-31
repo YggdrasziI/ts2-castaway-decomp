@@ -132,3 +132,4 @@
 | 2026-11-01 | ebf2e78 | 331244 / 720836 bytes (45.95 %; fuzzy 73.64 %, linked 12.83 %) | 2742 / 4556 | 92 / 228 | Play Instrument action unit (complete, 11 / 11 functions) |
 | 2026-11-01 | 0800a12 | 331880 / 720836 bytes (46.04 %; fuzzy 73.72 %, linked 12.92 %) | 2751 / 4556 | 93 / 229 | Plant Seed action unit (complete, 9 / 9 functions) |
 | 2026-11-01 | 6ed8b6a | 332820 / 720836 bytes (46.17 %; fuzzy 73.85 %, linked 13.05 %) | 2760 / 4556 | 94 / 230 | Place Object action unit (complete, 9 / 9 functions) |
+| 2026-11-01 | 6f7fff4 | 333652 / 720836 bytes (46.29 %; fuzzy 73.97 %, linked 13.16 %) | 2768 / 4556 | 95 / 231 | Action Pickup unit (complete, 8 / 8 functions) |
