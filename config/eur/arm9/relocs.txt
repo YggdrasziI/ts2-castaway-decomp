@@ -458,7 +458,7 @@ from:0x02004290 kind:load to:0x020be094 module:main
 from:0x02004294 kind:load to:0x020b719c module:main
 from:0x02004298 kind:load to:0x020be098 module:main
 from:0x020042a4 kind:arm_call to:0x020023b8 module:main
-from:0x020042b8 kind:load to:0x020b71bc module:main
+from:0x020042b8 kind:load to:0x020b71b4 add:0x8 module:main
 from:0x020042c4 kind:arm_call to:0x02002408 module:main
 from:0x020042d8 kind:arm_call to:0x02002408 module:main
 from:0x020042e0 kind:arm_call to:0x020023b4 module:main
