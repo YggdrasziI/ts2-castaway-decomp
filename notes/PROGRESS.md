@@ -102,3 +102,4 @@
 | 2026-10-30 | 483532a | 287832 / 720836 bytes (39.93 %; fuzzy 60.88 %, linked 9.89 %) | 2341 / 4556 | 72 / 196 | Keyboard screen unit (complete, 18 functions) |
 | 2026-10-30 | de8550a | 289500 / 720836 bytes (40.16 %; fuzzy 61.11 %, linked 10.12 %) | 2361 / 4556 | 73 / 197 | Credits screen unit (complete, 20 functions) |
 | 2026-10-31 | cfd3aa5 | 293264 / 720836 bytes (40.68 %; fuzzy 61.77 %, linked 10.12 %) | 2385 / 4556 | 73 / 196 | Conversation balloon unit (24 / 25 functions, `.text` fuzzy 99.64 %) |
+| 2026-10-31 | 64644c8 | 293544 / 720836 bytes (40.72 %; fuzzy 61.81 %, linked 10.16 %) | 2391 / 4556 | 75 / 198 | Telescope and treasure map microgame units (complete, 6 functions) |
