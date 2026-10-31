@@ -683,7 +683,7 @@ bool Unk0201a4e0::func_04(int index, bool force) {
 #pragma dont_inline on
 bool Unk0201a4e0::func_02019b18() {
     if (hitting.v & 1) {
-        if (hit(&unk124, unkc8, &pos, unk12c) == 1) {
+        if (hit(&unk124, &scale, &pos, unk12c) == 1) {
             Unk0201a2c8 *g = owner;
             int k = func_0200cb58(this);
             for (int i = 0; i < 3; i++) {

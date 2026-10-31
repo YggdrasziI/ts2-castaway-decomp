@@ -69,7 +69,7 @@ inline void func_set(Unk02098e70 &d, const Unk02098e70 &s) {
     *(Unk02098e70Wrap *)&d = *(Unk02098e70Wrap *)&s;
 }
 
-/* Base of Unk02010920: its code (0x0200AD70...) is not written yet. */
+/* Base of Unk02010920. */
 class Unk0200ad70 : public Unk0200dd90 {
 public:
     Unk0200ad70(int count);
@@ -88,10 +88,8 @@ public:
     Unk02098e70 target;
     int unkc0;
     int (*hit)(Unk02098e70 *a, void *b, Unk02098e70 *c, int d);
-    u8 unkc8[4];
-    int reach;
-    int size;
-    u8 unkd4[4];
+    Unk02098e70 scale;
+    int sizes[2];
     int key;
     int index;
     u32 anims[2];

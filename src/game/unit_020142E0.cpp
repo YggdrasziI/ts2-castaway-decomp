@@ -1291,7 +1291,7 @@ bool Unk02015790::func_020174a4(Unk0201567c *line) {
     if (line->fish != 0) {
         return false;
     }
-    int f = reach == 0 ? 0x1000 : func_02077c60(0x1000, reach);
+    int f = scale.y == 0 ? 0x1000 : func_02077c60(0x1000, scale.y);
     Unk02098e70 d = target.func_02098fcc(pos).func_02098f38();
     Unk02098e70 a = pos.func_02098fa8(d.func_02098ec0(f));
     if ((int)func_position(line->sprites[28]).func_02098fcc(a).func_02098e94() > 0x40000) {

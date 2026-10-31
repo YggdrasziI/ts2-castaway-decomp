@@ -4700,7 +4700,7 @@ data_020b7868 kind:data(any) addr:0x020b7868
 data_020b788c kind:data(any) addr:0x020b788c
 data_020b78b0 kind:data(any) addr:0x020b78b0
 data_020b78d0 kind:data(any) addr:0x020b78d0
-data_020b78fc kind:data(any) addr:0x020b78fc
+_ZTV11Unk0200ad70 kind:data(any) addr:0x020b78f4
 data_020b7900 kind:data(any) addr:0x020b7900
 data_020b7904 kind:data(any) addr:0x020b7904
 data_020b7990 kind:data(any) addr:0x020b7990

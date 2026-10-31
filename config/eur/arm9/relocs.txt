@@ -1395,7 +1395,7 @@ from:0x0200ad48 kind:arm_call to:0x02002408 module:main
 from:0x0200ad5c kind:arm_call to:0x02002408 module:main
 from:0x0200ad64 kind:arm_call to:0x020023b4 module:main
 from:0x0200ad78 kind:arm_call to:0x0200dd90 module:main
-from:0x0200ad8c kind:load to:0x020b78fc module:main
+from:0x0200ad8c kind:load to:0x020b78f4 add:0x8 module:main
 from:0x0200ad98 kind:arm_call to:0x0200de00 module:main
 from:0x0200adbc kind:arm_call to:0x0200df54 module:main
 from:0x0200adc4 kind:arm_call to:0x0200e0fc module:main
