@@ -983,7 +983,7 @@ from:0x02007c00 kind:arm_call to:0x02000cb0 module:main
 from:0x02007c20 kind:load to:0x020b7408 module:main
 from:0x02007c24 kind:load to:0x020b73dc module:main
 from:0x02007c28 kind:load to:0x020b73b0 module:main
-from:0x02007c2c kind:load to:0x020b77bc module:main
+from:0x02007c2c kind:load to:0x020b77b4 add:0x8 module:main
 from:0x02007c30 kind:load to:0x020b72a0 module:main
 from:0x02007c34 kind:load to:0x020b7884 add:0x8 module:main
 from:0x02007c38 kind:load to:0x020b7830 add:0x8 module:main

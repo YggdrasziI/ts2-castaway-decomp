@@ -7,6 +7,12 @@
     .data       start:0x020b6ee0 end:0x020bdfe0 kind:data align:32
     .bss        start:0x020bdfe0 end:0x020d7160 kind:bss align:32
 
+src/game/unit_02009794.cpp:
+    complete
+    .text       start:0x02009794 end:0x02009848
+    .data       start:0x020b77a4 end:0x020b77e0
+    .bss        start:0x020be1d8 end:0x020be1ec
+
 src/game/unit_02009848.cpp:
     complete
     .text       start:0x02009848 end:0x02009d08
