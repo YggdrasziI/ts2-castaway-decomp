@@ -31,6 +31,13 @@ default: add one here only once a unit of this ROM proves it with mwccarm.
 
 ## Registers and stack
 
+- `add rN, sp, #x` before reading a temporary (`ldrsh r9, [r3, #6]`): the original calls an
+  inline member on the temporary, so `this` is a pointer register. An inline free function
+  taking `const T &` reads from sp directly. Same for a compare through `add r1, sp, #x`:
+  member of the temporary, other value by copy (`unit_020090B4.cpp`, 93 % to 99.75 %).
+- Registers rose with the declaration order of the locals in `func_18` of
+  `unit_020090B4.cpp`: declaring first and assigning later moved them directly.
+
 - A pointer used in a loop body and declared inside the loop can take the counter's
   register and the other way round. Declaring it at function scope, before the
   `for`, gave the original allocation (`func_0202171c` in `unit_0201E300.cpp`,
