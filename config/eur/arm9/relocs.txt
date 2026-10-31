@@ -980,26 +980,26 @@ from:0x02007bc4 kind:arm_call to:0x020023ac module:main
 from:0x02007bd8 kind:arm_call to:0x0200429c module:main
 from:0x02007bec kind:arm_call to:0x020023ac module:main
 from:0x02007c00 kind:arm_call to:0x02000cb0 module:main
-from:0x02007c20 kind:load to:0x020b7408 module:main
-from:0x02007c24 kind:load to:0x020b73dc module:main
-from:0x02007c28 kind:load to:0x020b73b0 module:main
+from:0x02007c20 kind:load to:0x020b7400 add:0x8 module:main
+from:0x02007c24 kind:load to:0x020b73d4 add:0x8 module:main
+from:0x02007c28 kind:load to:0x020b73a8 add:0x8 module:main
 from:0x02007c2c kind:load to:0x020b77b4 add:0x8 module:main
-from:0x02007c30 kind:load to:0x020b72a0 module:main
+from:0x02007c30 kind:load to:0x020b7298 add:0x8 module:main
 from:0x02007c34 kind:load to:0x020b7884 add:0x8 module:main
 from:0x02007c38 kind:load to:0x020b7830 add:0x8 module:main
 from:0x02007c3c kind:load to:0x020b759c add:0x8 module:main
-from:0x02007c40 kind:load to:0x020b7444 module:main
+from:0x02007c40 kind:load to:0x020b743c add:0x8 module:main
 from:0x02007c54 kind:load to:0x020b75ec add:0x8 module:main
-from:0x02007c58 kind:load to:0x020b72dc module:main
+from:0x02007c58 kind:load to:0x020b72d4 add:0x8 module:main
 from:0x02007c60 kind:load to:0x020b76d8 add:0x8 module:main
 from:0x02007c64 kind:load to:0x020b78c8 add:0x8 module:main
 from:0x02007c68 kind:load to:0x020b7778 add:0x8 module:main
 from:0x02007c6c kind:load to:0x020b774c add:0x8 module:main
 from:0x02007c70 kind:load to:0x020b7720 add:0x8 module:main
-from:0x02007c74 kind:load to:0x020b7024 module:main
-from:0x02007c78 kind:load to:0x020b6ff8 module:main
-from:0x02007c7c kind:load to:0x020b6fcc module:main
-from:0x02007c80 kind:load to:0x020b6fa0 module:main
+from:0x02007c74 kind:load to:0x020b701c add:0x8 module:main
+from:0x02007c78 kind:load to:0x020b6ff0 add:0x8 module:main
+from:0x02007c7c kind:load to:0x020b6fc4 add:0x8 module:main
+from:0x02007c80 kind:load to:0x020b6f98 add:0x8 module:main
 from:0x02007c8c kind:arm_call to:0x02002408 module:main
 from:0x02007ca4 kind:arm_call to:0x02007340 module:main
 from:0x02007cbc kind:arm_call to:0x02007340 module:main

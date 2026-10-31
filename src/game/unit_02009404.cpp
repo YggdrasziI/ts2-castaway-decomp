@@ -5,9 +5,6 @@
  * action to the deleting destructors; `.data` is the name and three vtables, `.bss` the
  * guard, the local description and the local reference). Layouts come from the code;
  * all names are placeholders.
- *
- * Not complete: all at 100 %, but the base D1 is the kept copy 0x02007C84, in a file
- * that is still assembly ("Multiply-defined").
  */
 #include "game/unk_sim.h"
 

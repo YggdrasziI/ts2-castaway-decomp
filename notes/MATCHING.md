@@ -1386,6 +1386,10 @@ default: add one here only once a unit of this ROM proves it with mwccarm.
   in the original (`unit_0200B23C.cpp`, open).
 - A `complete` unit can be at 100 % in objdiff and still fail the link check: inline array element constructors are emitted after their user, as weak symbols. When the original has them before, define them as plain functions at the file start (`Unk0200dd90Part`).
 - A byte field passed to or set from a `bool` parameter without a `cmp` or an `and #0xff`: the field is a `bool` too (`Unk0200dd90Part::flag`).
+- A `new (p) T()` in a factory needs only the inline constructors: a class with a declared, never defined non-inline virtual references `_ZTV<class>` without emitting the vtable, so the vtable stays with its own file (`unit_02007204.cpp`).
+- A loop that runs before the vtable store of the class is the constructor of a second, vtable-less base class; a member set before a member constructor is an initializer list entry. Both are in `unit_02007204.cpp`.
+- A class destructor at the end of a file, with no call to it left in the code: the implicit destructor of a temporary written as an expression statement (`Unk02007c84();`). The call is inlined and the D1 is still emitted; a named local or a user-declared inline destructor does not emit it (`unit_02007204.cpp`).
+- A base constructor called from a derived constructor is the `C2` symbol: name the address `C2` in `symbols.txt`; the `C1` alias at that address is then dropped.
 - A `swpb` store comes from assigning a `bool` field: a `u8` source then gets normalized
   (`movne/moveq`), so the source field is a `bool` too (`unit_0200A5E0.cpp`).
 - Arguments are evaluated right to left: an inline taking a call result by value plus
