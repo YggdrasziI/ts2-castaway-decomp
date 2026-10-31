@@ -31,6 +31,10 @@ default: add one here only once a unit of this ROM proves it with mwccarm.
 
 ## Registers and stack
 
+- A value set to 0 in a branch before its only use (`moveq r4, #0`) may be a ternary in the
+  argument: `f(o, flag ? actor : 0)` also gave `actor` a lower register than `this`
+  (`func_18` of `unit_0200825C.cpp`, 99.08 % to 99.73 %).
+
 - `add rN, sp, #x` before reading a temporary (`ldrsh r9, [r3, #6]`): the original calls an
   inline member on the temporary, so `this` is a pointer register. An inline free function
   taking `const T &` reads from sp directly. Same for a compare through `add r1, sp, #x`:

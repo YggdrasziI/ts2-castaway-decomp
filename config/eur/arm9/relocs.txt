@@ -1044,7 +1044,7 @@ from:0x0200822c kind:arm_call to:0x02002408 module:main
 from:0x02008234 kind:arm_call to:0x020023b4 module:main
 from:0x02008248 kind:arm_call to:0x02002408 module:main
 from:0x02008264 kind:arm_call to:0x020023b8 module:main
-from:0x020082a0 kind:load to:0x020b764c module:main
+from:0x020082a0 kind:load to:0x020b7644 add:0x8 module:main
 from:0x020082b8 kind:arm_call to:0x02002438 module:main
 from:0x020082e8 kind:arm_call to:0x02002414 module:main
 from:0x02008318 kind:load to:0x020c3ba4 module:main

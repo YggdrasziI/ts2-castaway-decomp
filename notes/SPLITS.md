@@ -62,6 +62,7 @@ Commands: `python tools/compiler_sweep.py --ref <project> --compilers 2.0/sp1p5
 
 | Unit | Bounds | Content | Status |
 |---|---|---|---|
+| `src/game/unit_0200825C.cpp` | `.text` 0x0200825C-0x02008D48, `.data` 0x020B7624-0x020B767C (hypothesis on the bounds: from the constructor to the destructors; `.data` is the two names and the vtable; func_24 at 0x02008258 and func_28 at 0x02004930 stay out) | interaction base `Unk02008d18`, 9 / 11 functions |
 | `src/game/unit_02008D48.cpp` | `.text` 0x02008D48-0x020090B4, `.data` 0x020B767C-0x020B76C4 (hypothesis on the bounds: from the constructor to the destructors; `.data` is the vtable with four more pure slots) | abstract action `Unk02009084`, 5 / 6 functions |
 | `src/game/unit_020090B4.cpp` | `.text` 0x020090B4-0x02009404, `.data` 0x020B76C4-0x020B7710, `.bss` 0x020BE1A8-0x020BE1BC (hypothesis on the bounds: `.data` is the name and the vtable, `.bss` the guard and the local description) | action "cAction ShakeTree" `Unk020093ec`, 4 / 5 functions |
 | `src/game/unit_02009404.cpp` | `.text` 0x02009404-0x02009794, `.data` 0x020B7710-0x020B77A4, `.bss` 0x020BE1BC-0x020BE1D8 (hypothesis on the bounds: `.data` is the name and three vtables) | action "Sim Animation" `Unk02007c84` and its derived classes `Unk02009764`, `Unk02009734`; all at 100 %, not complete: base D1 kept at 0x02007C84 |
