@@ -29,6 +29,11 @@ default: add one here only once a unit of this ROM proves it with mwccarm.
   bytes match (`func_01ff8c64` stays at 99.90 % in the report with its file
   `complete`, ITCM: OK).
 
+- A lone `bx lr` just after a derived class, shared with its base vtable, can be an inline
+  virtual of the base: `virtual void func_24() {}` emits it last in the file that first
+  builds a vtable with it (`unit_020080C0.cpp`).
+- A destructor called before the next statement while the local is declared at function
+  level: put the local in its own `{ }` block (`func_28` of `unit_020080C0.cpp`).
 ## Registers and stack
 
 - A value set to 0 in a branch before its only use (`moveq r4, #0`) may be a ternary in the

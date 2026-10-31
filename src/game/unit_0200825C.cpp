@@ -3,8 +3,8 @@
  * front of the object, runs the interaction of the current block of the object script
  * and shows the conversation attached to it. Bounds: hypothesis (from its constructor to
  * its destructors; `.data` is the two names and the vtable). Layouts come from the code;
- * all names are placeholders. func_24 (0x02008258) and func_28 (0x02004930) are declared
- * only: they sit out of this range.
+ * all names are placeholders. func_24 (inline, emitted by unit_020080C0.cpp) and func_28
+ * (0x02004930) are declared only: they sit out of this range.
  *
  * Open gaps: func_14 99.81 % (stack slots of the temporaries of the test, as in
  * unit_02008D48.cpp), func_18 99.73 % (the same slots, and r12 / r6 swapped between the
