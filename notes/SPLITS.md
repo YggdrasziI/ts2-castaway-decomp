@@ -62,6 +62,7 @@ Commands: `python tools/compiler_sweep.py --ref <project> --compilers 2.0/sp1p5
 
 | Unit | Bounds | Content | Status |
 |---|---|---|---|
+| `src/game/unit_02007C98.cpp` | `.text` 0x02007C98-0x020080C0 (hypothesis on the bounds: after the destructor at 0x02007C84, up to the first action of the next file; it may be one file with the pool code before it; no data of its own) | list of actions of an object, 19 / 19 functions, complete |
 | `src/game/unit_020080C0.cpp` | `.text` 0x020080C0-0x0200825C, `.data` 0x020B75D4-0x020B7624, `.bss` 0x020BE194-0x020BE1A8 (hypothesis on the bounds: `.data` is the name and the vtable, `.bss` the guard and the local description; the last function is the inline func_24 of the base) | action "Action Change Clothing" `Unk02008240`, outfit getter func_020081dc, 7 / 7 functions, complete |
 | `src/game/unit_0200825C.cpp` | `.text` 0x0200825C-0x02008D48, `.data` 0x020B7624-0x020B767C (hypothesis on the bounds: from the constructor to the destructors; `.data` is the two names and the vtable; func_28 at 0x02004930 stays out) | interaction base `Unk02008d18`, 9 / 11 functions |
 | `src/game/unit_02008D48.cpp` | `.text` 0x02008D48-0x020090B4, `.data` 0x020B767C-0x020B76C4 (hypothesis on the bounds: from the constructor to the destructors; `.data` is the vtable with four more pure slots) | abstract action `Unk02009084`, 5 / 6 functions |
