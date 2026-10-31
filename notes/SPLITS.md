@@ -62,6 +62,7 @@ Commands: `python tools/compiler_sweep.py --ref <project> --compilers 2.0/sp1p5
 
 | Unit | Bounds | Content | Status |
 |---|---|---|---|
+| `src/game/unit_02005E30.cpp` | `.text` 0x02005E30-0x020061DC, `.rodata` 0x020AE520-0x020AE52C, `.data` 0x020B7478-0x020B74D0, `.bss` 0x020BE134-0x020BE148 (hypothesis on the bounds: `.rodata` is a local table of func_38, `.data` the name and the vtable, `.bss` the guard and the local description) | action "Place Object" `Unk02005e7c`, 9 / 9 functions, complete |
 | `src/game/unit_020061DC.cpp` | `.text` 0x020061DC-0x02006458, `.data` 0x020B74D0-0x020B7524, `.bss` 0x020BE148-0x020BE15C (hypothesis on the bounds: `.data` is the name and the vtable, `.bss` the guard and the local description) | action "Plant Seed" `Unk02006228`, 9 / 9 functions, complete |
 | `src/game/unit_02006458.cpp` | `.text` 0x02006458-0x020066B4, `.data` 0x020B7524-0x020B7560, `.bss` 0x020BE15C-0x020BE170 (hypothesis on the bounds: `.data` is the name and the vtable, `.bss` the guard and the local description) | action "Play Instrument" `Unk020064a4`, 11 / 11 functions, complete |
 | `src/game/unit_020066B4.cpp` | `.text` 0x020066B4-0x02006CAC, `.data` 0x020B7560-0x020B759C, `.bss` 0x020BE170-0x020BE184 (hypothesis on the bounds: `.data` is the name and the vtable, `.bss` the guard and the local description) | action "Play Microgame" `Unk02006700`, 11 / 11 functions, complete |

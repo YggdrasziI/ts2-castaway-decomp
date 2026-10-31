@@ -53,7 +53,7 @@ public:
     u8 unk4[0x1c];
 };
 
-/* kind 0: "Action Pickup" and its derived classes. */
+/* kinds 0 and 1: the move actions (names at 0x020B7360-0x020B738C, a hypothesis) and their base. */
 class Unk02005ad4 : public Unk02002408 {
 public:
     Unk02005ad4() {
@@ -183,7 +183,7 @@ public:
     bool unk24;
 };
 
-/* kind 9: "Place Object". */
+/* kind 9: "Action Pickup". */
 class Unk02005e1c : public Unk020071d4 {
 public:
     Unk02005e1c() {
