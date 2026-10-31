@@ -56,7 +56,7 @@ from:0x02000db4 kind:arm_call to:0x02002408 module:main
 from:0x02000dbc kind:arm_call to:0x020023b4 module:main
 from:0x02000dd0 kind:arm_call to:0x02002408 module:main
 from:0x02000df8 kind:arm_call to:0x020023b8 module:main
-from:0x02000e38 kind:load to:0x020b75a4 module:main
+from:0x02000e38 kind:load to:0x020b759c add:0x8 module:main
 from:0x02000e3c kind:load to:0x020b6f38 module:main
 from:0x02000e48 kind:arm_call to:0x02002408 module:main
 from:0x02000e5c kind:arm_call to:0x02002408 module:main
@@ -987,7 +987,7 @@ from:0x02007c2c kind:load to:0x020b77bc module:main
 from:0x02007c30 kind:load to:0x020b72a0 module:main
 from:0x02007c34 kind:load to:0x020b7884 add:0x8 module:main
 from:0x02007c38 kind:load to:0x020b7830 add:0x8 module:main
-from:0x02007c3c kind:load to:0x020b75a4 module:main
+from:0x02007c3c kind:load to:0x020b759c add:0x8 module:main
 from:0x02007c40 kind:load to:0x020b7444 module:main
 from:0x02007c54 kind:load to:0x020b75f4 module:main
 from:0x02007c58 kind:load to:0x020b72dc module:main
@@ -1128,7 +1128,7 @@ from:0x02008d20 kind:arm_call to:0x02002408 module:main
 from:0x02008d34 kind:arm_call to:0x02002408 module:main
 from:0x02008d3c kind:arm_call to:0x020023b4 module:main
 from:0x02008d50 kind:arm_call to:0x020023b8 module:main
-from:0x02008d88 kind:load to:0x020b75a4 module:main
+from:0x02008d88 kind:load to:0x020b759c add:0x8 module:main
 from:0x02008d8c kind:load to:0x020b7684 module:main
 from:0x02008dac kind:arm_call to:0x02002438 module:main
 from:0x02008db8 kind:arm_call to:0x02002414 module:main
@@ -1199,8 +1199,8 @@ from:0x02009820 kind:arm_call to:0x02002408 module:main
 from:0x02009834 kind:arm_call to:0x02002408 module:main
 from:0x0200983c kind:arm_call to:0x020023b4 module:main
 from:0x02009850 kind:arm_call to:0x020023b8 module:main
-from:0x02009898 kind:load to:0x020b75a4 module:main
-from:0x0200989c kind:load to:0x020b77f0 module:main
+from:0x02009898 kind:load to:0x020b759c add:0x8 module:main
+from:0x0200989c kind:load to:0x020b77e8 add:0x8 module:main
 from:0x020098a8 kind:arm_call to:0x02002408 module:main
 from:0x020098bc kind:arm_call to:0x02002408 module:main
 from:0x020098c4 kind:arm_call to:0x020023b4 module:main
