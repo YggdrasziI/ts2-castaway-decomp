@@ -116,3 +116,4 @@
 | 2026-10-31 | 53d608c | 313120 / 720836 bytes (43.44 %; fuzzy 69.44 %, linked 10.98 %) | 2547 / 4556 | 80 / 211 | Sprite animation unit, complete (5 / 5 functions) |
 | 2026-10-31 | 7b13d34 | 315520 / 720836 bytes (43.77 %; fuzzy 70.91 %, linked 10.98 %) | 2585 / 4556 | 80 / 212 | Collecting microgame unit (38 / 57 functions, `.text` fuzzy 95.99 %) |
 | 2026-10-31 | ae1fde8 | 316484 / 720836 bytes (43.91 %; fuzzy 71.05 %, linked 11.11 %) | 2602 / 4556 | 81 / 212 | Scene element unit, complete (17 / 17 functions) |
+| 2026-10-31 | e90bba8 | 316800 / 720836 bytes (43.95 %; fuzzy 71.31 %, linked 11.11 %) | 2608 / 4556 | 81 / 214 | Tool use action unit (6 / 9 functions, `.text` 97.20 %) |
