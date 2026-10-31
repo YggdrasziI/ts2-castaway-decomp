@@ -131,7 +131,6 @@ void func_0200df54(Unk0200dd90 *e);
 Unk0200dd90Part *func_0200dfc8(Unk0200dd90 *e, int i);
 int func_0200dfd8(Unk0200dd90 *e, Unk02098e70 *v, int d);
 void func_0200e010(Unk0200dd90 *e, Unk02098e70 *v, void *r, int a);
-int func_02010b28(Unk02010920 *e, int i, bool force);
 void func_02010954(Unk02010920 *e, void *def);
 void func_02010b8c(void *def, int a);
 void func_02010ba8(void *def);
@@ -690,7 +689,7 @@ inline void Unk02015790::func_escape() {
 }
 
 bool Unk02015790::func_04(int index, bool force) {
-    if (func_02010b28(this, index, force) == 0) {
+    if (!Unk02010920::func_04(index, force)) {
         return false;
     }
     if (id != 0) {

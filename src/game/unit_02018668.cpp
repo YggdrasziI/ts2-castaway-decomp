@@ -49,7 +49,6 @@ void func_0200df54(Unk0200dd90 *e);
 Unk0200dd90Part *func_0200dfc8(Unk0200dd90 *e, int i);
 int func_0200dfd8(Unk0200dd90 *e, Unk02098e70 *v, int d);
 void func_0200e010(Unk0200dd90 *e, Unk02098e70 *v, void *r, int a);
-int func_02010b28(Unk02010920 *e, int i, bool force);
 void func_02010954(Unk02010920 *e, void *def);
 void func_020a6058(void *g, int id);
 int func_020a6038(void *g, int hash);
@@ -669,7 +668,7 @@ void Unk0201a2c8::func_02019444() {
 }
 
 bool Unk0201a4e0::func_04(int index, bool force) {
-    if (func_02010b28(this, index, force) == 0) {
+    if (!Unk02010920::func_04(index, force)) {
         return false;
     }
     func_0200b120(&anim);

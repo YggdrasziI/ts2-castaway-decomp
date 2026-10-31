@@ -69,11 +69,18 @@ inline void func_set(Unk02098e70 &d, const Unk02098e70 &s) {
     *(Unk02098e70Wrap *)&d = *(Unk02098e70Wrap *)&s;
 }
 
-class Unk02010920 : public Unk0200dd90 {
+/* Base of Unk02010920: its code (0x0200AD70...) is not written yet. */
+class Unk0200ad70 : public Unk0200dd90 {
+public:
+    Unk0200ad70(int count);
+    ~Unk0200ad70();
+};
+
+class Unk02010920 : public Unk0200ad70 {
 public:
     Unk02010920(int count);
     ~Unk02010920();
-    virtual bool func_04(int index, bool force) = 0;
+    virtual bool func_04(int index, bool force);
 
     Unk02098e70 unka0;
     Unk02098e70 unka8;
@@ -86,7 +93,8 @@ public:
     int size;
     u8 unkd4[4];
     int key;
-    u8 unkdc[0xc];
+    int index;
+    u32 anims[2];
     int bait;
 };
 

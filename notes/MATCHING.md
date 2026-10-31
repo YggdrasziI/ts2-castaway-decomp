@@ -604,7 +604,16 @@ default: add one here only once a unit of this ROM proves it with mwccarm.
   a one-element array. mwccarm lays it out before the vtable of its file
   whatever the definition order, so a word just after one class's vtable
   belongs to the next file when that file's `.data` starts with a vtable
-  (`data_020b95f8`, moved into `unit_0203C188.cpp`).
+  (`data_020b95f8`, moved into `unit_0203C188.cpp`). `explicit_zero_data` tables
+  do the same (`data_020b7bb4` of `unit_02010E60.cpp`).
+- A local static whose `.bss` slot comes after a file-scope object goes behind it
+  only if a function comes before the static's own in the file; as the first
+  function it comes first. This located the start of `unit_02010E60.cpp`.
+- Two loads of one global's field through a pointer call: an inline accessor
+  (`func_player()->func_14()`) keeps the `ldr vtable; blx`; a virtual call on the
+  object itself is devirtualized.
+- A `(u16)` narrowing done twice (`lsl #16; lsr #16` before an index already
+  known as `u16`): the index goes through an inline taking `int`.
 - A table filled by a static initializer with both fields stored at run time
   (hash from a call, then a function pointer) has an element type with an
   inline constructor (`Entry(const char *name, Func f) : key(hash(name)),
