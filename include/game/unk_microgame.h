@@ -9,12 +9,13 @@ class Unk020a5ccc {
 public:
     Unk020a5ccc(Unk02093648 *file, int a, int b);
     virtual ~Unk020a5ccc();
-    virtual void func_08();
+    virtual bool func_08();
     virtual void func_0c();
 
     void func_020a5ea4(Unk020a9d58 *layout);
 
-    u8 unk4[0x34];
+    Unk02093648 *file;
+    u8 unk8[0x30];
 };
 
 /* Microgame base, 0xBC bytes, constructor 0x02013F8C. */

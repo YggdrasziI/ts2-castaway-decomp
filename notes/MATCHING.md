@@ -1085,6 +1085,19 @@ default: add one here only once a unit of this ROM proves it with mwccarm.
   a `bool` `g`, not `f(!g())`, which gives `cmp #0; moveq / movne`
   (`Unk02013f8c::func_18`, 98 % -> 100 %).
 
+- A two-word vector copied as `ldr ldr str str` for every assignment in a file:
+  assign through a struct wrapping the vector (`Unk02098e70Wrap`), as for the block
+  copies of three-word vectors (`unit_02018668.cpp`, 70 % -> 99.8 %).
+- A flag word read by `tst`, then reloaded by the `bic` or `eor` of the same test:
+  a small class with inline `get` / `set` / `clear`, not a bit-field, whose
+  `lsl` / `lsr` pair gives it away (`func_02018d04`).
+- Inline helpers kept out of line at the end of the file, in reverse order of first
+  call: `#pragma dont_inline on` around the one big caller (`Unk0201a2c8::func_14`).
+- A value loaded again before each store on a loop's two branches: a `volatile`
+  access through an inline member (`Unk0201a2c8Time::func_put`, hypothesis).
+- `adds` where a 32-bit `add` is expected: the sum is computed in `s64`, then
+  truncated (`func_020191b4`).
+
 ## ARM / Thumb
 
 (none yet)
