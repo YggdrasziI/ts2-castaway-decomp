@@ -813,7 +813,7 @@ from:0x02006498 kind:load to:0x020be15c module:main
 from:0x0200649c kind:load to:0x020b7524 module:main
 from:0x020064a0 kind:load to:0x020be160 module:main
 from:0x020064ac kind:arm_call to:0x020023b8 module:main
-from:0x020064dc kind:load to:0x020b753c module:main
+from:0x020064dc kind:load to:0x020b7534 add:0x8 module:main
 from:0x02006518 kind:arm_call to:0x02002438 module:main
 from:0x02006520 kind:arm_call to:0x0205e1b8 module:main
 from:0x0200653c kind:arm_call to:0x0200264c module:main
