@@ -112,3 +112,4 @@
 | 2026-10-31 | 98a1b54 | 307948 / 720836 bytes (42.72 %; fuzzy 67.46 %, linked 10.81 %) | 2485 / 4556 | 78 / 206 | Rod fishing unit (37 / 50 functions, `.text` fuzzy 98.25 %) |
 | 2026-10-31 | ad62980 | 309968 / 720836 bytes (43.00 %; fuzzy 67.88 %, linked 10.81 %) | 2503 / 4556 | 78 / 207 | Shared fishing units (18 / 21 functions, `.text` fuzzy 99.2 %) |
 | 2026-10-31 | 29e785a | 311892 / 720836 bytes (43.27 %; fuzzy 69.27 %, linked 10.81 %) | 2527 / 4556 | 78 / 208 | Fire microgame unit (24 / 33 functions, `.text` fuzzy 97.81 %) |
+| 2026-10-31 | 21c177a | 312624 / 720836 bytes (43.37 %; fuzzy 69.37 %, linked 10.91 %) | 2542 / 4556 | 79 / 210 | Fish base unit, complete (15 / 15 functions) |
