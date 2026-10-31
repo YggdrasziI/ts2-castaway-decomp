@@ -1380,6 +1380,8 @@ default: add one here only once a unit of this ROM proves it with mwccarm.
 - `movne r0, #0; moveq r0, #1` on a returned test, not followed by a `cmp`: same cause, an
   inline helper returning an `enum` (`func_18` of `unit_02004938.cpp`, 99.88 % -> 100 %);
   `bool` and `int` helpers, ternaries, `if` forms and pointer members give the reverse order.
+  The enum needs a function returning `int`: returned as `bool` it adds a `cmp` and two moves, so a
+  `bool` slot is declared `int` in that file (`func_08` of `unit_02003AB0.cpp`, 91 % -> 100 %).
 - A string literal in a table initializer lands before the table, even at the end of
   the file; the original has such strings after the vtables, in reverse order of use
   (`unit_0200B23C.cpp`, open).

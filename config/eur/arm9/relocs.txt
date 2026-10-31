@@ -395,7 +395,7 @@ from:0x02003a44 kind:arm_call to:0x02002438 module:main
 from:0x02003a94 kind:arm_call to:0x0205e184 module:main
 from:0x02003ab8 kind:arm_call to:0x020023b8 module:main
 from:0x02003ac8 kind:arm_call to:0x020593e4 module:main
-from:0x02003af4 kind:load to:0x020b716c module:main
+from:0x02003af4 kind:load to:0x020b7164 add:0x8 module:main
 from:0x02003b00 kind:arm_call to:0x02002408 module:main
 from:0x02003b14 kind:arm_call to:0x02002408 module:main
 from:0x02003b1c kind:arm_call to:0x020023b4 module:main
