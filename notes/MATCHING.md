@@ -1365,3 +1365,10 @@ default: add one here only once a unit of this ROM proves it with mwccarm.
   in the original (`unit_0200B23C.cpp`, open).
 - A `complete` unit can be at 100 % in objdiff and still fail the link check: inline array element constructors are emitted after their user, as weak symbols. When the original has them before, define them as plain functions at the file start (`Unk0200dd90Part`).
 - A byte field passed to or set from a `bool` parameter without a `cmp` or an `and #0xff`: the field is a `bool` too (`Unk0200dd90Part::flag`).
+- A `swpb` store comes from assigning a `bool` field: a `u8` source then gets normalized
+  (`movne/moveq`), so the source field is a `bool` too (`unit_0200A5E0.cpp`).
+- Arguments are evaluated right to left: an inline taking a call result by value plus
+  another call places the calls in reverse order (`unit_0200A5E0.cpp`).
+- A compare order different from `operator==` (here `+2, +0, +3`, result 1 then cleared)
+  is a separate `operator!=`, taking its cell by reference while the parts stay by
+  value; the by-value copy comes from an inline around it (`unit_0200A5E0.cpp`).

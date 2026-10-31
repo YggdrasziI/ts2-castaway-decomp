@@ -62,6 +62,7 @@ Commands: `python tools/compiler_sweep.py --ref <project> --compilers 2.0/sp1p5
 
 | Unit | Bounds | Content | Status |
 |---|---|---|---|
+| `src/game/unit_0200A5E0.cpp` | `.text` 0x0200A5E0-0x0200AD70, `.data` 0x020B78B0-0x020B78F4, `.bss` 0x020BE228-0x020BE23C (hypothesis on the bounds: `.data` is the name and the vtable, `.bss` the guard and the local static description) | action "Use Tool From Inventory" `Unk0200ad40` | not complete (see `TASKS.md`) |
 | `src/game/unit_0200AD70.cpp` | `.text` 0x0200AD70-0x0200B04C, `.data` 0x020B78F4-0x020B7900 (hypothesis on the end: the class `Unk0200b04c` starts at 0x0200B04C; `.data` is the vtable) | fish base `Unk0200ad70`, set-up from a fish record, accessors of the record | complete (15 / 15 functions) |
 | `src/game/unit_0200B04C.cpp` | `.text` 0x0200B04C-0x0200B23C (hypothesis on the end) | sprite animation `Unk0200b04c`: start, stop, step | complete (5 / 5 functions) |
 | `src/game/unit_0200B23C.cpp` | `.text` 0x0200B23C-0x0200DD80, `.rodata` 0x020AE52C-0x020AE634, `.data` 0x020B7900-0x020B7AC8 (hypothesis: from the first helper to the view destructor; 0x0200DD80 and 0x0200DD84 are the part destructor and constructor of the next class; `.data` ends at the vtable of `Unk0200dd90`) | collecting microgame `Unk0200cec8`, catches `Unk0200c308`, player block `Unk0200b75c` | not complete (see `TASKS.md`) |

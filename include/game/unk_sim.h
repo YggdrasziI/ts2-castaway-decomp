@@ -48,6 +48,10 @@ public:
         return unk3 == o.unk3 && unk2 == o.unk2 && unk0 == o.unk0;
     }
 
+    bool operator!=(Unk020593e4 o) const {
+        return unk2 != o.unk2 || unk0 != o.unk0 || unk3 != o.unk3;
+    }
+
     s16 unk0;
     s8 unk2;
     s8 unk3;
@@ -64,6 +68,10 @@ struct Unk020680d4Xy {
         return x == o.x && y == o.y;
     }
 
+    bool operator!=(Unk020680d4Xy o) const {
+        return x != o.x || y != o.y;
+    }
+
     s16 x;
     s16 y;
 };
@@ -77,6 +85,10 @@ struct Unk020680d4Cell {
 
     bool operator==(Unk020680d4Cell o) const {
         return pos == o.pos && xy == o.xy;
+    }
+
+    bool operator!=(const Unk020680d4Cell &o) const {
+        return pos != o.pos || xy != o.xy;
     }
 
     Unk020593e4 pos;
