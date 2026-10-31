@@ -20,9 +20,8 @@
  * the base vtable is not emitted with them.
  *
  * Not complete: 36 of 54 functions at 100 % (comments above the others), `.data`
- * and `.bss` at 100 %. `.rodata` 62.86 %: the words 4 and 0x46 at 0x020AE77C are
- * never loaded and not reproduced (the same pattern as in the screens after it);
- * the rest of that score is not analysed.
+ * and `.bss` at 100 %. The `.rodata` words 4 and 0x46 at 0x020AE77C, never
+ * loaded, are local `static const` sizes of the two name lists.
  */
 
 #include "game/unk_screen.h"
@@ -404,16 +403,18 @@ Unk0201e300::Unk0201e300()
     u32 keys2[6] = {0x28694930, 0xf7864cb9, 0x299589ad, 0x89a1412f, 0x1927bce7, 0x59da5497};
     u32 keys3[10] = {0xc7425c2, 0xc7425c3, 0xc7425c4, 0xc7425c5, 0xc7425c6,
                      0xc7425c7, 0xc7425c8, 0xc7425c9, 0xc7425ca, 0xc7425cb};
-    Unk020a7af4Entry entries1[0x46];
-    Unk020a7af4 names1(entries1, 0x46);
-    Unk020a7af4Entry entries2[4];
+    static const int size1 = 0x46;
+    static const int size2 = 4;
+    Unk020a7af4Entry entries1[size1];
+    Unk020a7af4 names1(entries1, size1);
+    Unk020a7af4Entry entries2[size2];
 
     data_020be3b0 = this;
     layout1 = new Unk020a9d58(func_020a18e4()->archive, 0);
     func_020aba38(func_020a18e4()->archive, 0x974a9fac, layout1, &names1);
     func_020a9db8(layout1, func_020a154c, 0);
 
-    Unk020a7af4 names2(entries2, 4);
+    Unk020a7af4 names2(entries2, size2);
     layout2 = new Unk020a9d58(func_020a18e4()->archive, 1);
     func_020aba38(func_020a18e4()->archive, 0x179c14aa, layout2, &names2);
     func_020a9db8(layout2, func_020a154c, 0);

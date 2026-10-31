@@ -15,7 +15,7 @@
  *
  * Not complete: six functions are below 100 % (comments above them); the last
  * two words of `.rodata` (0x020AE8BC 0x3C000, 0x020AE8C0 0x46, never loaded)
- * are not reproduced, and objdiff scores `.data` 87.5 % (the three formats).
+ * are local `static const` values, and objdiff scores `.data` 87.5 % (the three formats).
  * func_02031028 is the widget base slot func_1c, defined here as its kept copy
  * sits in this file; the widget vtables still reference it by that name.
  */
@@ -299,8 +299,9 @@ Unk0202fddc::Unk0202fddc(Unk0203c188Owner *owner, int mode)
     if (e != 0) {
         count = e->count;
     }
-    Unk020a7af4Entry entries[0x46];
-    Unk020a7af4 names(entries, 0x46);
+    static const int size = 0x46;
+    Unk020a7af4Entry entries[size];
+    Unk020a7af4 names(entries, size);
 
     layout = new Unk020a9d58(func_020a18e4()->archive, 0);
     func_020aba38(func_020a18e4()->archive, 0xd362de45, layout, &names);
@@ -1313,7 +1314,8 @@ static void *func_02033628(u32 id, void *user) {
         return self->num;
     case 4:
         func_02082a2c(self->num, "%d%", self->value);
-        func_020a69ac(self->s1b4, func_fxmul(func_fxdiv(FX32(self->value), 0x64000), 0x3c000) >> 12);
+        static const int frames = 0x3c000;
+        func_020a69ac(self->s1b4, func_fxmul(func_fxdiv(FX32(self->value), 0x64000), frames) >> 12);
         return self->num;
     }
     return (void *)func_020a18e4()->func_text(id);

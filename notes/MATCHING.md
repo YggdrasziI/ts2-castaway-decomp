@@ -901,6 +901,8 @@ default: add one here only once a unit of this ROM proves it with mwccarm.
   `static const u32 hash = 0xa030f2c3;` in `func_02015dd8` gives the last word of
   the `.rodata` of `unit_020142E0.cpp`. In an inline member defined in the class
   body the object comes first in `.rodata` instead (spear unit, reverted).
+  The name list sizes of the screens are this form (`static const int size = 0x46;`
+  before `entries[size]`); `.rodata` 100 % in seven units.
 - Out-of-order pointer to member constants (a state set late in the code with its
   constant early) were reproduced with small inline setters defined at the place of
   the constant (`unit_020142E0.cpp`, `func_go*`); the real source form is unknown.

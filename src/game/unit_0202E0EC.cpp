@@ -12,8 +12,8 @@
  * vtable with its header and the two page formats. Real file name unknown.
  *
  * Not complete: two functions are below 100 % (comments above them); the words
- * 0x020AE89C 5 and 0x020AE8A0 0x32 of `.rodata`, never loaded, are not
- * reproduced (unused file-scope constants do not emit them).
+ * 0x020AE89C 5 and 0x020AE8A0 0x32 of `.rodata`, never loaded, are local
+ * `static const` values folded into the code.
  */
 
 #include "game/unk_screen.h"
@@ -173,8 +173,9 @@ static void *func_0202fd38(u32 id, void *user);
  */
 Unk0202e0ec::Unk0202e0ec(Unk0203c188Owner *owner, int mode)
     : Unk0203c188(owner), mode(mode), toolDef(0), itemDef(0) {
-    Unk020a7af4Entry entries[0x32];
-    Unk020a7af4 names(entries, 0x32);
+    static const int size = 0x32;
+    Unk020a7af4Entry entries[size];
+    Unk020a7af4 names(entries, size);
 
     layout = new Unk020a9d58(func_020a18e4()->archive, 0);
     func_020aba38(func_020a18e4()->archive, 0xfbd7d1b9, layout, &names);
@@ -478,15 +479,16 @@ void Unk0202e0ec::func_0202f2ac() {
     font = func_020aa040(layout, 0, func_020a7164(title));
     value = 0;
     if (dated) {
-        u32 keys[5] = {0x97006df8, 0xfaa14499, 0x67c64c17, 0x887c10c0, 0x146126e3};
-        u32 ids[5] = {0xe60, 0xe61, 0xe62, 0xe63, 0xe63};
+        static const int count = 5;
+        u32 keys[count] = {0x97006df8, 0xfaa14499, 0x67c64c17, 0x887c10c0, 0x146126e3};
+        u32 ids[count] = {0xe60, 0xe61, 0xe62, 0xe63, 0xe63};
         int i;
-        for (i = 0; i < 5; i++) {
+        for (i = 0; i < count; i++) {
             if (func_0205d340(data_020b9364, keys[i])) {
                 break;
             }
         }
-        if (i >= 5) {
+        if (i >= count) {
             i = 0;
         }
         func_020a78cc(sub2.func_02051ad0(0), font, func_020a00a0(texts, ids[i]));

@@ -18,8 +18,8 @@
  * func_0203e314. Real file name unknown.
  *
  * Not complete: five functions are below 100 % (comments above them); the
- * last word of `.rodata` (0x020AE968, 0x46, the size of the name list, never
- * loaded) is not reproduced, as in unit_0203ECD4.cpp, and the one-byte flag
+ * last word of `.rodata` (0x020AE968, 0x46, never loaded) is the size of the
+ * name list, a local `static const` folded into the code; the one-byte flag
  * leaves `.bss` at 50 % (the original range is a word).
  */
 
@@ -239,8 +239,9 @@ static inline bool func_owned(Unk0205cf00 *def) {
  */
 Unk0203c2e8::Unk0203c2e8(Unk0203c188Owner *owner)
     : Unk0203c188(owner), page(0), choice(0), selected(-1), count(0), records(0), pages(0) {
-    Unk020a7af4Entry entries[0x46];
-    Unk020a7af4 names(entries, 0x46);
+    static const int size = 0x46;
+    Unk020a7af4Entry entries[size];
+    Unk020a7af4 names(entries, size);
 
     layout = new Unk020a9d58(func_020a18e4()->archive, 0);
     func_020aba38(func_020a18e4()->archive, 0xfa1f6daf, layout, &names);

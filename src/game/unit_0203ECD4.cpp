@@ -16,9 +16,8 @@
  * Real file name unknown.
  *
  * Not complete: the constructor is below 100 % (comment above it) and the last
- * word of `.rodata` (0x020AE9A0, 0x1E, never loaded) is not reproduced: a
- * static const is folded away and an external one goes first in the section.
- * The range keeps it: ending the file at 0x020AE9A0 drops the word from the
+ * word of `.rodata` (0x020AE9A0, 0x1E, never loaded) is the name list size, a
+ * local `static const` folded into the code. Ending the file at 0x020AE9A0 drops the word from the
  * link and shifts the rest of `.rodata`.
  */
 
@@ -153,8 +152,9 @@ Unk0203ecd4::Unk0203ecd4(Unk0203c188Owner *owner) : Unk0203c188(owner) {
     for (int i = 0; i < 4; i++) {
         items[i] = func_0205f6f8(&data_020c3fc4, data_020af000[data_020ae97c[i]]);
     }
-    Unk020a7af4Entry entries[0x1e];
-    Unk020a7af4 names(entries, 0x1e);
+    static const int size = 0x1e;
+    Unk020a7af4Entry entries[size];
+    Unk020a7af4 names(entries, size);
 
     layout = new Unk020a9d58(func_020a18e4()->archive, 0);
     func_020aba38(func_020a18e4()->archive, 0x1cf74cf8, layout, &names);

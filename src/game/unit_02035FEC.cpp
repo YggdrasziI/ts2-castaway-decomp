@@ -23,8 +23,8 @@
  * its header and the formats of the text function. Real file name unknown.
  *
  * Not complete: three functions are below 100 % (comments above them); the
- * last word of `.rodata` (0x020AE8D8, 0x50, never loaded) is not reproduced,
- * as in unit_0203C2E8.cpp.
+ * last word of `.rodata` (0x020AE8D8, 0x50, never loaded) is a local `static
+ * const`, as in unit_0203C2E8.cpp.
  */
 
 #include "game/unk_screen.h"
@@ -217,8 +217,9 @@ static void *func_020388c8(u32 id, void *user);
  */
 Unk02035fec::Unk02035fec(Unk0203c188Owner *owner, int mode)
     : Unk0203c188(owner), mode(mode), records(0), count(0), pages(0), page(0), tabCount(0), tab(0), marked(0) {
-    Unk020a7af4Entry entries[0x50];
-    Unk020a7af4 names(entries, 0x50);
+    static const int size = 0x50;
+    Unk020a7af4Entry entries[size];
+    Unk020a7af4 names(entries, size);
 
     layout = new Unk020a9d58(func_020a18e4()->archive, 0);
     func_020aba38(func_020a18e4()->archive, 0x7b0ccdee, layout, &names);
