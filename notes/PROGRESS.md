@@ -118,3 +118,4 @@
 | 2026-10-31 | ae1fde8 | 316484 / 720836 bytes (43.91 %; fuzzy 71.05 %, linked 11.11 %) | 2602 / 4556 | 81 / 212 | Scene element unit, complete (17 / 17 functions) |
 | 2026-10-31 | e90bba8 | 316800 / 720836 bytes (43.95 %; fuzzy 71.31 %, linked 11.11 %) | 2608 / 4556 | 81 / 214 | Tool use action unit (6 / 9 functions, `.text` 97.20 %) |
 | 2026-10-31 | 9f7c053 | 318600 / 720836 bytes (44.20 %; fuzzy 71.62 %, linked 11.32 %) | 2622 / 4556 | 82 / 216 | Upgrade action units: "Action Upgrade" complete (6 / 6 functions), "Action Upgrade Indirectly" 8 / 9 |
+| 2026-10-31 | d53c8fd | 319816 / 720836 bytes (44.37 %; fuzzy 71.79 %, linked 11.49 %) | 2634 / 4556 | 83 / 217 | Sleep action unit, complete (12 / 12 functions) |
