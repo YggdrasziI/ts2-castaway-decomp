@@ -100,13 +100,6 @@ class Unk0200ad70 : public Unk0200dd90 {
 public:
     Unk0200ad70(int count);
     ~Unk0200ad70();
-};
-
-class Unk02010920 : public Unk0200ad70 {
-public:
-    Unk02010920(int count);
-    ~Unk02010920();
-    virtual bool func_04(int index, bool force);
 
     Unk02098e70 unka0;
     Unk02098e70 unka8;
@@ -117,6 +110,14 @@ public:
     Unk02098e70 scale;
     int sizes[2];
     int key;
+};
+
+class Unk02010920 : public Unk0200ad70 {
+public:
+    Unk02010920(int count);
+    ~Unk02010920();
+    virtual bool func_04(int index, bool force);
+
     int index;
     u32 anims[2];
     int bait;

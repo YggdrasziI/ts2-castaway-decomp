@@ -1356,3 +1356,10 @@ default: add one here only once a unit of this ROM proves it with mwccarm.
   `r2` across a compare then follows (`Unk0200b04c`, 83 % -> 100 %). The same unit:
   `movs r0, r5` for a pointer tested after a store comes from re-reading the member
   into a local (`a->f = f; p = a->f; if (p == 0)`).
+- A string literal in a table initializer lands before the table, even at the end of
+  the file; the original has such strings after the vtables, in reverse order of use
+  (`unit_0200B23C.cpp`, open).
+- A file whose pointer to member constants are all read from one anchor
+  (`[r0, #0x108]`) can be written as one table object: same shape of the loads and
+  the same `.data` words; the second word of a compared constant keeps its own anchor
+  in the original (`unit_0200B23C.cpp`, open).
