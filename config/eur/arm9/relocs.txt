@@ -471,7 +471,7 @@ from:0x0200438c kind:load to:0x020be0a8 module:main
 from:0x02004390 kind:load to:0x020b71e0 module:main
 from:0x02004394 kind:load to:0x020be0ac module:main
 from:0x020043a0 kind:arm_call to:0x02008d48 module:main
-from:0x020043bc kind:load to:0x020b724c module:main
+from:0x020043bc kind:load to:0x020b7244 add:0x8 module:main
 from:0x020043d4 kind:arm_call to:0x02002414 module:main
 from:0x020043e0 kind:arm_call to:0x02002438 module:main
 from:0x02004410 kind:arm_call to:0x02093648 module:main
