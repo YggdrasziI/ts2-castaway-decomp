@@ -140,7 +140,10 @@ struct Unk020615f0Def {
 /* The object attached to a visible object. */
 class Unk0201c460 {
 public:
+    Unk0201c460(u32 key);
     virtual ~Unk0201c460();
+
+    u8 unk4[0x84];
 };
 
 /* A script variable record (12 bytes). */
@@ -343,7 +346,6 @@ Unk0205d8d8Vec func_020613a4(Unk02060d78 *e);
 Unk0205d8d8Vec func_020613c8(Unk02060d78 *e);
 void func_020615f0(Unk02060d78 *e, Unk020615f0Def *def);
 bool func_020618f4(Unk02060d78 *e, Unk0201c460 *o);
-Unk0201c460 *func_0201c460(Unk0201c460 *o, u32 key);
 void func_02061930(Unk02060d78 *e);
 Unk020680d4Xy func_020619a8(Unk02061d08Item *item, Unk020680d4Xy p, Unk020680d4Dir dir);
 bool func_02061ab4(Unk02061d08Item *item, const Unk020680d4Cell *cell);
@@ -604,10 +606,7 @@ void func_0205e1b8(Unk02061d08Item *item, Unk020c43a8 *p) {
     item->flags |= 0x2000;
     const Unk020615f0Def &d = func_0205c8b4(item->def, block);
     if (d.flags & 0x40) {
-        Unk0201c460 *o = (Unk0201c460 *)operator new(0x88);
-        if (o != 0) {
-            o = func_0201c460(o, d.unk24);
-        }
+        Unk0201c460 *o = new Unk0201c460(d.unk24);
         if (!func_020618f4(visible, o) && o != 0) {
             delete o;
         }

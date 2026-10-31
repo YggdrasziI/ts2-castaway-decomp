@@ -39,6 +39,7 @@ public:
     virtual void func_1c();
     virtual void func_20();
     virtual void func_24();
+    void func_0201cf6c(Unk020680d4Vec pos, Unk020680d4Vec offset);
 
     u8 unk4[0x3c];
     u32 flags;
@@ -335,7 +336,7 @@ void func_02060e0c(Unk02060d78 *e) {
         }
     }
     if (e->attached != 0) {
-        func_0201cf6c(e->attached, func_020613f0(e, "head", Unk020680d4Vec(0, 0, 0)), Unk020680d4Vec(0, 0, 0));
+        e->attached->func_0201cf6c(func_020613f0(e, "head", Unk020680d4Vec(0, 0, 0)), Unk020680d4Vec(0, 0, 0));
         if (e->attached->flags & 4) {
             e->attached->func_18();
             e->attached->func_24();

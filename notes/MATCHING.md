@@ -1127,6 +1127,10 @@ default: add one here only once a unit of this ROM proves it with mwccarm.
   `...D2Ev`) instead of `C1` / `D1`: the object is an empty derived class, with
   implicit constructor and destructor (`class Line : public Unk02090308 {};`,
   `unit_0201D70C.cpp`).
+- A class whose only non-pure virtual is defined in the file gets its vtable
+  emitted there. When the original has no such copy, define the function
+  `inline` outside the class: it stays emitted through the derived vtable, and
+  the class vtable is not (`Unk020a07d4::func_30`, `unit_0201C460.cpp`).
 - A sparse `switch` tests its cases in sorted order, and the signedness of the
   value sets it: an `int` value tests 0xE0343C1B before 0x4CCC5ACE, a `u32` the
   reverse (`unit_0201D70C.cpp`).

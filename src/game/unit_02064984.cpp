@@ -102,6 +102,7 @@ struct Unk020c43a8Queue {
 /* The object attached to the player's head (vtable slots 0x18 and 0x24, flags at 0x40). */
 class Unk0201c460 {
 public:
+    Unk0201c460(u32 key);
     virtual void func_00();
     virtual void func_04();
     virtual void func_08();
@@ -112,9 +113,11 @@ public:
     virtual void func_1c();
     virtual void func_20();
     virtual void func_24();
+    void func_0201cf6c(Unk020680d4Vec pos, Unk020680d4Vec offset);
 
     u8 unk4[0x3c];
     u32 flags;
+    u8 unk44[0x44];
 };
 
 /* The part of the player written to the save (0x98 bytes). */
@@ -292,7 +295,6 @@ Unk020547f8Node *func_02054858(Unk020547f8 *list, int index);
 void func_02054cf0(void *db, Unk020547f8Node *node, int a);
 void *func_020a2994();
 void func_020a2ce8(void *sound, u32 hash, int volume, int unk);
-Unk0201c460 *func_0201c460(Unk0201c460 *o, u32 key);
 Unk020d6240 *func_020a18e4();
 void func_020897b4(const char *fmt, ...);
 void func_020a4dc4(Unk020a4dc4 *s, void *p, int size);
@@ -321,7 +323,6 @@ void func_02007e48(Unk020c43a8Queue *q, void *o);
 Unk020081dc func_020081dc(Unk020c43a8 *p);
 Unk02063d84 *func_02063e2c(u32 key, int mode);
 Unk020897c0 *func_02063d84(Unk02063d84 *a);
-void func_0201cf6c(Unk0201c460 *o, Unk020680d4Vec pos, Unk020680d4Vec offset);
 void *func_02002438(int a);
 Unk02098ff0 func_020613a4(int a);
 Unk0208be3cEntry *func_01ffa954(Unk0208be3c *xform, int index);
@@ -733,7 +734,7 @@ void func_02065b80(Unk020c43a8 *p, bool place) {
         }
     }
     if (p->obj != 0) {
-        func_0201cf6c(p->obj, func_0206920c(p->sim, "head", Unk020680d4Vec(0, 0, 0)), Unk020680d4Vec(0, 0, 0));
+        p->obj->func_0201cf6c(func_0206920c(p->sim, "head", Unk020680d4Vec(0, 0, 0)), Unk020680d4Vec(0, 0, 0));
         if (p->obj->flags & 4) {
             p->obj->func_18();
             p->obj->func_24();
@@ -1111,10 +1112,7 @@ void func_02066884(Unk020c43a8 *p) {
             }
             if (count > 0) {
                 u32 k = func_020a1f84(&data_020d62a4) % count;
-                Unk0201c460 *o = (Unk0201c460 *)operator new(0x88);
-                if (o != 0) {
-                    o = func_0201c460(o, p->idles[picked[k]].key);
-                }
+                Unk0201c460 *o = new Unk0201c460(p->idles[picked[k]].key);
                 p->obj = o;
                 p->obj->func_08();
                 done = true;
