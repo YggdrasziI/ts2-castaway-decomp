@@ -597,6 +597,11 @@ default: add one here only once a unit of this ROM proves it with mwccarm.
 
 ## Data layout
 
+- A file boundary from a static: mwccarm addresses all the function-local statics of a
+  file from one anchor, so a second static is loaded as `[r0, #0x14]`. If the original
+  loads it at offset 0 with its own pool word, the two statics are in two files
+  (`unit_02009D08.cpp` / `unit_0200A2EC.cpp`).
+
 - A word in `.data` (value 0) that only a static initializer writes from
   another unit's object (`ldr`, `str`): a namespace-scope `const` object
   with a dynamic initializer (`extern const int x = obj.count;`, `extern`

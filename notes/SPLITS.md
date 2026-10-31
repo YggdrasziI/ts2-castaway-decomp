@@ -62,6 +62,8 @@ Commands: `python tools/compiler_sweep.py --ref <project> --compilers 2.0/sp1p5
 
 | Unit | Bounds | Content | Status |
 |---|---|---|---|
+| `src/game/unit_02009D08.cpp` | `.text` 0x02009D08-0x0200A2EC, `.data` 0x020B7820-0x020B7868, `.bss` 0x020BE200-0x020BE214 (hypothesis on the bounds: `.data` is the name and the vtable, `.bss` the guard and the local description) | action "Action Upgrade" `Unk0200a2d8`, complete |
+| `src/game/unit_0200A2EC.cpp` | `.text` 0x0200A2EC-0x0200A5E0, `.data` 0x020B7868-0x020B78B0, `.bss` 0x020BE214-0x020BE228 (separate file: its static is loaded at offset 0, statics of one file share an anchor) | action "Action Upgrade Indirectly" `Unk0200a5cc`, 8 / 9 functions |
 | `src/game/unit_0200A5E0.cpp` | `.text` 0x0200A5E0-0x0200AD70, `.data` 0x020B78B0-0x020B78F4, `.bss` 0x020BE228-0x020BE23C (hypothesis on the bounds: `.data` is the name and the vtable, `.bss` the guard and the local static description) | action "Use Tool From Inventory" `Unk0200ad40` | not complete (see `TASKS.md`) |
 | `src/game/unit_0200AD70.cpp` | `.text` 0x0200AD70-0x0200B04C, `.data` 0x020B78F4-0x020B7900 (hypothesis on the end: the class `Unk0200b04c` starts at 0x0200B04C; `.data` is the vtable) | fish base `Unk0200ad70`, set-up from a fish record, accessors of the record | complete (15 / 15 functions) |
 | `src/game/unit_0200B04C.cpp` | `.text` 0x0200B04C-0x0200B23C (hypothesis on the end) | sprite animation `Unk0200b04c`: start, stop, step | complete (5 / 5 functions) |

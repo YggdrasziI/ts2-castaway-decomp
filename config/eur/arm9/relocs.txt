@@ -985,8 +985,8 @@ from:0x02007c24 kind:load to:0x020b73dc module:main
 from:0x02007c28 kind:load to:0x020b73b0 module:main
 from:0x02007c2c kind:load to:0x020b77bc module:main
 from:0x02007c30 kind:load to:0x020b72a0 module:main
-from:0x02007c34 kind:load to:0x020b788c module:main
-from:0x02007c38 kind:load to:0x020b7838 module:main
+from:0x02007c34 kind:load to:0x020b7884 add:0x8 module:main
+from:0x02007c38 kind:load to:0x020b7830 add:0x8 module:main
 from:0x02007c3c kind:load to:0x020b75a4 module:main
 from:0x02007c40 kind:load to:0x020b7444 module:main
 from:0x02007c54 kind:load to:0x020b75f4 module:main
