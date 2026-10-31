@@ -42,6 +42,7 @@ struct Unk020680d4Box {
 class Unk020593e4 {
 public:
     Unk020593e4();
+    Unk020593e4(s8 unk3, s8 unk2, s16 unk0);
 
     bool operator==(Unk020593e4 o) const {
         return unk3 == o.unk3 && unk2 == o.unk2 && unk0 == o.unk0;

@@ -1335,3 +1335,19 @@ default: add one here only once a unit of this ROM proves it with mwccarm.
 - Block copy of a return value under `dont_inline`, no `operator=` call: a POD
   initialised from a cast (`Pod head = (const Pod &)f();`); assigning calls the
   out-of-line operator.
+- `#pragma explicit_zero_data on` places a zero table in `.data`, before the vtable of
+  the file: a table after a vtable therefore opens the next file (`unit_0200E144.cpp`,
+  `unit_02010920.cpp`).
+- A local static goes after a file-scope `.bss` object only if a function precedes it
+  in the file.
+- A vtable symbol at the header start needs relocs `to:<ZTV> add:0x8`; inner
+  references to a `.bss` object need `to:<sym> add:0xc`.
+- Struct assignment of a wrapper class in an array (`history[i] = ...`) keeps
+  `add rX, base, i, lsl #3`: no strength reduction. Assign from a direct cast of a
+  temporary, `(const Wrap &)Vec(x, y)`, not through an inline helper: the temporary
+  then stays on the stack with `[sp, #n]` loads (`func_0200f0e0`, 100 %).
+- Small getters called with `bl` from a constructor inlined in its factory: plain
+  non-inline functions, declared before the class, defined after the factory.
+- Open: the original `Unk0200f174` constructor packs four fields from an unfolded
+  zero with one register per step and no masks; explicit masks and nested inlines
+  fold the zero, a union bit-field adds masks.
