@@ -62,6 +62,7 @@ Commands: `python tools/compiler_sweep.py --ref <project> --compilers 2.0/sp1p5
 
 | Unit | Bounds | Content | Status |
 |---|---|---|---|
+| `src/game/unit_02009404.cpp` | `.text` 0x02009404-0x02009794, `.data` 0x020B7710-0x020B77A4, `.bss` 0x020BE1BC-0x020BE1D8 (hypothesis on the bounds: `.data` is the name and three vtables) | action "Sim Animation" `Unk02007c84` and its derived classes `Unk02009764`, `Unk02009734`; all at 100 %, not complete: base D1 kept at 0x02007C84 |
 | `src/game/unit_02009794.cpp` | `.text` 0x02009794-0x02009848, `.data` 0x020B77A4-0x020B77E0, `.bss` 0x020BE1D8-0x020BE1EC (hypothesis on the bounds: `.data` is the name and the vtable, `.bss` the guard and the local description) | action "Simple Slave" `Unk02009818`, complete |
 | `src/game/unit_02009848.cpp` | `.text` 0x02009848-0x02009D08, `.data` 0x020B77E0-0x020B7820, `.bss` 0x020BE1EC-0x020BE200 (hypothesis on the bounds: from the constructor to the last vtable slot; `.data` is the name and the vtable, `.bss` the guard and the local description) | action "Sleep" `Unk020098a0`, complete |
 | `src/game/unit_02009D08.cpp` | `.text` 0x02009D08-0x0200A2EC, `.data` 0x020B7820-0x020B7868, `.bss` 0x020BE200-0x020BE214 (hypothesis on the bounds: `.data` is the name and the vtable, `.bss` the guard and the local description) | action "Action Upgrade" `Unk0200a2d8`, complete |
