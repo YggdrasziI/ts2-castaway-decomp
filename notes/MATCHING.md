@@ -1377,6 +1377,9 @@ default: add one here only once a unit of this ROM proves it with mwccarm.
   `r2` across a compare then follows (`Unk0200b04c`, 83 % -> 100 %). The same unit:
   `movs r0, r5` for a pointer tested after a store comes from re-reading the member
   into a local (`a->f = f; p = a->f; if (p == 0)`).
+- `movne r0, #0; moveq r0, #1` on a returned test, not followed by a `cmp`: same cause, an
+  inline helper returning an `enum` (`func_18` of `unit_02004938.cpp`, 99.88 % -> 100 %);
+  `bool` and `int` helpers, ternaries, `if` forms and pointer members give the reverse order.
 - A string literal in a table initializer lands before the table, even at the end of
   the file; the original has such strings after the vtables, in reverse order of use
   (`unit_0200B23C.cpp`, open).

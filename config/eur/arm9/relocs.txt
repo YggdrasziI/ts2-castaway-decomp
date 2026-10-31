@@ -547,7 +547,7 @@ from:0x0200497c kind:load to:0x020b730c module:main
 from:0x02004980 kind:load to:0x020be0e8 module:main
 from:0x0200498c kind:arm_call to:0x020023b8 module:main
 from:0x020049c0 kind:arm_call to:0x0200264c module:main
-from:0x020049dc kind:load to:0x020b733c module:main
+from:0x020049dc kind:load to:0x020b7334 add:0x8 module:main
 from:0x020049e0 kind:load to:0x020c43a8 module:main
 from:0x020049ec kind:arm_call to:0x02002408 module:main
 from:0x02004a00 kind:arm_call to:0x02002408 module:main
