@@ -1390,6 +1390,8 @@ default: add one here only once a unit of this ROM proves it with mwccarm.
 - A loop that runs before the vtable store of the class is the constructor of a second, vtable-less base class; a member set before a member constructor is an initializer list entry. Both are in `unit_02007204.cpp`.
 - A class destructor at the end of a file, with no call to it left in the code: the implicit destructor of a temporary written as an expression statement (`Unk02007c84();`). The call is inlined and the D1 is still emitted; a named local or a user-declared inline destructor does not emit it (`unit_02007204.cpp`).
 - A base constructor called from a derived constructor is the `C2` symbol: name the address `C2` in `symbols.txt`; the `C1` alias at that address is then dropped.
+- The test "the object's front cell differs from the sim's cell" (`unit_02006CAC.cpp`, also 0x02008D48, 0x020090B4, 0x0200825C): an inline returning the cell, written as one nested expression, compared with `func_front(o) != sim->func_14()`, `operator!=` taking its cell by value. The result temporary takes the top slot, the sim's cell the next, then the expression's temporaries in creation order. An inline taking the cell and returning `bool` gave 99.7 % at best.
+- Stores scheduled differently in a block with the same statements: a local holding an intermediate result (`actor = func_02002414(owner); sim = actor->sim;` vs. `sim = func_02002414(owner)->sim;`), 93.4 % -> 100 % (`unit_02006CAC.cpp`).
 - A `swpb` store comes from assigning a `bool` field: a `u8` source then gets normalized
   (`movne/moveq`), so the source field is a `bool` too (`unit_0200A5E0.cpp`).
 - Arguments are evaluated right to left: an inline taking a call result by value plus

@@ -5,9 +5,7 @@
  * pure slots). Base of the actions with vtables 0x020B724C, 0x020B7490, 0x020B74E4.
  * Layouts come from the code; all names are placeholders.
  *
- * Open gap: func_18 99.82 %: only the stack slots of the temporaries of case 0, as in
- * unit_020090B4.cpp (forms of the inline test tried, none moves them to the original
- * order). The casts to `Unk02009084Pos` and `Unk02009084Facing` are workarounds.
+ * The casts to `Unk02009084Pos` and `Unk02009084Facing` are workarounds.
  */
 #include "game/unk_sim.h"
 
@@ -59,7 +57,7 @@ struct Unk02009084Cell {
         xy.y = y;
     }
 
-    bool operator!=(const Unk020680d4Cell &o) const {
+    bool operator!=(Unk020680d4Cell o) const {
         return pos != o.pos || xy != o.xy;
     }
 
@@ -158,10 +156,9 @@ struct Unk02009084Facing {
     int v;
 };
 
-static inline bool func_away(Unk02061d08Item *o, Unk020680d4Cell c) {
-    Unk020680d4Xy size(o->def->w, o->def->h);
-    Unk020680d4Xy rel = func_020619a8(o, size, o->func_1c());
-    return ((const Unk02009084Pos &)o->func_14()).func_add(rel) != c;
+static inline Unk02009084Cell func_front(Unk02061d08Item *o) {
+    return ((const Unk02009084Pos &)o->func_14())
+        .func_add(func_020619a8(o, Unk020680d4Xy(o->def->w, o->def->h), o->func_1c()));
 }
 
 Unk02009084::Unk02009084() {
@@ -187,7 +184,7 @@ int Unk02009084::func_18() {
     done = func_020691c4(sim);
     switch (state) {
     case 0:
-        if (func_away(o, sim->func_14()) || !((const Unk02009084Facing &)sim->func_1c()).func_same(o->func_1c())) {
+        if (func_front(o) != sim->func_14() || !((const Unk02009084Facing &)sim->func_1c()).func_same(o->func_1c())) {
             return 2;
         }
         if (done && visible) {

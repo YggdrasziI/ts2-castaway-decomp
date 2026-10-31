@@ -4,8 +4,7 @@
  * action to its last vtable slot; `.data` is the name and the vtable, `.bss` the guard
  * and the local description). Layouts come from the code; all names are placeholders.
  *
- * Open gap: func_18 99.75 % (stack slots of the temporaries, order of two `mov` of the
- * arguments). `state` is `volatile` as a hypothesis: the original stores 3, then 2.
+ * Open gap: func_18 99.93 % (order of two `mov` of the arguments). `state` is `volatile` as a hypothesis: the original stores 3, then 2.
  * The casts to `Unk020093ecPos` and `Unk020093ecFacing` are workarounds for inline
  * members on temporaries.
  */
@@ -59,7 +58,7 @@ struct Unk020093ecCell {
         xy.y = y;
     }
 
-    bool operator!=(const Unk020680d4Cell &o) const {
+    bool operator!=(Unk020680d4Cell o) const {
         return pos != o.pos || xy != o.xy;
     }
 
@@ -139,10 +138,9 @@ struct Unk020093ecFacing {
     int v;
 };
 
-static inline bool func_away(Unk02061d08Item *o, Unk020680d4Cell c) {
-    Unk020680d4Xy size(o->def->w, o->def->h);
-    Unk020680d4Xy rel = func_020619a8(o, size, o->func_1c());
-    return ((const Unk020093ecPos &)o->func_14()).func_add(rel) != c;
+static inline Unk020093ecCell func_front(Unk02061d08Item *o) {
+    return ((const Unk020093ecPos &)o->func_14())
+        .func_add(func_020619a8(o, Unk020680d4Xy(o->def->w, o->def->h), o->func_1c()));
 }
 
 const Unk020093ecDesc *Unk020093ec::func_20() {
@@ -163,7 +161,7 @@ int Unk020093ec::func_18() {
     done = func_020691c4(sim);
     switch (state) {
     case 0:
-        if (func_away(o, sim->func_14()) || !((const Unk020093ecFacing &)sim->func_1c()).func_same(o->func_1c())) {
+        if (func_front(o) != sim->func_14() || !((const Unk020093ecFacing &)sim->func_1c()).func_same(o->func_1c())) {
             return 2;
         }
         if (!done || !visible) {

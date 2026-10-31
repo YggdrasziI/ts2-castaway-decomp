@@ -6,9 +6,8 @@
  * all names are placeholders. func_24 (inline, emitted by unit_020080C0.cpp) and func_28
  * (0x02004930) are declared only: they sit out of this range.
  *
- * Open gaps: func_14 99.81 % (stack slots of the temporaries of the test, as in
- * unit_02008D48.cpp), func_18 99.73 % (the same slots, and r12 / r6 swapped between the
- * zero of the vectors and the sim). The casts to `Unk02008d18Pos` and `Unk02008d18Facing`
+ * Open gap: func_18 99.84 % (r12 / r6 swapped between the zero of the vectors and the
+ * sim). The casts to `Unk02008d18Pos` and `Unk02008d18Facing`
  * are workarounds.
  */
 #include "game/unk_objscript.h"
@@ -105,7 +104,7 @@ struct Unk02008d18Cell {
         xy.y = y;
     }
 
-    bool operator!=(const Unk020680d4Cell &o) const {
+    bool operator!=(Unk020680d4Cell o) const {
         return pos != o.pos || xy != o.xy;
     }
 
@@ -212,10 +211,9 @@ static inline Unk02008d18Found func_found(void *p) {
     return p != 0 ? UNK_02008D18_FOUND : UNK_02008D18_MISSING;
 }
 
-static inline bool func_away(Unk02061d08Item *o, Unk020680d4Cell c) {
-    Unk020680d4Xy size(o->def->w, o->def->h);
-    Unk020680d4Xy rel = func_020619a8(o, size, o->func_1c());
-    return ((const Unk02008d18Pos &)o->func_14()).func_add(rel) != c;
+static inline Unk02008d18Cell func_front(Unk02061d08Item *o) {
+    return ((const Unk02008d18Pos &)o->func_14())
+        .func_add(func_020619a8(o, Unk020680d4Xy(o->def->w, o->def->h), o->func_1c()));
 }
 
 Unk02008d18::Unk02008d18() {
@@ -255,7 +253,7 @@ int Unk02008d18::func_14() {
     if (!func_0200292c(owner)) {
         return 0;
     }
-    if (func_away(o, sim->func_14())) {
+    if (func_front(o) != sim->func_14()) {
         return func_0200294c(this, 1);
     }
     Unk0205cf00 *def = o->def;
@@ -279,7 +277,7 @@ int Unk02008d18::func_18() {
     Unk02061d08Item *sim;
     sim = actor->sim;
     o = func_02002438(this);
-    if (func_away(o, sim->func_14()) || !((const Unk02008d18Facing &)sim->func_1c()).func_same(o->func_1c())) {
+    if (func_front(o) != sim->func_14() || !((const Unk02008d18Facing &)sim->func_1c()).func_same(o->func_1c())) {
         return 2;
     }
     if (func_0206bce0()->unk144 != 0) {
