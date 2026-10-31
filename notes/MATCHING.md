@@ -1351,3 +1351,8 @@ default: add one here only once a unit of this ROM proves it with mwccarm.
 - Open: the original `Unk0200f174` constructor packs four fields from an unfolded
   zero with one register per step and no masks; explicit masks and nested inlines
   fold the zero, a union bit-field adds masks.
+- A test materialised as `movne r0, #0; moveq r0, #1; cmp r0, #0` that bool helpers,
+  ternaries and inline levels all fold: the helper returns an `enum`; a value kept in
+  `r2` across a compare then follows (`Unk0200b04c`, 83 % -> 100 %). The same unit:
+  `movs r0, r5` for a pointer tested after a store comes from re-reading the member
+  into a local (`a->f = f; p = a->f; if (p == 0)`).

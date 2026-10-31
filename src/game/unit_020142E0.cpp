@@ -1393,7 +1393,7 @@ void Unk02015408::func_02017588(Unk020a7af4 *names) {
         f1 += 0x44;
         f2 += 0x44;
         f3 += 0x44;
-        *(int *)(fish[i].anim.unk0 + 4) = 1;
+        fish[i].anim.mode = 1;
     }
     for (int i = 0; i < 3; i++) {
         u8 def[8];

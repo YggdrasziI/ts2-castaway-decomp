@@ -8,7 +8,6 @@
 
 #include "game/unk_vector.h"
 
-/* A sprite animation (0x1C bytes). */
 /* One flag word. */
 struct Unk0200b04cBit {
     u32 v;
@@ -19,14 +18,41 @@ struct Unk0200b04cBit {
     void func_clear() { v &= ~1; }
 };
 
+class Unk02095140;
+
+enum Unk0200b04cDir {
+    UNK_0200B04C_UP,
+    UNK_0200B04C_DOWN
+};
+
+/* A sprite animation (0x1C bytes). */
 class Unk0200b04c {
 public:
     Unk0200b04c();
     ~Unk0200b04c();
 
-    u8 unk0[8];
+    Unk0200b04cDir func_dir() const {
+        return playing.v & 2 ? UNK_0200B04C_UP : UNK_0200B04C_DOWN;
+    }
+    void func_set_dir(Unk0200b04cDir dir) {
+        if (func_dir() != dir) {
+            playing.v ^= 2;
+        }
+    }
+    int func_start() const {
+        return func_dir() == UNK_0200B04C_UP ? 0 : count - 1;
+    }
+    int func_end(Unk0200b04cDir dir) const {
+        return dir == UNK_0200B04C_DOWN ? count - 1 : 0;
+    }
+
+    int frame;
+    int mode;
     Unk0200b04cBit playing;
-    u8 unkc[0x10];
+    int loops;
+    int cur;
+    int count;
+    Unk02095140 *file;
 };
 
 struct Unk0200dd90Part {

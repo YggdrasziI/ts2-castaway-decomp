@@ -12,6 +12,10 @@ src/game/unit_0200AD70.cpp:
     .text       start:0x0200ad70 end:0x0200b04c
     .data       start:0x020b78f4 end:0x020b7900
 
+src/game/unit_0200B04C.cpp:
+    complete
+    .text       start:0x0200b04c end:0x0200b23c
+
 src/game/unit_0200E144.cpp:
     .text       start:0x0200e144 end:0x02010920
     .rodata     start:0x020ae634 end:0x020ae678
