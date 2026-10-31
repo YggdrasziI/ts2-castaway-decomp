@@ -287,14 +287,6 @@ public:
     Unk0200b04c anim2;
 };
 
-static const char *data_020b8624[15] = {
-    "fishing_spear_idle", "fishing_spear_jab", "fishing_spear_jab2",
-    "fishing_spear_jabhit", "fishing_spear_jabhit2", "fishing_spear_jabhit3",
-    "fishing_spear_jabhit4", "fishing_spear_jabmiss", "fishing_spear_jabmiss2",
-    "fishing_spear_stash", "fishing_spear_stash2", "fishing_spear_victory",
-    "fishing_spear_bigvictory", "fishing_spear_hugevictory", "fishing_spear_fail",
-};
-
 /* A countdown: frames, seconds, minutes, hours, 6 bits each. */
 struct Unk0201a2c8Time {
     union {
@@ -339,9 +331,16 @@ public:
     void func_0201a12c();
     bool func_all() { return func_02011188(counts) == 6; }
     bool func_hit() { return sound >= 3 && sound <= 6; }
-    void func_sound(int index) {
-        if (sound != index) {
-            func_020a6340(this, 0xc5a28efa, data_020b8624[index], 0, 0);
+    void func_sound(int index, int a = 0, int force = 0, int b = 0) {
+        static const char *data_020b8624[15] = {
+            "fishing_spear_idle", "fishing_spear_jab", "fishing_spear_jab2",
+            "fishing_spear_jabhit", "fishing_spear_jabhit2", "fishing_spear_jabhit3",
+            "fishing_spear_jabhit4", "fishing_spear_jabmiss", "fishing_spear_jabmiss2",
+            "fishing_spear_stash", "fishing_spear_stash2", "fishing_spear_victory",
+            "fishing_spear_bigvictory", "fishing_spear_hugevictory", "fishing_spear_fail",
+        };
+        if (force || sound != index) {
+            func_020a6340(this, 0xc5a28efa, data_020b8624[index], a, b);
             sound = index;
         }
     }
@@ -488,10 +487,7 @@ void Unk0201a4e0::func_02018c38() {
 
 void Unk0201af9c::func_02018ca0() {
     Unk0201a2c8 *g = owner;
-    if (g->sound != 0) {
-        func_020a6340(g, 0xc5a28efa, data_020b8624[0], 1, 0);
-        g->sound = 0;
-    }
+    g->func_sound(0, 1);
     state = &Unk0201af9c::func_02018d04;
 }
 
@@ -602,10 +598,7 @@ void Unk0201af9c::func_020191b4() {
 
 void Unk0201af9c::func_020192bc() {
     Unk0201a2c8 *g = owner;
-    if (g->sound != 9) {
-        func_020a6340(g, 0xc5a28efa, data_020b8624[9], 0, 0);
-        g->sound = 9;
-    }
+    g->func_sound(9, 0);
     state = &Unk0201af9c::func_0201931c;
 }
 
@@ -618,8 +611,7 @@ void Unk0201af9c::func_0201931c() {
 void Unk0201a2c8::func_0201934c() {
     if (func_020a13d4(func_020a18e4(), 2, 0) != 0) {
         func_020a6114(this, 0xab8dd75e, 0xf8ef1cc5);
-        func_020a6340(this, 0xc5a28efa, data_020b8624[0], 1, 0);
-        sound = 0;
+        func_sound(0, 1, 1);
         state = &Unk0201a2c8::func_020193dc;
     }
 }

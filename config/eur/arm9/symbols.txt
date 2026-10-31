@@ -4824,7 +4824,7 @@ data_020b85c0 kind:data(any) addr:0x020b85c0
 data_020b85d8 kind:data(any) addr:0x020b85d8
 data_020b85f4 kind:data(any) addr:0x020b85f4
 data_020b8610 kind:data(any) addr:0x020b8610
-data_020b8624 kind:data(any) addr:0x020b8624
+_ZZN11Unk0201a2c810func_soundEiiiiE13data_020b8624 kind:data(any) addr:0x020b8624 local
 data_020b86e0 kind:data(any) addr:0x020b86e0
 data_020b8740 kind:data(any) addr:0x020b8740
 data_020b8748 kind:data(any) addr:0x020b8748

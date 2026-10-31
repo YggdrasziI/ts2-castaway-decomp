@@ -1285,3 +1285,13 @@ default: add one here only once a unit of this ROM proves it with mwccarm.
 - `bars[index - 1]` after `index - 1 > 0` reuses the difference; `(&bars[index])[-1]`
   gives the original's `add r0, r9, r1, lsl #2; ldr r0, [r0, #0xd4]`
   (`func_02013b04`).
+- A name table with many readers can still be a `static` local: put it in an
+  inline helper with the guard as an argument (`func_sound(index, a, force, b)`).
+  Calls show as `mov r12, #0` after the table load, `str r12, [sp]` before the
+  `bl`; a written-out call stores the zero first (`unit_02018668.cpp`,
+  `func_02018ca0` 85.4 % -> 99.9 %). Give `symbols.txt` the mangled `_ZZ...` name
+  (`local`), or objdiff stops pairing the table and `.data` drops to 0.
+- Open: in `unit_02018668.cpp` the original addresses its pointer to member
+  constants from the table (`data_020b8624 + offset`), table first, constants in
+  descending creation order; ours are ascending in a separate block, as they are
+  in the original `unit_02013258.cpp`. Cause unknown.
