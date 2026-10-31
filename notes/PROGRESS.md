@@ -125,3 +125,4 @@
 | 2026-10-31 | 1340482 | 321172 / 720836 bytes (44.56 %; fuzzy 72.18 %, linked 11.51 %) | 2668 / 4556 | 84 / 221 | Abstract action unit (5 / 6 functions, `.text` 99.85 %) |
 | 2026-10-31 | 32aec6a | 322180 / 720836 bytes (44.70 %; fuzzy 72.57 %, linked 11.51 %) | 2677 / 4556 | 84 / 222 | Interaction base unit (9 / 11 functions, `.text` 99.84 %) |
 | 2026-10-31 | cdb51dc | 322592 / 720836 bytes (44.75 %; fuzzy 72.63 %, linked 11.57 %) | 2684 / 4556 | 85 / 223 | Change clothing action unit (complete, 7 / 7 functions) |
+| 2026-10-31 | 89005ed | 323656 / 720836 bytes (44.90 %; fuzzy 72.77 %, linked 11.72 %) | 2703 / 4556 | 86 / 224 | Action list unit (complete, 19 / 19 functions) |
