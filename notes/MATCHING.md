@@ -896,6 +896,14 @@ default: add one here only once a unit of this ROM proves it with mwccarm.
   own 8-byte `.data` constant, emitted in source order before the vtable (one
   per use, duplicates included); `(this->*phase)()` tests the adjustment's bit 0
   (`unit_02072D94.cpp`, 0x020BC9C8-0x020BCA28).
+- A `.rodata` word no code loads can be a function-local `static const` whose
+  value is folded into the code: mwccarm keeps the object all the same.
+  `static const u32 hash = 0xa030f2c3;` in `func_02015dd8` gives the last word of
+  the `.rodata` of `unit_020142E0.cpp`. In an inline member defined in the class
+  body the object comes first in `.rodata` instead (spear unit, reverted).
+- Out-of-order pointer to member constants (a state set late in the code with its
+  constant early) were reproduced with small inline setters defined at the place of
+  the constant (`unit_020142E0.cpp`, `func_go*`); the real source form is unknown.
 - A pointer to member constant that no code loads (0x020BCAC4 in
   `unit_02073878.cpp`) still comes from the source: mwccarm emits the constant
   for a `&C::f` in a dead branch (`if (0)`, or after a `return`) and drops the

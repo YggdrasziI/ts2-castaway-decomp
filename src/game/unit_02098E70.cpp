@@ -36,9 +36,10 @@ s64 Unk02098e70::func_02098e94() const {
     return (((s64)y * y) >> 12) + (((s64)x * x) >> 12);
 }
 
-void Unk02098e70::func_02098ec0(int f) {
+Unk02098e70 &Unk02098e70::func_02098ec0(int f) {
     x = func_fxmul(x, f);
     y = func_fxmul(y, f);
+    return *this;
 }
 
 Unk02098e70 &Unk02098e70::func_02098eec() {
@@ -55,7 +56,7 @@ Unk02098e70 Unk02098e70::func_02098f38() const {
     return v.func_02098eec();
 }
 
-void Unk02098e70::func_02098f74(int min, int max) {
+Unk02098e70 &Unk02098e70::func_02098f74(int min, int max) {
     if (x < min) {
         x = min;
     }
@@ -68,6 +69,7 @@ void Unk02098e70::func_02098f74(int min, int max) {
     if (y > max) {
         y = max;
     }
+    return *this;
 }
 
 Unk02098e70 Unk02098e70::func_02098fa8(const Unk02098e70 &o) const {

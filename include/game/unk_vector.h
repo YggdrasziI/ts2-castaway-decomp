@@ -33,10 +33,10 @@ public:
     Unk02098e70(int x, int y);
     int func_02098e84() const;
     s64 func_02098e94() const;
-    void func_02098ec0(int f);
+    Unk02098e70 &func_02098ec0(int f);
     Unk02098e70 &func_02098eec();
     Unk02098e70 func_02098f38() const;
-    void func_02098f74(int min, int max);
+    Unk02098e70 &func_02098f74(int min, int max);
     Unk02098e70 func_02098fa8(const Unk02098e70 &o) const;
     Unk02098e70 func_02098fcc(const Unk02098e70 &o) const;
 };
