@@ -134,3 +134,4 @@
 | 2026-11-01 | 6ed8b6a | 332820 / 720836 bytes (46.17 %; fuzzy 73.85 %, linked 13.05 %) | 2760 / 4556 | 94 / 230 | Place Object action unit (complete, 9 / 9 functions) |
 | 2026-11-01 | 6f7fff4 | 333652 / 720836 bytes (46.29 %; fuzzy 73.97 %, linked 13.16 %) | 2768 / 4556 | 95 / 231 | Action Pickup unit (complete, 8 / 8 functions) |
 | 2026-11-01 | 66353c1 | 335796 / 720836 bytes (46.58 %; fuzzy 74.37 %, linked 13.16 %) | 2784 / 4556 | 95 / 232 | Move actions unit, 16 of 17 functions |
+| 2026-11-01 | db53064 | 337464 / 720836 bytes (46.82 %; fuzzy 74.60 %, linked 13.39 %) | 2797 / 4556 | 96 / 233 | Motive Failure action unit (complete, 13 / 13 functions) |
