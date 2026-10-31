@@ -130,3 +130,4 @@
 | 2026-10-31 | a22de27 | 329112 / 720836 bytes (45.66 %; fuzzy 73.34 %, linked 12.53 %) | 2719 / 4556 | 90 / 226 | Base action unit (complete, 8 / 8 functions); abstract action unit complete |
 | 2026-11-01 | ad4b8cf | 330640 / 720836 bytes (45.87 %; fuzzy 73.55 %, linked 12.75 %) | 2731 / 4556 | 91 / 227 | Play Microgame action unit (complete, 11 / 11 functions) |
 | 2026-11-01 | ebf2e78 | 331244 / 720836 bytes (45.95 %; fuzzy 73.64 %, linked 12.83 %) | 2742 / 4556 | 92 / 228 | Play Instrument action unit (complete, 11 / 11 functions) |
+| 2026-11-01 | 0800a12 | 331880 / 720836 bytes (46.04 %; fuzzy 73.72 %, linked 12.92 %) | 2751 / 4556 | 93 / 229 | Plant Seed action unit (complete, 9 / 9 functions) |
