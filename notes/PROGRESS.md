@@ -136,3 +136,4 @@
 | 2026-11-01 | 66353c1 | 335796 / 720836 bytes (46.58 %; fuzzy 74.37 %, linked 13.16 %) | 2784 / 4556 | 95 / 232 | Move actions unit, 16 of 17 functions |
 | 2026-11-01 | db53064 | 337464 / 720836 bytes (46.82 %; fuzzy 74.60 %, linked 13.39 %) | 2797 / 4556 | 96 / 233 | Motive Failure action unit (complete, 13 / 13 functions) |
 | 2026-11-01 | 222d596 | 337780 / 720836 bytes (46.86 %; fuzzy 74.64 %, linked 13.44 %) | 2805 / 4556 | 97 / 234 | Action Interact unit (complete, 8 / 8 functions) |
+| 2026-11-01 | 868eae6 | 338108 / 720836 bytes (46.90 %; fuzzy 74.69 %, linked 13.48 %) | 2814 / 4556 | 98 / 235 | Immediate action unit (complete, 9 / 9 functions) |
