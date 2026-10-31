@@ -1301,3 +1301,18 @@ default: add one here only once a unit of this ROM proves it with mwccarm.
   D0, D1, virtual (`unit_02011524.cpp`).
 - A string literal in an inline constructor is a global `_ZZ<ctor>Es`: no `local`
   in `symbols.txt`, and its `.data` follows the vtable (`unit_02011524.cpp`).
+- States before the factory, then D1, the virtuals and D0 last: the whole class is
+  defined in its body (`unit_020116E0.cpp`, the same as `unit_02011524.cpp`). The
+  `.text` order then does not depend on the member order, but the order of the
+  pointer to member constants does. Their bodies are parsed last member first.
+- `#pragma dont_inline` has no effect inside a class body: an inline method that
+  needs it goes outside the class as `inline`, under the pragma, and keeps its place
+  in the emission order (`func_18` of `unit_020116E0.cpp`).
+- Two copies of one string in a file are not a file boundary when the users are
+  inline: `-str reuse` does not merge strings of inline functions (`head` and the
+  jam track name in `unit_020116E0.cpp`).
+- `if (x) { f = 1; } else { f = 0; }` on a byte member gives the conditional `add`
+  and `mov` of each branch; `f = x != 0` gives one store with a late `add`.
+- Block copy of a return value under `dont_inline`, no `operator=` call: a POD
+  initialised from a cast (`Pod head = (const Pod &)f();`); assigning calls the
+  out-of-line operator.
