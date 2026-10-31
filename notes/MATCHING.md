@@ -1395,6 +1395,21 @@ default: add one here only once a unit of this ROM proves it with mwccarm.
 - A field reloaded for one bit test while other tests of the same field share a load: the reloading test goes through an inline const getter (`func_has`); a local or another block shape does not reload (`unit_020066B4.cpp`).
 - Registers one step off with a sign-extended byte kept in a local: the local is an `int`, not an `s8` (`unit_02005E30.cpp`, 98.6 % -> 99.6 %). Two locals with swapped registers although their loads are in the original order: declare them in the other order, the scheduler keeps the loads (99.6 % -> 100 %, same file). Declaration order at the top of the function changed nothing there.
 - D0 before D1 in `.text`: the destructor is implicit (none declared in the class); `virtual ~T() {}` gives D1 then D0. objdiff scores both orders 100 %, only the module check sees it (`unit_02005AF0.cpp`).
+- A vector member copied with `ldm` / `stm` and reread afterwards: a wrapper struct
+  (`Unk02005ad4Pos { Unk02098ff0 v; }`) assigned from a cast
+  (`pos = (const Pos &)f();`); the vector class alone is copied field by field and its
+  fields are forwarded from registers (`func_0200527c`, 94.4 % -> 99.9 %).
+- Hoisted stack addresses in a loop (`add r7, sp, #x` before the loop, `ldrsh r0, [r7,
+  #4]` inside): a reference or pointer bound to the temporary, not a value. Its register
+  follows the declaration order: `const Cell *c;` declared before `map`, assigned with
+  `c = &(const Cell &)f();`, gave the original allocation (`func_02005654`, 99.67 % ->
+  100 %).
+- A local declared before a variable that a call result initialises swaps their
+  registers: `int speed;` before `sim` (`Unk02005ad4::func_18`, 98.9 % -> 100 %).
+- A `return 1` placed before the `return 0` at the end of the function: `if (ok) { ... }
+  else { return 1; } return 0;` (`func_0200527c`).
+- A `Vec` virtual call with only its `y` used, where the frame seems 4 bytes too large:
+  the result is a 12-byte vector, not an 8-byte pair (`func_02005654`).
 - A `swpb` store comes from assigning a `bool` field: a `u8` source then gets normalized
   (`movne/moveq`), so the source field is a `bool` too (`unit_0200A5E0.cpp`).
 - Arguments are evaluated right to left: an inline taking a call result by value plus
