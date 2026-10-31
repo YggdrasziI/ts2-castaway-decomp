@@ -21,6 +21,11 @@ src/game/unit_0200B23C.cpp:
     .rodata     start:0x020ae52c end:0x020ae634
     .data       start:0x020b7900 end:0x020b7ac8
 
+src/game/unit_0200DD80.cpp:
+    complete
+    .text       start:0x0200dd80 end:0x0200e144
+    .data       start:0x020b7ac8 end:0x020b7ad4
+
 src/game/unit_0200E144.cpp:
     .text       start:0x0200e144 end:0x02010920
     .rodata     start:0x020ae634 end:0x020ae678

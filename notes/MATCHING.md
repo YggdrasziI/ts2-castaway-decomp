@@ -1363,3 +1363,5 @@ default: add one here only once a unit of this ROM proves it with mwccarm.
   (`[r0, #0x108]`) can be written as one table object: same shape of the loads and
   the same `.data` words; the second word of a compared constant keeps its own anchor
   in the original (`unit_0200B23C.cpp`, open).
+- A `complete` unit can be at 100 % in objdiff and still fail the link check: inline array element constructors are emitted after their user, as weak symbols. When the original has them before, define them as plain functions at the file start (`Unk0200dd90Part`).
+- A byte field passed to or set from a `bool` parameter without a `cmp` or an `and #0xff`: the field is a `bool` too (`Unk0200dd90Part::flag`).

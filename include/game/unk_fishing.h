@@ -56,8 +56,11 @@ public:
 };
 
 struct Unk0200dd90Part {
+    Unk0200dd90Part();
+    ~Unk0200dd90Part();
+
     Unk02098e70 pos;
-    u8 flag;
+    bool flag;
     int flags;
     int unk10;
     int unk14;
@@ -65,6 +68,9 @@ struct Unk0200dd90Part {
 
 /* The movement block at 0x08 of a scene element. */
 struct Unk020acb90 {
+    Unk020acb90(int speed, int a);
+    ~Unk020acb90();
+
     Unk02098e70 dir;
     Unk02098e70 step;
     int speed;
