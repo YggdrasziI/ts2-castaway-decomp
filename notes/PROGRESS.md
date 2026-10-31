@@ -123,3 +123,4 @@
 | 2026-10-31 | 85c6a5f | 320908 / 720836 bytes (44.52 %; fuzzy 71.94 %, linked 11.51 %) | 2659 / 4556 | 84 / 219 | Sim Animation unit, all at 100 %, not complete (base D1 kept far) |
 | 2026-10-31 | c2a7a97 | 321036 / 720836 bytes (44.54 %; fuzzy 72.06 %, linked 11.51 %) | 2663 / 4556 | 84 / 220 | ShakeTree action unit (4 / 5 functions, `.text` 99.79 %) |
 | 2026-10-31 | 1340482 | 321172 / 720836 bytes (44.56 %; fuzzy 72.18 %, linked 11.51 %) | 2668 / 4556 | 84 / 221 | Abstract action unit (5 / 6 functions, `.text` 99.85 %) |
+| 2026-10-31 | 32aec6a | 322180 / 720836 bytes (44.70 %; fuzzy 72.57 %, linked 11.51 %) | 2677 / 4556 | 84 / 222 | Interaction base unit (9 / 11 functions, `.text` 99.84 %) |
