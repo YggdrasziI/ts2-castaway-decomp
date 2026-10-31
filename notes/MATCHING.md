@@ -1394,6 +1394,7 @@ default: add one here only once a unit of this ROM proves it with mwccarm.
 - Stores scheduled differently in a block with the same statements: a local holding an intermediate result (`actor = func_02002414(owner); sim = actor->sim;` vs. `sim = func_02002414(owner)->sim;`), 93.4 % -> 100 % (`unit_02006CAC.cpp`).
 - A field reloaded for one bit test while other tests of the same field share a load: the reloading test goes through an inline const getter (`func_has`); a local or another block shape does not reload (`unit_020066B4.cpp`).
 - Registers one step off with a sign-extended byte kept in a local: the local is an `int`, not an `s8` (`unit_02005E30.cpp`, 98.6 % -> 99.6 %). Two locals with swapped registers although their loads are in the original order: declare them in the other order, the scheduler keeps the loads (99.6 % -> 100 %, same file). Declaration order at the top of the function changed nothing there.
+- D0 before D1 in `.text`: the destructor is implicit (none declared in the class); `virtual ~T() {}` gives D1 then D0. objdiff scores both orders 100 %, only the module check sees it (`unit_02005AF0.cpp`).
 - A `swpb` store comes from assigning a `bool` field: a `u8` source then gets normalized
   (`movne/moveq`), so the source field is a `bool` too (`unit_0200A5E0.cpp`).
 - Arguments are evaluated right to left: an inline taking a call result by value plus

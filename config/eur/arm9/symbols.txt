@@ -220,14 +220,14 @@ func_02005aa4 kind:function(arm,size=0x14) addr:0x02005aa4
 func_02005ab8 kind:function(arm,size=0x1c) addr:0x02005ab8
 func_02005ad4 kind:function(arm,size=0x14) addr:0x02005ad4
 func_02005ae8 kind:function(arm,size=0x8) addr:0x02005ae8
-func_02005af0 kind:function(arm,size=0x4c) addr:0x02005af0
-func_02005b3c kind:function(arm,size=0x124) addr:0x02005b3c
-func_02005c60 kind:function(arm,size=0x10) addr:0x02005c60
-func_02005c70 kind:function(arm,size=0xa8) addr:0x02005c70
-func_02005d18 kind:function(arm,size=0x3c) addr:0x02005d18
-func_02005d54 kind:function(arm,size=0xac) addr:0x02005d54
-func_02005e00 kind:function(arm,size=0x1c) addr:0x02005e00
-func_02005e1c kind:function(arm,size=0x14) addr:0x02005e1c
+_ZN11Unk02005e1c7func_20Ev kind:function(arm,size=0x4c) addr:0x02005af0
+_ZN11Unk02005e1c7func_24Ev kind:function(arm,size=0x124) addr:0x02005b3c
+_ZN11Unk02005e1c7func_30Ev kind:function(arm,size=0x10) addr:0x02005c60
+_ZN11Unk02005e1c7func_18Ev kind:function(arm,size=0xa8) addr:0x02005c70
+_ZN11Unk02005e1c13func_02005d18Ev kind:function(arm,size=0x3c) addr:0x02005d18
+_ZN11Unk02005e1c7func_2cEv kind:function(arm,size=0xac) addr:0x02005d54
+_ZN11Unk02005e1cD0Ev kind:function(arm,size=0x1c) addr:0x02005e00
+_ZN11Unk02005e1cD1Ev kind:function(arm,size=0x14) addr:0x02005e1c
 _ZN11Unk02005e7c7func_20Ev kind:function(arm,size=0x4c) addr:0x02005e30
 _ZN11Unk02005e7cC1Ev kind:function(arm,size=0x20) addr:0x02005e7c
 _ZN11Unk02005e7c7func_34Ev kind:function(arm,size=0x34) addr:0x02005e9c
@@ -4667,7 +4667,7 @@ data_020b738c kind:data(any) addr:0x020b738c
 _ZTV11Unk02005a74 kind:data(any) addr:0x020b73a8
 _ZTV11Unk02005aa4 kind:data(any) addr:0x020b73d4
 _ZTV11Unk02005ad4 kind:data(any) addr:0x020b7400
-data_020b742c kind:data(any) addr:0x020b742c
+@800 kind:data(any) addr:0x020b742c local
 _ZTV11Unk02005e1c kind:data(any) addr:0x020b743c
 @791 kind:data(any) addr:0x020b7478 local
 _ZTV11Unk02005e7c kind:data(any) addr:0x020b7488
@@ -5572,8 +5572,8 @@ data_020be0e8 kind:bss addr:0x020be0e8
 data_020be0f8 kind:bss addr:0x020be0f8
 data_020be0fc kind:bss addr:0x020be0fc
 data_020be110 kind:bss addr:0x020be110
-data_020be120 kind:bss addr:0x020be120
-data_020be124 kind:bss addr:0x020be124
+_ZGVdesc$795 kind:bss addr:0x020be120 local
+desc$795 kind:bss addr:0x020be124 local
 _ZGVdesc$786 kind:bss addr:0x020be134 local
 desc$786 kind:bss addr:0x020be138 local
 _ZGVdesc$781 kind:bss addr:0x020be148 local
