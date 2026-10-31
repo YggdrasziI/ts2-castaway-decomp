@@ -127,3 +127,4 @@
 | 2026-10-31 | cdb51dc | 322592 / 720836 bytes (44.75 %; fuzzy 72.63 %, linked 11.57 %) | 2684 / 4556 | 85 / 223 | Change clothing action unit (complete, 7 / 7 functions) |
 | 2026-10-31 | 89005ed | 323656 / 720836 bytes (44.90 %; fuzzy 72.77 %, linked 11.72 %) | 2703 / 4556 | 86 / 224 | Action list unit (complete, 19 / 19 functions) |
 | 2026-10-31 | aa4c0d0 | 326364 / 720836 bytes (45.28 %; fuzzy 73.15 %, linked 12.22 %) | 2709 / 4556 | 88 / 225 | Action pool and factory unit (complete, 6 / 6 functions); sim animation unit complete |
+| 2026-10-31 | a22de27 | 329112 / 720836 bytes (45.66 %; fuzzy 73.34 %, linked 12.53 %) | 2719 / 4556 | 90 / 226 | Base action unit (complete, 8 / 8 functions); abstract action unit complete |
