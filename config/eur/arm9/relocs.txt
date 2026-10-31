@@ -2327,7 +2327,7 @@ from:0x02011510 kind:load to:0x020be2f8 module:main
 from:0x0201153c kind:arm_call to:0x02099840 module:main
 from:0x0201155c kind:arm_call to:0x02013f8c module:main
 from:0x02011594 kind:load to:0x020b7be8 module:main
-from:0x0201159c kind:load to:0x020b7bc8 module:main
+from:0x0201159c kind:load to:0x020b7bc0 add:0x8 module:main
 from:0x020115a8 kind:arm_call to:0x020141dc module:main
 from:0x020115c8 kind:arm_call to:0x020aa040 module:main
 from:0x020115d8 kind:arm_call to:0x020a7c90 module:main

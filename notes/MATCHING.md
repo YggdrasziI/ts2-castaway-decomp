@@ -1295,3 +1295,9 @@ default: add one here only once a unit of this ROM proves it with mwccarm.
   constants from the table (`data_020b8624 + offset`), table first, constants in
   descending creation order; ours are ascending in a separate block, as they are
   in the original `unit_02013258.cpp`. Cause unknown.
+- A class whose constructor is inlined in its factory, with D1 (no vptr store),
+  then a virtual, then D0 after the factory: everything is defined in the class,
+  with `virtual ~X() {}` written out. The implicit destructor gives the order
+  D0, D1, virtual (`unit_02011524.cpp`).
+- A string literal in an inline constructor is a global `_ZZ<ctor>Es`: no `local`
+  in `symbols.txt`, and its `.data` follows the vtable (`unit_02011524.cpp`).
