@@ -129,3 +129,4 @@
 | 2026-10-31 | aa4c0d0 | 326364 / 720836 bytes (45.28 %; fuzzy 73.15 %, linked 12.22 %) | 2709 / 4556 | 88 / 225 | Action pool and factory unit (complete, 6 / 6 functions); sim animation unit complete |
 | 2026-10-31 | a22de27 | 329112 / 720836 bytes (45.66 %; fuzzy 73.34 %, linked 12.53 %) | 2719 / 4556 | 90 / 226 | Base action unit (complete, 8 / 8 functions); abstract action unit complete |
 | 2026-11-01 | ad4b8cf | 330640 / 720836 bytes (45.87 %; fuzzy 73.55 %, linked 12.75 %) | 2731 / 4556 | 91 / 227 | Play Microgame action unit (complete, 11 / 11 functions) |
+| 2026-11-01 | ebf2e78 | 331244 / 720836 bytes (45.95 %; fuzzy 73.64 %, linked 12.83 %) | 2742 / 4556 | 92 / 228 | Play Instrument action unit (complete, 11 / 11 functions) |
