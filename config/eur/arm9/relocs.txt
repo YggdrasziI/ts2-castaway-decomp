@@ -345,7 +345,7 @@ from:0x020031cc kind:load to:0x020be06c module:main
 from:0x020031d0 kind:load to:0x020b7114 module:main
 from:0x020031d4 kind:load to:0x020be070 module:main
 from:0x020031e0 kind:arm_call to:0x020023b8 module:main
-from:0x02003208 kind:load to:0x020b7128 module:main
+from:0x02003208 kind:load to:0x020b7120 add:0x8 module:main
 from:0x02003214 kind:arm_call to:0x02002408 module:main
 from:0x02003228 kind:arm_call to:0x02002408 module:main
 from:0x02003230 kind:arm_call to:0x020023b4 module:main
