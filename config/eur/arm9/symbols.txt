@@ -5966,3 +5966,8 @@ data_020d7110 kind:bss addr:0x020d7110
 @2538 kind:data(any) addr:0x020b86f0 local
 @2581 kind:data(any) addr:0x020b8698 local
 @2674 kind:data(any) addr:0x020b8660 local
+__stdio_exit kind:bss addr:0x020c77ac
+__atexit_curr_func kind:bss addr:0x020c77b0 local
+__aborting kind:bss addr:0x020c77b4
+_ZGVsounds$523 kind:bss addr:0x020d622c local
+sounds$523 kind:bss addr:0x020d6230 local
