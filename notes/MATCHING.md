@@ -870,6 +870,12 @@ default: add one here only once a unit of this ROM proves it with mwccarm.
   the classes and the destructor pairs are ordered by the class definitions. The class
   defined last has its vtable first and its destructors last. In `unit_02053204.cpp` the
   factory is defined before the file class, whose written-out `~T() {}` gives D1, then D0.
+- `mov r1, #1`, then `moveq r1, #0` for a flag kept in a local: declare the `bool` apart and assign
+  `true` in a statement of its own, then clear it in an `if`. An initializer is propagated into the
+  branches, and `a || b` as a value gives two `mov` (`func_020a04d4`, 94 % -> 99.9 %).
+- A literal used in a function comes out in the order of first use in the source; a literal in an
+  inline comes first, but an inline not called or called in `if (0)` does not count, and the inline
+  can change the registers of the caller (`unit_020A0014.cpp`, cause of its original order unknown).
 - A switch whose original jump table covers ids that an earlier test already
   excludes (`if (id < 0) return 0x10;`, then `sub r0, r1, =0xFFFEFEF7`): the
   source lists those negative cases too, written `(int)0xfffefef7` and so on
