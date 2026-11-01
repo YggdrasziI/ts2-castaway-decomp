@@ -904,6 +904,9 @@ default: add one here only once a unit of this ROM proves it with mwccarm.
   separate `return 0` is a switch assigning a local, with `default: return 0;`;
   returning from each case gives conditional `ldmeq` exits (`unit_02053204.cpp`,
   83.9 % -> 100 %).
+- `__cxa_vec_new(n, size, 8, ctor, 0)` (a cookie with no destructor): declaring a sized class
+  `operator delete[](void *, size_t)` gives it; without it the padding is 0 (`unit_020A4E60.cpp`, 99.23 % -> 100 %).
+  The declaration is not needed by anything else in the file: its presence in the original is a hypothesis.
 - `new T[n]` with a class `operator new[]` and a non-trivial constructor calls
   the class operator, then `__cxa_vec_newinit(p, n, size, 8, ctor, dtor)` only
   when it returned a block; `delete[] p` with a class `operator delete[]` calls
