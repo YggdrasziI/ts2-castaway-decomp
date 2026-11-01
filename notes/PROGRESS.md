@@ -157,3 +157,4 @@
 | 2026-11-01 | 61d0738 | 375776 / 720836 bytes (52.13 %; fuzzy 80.49 %, linked 17.90 %) | 3181 / 4556 | 121 / 265 | Save files (16 functions, CRC table in `.bss`), complete; matched code +2100 bytes |
 | 2026-11-01 | 67a8cd4 | 377368 / 720836 bytes (52.35 %; fuzzy 80.71 %, linked 18.12 %) | 3191 / 4556 | 123 / 266 | Hit tests (4 functions) and microgame launcher (6, `.data`, `.bss`), complete; matched code +1592 bytes |
 | 2026-11-01 | 3fc0d1c | 379332 / 720836 bytes (52.62 %; fuzzy 81.02 %, linked 18.12 %) | 3212 / 4556 | 123 / 267 | Game mode base (21/22 functions, `.data`, `.bss`), not complete: `func_020a5f28` 97.43 %, registers; matched code +1964 bytes |
+| 2026-11-01 | d3e5124 | 380232 / 720836 bytes (52.75 %; fuzzy 81.14 %, linked 18.25 %) | 3228 / 4556 | 124 / 268 | Game mode screen (16 functions, `.data`), complete; matched code +900 bytes |
