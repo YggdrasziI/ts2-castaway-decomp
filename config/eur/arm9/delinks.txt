@@ -2175,3 +2175,39 @@ libs/nns/src/fnd/unit_0209ED58.c:
 libs/nitro/src/math/unit_0207954C.c:
     complete
     .text       start:0x0207954c end:0x02079590
+
+libs/nitro/src/os/unit_0207B47C.c:
+    complete
+    .text       start:0x0207b47c end:0x0207b4cc
+
+libs/nitro/src/gx/unit_020791A4.c:
+    complete
+    .text       start:0x020791a4 end:0x02079218
+
+libs/nitro/src/os/unit_0207BF14.c:
+    complete
+    .text       start:0x0207bf14 end:0x0207bf58
+
+libs/nitro/src/snd/unit_0207D8A4.c:
+    complete
+    .text       start:0x0207d8a4 end:0x0207d8e4
+
+libs/nitro/src/os/unit_0207C2F8.c:
+    complete
+    .text       start:0x0207c2f8 end:0x0207c374
+
+libs/nns/src/snd/unit_0209C03C.c:
+    complete
+    .text       start:0x0209c03c end:0x0209c0c4
+
+libs/nitro/src/spi/unit_0207FDC0.c:
+    complete
+    .text       start:0x0207fdc0 end:0x0207fe78
+
+libs/nitro/src/gx/unit_02079260.c:
+    complete
+    .text       start:0x02079260 end:0x020792d0
+
+libs/nitro/src/spi/unit_0207EAEC.c:
+    complete
+    .text       start:0x0207eaec end:0x0207eb8c
