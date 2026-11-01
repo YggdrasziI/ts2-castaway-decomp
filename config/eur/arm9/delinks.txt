@@ -747,6 +747,10 @@ libs/nitro/src/fs/unit_02075F70.c:
     complete
     .text       start:0x02075f70 end:0x02077ae4
 
+libs/nitro/src/fx/unit_02077AE4.c:
+    complete
+    .text       start:0x02077ae4 end:0x02077c08
+
 libs/nitro/src/os/os_mutex.c:
     complete
     .text       start:0x0207b1a8 end:0x0207b3c4

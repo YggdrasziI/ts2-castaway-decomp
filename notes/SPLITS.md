@@ -396,3 +396,5 @@ like `libs/nitro`, a working choice.
 `libs/nitro/src/mi/unit_02079590.c` (DMA and WRAM bank, 0x02079590-0x02079ABC) and `libs/nitro/src/snd/unit_0207D1F8.c` (sound commands, 0x0207D1F8-0x0207D5CC): named by address, bounds are a hypothesis.
 
 `libs/nitro/src/fs/unit_02075F70.c` (FS commands, archives, files, 0x02075F70-0x02077AE4): named by address, bounds are a hypothesis; the hardware divider helpers follow it.
+
+`libs/nitro/src/fx/unit_02077AE4.c` (hardware divider helpers, 0x02077AE4-0x02077C08): named by address, bounds are a hypothesis.
