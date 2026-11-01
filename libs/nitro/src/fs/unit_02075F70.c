@@ -10,7 +10,27 @@
 
 typedef FSResult (*FSCommandFunc)(FSFile *);
 
-extern const FSCommandFunc data_020af1c4[];
+FSResult FSi_ReadFileCommand(FSFile *p_file);
+FSResult FSi_WriteFileCommand(FSFile *p_file);
+FSResult FSi_SeekDirCommand(FSFile *p_file);
+FSResult FSi_ReadDirCommand(FSFile *p_file);
+FSResult FSi_FindPathCommand(FSFile *p_file);
+FSResult FSi_GetPathCommand(FSFile *p_file);
+FSResult FSi_OpenFileFastCommand(FSFile *p_file);
+FSResult FSi_OpenFileDirectCommand(FSFile *p_file);
+FSResult func_02076150(FSFile *p_file);
+
+const FSCommandFunc data_020af1c4[9] = {
+    FSi_ReadFileCommand,
+    FSi_WriteFileCommand,
+    FSi_SeekDirCommand,
+    FSi_ReadDirCommand,
+    FSi_FindPathCommand,
+    FSi_GetPathCommand,
+    FSi_OpenFileFastCommand,
+    FSi_OpenFileDirectCommand,
+    func_02076150,
+};
 extern const char data_020bcb68[];
 extern const char data_020bcb6c[];
 extern FSArchive *data_020c5670;

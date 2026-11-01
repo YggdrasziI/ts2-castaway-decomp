@@ -754,10 +754,15 @@ libs/nitro/src/snd/unit_0207D1F8.c:
 libs/nitro/src/fs/unit_02075F70.c:
     complete
     .text       start:0x02075f70 end:0x02077ae4
+    .rodata     start:0x020af1c4 end:0x020af1e8
 
 libs/nitro/src/fx/unit_02077AE4.c:
     complete
     .text       start:0x02077ae4 end:0x02077c08
+
+libs/nitro/src/fx/unit_020AF1E8.c:
+    complete
+    .rodata     start:0x020af1e8 end:0x020b31e8
 
 libs/nitro/src/cp/unit_020755F4.c:
     complete
@@ -774,6 +779,7 @@ libs/nitro/src/mi/unit_02075ECC.c:
 libs/nitro/src/fx/unit_02077C08.c:
     complete
     .text       start:0x02077c08 end:0x02077e50
+    .rodata     start:0x020b31e8 end:0x020b32ec
 
 libs/nitro/src/gx/unit_02077E54.c:
     complete
@@ -886,6 +892,7 @@ libs/nns/src/snd/unit_0209C948.c:
 libs/nitro/src/snd/unit_0207DB7C.c:
     complete
     .text       start:0x0207db7c end:0x0207e2f4
+    .rodata     start:0x020b345c end:0x020b3730
 
 libs/nitro/src/spi/unit_0207F980.c:
     complete
@@ -1238,6 +1245,14 @@ libs/c/src/strtoul.c:
     .text       start:0x02082efc end:0x020833b8
     .exceptix   start:0x020ace50 end:0x020ace74
 
+libs/c/src/ctype.c:
+    complete
+    .rodata     start:0x020b3730 end:0x020b38b0
+
+libs/c/src/unit_020B38B0.c:
+    complete
+    .rodata     start:0x020b38b0 end:0x020b38b8
+
 libs/c/src/math/s_copysign.c:
     complete
     .text       start:0x020833b8 end:0x020833e0
@@ -1583,6 +1598,7 @@ src/game/unit_02097434.cpp:
 src/game/unit_02097A58.c:
     complete
     .text       start:0x02097a58 end:0x02097b6c
+    .rodata     start:0x020b38e8 end:0x020b58ec
 
 src/game/unit_02097B6C.cpp:
     .text       start:0x02097b6c end:0x02098094
@@ -2095,6 +2111,7 @@ libs/nitro/src/math/unit_020794D0.c:
 libs/nitro/src/gx/unit_02079218.c:
     complete
     .text       start:0x02079218 end:0x02079260
+    .rodata     start:0x020b32ec end:0x020b32fc
 
 libs/nitro/src/gx/unit_0207914C.c:
     complete
@@ -2357,6 +2374,11 @@ libs/nitro/src/os/unit_0207C004.c:
 libs/nitro/src/gx/unit_02079434.c:
     complete
     .text       start:0x02079434 end:0x020794b4
+    .rodata     start:0x020b32fc end:0x020b335c
+
+libs/nitro/src/snd/unit_020B335C.c:
+    complete
+    .rodata     start:0x020b335c end:0x020b345c
 
 libs/nitro/src/rtc/unit_0207D0D0.c:
     complete

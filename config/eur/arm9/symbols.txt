@@ -4587,8 +4587,6 @@ data_020af1e8 kind:data(any) addr:0x020af1e8
 data_020b31e8 kind:data(any) addr:0x020b31e8
 data_020b32ec kind:data(any) addr:0x020b32ec
 data_020b32fc kind:data(any) addr:0x020b32fc
-data_020b32fe kind:data(any) addr:0x020b32fe
-data_020b3300 kind:data(any) addr:0x020b3300
 data_020b335c kind:data(any) addr:0x020b335c
 data_020b345c kind:data(any) addr:0x020b345c
 __upper_mapC kind:data(any) addr:0x020b3730
