@@ -1205,6 +1205,11 @@ src/game/unit_020A9054.cpp:
     .text       start:0x020a9054 end:0x020a90f8
     .data       start:0x020bdd40 end:0x020bdd58
 
+src/game/unit_020A90F8.cpp:
+    complete
+    .text       start:0x020a90f8 end:0x020a9914
+    .data       start:0x020bdd58 end:0x020bdd78
+
 src/game/unit_020A9914.cpp:
     complete
     .text       start:0x020a9914 end:0x020a9d58
