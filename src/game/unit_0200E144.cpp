@@ -173,7 +173,7 @@ void func_020aa06c(Unk020a9d58 *layout, bool shown);
 void func_020aa158(Unk020a9d58 *layout);
 Unk020a7c90 *func_020aa04c(Unk020a9d58 *l, u32 id);
 void func_020aa42c(Unk020a9d58 *l);
-void func_020aba38(Unk02093648 *archive, u32 hash, Unk020a9d58 *layout, Unk020a7af4 *names);
+int func_020aba38(Unk02093648 *archive, u32 hash, Unk020a9d58 *layout, Unk020a7af4 *names);
 u32 func_0209a32c(const char *str, u32 last, u32 end);
 Unk0205cf00 *func_0205f6f8(void *db, u32 id);
 Unk02061d08Item *func_0205fbf4(void *m, int id);

@@ -4594,6 +4594,7 @@ data_020b6d9c kind:data(any) addr:0x020b6d9c
 data_020b6db0 kind:data(any) addr:0x020b6db0
 data_020b6dbc kind:data(any) addr:0x020b6dbc
 data_020b6de0 kind:data(any) addr:0x020b6de0
+data_020b6e08 kind:data(any) addr:0x020b6e08
 .p__sinit_020ad024 kind:data(word) addr:0x020b6e44
 .p__sinit_unit_020142E0.cpp kind:data(word) addr:0x020b6e48
 .p__sinit_unit_020B8888.cpp kind:data(word) addr:0x020b6e4c local

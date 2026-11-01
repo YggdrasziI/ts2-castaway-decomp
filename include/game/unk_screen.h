@@ -213,7 +213,7 @@ public:
 };
 
 extern "C" {
-void func_020aba38(Unk02093648 *archive, u32 hash, Unk020a9d58 *layout, Unk020a7af4 *names);
+int func_020aba38(Unk02093648 *archive, u32 hash, Unk020a9d58 *layout, Unk020a7af4 *names);
 void func_020a9db8(Unk020a9d58 *layout, Unk020a9d58Text text, void *user);
 void *func_020a154c(u32 id, void *user);
 u32 func_020a7b50(Unk020a7af4 *names, u32 hash);

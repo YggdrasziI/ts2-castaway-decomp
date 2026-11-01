@@ -162,7 +162,7 @@ void func_020aa158(Unk020a9d58 *l);
 Unk020a7c90 *func_020aa04c(Unk020a9d58 *l, u32 id);
 void func_020aa1c0(Unk020a9d58 *l, Unk02098e70 *p, int touched);
 void func_020aa42c(Unk020a9d58 *l);
-void func_020aba38(Unk02093648 *archive, u32 hash, Unk020a9d58 *layout, Unk020a7af4 *names);
+int func_020aba38(Unk02093648 *archive, u32 hash, Unk020a9d58 *layout, Unk020a7af4 *names);
 void func_020acbc8(Unk02098e70 *v);
 extern const s16 data_020af1e8[];
 extern u8 data_020bfc9c[];
