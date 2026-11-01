@@ -182,4 +182,4 @@
 | 2026-11-01 | 40a5235 | 510284 / 723540 bytes (70.53 %; fuzzy 98.50 %, linked 34.81 %) | 4223 / 4577 | 436 / 572 | 29 NitroSDK and NitroSystem functions written from the ROM, all complete |
 | 2026-11-01 | 17d8c78 | 512068 / 723540 bytes (70.77 %; fuzzy 98.51 %, linked 34.81 %) | 4229 / 4577 | 436 / 572 | Declaration search over the near matches: six more functions at 100 % |
 | 2026-11-01 | a8f7888 | 512068 / 723540 bytes (70.77 %; fuzzy 98.51 %, linked 34.81 %) | 4229 / 4577 | 535 / 657 | Data pass: matched data 61.93 % -> 96.52 %, lookup tables, library .bss and .data, DTCM, literal symbols |
-| 2026-11-01 | c80013f | 513416 / 723540 bytes (70.96 %; fuzzy 98.69 %, linked 36.00 %) | 4235 / 4577 | 537 / 656 | Data unit by unit: matched data 96.52 % -> 99.94 %, base vtable copies emitted, two static initializers attached |
+| 2026-11-01 | c80013f | 513416 / 723540 bytes (70.96 %; fuzzy 98.69 %, linked 34.82 %) | 4235 / 4577 | 536 / 656 | Data unit by unit: matched data 96.52 % -> 99.94 %, base vtable copies emitted, two static initializers attached |
