@@ -1036,9 +1036,21 @@ src/game/unit_0209A32C.c:
     .text       start:0x0209a32c end:0x0209a740
 
 
+src/game/unit_0209EED0.cpp:
+    complete
+    .text       start:0x0209eed0 end:0x020a0014
+    .init       start:0x020ae43c end:0x020ae468
+    .ctor       start:0x020b6eb0 end:0x020b6eb4
+    .data       start:0x020bd59c end:0x020bd72c
+    .bss        start:0x020d60bc end:0x020d6234
+
 src/game/unit_020A0014.cpp:
     .text       start:0x020a0014 end:0x020a03e0
     .data       start:0x020bd72c end:0x020bd7ac
 
 src/game/unit_020A03E0.cpp:
     .text       start:0x020a03e0 end:0x020a07d4
+
+src/game/unit_020A07D4.cpp:
+    complete
+    .text       start:0x020a07d4 end:0x020a0bc0

@@ -876,6 +876,17 @@ default: add one here only once a unit of this ROM proves it with mwccarm.
 - A literal used in a function comes out in the order of first use in the source; a literal in an
   inline comes first, but an inline not called or called in `if (0)` does not count, and the inline
   can change the registers of the caller (`unit_020A0014.cpp`, cause of its original order unknown).
+- `mov r0, #1; cmp r0, #1; bne` before a wait loop: the local is an enum (`while (busy == BUSY)`,
+  assigned apart from its declaration). An `int`, `u32` or `for` form folds the first test
+  (`func_0209fa80`, 98.88 % -> 100 %).
+- `b` to a `b` in a `switch`: the cases assign a second local instead of leaving the parameter
+  alone, so the block stays (`func_0209f05c`, 92.5 % -> 100 %).
+- A local read as signed and tested as unsigned from separate loads: test through a cast of its
+  address, `*(u8 *)&p[i] <= 1`; `(u8)p[i]` gives `and` and an `if`-conversion (`func_0209f74c`).
+- A pointer static tested with a run-time guard: a `static T &` reference to a global
+  (`func_0209f880`, 59.6 % -> 100 %, the form of `unit_02055118.cpp`).
+- A member sub-object whose first field is set before its arrays are built: the sub-object's
+  initializer list, not its constructor body (`Unk0209f0ac`).
 - A switch whose original jump table covers ids that an earlier test already
   excludes (`if (id < 0) return 0x10;`, then `sub r0, r1, =0xFFFEFEF7`): the
   source lists those negative cases too, written `(int)0xfffefef7` and so on

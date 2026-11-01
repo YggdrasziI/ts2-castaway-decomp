@@ -10,6 +10,13 @@ struct Unk020a4c4c;
 
 class Unk0206b630 {
 public:
+    Unk0206b630() {
+        count = 0;
+        for (int i = 0; i < 0x500; i++) {
+            values[i] = 0;
+        }
+    }
+
     bool func_0206b630(int value);
     bool func_0206b6bc(int value);
     int func_0206b6e8(int value);
