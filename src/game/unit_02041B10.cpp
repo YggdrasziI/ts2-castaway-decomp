@@ -240,31 +240,31 @@ Unk02041b10::Unk02041b10(Unk02093648 *archive, Unk020c43a8 *player, Unk020724cc 
     func_020aba38(archive, 0x743a4e2a, &layout, &names);
     func_020a9db8(&layout, func_020a154c, 0);
     keyboard.maxLength = 15;
-    done.func_02050838(func_020aa040(&layout, 0xb, func_020a7b50(&names, 0x57cd1f42)), false);
+    { u32 i_ = func_020a7b50(&names, 0x57cd1f42); Unk020a7c90 *s_ = func_020aa040(&layout, 0xb, i_); done.func_02050838(s_, false); }
     done.func_02050c48(0, 1, -1);
     done.func_24(0xc1000, done.func_10()->y);
-    name.func_02050838(func_020aa040(&layout, 0xb, func_020a7b50(&names, 0xbb88ca9b)), false);
+    { u32 i_ = func_020a7b50(&names, 0xbb88ca9b); Unk020a7c90 *s_ = func_020aa040(&layout, 0xb, i_); name.func_02050838(s_, false); }
     name.func_02050c48(0, 1, -1);
     name.func_24(0xc1000, name.func_10()->y);
 
-    Unk020a7c90 *s = func_020aa040(&layout, 0xb, func_020a7b50(&names, 0x7b86638c));
+    u32 i_s = func_020a7b50(&names, 0x7b86638c); Unk020a7c90 *s = func_020aa040(&layout, 0xb, i_s);
     outfit0.func_02050838(s, false);
     outfit0.func_02050c48(1, 1, -1);
     outfit0.func_02050a64(true, true);
     outfit0.func_02050c80(0, 0);
-    Unk020a7c90 *icon = func_020aa040(&layout, 1, func_020a7b50(&names, 0x28d57b1f));
+    u32 i_icon = func_020a7b50(&names, 0x28d57b1f); Unk020a7c90 *icon = func_020aa040(&layout, 1, i_icon);
     func_020a7c90(icon, func_020a7ca4(s) + 0x8000);
     func_020a7cac(icon, func_020a7cc0(s) + 0x4000);
     outfit0.func_020508a4(icon);
     outfit0.func_02050c64(2, 3, -1);
     outfit0.func_02050c94(3, 3);
 
-    s = func_020aa040(&layout, 0xb, func_020a7b50(&names, 0x29e2667b));
+    { u32 i_ = func_020a7b50(&names, 0x29e2667b); Unk020a7c90 *s_ = func_020aa040(&layout, 0xb, i_); s = s_; }
     outfit1.func_02050838(s, false);
     outfit1.func_02050c48(1, 1, -1);
     outfit1.func_02050a64(true, true);
     outfit1.func_02050c80(0, 0);
-    icon = func_020aa040(&layout, 1, func_020a7b50(&names, 0xcd60d809));
+    { u32 i_ = func_020a7b50(&names, 0xcd60d809); Unk020a7c90 *s_ = func_020aa040(&layout, 1, i_); icon = s_; }
     func_020a7c90(icon, func_020a7ca4(s) + 0x8000);
     func_020a7cac(icon, func_020a7cc0(s) + 0x4000);
     outfit1.func_020508a4(icon);
@@ -275,44 +275,44 @@ Unk02041b10::Unk02041b10(Unk02093648 *archive, Unk020c43a8 *player, Unk020724cc 
     panelTabs.func_20(-0x8a000, 0);
     panelTabs.func_02051804(1);
     panelTabs.func_020518a8(8);
-    panelTabs.func_02051858(func_020aa040(&layout, 0xb, func_020a7b50(&names, 0x24443f74)));
+    { u32 i_ = func_020a7b50(&names, 0x24443f74); Unk020a7c90 *s_ = func_020aa040(&layout, 0xb, i_); panelTabs.func_02051858(s_); }
     panelTabs.func_020518fc(&outfit0);
     panelTabs.func_020518fc(&outfit1);
     for (int i = 0; i < 6; i++) {
         int x = FX32((i % 2) * 38 + 7);
         int y = FX32((i / 2) * 38 + 25);
-        tabs[i].func_02050838(func_020aa040(&layout, 0xb, func_020a7b50(&names, 0x30abe9f2 + i)), false);
+        { u32 i_ = func_020a7b50(&names, 0x30abe9f2 + i); Unk020a7c90 *s_ = func_020aa040(&layout, 0xb, i_); tabs[i].func_02050838(s_, false); }
         tabs[i].func_02050c48(0, 1, -1);
         tabs[i].func_02050a64(true, true);
         tabs[i].func_02050c80(2, 3);
         tabs[i].func_14(x, y);
-        Unk020a7c90 *icon = func_020aa040(&layout, 1, func_020a7b50(&names, 0xe69db0da + i));
+        u32 i_icon = func_020a7b50(&names, 0xe69db0da + i); Unk020a7c90 *icon = func_020aa040(&layout, 1, i_icon);
         func_020a7c90(icon, x);
         func_020a7cac(icon, y);
         tabs[i].func_020508a4(icon);
         panelTabs.func_020518fc(&tabs[i]);
     }
 
-    s = func_020aa040(&layout, 2, func_020a7b50(&names, 0xc18d4c99));
+    { u32 i_ = func_020a7b50(&names, 0xc18d4c99); Unk020a7c90 *s_ = func_020aa040(&layout, 2, i_); s = s_; }
     panelItems.func_14(func_020a7ca4(s), 0);
     panelItems.func_20(0, func_020a7ca4(s));
     panelItems.func_02051804(3);
     panelItems.func_020518a8(7);
     panelItems.func_02051858(s);
-    cursor = func_020aa040(&layout, 1, func_020a7b50(&names, 0x869f32b9));
+    { u32 i_ = func_020a7b50(&names, 0x869f32b9); Unk020a7c90 *s_ = func_020aa040(&layout, 1, i_); cursor = s_; }
     panelItems.func_02051858(cursor);
     for (int i = 0; i < 6; i++) {
         int x = FX32((i % 2) * 38 + 0xb0);
         int y = FX32((i / 2) * 38 + 25);
-        items[i].func_02050838(func_020aa040(&layout, 0xb, func_020a7b50(&names, 0x94f941aa + i)), false);
+        { u32 i_ = func_020a7b50(&names, 0x94f941aa + i); Unk020a7c90 *s_ = func_020aa040(&layout, 0xb, i_); items[i].func_02050838(s_, false); }
         items[i].func_02050a64(true, true);
         items[i].func_14(x, y);
         items[i].func_02050bf0(i + 9, -1, -1, -1, -1, -1);
         panelItems.func_020518fc(&items[i]);
     }
-    colorSprite = func_020aa040(&layout, 1, func_020a7b50(&names, 0xdb82455d));
+    { u32 i_ = func_020a7b50(&names, 0xdb82455d); Unk020a7c90 *s_ = func_020aa040(&layout, 1, i_); colorSprite = s_; }
     panelItems.func_02051858(colorSprite);
-    Unk020a7c90 *track = func_020aa040(&layout, 0xb, func_020a7b50(&names, 0xa2ea5a79));
+    u32 i_track = func_020a7b50(&names, 0xa2ea5a79); Unk020a7c90 *track = func_020aa040(&layout, 0xb, i_track);
     slider.func_02051ec4(func_020aa040(&layout, 0xb, func_020a7b50(&names, 0xb40bef04)), track, -0x3000, 0x2000,
                          false, false);
     slider.func_range(0, FX32(this->catalog->func_020726bc(5) - 1), -0x3000);
@@ -322,21 +322,21 @@ Unk02041b10::Unk02041b10(Unk02093648 *archive, Unk020c43a8 *player, Unk020724cc 
     }
     func_020670fc(&data_020c43a8, &outfits[outfit]);
 
-    yes.func_02050838(func_020aa040(&layout, 0xb, func_020a7b50(&names, 0xbad53d0c)), false);
+    { u32 i_ = func_020a7b50(&names, 0xbad53d0c); Unk020a7c90 *s_ = func_020aa040(&layout, 0xb, i_); yes.func_02050838(s_, false); }
     yes.func_02050c48(0, 1, -1);
     yes.func_02050914(1);
-    yes.func_02050968(func_020aa040(&layout, 4, func_020a7b50(&names, 0x1420eff5)));
-    no.func_02050838(func_020aa040(&layout, 0xb, func_020a7b50(&names, 0xfa09d814)), false);
+    { u32 i_ = func_020a7b50(&names, 0x1420eff5); Unk020a7c90 *s_ = func_020aa040(&layout, 4, i_); yes.func_02050968(s_); }
+    { u32 i_ = func_020a7b50(&names, 0xfa09d814); Unk020a7c90 *s_ = func_020aa040(&layout, 0xb, i_); no.func_02050838(s_, false); }
     no.func_02050c48(0, 1, -1);
     no.func_02050914(1);
-    no.func_02050968(func_020aa040(&layout, 4, func_020a7b50(&names, 0xd3ef2f14)));
-    s = func_020aa040(&layout, 0xb, func_020a7b50(&names, 0xf961d5fc));
+    { u32 i_ = func_020a7b50(&names, 0xd3ef2f14); Unk020a7c90 *s_ = func_020aa040(&layout, 4, i_); no.func_02050968(s_); }
+    { u32 i_ = func_020a7b50(&names, 0xf961d5fc); Unk020a7c90 *s_ = func_020aa040(&layout, 0xb, i_); s = s_; }
     panelConfirm.func_14(0, func_020a7cc0(s));
     panelConfirm.func_24(0xc1000, func_020a7cc0(s));
     panelConfirm.func_02051804(2);
     panelConfirm.func_020518a8(2);
     panelConfirm.func_02051858(s);
-    panelConfirm.func_02051858(func_020aa040(&layout, 4, func_020a7b50(&names, 0x15945575)));
+    { u32 i_ = func_020a7b50(&names, 0x15945575); Unk020a7c90 *s_ = func_020aa040(&layout, 4, i_); panelConfirm.func_02051858(s_); }
     panelConfirm.func_020518fc(&yes);
     panelConfirm.func_020518fc(&no);
     panelConfirm.func_34(0x11);

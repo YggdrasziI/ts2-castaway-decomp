@@ -4960,8 +4960,8 @@ data_020b954c kind:data(any) addr:0x020b954c
 _ZTV11Unk02038bcc kind:data(any) addr:0x020b9550
 data_020b959c kind:data(any) addr:0x020b959c
 data_020b95a0 kind:data(any) addr:0x020b95a0
-data_020b95a4 kind:data(any) addr:0x020b95a4
-data_020b95a8 kind:data(any) addr:0x020b95a8
+@1277 kind:data(any) addr:0x020b95a4 local
+@1278 kind:data(any) addr:0x020b95a8 local
 _ZTV11Unk0203b3b8 kind:data(any) addr:0x020b95ac
 data_020b95f8 kind:data(any) addr:0x020b95f8
 _ZTV11Unk0203c188 kind:data(any) addr:0x020b95fc

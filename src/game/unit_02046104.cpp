@@ -53,16 +53,16 @@ Unk02046104::Unk02046104(Unk02044234 *owner) : Unk020465bc(owner) {
     func_020aba38(func_020a18e4()->archive, 0x668344bb, layout, &names);
     func_020a9db8(layout, func_020a154c, 0);
     func_02046a94(layout, &names);
-    buttons[0].func_02050838(func_020aa040(layout, 0xb, func_020a7b50(&names, 0x47a09f2)), false);
+    buttons[0].func_02050838(func_sprite(layout, 0xb, func_020a7b50(&names, 0x47a09f2)), false);
     buttons[0].func_02050c48(0, 3, -1);
-    buttons[1].func_02050838(func_020aa040(layout, 0xb, func_020a7b50(&names, 0x47a09f3)), false);
+    buttons[1].func_02050838(func_sprite(layout, 0xb, func_020a7b50(&names, 0x47a09f3)), false);
     buttons[1].func_02050c48(0, 3, -1);
-    panel18.func_02051858(func_020aa040(layout, 0xb, func_020a7b50(&names, 0x47a09f2)));
-    panel18.func_02051858(func_020aa040(layout, 0xb, func_020a7b50(&names, 0x47a09f3)));
-    panel18.func_02051858(func_020aa040(layout, 4, func_020a7b50(&names, 0x5f667363)));
-    panel18.func_02051858(func_020aa040(layout, 4, func_020a7b50(&names, 0x5f667364)));
-    panel18.func_02051858(func_020aa040(layout, 1, func_020a7b50(&names, 0xd497feae)));
-    panel18.func_02051858(func_020aa040(layout, 1, func_020a7b50(&names, 0xd497feaf)));
+    panel18.func_02051858(func_sprite(layout, 0xb, func_020a7b50(&names, 0x47a09f2)));
+    panel18.func_02051858(func_sprite(layout, 0xb, func_020a7b50(&names, 0x47a09f3)));
+    panel18.func_02051858(func_sprite(layout, 4, func_020a7b50(&names, 0x5f667363)));
+    panel18.func_02051858(func_sprite(layout, 4, func_020a7b50(&names, 0x5f667364)));
+    panel18.func_02051858(func_sprite(layout, 1, func_020a7b50(&names, 0xd497feae)));
+    panel18.func_02051858(func_sprite(layout, 1, func_020a7b50(&names, 0xd497feaf)));
     func_02044f14(this->owner, 0x714);
 }
 

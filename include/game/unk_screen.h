@@ -222,6 +222,16 @@ void func_020aa06c(Unk020a9d58 *layout, bool shown);
 void func_020aa158(Unk020a9d58 *layout);
 }
 
+/*
+ * A sprite of a layout by its index. The local and the `u32` index are needed:
+ * written as a direct call, the index truncations of long constructors go
+ * through the other one of r0 / r1. Real form unknown.
+ */
+static inline Unk020a7c90 *func_sprite(Unk020a9d58 *layout, int type, u32 index) {
+    Unk020a7c90 *sprite = func_020aa040(layout, type, index);
+    return sprite;
+}
+
 /* A show / hide timer: 0 opening, 1 opened, 2 shown, 3 closing, 4 closed, 5 hidden. */
 struct Unk020a07d4Timer {
     Unk020a07d4Timer() {

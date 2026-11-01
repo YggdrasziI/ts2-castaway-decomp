@@ -185,24 +185,24 @@ Unk0202e0ec::Unk0202e0ec(Unk0203c188Owner *owner, int mode)
     panel.func_20(0xffeba000, -0x23000);
     panel.func_020518a8(6);
     panel.func_02051804(0xf);
-    title = func_020aa040(layout, 4, func_020a7b50(&names, 0x96c99379));
+    { u32 i_ = func_020a7b50(&names, 0x96c99379); Unk020a7c90 *s_ = func_020aa040(layout, 4, i_); title = s_; }
     panel.func_02051858(title);
-    panel.func_02051858(func_020aa040(layout, 0xb, func_020a7b50(&names, 0xea7a08ce)));
+    { u32 i_ = func_020a7b50(&names, 0xea7a08ce); Unk020a7c90 *s_ = func_020aa040(layout, 0xb, i_); panel.func_02051858(s_); }
 
     int textId = 0xd7b;
     sub1.func_02051804(2);
-    sub1.func_02051858(func_020aa040(layout, 0xb, func_020a7b50(&names, 0x9774c086)));
-    sub1.func_02051858(func_020aa040(layout, 0xb, func_020a7b50(&names, 0xc40c9901)));
+    { u32 i_ = func_020a7b50(&names, 0x9774c086); Unk020a7c90 *s_ = func_020aa040(layout, 0xb, i_); sub1.func_02051858(s_); }
+    { u32 i_ = func_020a7b50(&names, 0xc40c9901); Unk020a7c90 *s_ = func_020aa040(layout, 0xb, i_); sub1.func_02051858(s_); }
     sub1.func_18(false);
     panel.func_020518fc(&sub1);
 
     sub2.func_02051804(6);
-    sub2.func_02051858(func_020aa040(layout, 4, func_020a7b50(&names, 0x8df9f519)));
-    sub2.func_02051858(func_020aa040(layout, 4, func_020a7b50(&names, 0x8df9f51a)));
-    sub2.func_02051858(func_020aa040(layout, 1, func_020a7b50(&names, 0xc871ce68)));
-    sub2.func_02051858(func_020aa040(layout, 1, func_020a7b50(&names, 0xc871ce69)));
-    sub2.func_02051858(func_020aa040(layout, 1, func_020a7b50(&names, 0x0050864a)));
-    sub2.func_02051858(func_020aa040(layout, 1, func_020a7b50(&names, 0x0050864b)));
+    { u32 i_ = func_020a7b50(&names, 0x8df9f519); Unk020a7c90 *s_ = func_020aa040(layout, 4, i_); sub2.func_02051858(s_); }
+    { u32 i_ = func_020a7b50(&names, 0x8df9f51a); Unk020a7c90 *s_ = func_020aa040(layout, 4, i_); sub2.func_02051858(s_); }
+    { u32 i_ = func_020a7b50(&names, 0xc871ce68); Unk020a7c90 *s_ = func_020aa040(layout, 1, i_); sub2.func_02051858(s_); }
+    { u32 i_ = func_020a7b50(&names, 0xc871ce69); Unk020a7c90 *s_ = func_020aa040(layout, 1, i_); sub2.func_02051858(s_); }
+    { u32 i_ = func_020a7b50(&names, 0x0050864a); Unk020a7c90 *s_ = func_020aa040(layout, 1, i_); sub2.func_02051858(s_); }
+    { u32 i_ = func_020a7b50(&names, 0x0050864b); Unk020a7c90 *s_ = func_020aa040(layout, 1, i_); sub2.func_02051858(s_); }
     sub2.func_18(false);
     panel.func_020518fc(&sub2);
 
@@ -228,7 +228,7 @@ Unk0202e0ec::Unk0202e0ec(Unk0203c188Owner *owner, int mode)
         key = 0;
     }
 
-    Unk020a7c90 *icon = func_020aa040(layout, 0xb, func_020a7b50(&names, 0xc372e8bd));
+    u32 i_icon = func_020a7b50(&names, 0xc372e8bd); Unk020a7c90 *icon = func_020aa040(layout, 0xb, i_icon);
     func_020a6980(icon, func_0206446c(key));
     func_020a69ac(icon, func_020644bc(key));
     int palette = func_020644b0(key);
@@ -241,7 +241,7 @@ Unk0202e0ec::Unk0202e0ec(Unk0203c188Owner *owner, int mode)
         func_0203c254(music, func_020a7d44(icon), 0);
     }
 
-    item.func_02050838(func_020aa040(layout, 0xb, func_020a7b50(&names, 0x611a4b02)), false);
+    { u32 i_ = func_020a7b50(&names, 0x611a4b02); Unk020a7c90 *s_ = func_020aa040(layout, 0xb, i_); item.func_02050838(s_, false); }
     item.func_02050c48(0, 1, -1);
     item.func_020508a4(icon);
     item.func_18(true);
@@ -263,7 +263,7 @@ Unk0202e0ec::Unk0202e0ec(Unk0203c188Owner *owner, int mode)
         small = true;
         func_020a7cac(title, 0x22000);
         func_020a7cac(icon, 0x51000);
-        Unk020a7c90 *s = func_020aa040(layout, 4, func_020a7b50(&names, 0x70672481));
+        u32 i_s = func_020a7b50(&names, 0x70672481); Unk020a7c90 *s = func_020aa040(layout, 4, i_s);
         func_020a7cac(s, func_020a7cc0(icon) - 0x11000);
         func_020a7cf0(s, small);
         func_020a716c(s, count);
@@ -285,9 +285,9 @@ Unk0202e0ec::Unk0202e0ec(Unk0203c188Owner *owner, int mode)
         if (toolKey == -1) {
             toolKey = 0;
         }
-        tool.func_02050838(func_020aa040(layout, 0xb, func_020a7b50(&names, 0x611a4b03)), false);
+        { u32 i_ = func_020a7b50(&names, 0x611a4b03); Unk020a7c90 *s_ = func_020aa040(layout, 0xb, i_); tool.func_02050838(s_, false); }
         tool.func_02050c48(0, 1, -1);
-        Unk020a7c90 *s = func_020aa040(layout, 0xb, func_020a7b50(&names, 0xc372e8be));
+        u32 i_s = func_020a7b50(&names, 0xc372e8be); Unk020a7c90 *s = func_020aa040(layout, 0xb, i_s);
         tool.func_020508a4(s);
         func_020a6980(s, func_0206446c(toolKey));
         func_020a69ac(s, func_020644bc(toolKey));
@@ -310,37 +310,37 @@ Unk0202e0ec::Unk0202e0ec(Unk0203c188Owner *owner, int mode)
         tool.flags |= 8;
     }
 
-    Unk020a7c90 *s = func_020aa040(layout, 4, func_020a7b50(&names, 0xe0343c1b));
+    u32 i_s = func_020a7b50(&names, 0xe0343c1b); Unk020a7c90 *s = func_020aa040(layout, 4, i_s);
     func_020a716c(s, textId);
     panel.func_02051858(s);
 
-    button.func_02050838(func_020aa040(layout, 0xb, func_020a7b50(&names, 0x63b94c03)), false);
-    button.func_020508a4(func_020aa040(layout, 1, func_020a7b50(&names, 0xee1a47e2)));
+    { u32 i_ = func_020a7b50(&names, 0x63b94c03); Unk020a7c90 *s_ = func_020aa040(layout, 0xb, i_); button.func_02050838(s_, false); }
+    { u32 i_ = func_020a7b50(&names, 0xee1a47e2); Unk020a7c90 *s_ = func_020aa040(layout, 1, i_); button.func_020508a4(s_); }
     button.func_02050914(1);
-    button.func_02050968(func_020aa040(layout, 4, func_020a7b50(&names, 0x63412fed)));
+    { u32 i_ = func_020a7b50(&names, 0x63412fed); Unk020a7c90 *s_ = func_020aa040(layout, 4, i_); button.func_02050968(s_); }
     button.func_02050c48(0, 1, -1);
     button.func_02050c64(0, 1, 2);
     button.flags |= 2;
     panel.func_020518fc(&button);
 
-    s = func_020aa040(layout, 0xb, func_020a7b50(&names, 0xc2f94842));
+    { u32 i_ = func_020a7b50(&names, 0xc2f94842); Unk020a7c90 *s_ = func_020aa040(layout, 0xb, i_); s = s_; }
     back.func_02050838(s, false);
     back.func_02050c48(0, 1, -1);
     back.func_20(func_020a7ca4(s) - s->func_10(), func_020a7ca4(s));
     back.func_02050914(2);
-    back.func_02050968(func_020aa040(layout, 1, func_020a7b50(&names, 0x15f3ba51)));
-    back.func_02050968(func_020aa040(layout, 1, func_020a7b50(&names, 0x060bbd76)));
+    { u32 i_ = func_020a7b50(&names, 0x15f3ba51); Unk020a7c90 *s_ = func_020aa040(layout, 1, i_); back.func_02050968(s_); }
+    { u32 i_ = func_020a7b50(&names, 0x060bbd76); Unk020a7c90 *s_ = func_020aa040(layout, 1, i_); back.func_02050968(s_); }
     back.func_18(mode == 1);
 
-    prev.func_02050838(func_020aa040(layout, 0xb, func_020a7b50(&names, 0x260323f0)), false);
+    { u32 i_ = func_020a7b50(&names, 0x260323f0); Unk020a7c90 *s_ = func_020aa040(layout, 0xb, i_); prev.func_02050838(s_, false); }
     prev.func_02050c48(0, 1, -1);
     prev.func_02050c64(0, 1, 2);
-    prev.func_020508a4(func_020aa040(layout, 1, func_020a7b50(&names, 0xcc3efd4a)));
+    { u32 i_ = func_020a7b50(&names, 0xcc3efd4a); Unk020a7c90 *s_ = func_020aa040(layout, 1, i_); prev.func_020508a4(s_); }
 
-    next.func_02050838(func_020aa040(layout, 0xb, func_020a7b50(&names, 0xcba0dc91)), false);
+    { u32 i_ = func_020a7b50(&names, 0xcba0dc91); Unk020a7c90 *s_ = func_020aa040(layout, 0xb, i_); next.func_02050838(s_, false); }
     next.func_02050c48(2, 3, -1);
     next.func_02050c64(3, 4, 5);
-    next.func_020508a4(func_020aa040(layout, 1, func_020a7b50(&names, 0x8f6a6fb5)));
+    { u32 i_ = func_020a7b50(&names, 0x8f6a6fb5); Unk020a7c90 *s_ = func_020aa040(layout, 1, i_); next.func_020508a4(s_); }
 
     pager.func_14(0, next.func_10()->y);
     pager.func_24(0xc0000, pager.func_10()->y);
@@ -348,8 +348,8 @@ Unk0202e0ec::Unk0202e0ec(Unk0203c188Owner *owner, int mode)
     pager.func_02051804(2);
     pager.func_020518fc(&prev);
     pager.func_020518fc(&next);
-    pager.func_02051858(func_020aa040(layout, 3, func_020a7b50(&names, 0x79be6d8f)));
-    pager.func_02051858(func_020aa040(layout, 3, func_020a7b50(&names, 0x03398ecd)));
+    { u32 i_ = func_020a7b50(&names, 0x79be6d8f); Unk020a7c90 *s_ = func_020aa040(layout, 3, i_); pager.func_02051858(s_); }
+    { u32 i_ = func_020a7b50(&names, 0x03398ecd); Unk020a7c90 *s_ = func_020aa040(layout, 3, i_); pager.func_02051858(s_); }
 }
 
 Unk0202e0ec::~Unk0202e0ec() {

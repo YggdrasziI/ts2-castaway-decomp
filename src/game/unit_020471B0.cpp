@@ -102,19 +102,19 @@ Unk020471b0::Unk020471b0() : flags(0), bottom(0), top(0), counter(0), text(0) {
     func_020aba38(archive, 0x5585fd88, top, &topNames);
     func_020a9db8(top, func_020a154c, 0);
     panel1c.func_02051804(2);
-    panel1c.func_02051858(func_020aa040(top, 4, func_020a7b50(&topNames, 0x6ed164d4)));
-    panel1c.func_02051858(func_020aa040(bottom, 2, func_020a7b50(&bottomNames, 0x516e4073)));
+    panel1c.func_02051858(func_sprite(top, 4, func_020a7b50(&topNames, 0x6ed164d4)));
+    panel1c.func_02051858(func_sprite(bottom, 2, func_020a7b50(&bottomNames, 0x516e4073)));
     panel1c.func_34(0x55);
-    message = func_020aa040(top, 4, func_020a7b50(&topNames, 0x2b777355));
+    message = func_sprite(top, 4, func_020a7b50(&topNames, 0x2b777355));
     widget.func_0204fdcc(false);
     widget.flags &= ~4;
     widget.delay = 1;
     widget.func_0204f8a0(1);
-    widget.func_0204f8f4(func_020aa040(bottom, 2, func_020a7b50(&bottomNames, 0xb29e8427)));
+    widget.func_0204f8f4(func_sprite(bottom, 2, func_020a7b50(&bottomNames, 0xb29e8427)));
     panel78.func_020518a8(1);
     panel78.func_02051804(1);
     panel78.func_020518fc(&widget);
-    panel78.func_02051858(func_020aa040(top, 4, func_020a7b50(&topNames, 0xdc831a1d)));
+    panel78.func_02051858(func_sprite(top, 4, func_020a7b50(&topNames, 0xdc831a1d)));
     panel78.func_34(0x55);
 }
 

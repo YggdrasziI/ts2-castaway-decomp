@@ -230,7 +230,7 @@ public:
 static void *func_0204a754(u32 id, void *user);
 
 static inline Unk020a7c90 *func_get(Unk020a9d58 *layout, int type, Unk020a7af4 *names, u32 hash) {
-    return func_020aa040(layout, type, func_020a7b50(names, hash));
+    return func_sprite(layout, type, func_020a7b50(names, hash));
 }
 
 /*

@@ -130,10 +130,10 @@ Unk0203b3b8::Unk0203b3b8(Unk0203c188Owner *owner, int mode) : Unk0203c188(owner)
     panel.func_20(-0x146000, -0x23000);
     panel.func_020518a8(4);
     panel.func_02051804(0xf);
-    back.func_02050838(func_020aa040(layout, 0xb, func_020a7b50(&names, 0x63b94c03)), false);
-    back.func_020508a4(func_020aa040(layout, 1, func_020a7b50(&names, 0xee1a47e2)));
+    back.func_02050838(func_sprite(layout, 0xb, func_020a7b50(&names, 0x63b94c03)), false);
+    back.func_020508a4(func_sprite(layout, 1, func_020a7b50(&names, 0xee1a47e2)));
     back.func_02050914(1);
-    back.func_02050968(func_020aa040(layout, 4, func_020a7b50(&names, 0x63412fed)));
+    back.func_02050968(func_sprite(layout, 4, func_020a7b50(&names, 0x63412fed)));
     back.func_02050c48(0, 1, -1);
     back.func_02050c64(0, 1, 2);
     back.flags |= 2;
@@ -150,21 +150,21 @@ Unk0203b3b8::Unk0203b3b8(Unk0203c188Owner *owner, int mode) : Unk0203c188(owner)
         title = 0xccb;
         break;
     }
-    Unk020a7c90 *s = func_020aa040(layout, 4, func_020a7b50(&names, 0xe0343c1b));
+    Unk020a7c90 *s = func_sprite(layout, 4, func_020a7b50(&names, 0xe0343c1b));
     func_020a716c(s, title);
     panel.func_02051858(s);
-    panel.func_02051858(func_020aa040(layout, 0xb, func_020a7b50(&names, 0xea7a08ce)));
-    text = (Unk020a78cc *)func_020aa040(layout, 4, func_020a7b50(&names, 0x96c99379));
+    panel.func_02051858(func_sprite(layout, 0xb, func_020a7b50(&names, 0xea7a08ce)));
+    text = (Unk020a78cc *)func_sprite(layout, 4, func_020a7b50(&names, 0x96c99379));
     panel.func_02051858(text);
 
-    prev.func_02050838(func_020aa040(layout, 0xb, func_020a7b50(&names, 0x260323f0)), false);
+    prev.func_02050838(func_sprite(layout, 0xb, func_020a7b50(&names, 0x260323f0)), false);
     prev.func_02050c48(0, 1, -1);
     prev.func_02050c64(0, 1, 2);
-    prev.func_020508a4(func_020aa040(layout, 1, func_020a7b50(&names, 0xcc3efd4a)));
-    next.func_02050838(func_020aa040(layout, 0xb, func_020a7b50(&names, 0xcba0dc91)), false);
+    prev.func_020508a4(func_sprite(layout, 1, func_020a7b50(&names, 0xcc3efd4a)));
+    next.func_02050838(func_sprite(layout, 0xb, func_020a7b50(&names, 0xcba0dc91)), false);
     next.func_02050c48(2, 3, -1);
     next.func_02050c64(3, 4, 5);
-    next.func_020508a4(func_020aa040(layout, 1, func_020a7b50(&names, 0x8f6a6fb5)));
+    next.func_020508a4(func_sprite(layout, 1, func_020a7b50(&names, 0x8f6a6fb5)));
 
     pager.func_14(0, next.func_10()->y);
     pager.func_24(0xc0000, pager.func_10()->y);
@@ -172,8 +172,8 @@ Unk0203b3b8::Unk0203b3b8(Unk0203c188Owner *owner, int mode) : Unk0203c188(owner)
     pager.func_02051804(2);
     pager.func_020518fc(&prev);
     pager.func_020518fc(&next);
-    pager.func_02051858(func_020aa040(layout, 3, func_020a7b50(&names, 0x79be6d8f)));
-    pager.func_02051858(func_020aa040(layout, 3, func_020a7b50(&names, 0x03398ecd)));
+    pager.func_02051858(func_sprite(layout, 3, func_020a7b50(&names, 0x79be6d8f)));
+    pager.func_02051858(func_sprite(layout, 3, func_020a7b50(&names, 0x03398ecd)));
 }
 
 Unk0203b3b8::~Unk0203b3b8() {

@@ -165,15 +165,15 @@ Unk0204a9f8::Unk0204a9f8(Unk02093648 *archive, int first, int last)
     func_020aba38(archive, 0xa3afd44b, &bottom, &bottomNames);
     func_020a9db8(&top, func_020a154c, 0);
     func_020a9db8(&bottom, func_0204be78, this);
-    image = func_020aa040(&bottom, 2, func_020a7b50(&bottomNames, 0x3abbc872));
+    image = func_sprite(&bottom, 2, func_020a7b50(&bottomNames, 0x3abbc872));
     for (i = 0; i < 10; i++) {
-        sprites[i] = func_020aa040(&top, 0xb, func_020a7b50(&topNames, spriteNames[i]));
+        sprites[i] = func_sprite(&top, 0xb, func_020a7b50(&topNames, spriteNames[i]));
     }
     for (i = 0; i < 5; i++) {
         shown[i] = 0;
     }
     for (i = 0; i < 12; i++) {
-        palettes[i] = func_020aa040(&bottom, 6, func_020a7b50(&bottomNames, paletteNames[i]));
+        palettes[i] = func_sprite(&bottom, 6, func_020a7b50(&bottomNames, paletteNames[i]));
         paletteData[i] = func_020a80c4(palettes[i]);
     }
     func_020a80bc(palettes[0], func_0204baa4);
@@ -189,37 +189,37 @@ Unk0204a9f8::Unk0204a9f8(Unk02093648 *archive, int first, int last)
     func_020a80bc(palettes[10], func_0204bcf4);
     func_020a80bc(palettes[11], func_0204bd30);
 
-    button1a8.func_02050838(func_020aa040(&bottom, 0xb, func_020a7b50(&bottomNames, 0x3adec7b0)), true);
+    button1a8.func_02050838(func_sprite(&bottom, 0xb, func_020a7b50(&bottomNames, 0x3adec7b0)), true);
     button1a8.func_02050c48(0, 4, 4);
-    button1a8.func_020508a4(func_020aa040(&bottom, 1, func_020a7b50(&bottomNames, 0x1efebfc0)));
+    button1a8.func_020508a4(func_sprite(&bottom, 1, func_020a7b50(&bottomNames, 0x1efebfc0)));
     button1a8.func_02050914(1);
-    button1a8.func_02050968(func_020aa040(&bottom, 4, func_020a7b50(&bottomNames, 0xe444dd9b)));
+    button1a8.func_02050968(func_sprite(&bottom, 4, func_020a7b50(&bottomNames, 0xe444dd9b)));
 
-    button22c.func_02050838(func_020aa040(&bottom, 0xb, func_020a7b50(&bottomNames, 0x1ae5bc53)), true);
+    button22c.func_02050838(func_sprite(&bottom, 0xb, func_020a7b50(&bottomNames, 0x1ae5bc53)), true);
     button22c.func_02050c48(0, 4, 4);
-    button22c.func_020508a4(func_020aa040(&bottom, 1, func_020a7b50(&bottomNames, 0x9ebd8282)));
+    button22c.func_020508a4(func_sprite(&bottom, 1, func_020a7b50(&bottomNames, 0x9ebd8282)));
     button22c.func_02050914(1);
-    button22c.func_02050968(func_020aa040(&bottom, 4, func_020a7b50(&bottomNames, 0xc7748c58)));
+    button22c.func_02050968(func_sprite(&bottom, 4, func_020a7b50(&bottomNames, 0xc7748c58)));
 
-    Unk020a7c90 *frame = func_020aa040(&bottom, 0xb, func_020a7b50(&bottomNames, 0x224ac889));
+    Unk020a7c90 *frame = func_sprite(&bottom, 0xb, func_020a7b50(&bottomNames, 0x224ac889));
     panel2b0.func_14(func_020a7ca4(frame), func_020a7cc0(frame));
     panel2b0.func_24(0xc0000, func_020a7cc0(frame));
     panel2b0.func_02051804(3);
     panel2b0.func_020518a8(2);
     panel2b0.func_02051858(frame);
-    panel2b0.func_02051858(func_020aa040(&bottom, 0xb, func_020a7b50(&bottomNames, 0x39877310)));
-    panel2b0.func_02051858(func_020aa040(&bottom, 4, func_020a7b50(&bottomNames, 0xd4050781)));
+    panel2b0.func_02051858(func_sprite(&bottom, 0xb, func_020a7b50(&bottomNames, 0x39877310)));
+    panel2b0.func_02051858(func_sprite(&bottom, 4, func_020a7b50(&bottomNames, 0xd4050781)));
     panel2b0.func_020518fc(&button1a8);
     panel2b0.func_020518fc(&button22c);
     panel2b0.func_34(0xf);
 
-    previous.func_02050838(func_020aa040(&bottom, 0xb, func_020a7b50(&bottomNames, 0xcba0dc91)), false);
+    previous.func_02050838(func_sprite(&bottom, 0xb, func_020a7b50(&bottomNames, 0xcba0dc91)), false);
     previous.func_02050c48(2, 3, -1);
     previous.func_02050c64(3, 4, 5);
-    previous.func_020508a4(func_020aa040(&bottom, 1, func_020a7b50(&bottomNames, 0x8f6a6fb5)));
+    previous.func_020508a4(func_sprite(&bottom, 1, func_020a7b50(&bottomNames, 0x8f6a6fb5)));
     previous.func_18(false);
 
-    next.func_02050838(func_020aa040(&bottom, 0xb, func_020a7b50(&bottomNames, 0xb24b9ba5)), false);
+    next.func_02050838(func_sprite(&bottom, 0xb, func_020a7b50(&bottomNames, 0xb24b9ba5)), false);
     next.func_02050c48(0, 1, -1);
     next.func_18(true);
 
@@ -227,9 +227,9 @@ Unk0204a9f8::Unk0204a9f8(Unk02093648 *archive, int first, int last)
     panel30c.func_02051804(4);
     panel30c.func_020518a8(2);
     panel30c.func_02051858(image);
-    panel30c.func_02051858(func_020aa040(&bottom, 4, func_020a7b50(&bottomNames, 0x3b5d157f)));
-    panel30c.func_02051858(func_020aa040(&bottom, 4, func_020a7b50(&bottomNames, 0x006c6d63)));
-    panel30c.func_02051858(func_020aa040(&bottom, 4, func_020a7b50(&bottomNames, 0x15b39762)));
+    panel30c.func_02051858(func_sprite(&bottom, 4, func_020a7b50(&bottomNames, 0x3b5d157f)));
+    panel30c.func_02051858(func_sprite(&bottom, 4, func_020a7b50(&bottomNames, 0x006c6d63)));
+    panel30c.func_02051858(func_sprite(&bottom, 4, func_020a7b50(&bottomNames, 0x15b39762)));
     panel30c.func_020518fc(&previous);
     panel30c.func_020518fc(&next);
 

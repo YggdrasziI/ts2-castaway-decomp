@@ -313,35 +313,35 @@ Unk0202fddc::Unk0202fddc(Unk0203c188Owner *owner, int mode)
     panel.func_020518a8(8);
     stats.func_02051804(0xe);
     for (int i = 0; i < 6; i++) {
-        stats.func_02051858(func_020aa040(layout, 4, func_020a7b50(&names, 0x8f8b9a98 + i)));
-        stats.func_02051858(func_020aa040(layout, 4, func_020a7b50(&names, 0x9cebe37c + i)));
+        stats.func_02051858(func_sprite(layout, 4, func_020a7b50(&names, 0x8f8b9a98 + i)));
+        stats.func_02051858(func_sprite(layout, 4, func_020a7b50(&names, 0x9cebe37c + i)));
     }
-    stats.func_02051858(func_020aa040(layout, 0xb, func_020a7b50(&names, 0x9774c086)));
-    stats.func_02051858(func_020aa040(layout, 0xb, func_020a7b50(&names, 0xc40c9901)));
+    stats.func_02051858(func_sprite(layout, 0xb, func_020a7b50(&names, 0x9774c086)));
+    stats.func_02051858(func_sprite(layout, 0xb, func_020a7b50(&names, 0xc40c9901)));
     panel.func_020518fc(&stats);
-    s1b4 = func_020aa040(layout, 1, func_020a7b50(&names, 0x21bf24fa));
+    s1b4 = func_sprite(layout, 1, func_020a7b50(&names, 0x21bf24fa));
     panel.func_02051858(s1b4);
-    s228 = func_020aa040(layout, 4, func_020a7b50(&names, 0xb1b7dbfb));
+    s228 = func_sprite(layout, 4, func_020a7b50(&names, 0xb1b7dbfb));
     panel.func_02051858(s228);
-    panel.func_02051858(s22c = func_020aa040(layout, 4, func_020a7b50(&names, 0x62ee430b)));
+    panel.func_02051858(s22c = func_sprite(layout, 4, func_020a7b50(&names, 0x62ee430b)));
     marks.func_0204f8a0(1);
-    marks.func_0204f8f4(func_020aa040(layout, 1, func_020a7b50(&names, 0x05c5aa2d)));
+    marks.func_0204f8f4(func_sprite(layout, 1, func_020a7b50(&names, 0x05c5aa2d)));
     panel.func_020518fc(&marks);
     kinds.func_02051804(3);
-    kinds.func_02051858(func_020aa040(layout, 1, func_020a7b50(&names, 0xc7e1f5b0)));
-    kinds.func_02051858(func_020aa040(layout, 1, func_020a7b50(&names, 0x85b4a356)));
-    kinds.func_02051858(s1a8 = func_020aa040(layout, 4, func_020a7b50(&names, 0x96c99379)));
+    kinds.func_02051858(func_sprite(layout, 1, func_020a7b50(&names, 0xc7e1f5b0)));
+    kinds.func_02051858(func_sprite(layout, 1, func_020a7b50(&names, 0x85b4a356)));
+    kinds.func_02051858(s1a8 = func_sprite(layout, 4, func_020a7b50(&names, 0x96c99379)));
     panel.func_020518fc(&kinds);
-    s230 = func_020aa040(layout, 4, func_020a7b50(&names, 0xe0343c1b));
+    s230 = func_sprite(layout, 4, func_020a7b50(&names, 0xe0343c1b));
     panel.func_02051858(s230);
-    panel.func_02051858(func_020aa040(layout, 0xb, func_020a7b50(&names, 0xea7a08ce)));
-    s1a0 = func_020aa040(layout, 1, func_020a7b50(&names, 0x085ee8a8));
+    panel.func_02051858(func_sprite(layout, 0xb, func_020a7b50(&names, 0xea7a08ce)));
+    s1a0 = func_sprite(layout, 1, func_020a7b50(&names, 0x085ee8a8));
     panel.func_02051858(s1a0);
-    panel.func_02051858(s19c = func_020aa040(layout, 3, func_020a7b50(&names, 0x7f2d5c79)));
-    panel.func_02051858(s1a4 = func_020aa040(layout, 1, func_020a7b50(&names, 0x5451bab4)));
-    s234 = func_020aa040(layout, 4, func_020a7b50(&names, 0x4fc8d2db));
-    s23c = func_020aa040(layout, 0xb, func_020a7b50(&names, 0xf0e1a0a2));
-    s238 = func_020aa040(layout, 1, func_020a7b50(&names, 0x7937ad0a));
+    panel.func_02051858(s19c = func_sprite(layout, 3, func_020a7b50(&names, 0x7f2d5c79)));
+    panel.func_02051858(s1a4 = func_sprite(layout, 1, func_020a7b50(&names, 0x5451bab4)));
+    s234 = func_sprite(layout, 4, func_020a7b50(&names, 0x4fc8d2db));
+    s23c = func_sprite(layout, 0xb, func_020a7b50(&names, 0xf0e1a0a2));
+    s238 = func_sprite(layout, 1, func_020a7b50(&names, 0x7937ad0a));
     panel.func_02051858(s234);
     panel.func_02051858(s23c);
     panel.func_02051858(s238);
@@ -352,26 +352,26 @@ Unk0202fddc::Unk0202fddc(Unk0203c188Owner *owner, int mode)
         hash = 0x25ae32f3;
         n = 2;
     }
-    s5e8 = func_020aa040(layout, 0xb, func_020a7b50(&names, 0x25ae32f3));
+    s5e8 = func_sprite(layout, 0xb, func_020a7b50(&names, 0x25ae32f3));
     for (int i = 0; i < 2; i++) {
-        buttons[i].func_02050838(func_020aa040(layout, 0xb, func_020a7b50(&names, hash + i)), false);
+        buttons[i].func_02050838(func_sprite(layout, 0xb, func_020a7b50(&names, hash + i)), false);
         buttons[i].func_02050c48(0, n, -1);
-        buttons[i].func_020508a4(func_020aa040(layout, 1, func_020a7b50(&names, 0x145c07e4 + i)));
+        buttons[i].func_020508a4(func_sprite(layout, 1, func_020a7b50(&names, 0x145c07e4 + i)));
         buttons[i].func_02050914(1);
-        buttons[i].func_02050968(func_020aa040(layout, 4, func_020a7b50(&names, 0x0ec6c1b0 + i)));
+        buttons[i].func_02050968(func_sprite(layout, 4, func_020a7b50(&names, 0x0ec6c1b0 + i)));
         panel.func_020518fc(&buttons[i]);
     }
 
-    Unk020a7c90 *s = func_020aa040(layout, 0xb, func_020a7b50(&names, 0xc2f94842));
+    Unk020a7c90 *s = func_sprite(layout, 0xb, func_020a7b50(&names, 0xc2f94842));
     back.func_02050838(s, false);
     back.func_02050c48(0, 1, -1);
     back.func_20(func_020a7ca4(s) - s->func_10(), func_020a7ca4(s));
     back.func_02050914(2);
-    back.func_02050968(func_020aa040(layout, 1, func_020a7b50(&names, 0x060bbd76)));
-    back.func_02050968(func_020aa040(layout, 1, func_020a7b50(&names, 0x15f3ba51)));
+    back.func_02050968(func_sprite(layout, 1, func_020a7b50(&names, 0x060bbd76)));
+    back.func_02050968(func_sprite(layout, 1, func_020a7b50(&names, 0x15f3ba51)));
 
-    Unk020a7c90 *bg = func_020aa040(layout, 0xb, func_020a7b50(&names, 0xf961d5fc));
-    s5e4 = func_020aa040(layout, 4, func_020a7b50(&names, 0x15945575));
+    Unk020a7c90 *bg = func_sprite(layout, 0xb, func_020a7b50(&names, 0xf961d5fc));
+    s5e4 = func_sprite(layout, 4, func_020a7b50(&names, 0x15945575));
     confirm.func_14(-0x23000, func_020a7cc0(bg));
     confirm.func_24(0xc0000, func_020a7cc0(bg));
     confirm.func_02051804(2);
@@ -383,40 +383,40 @@ Unk0202fddc::Unk0202fddc(Unk0203c188Owner *owner, int mode)
     confirm.func_18(false);
 
     compare.func_02051804(4);
-    compare.func_02051858(func_020aa040(layout, 1, func_020a7b50(&names, 0x1ac4aa49)));
-    compare.func_02051858(func_020aa040(layout, 1, func_020a7b50(&names, 0x1ac4aa4a)));
-    compare.func_02051858(func_020aa040(layout, 1, func_020a7b50(&names, 0x2cbb15e7)));
-    compare.func_02051858(func_020aa040(layout, 1, func_020a7b50(&names, 0x0675e7d9)));
+    compare.func_02051858(func_sprite(layout, 1, func_020a7b50(&names, 0x1ac4aa49)));
+    compare.func_02051858(func_sprite(layout, 1, func_020a7b50(&names, 0x1ac4aa4a)));
+    compare.func_02051858(func_sprite(layout, 1, func_020a7b50(&names, 0x2cbb15e7)));
+    compare.func_02051858(func_sprite(layout, 1, func_020a7b50(&names, 0x0675e7d9)));
     compare.func_18(false);
     panel.func_020518fc(&compare);
 
     icons.func_02051804(5);
     for (int i = 0; i < 3; i++) {
-        icons.func_02051858(func_020aa040(layout, 1, func_020a7b50(&names, 0xf1851a9d + i)));
+        icons.func_02051858(func_sprite(layout, 1, func_020a7b50(&names, 0xf1851a9d + i)));
     }
-    icons.func_02051858(func_020aa040(layout, 4, func_020a7b50(&names, 0xe492c2c3)));
-    icons.func_02051858(func_020aa040(layout, 0xb, func_020a7b50(&names, 0x31aa90b5)));
+    icons.func_02051858(func_sprite(layout, 4, func_020a7b50(&names, 0xe492c2c3)));
+    icons.func_02051858(func_sprite(layout, 0xb, func_020a7b50(&names, 0x31aa90b5)));
     icons.func_18(false);
     panel.func_020518fc(&icons);
 
-    yes.func_02050838(func_020aa040(layout, 0xb, func_020a7b50(&names, 0x14990c0b)), false);
-    yes.func_020508a4(func_020aa040(layout, 1, func_020a7b50(&names, 0x512265ac)));
+    yes.func_02050838(func_sprite(layout, 0xb, func_020a7b50(&names, 0x14990c0b)), false);
+    yes.func_020508a4(func_sprite(layout, 1, func_020a7b50(&names, 0x512265ac)));
     yes.func_02050914(1);
-    yes.func_02050968(func_020aa040(layout, 4, func_020a7b50(&names, 0x1420eff5)));
+    yes.func_02050968(func_sprite(layout, 4, func_020a7b50(&names, 0x1420eff5)));
     yes.func_02050c48(0, 1, -1);
     yes.func_02050c64(0, 1, 2);
 
-    no.func_02050838(func_020aa040(layout, 0xb, func_020a7b50(&names, 0xd4674b2a)), false);
-    no.func_020508a4(func_020aa040(layout, 1, func_020a7b50(&names, 0x905700b4)));
+    no.func_02050838(func_sprite(layout, 0xb, func_020a7b50(&names, 0xd4674b2a)), false);
+    no.func_020508a4(func_sprite(layout, 1, func_020a7b50(&names, 0x905700b4)));
     no.func_02050914(1);
-    no.func_02050968(func_020aa040(layout, 4, func_020a7b50(&names, 0xd3ef2f14)));
+    no.func_02050968(func_sprite(layout, 4, func_020a7b50(&names, 0xd3ef2f14)));
     no.func_02050c48(0, 1, -1);
     no.func_02050c64(0, 1, 2);
 
-    ok.func_02050838(func_020aa040(layout, 0xb, func_020a7b50(&names, 0x63b94c03)), true);
-    ok.func_020508a4(func_020aa040(layout, 1, func_020a7b50(&names, 0xee1a47e2)));
+    ok.func_02050838(func_sprite(layout, 0xb, func_020a7b50(&names, 0x63b94c03)), true);
+    ok.func_020508a4(func_sprite(layout, 1, func_020a7b50(&names, 0xee1a47e2)));
     ok.func_02050914(1);
-    ok.func_02050968(func_020aa040(layout, 4, func_020a7b50(&names, 0x63412fed)));
+    ok.func_02050968(func_sprite(layout, 4, func_020a7b50(&names, 0x63412fed)));
     ok.func_02050c48(0, 1, -1);
     ok.func_02050c64(0, 1, 2);
     ok.func_18(false);

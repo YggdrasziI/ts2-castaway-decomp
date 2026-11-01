@@ -131,12 +131,12 @@ Unk020238ec::Unk020238ec() : flags(0), unk10(0), layout(0), sprite(0), sprite2(0
     } else {
         func_020aba38(archive, 0x8c4e4cb1, layout, &names);
     }
-    sprite = (Unk020238ecSprite *)func_020aa040(layout, 2, func_020a7b50(&names, 0xc6ae8606));
-    sprite2 = func_020aa040(layout, 2, func_020a7b50(&names, 0x5fc4ca01));
-    button.func_02050838(func_020aa040(layout, 0xb, func_020a7b50(&names, 0xc2f94842)), false);
+    sprite = (Unk020238ecSprite *)func_sprite(layout, 2, func_020a7b50(&names, 0xc6ae8606));
+    sprite2 = func_sprite(layout, 2, func_020a7b50(&names, 0x5fc4ca01));
+    button.func_02050838(func_sprite(layout, 0xb, func_020a7b50(&names, 0xc2f94842)), false);
     button.func_02050c48(0, 1, -1);
-    limit = *func_020a9044(func_020aa040(layout, 8, func_020a7b50(&names, 0x6f0e712e)));
-    speed = *func_020a9044(func_020aa040(layout, 8, func_020a7b50(&names, 0xa1f1d1e7)));
+    limit = *func_020a9044(func_sprite(layout, 8, func_020a7b50(&names, 0x6f0e712e)));
+    speed = *func_020a9044(func_sprite(layout, 8, func_020a7b50(&names, 0xa1f1d1e7)));
 }
 
 Unk020238ec::~Unk020238ec() {
