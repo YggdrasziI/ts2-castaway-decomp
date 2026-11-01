@@ -171,3 +171,4 @@
 | 2026-11-01 | 09c21a6 | 424020 / 720836 bytes (58.82 %; fuzzy 87.89 %, linked 22.07 %) | 3596 / 4556 | 167 / 299 | MSL C and C++ runtime sources (twewy), 25 files complete, compiler 2.0/sp1p2 |
 | 2026-11-01 | 79400b3 | 432136 / 723540 bytes (59.73 %; fuzzy 89.53 %, linked 23.98 %) | 3641 / 4577 | 184 / 317 | Runtime FP and division helpers, 17 files complete (seven below 100 % in objdiff, bytes identical) |
 | 2026-11-01 | 1653e8a | 434936 / 723540 bytes (60.11 %; fuzzy 89.92 %, linked 24.37 %) | 3686 / 4577 | 196 / 329 | Last MSL / runtime code, `os_mutex.c`, first NitroSDK and NitroSystem units |
+| 2026-11-01 | 5930484 | 438172 / 723540 bytes (60.56 %; fuzzy 90.37 %, linked 24.49 %) | 3701 / 4577 | 197 / 333 | NitroSDK G3X complete, VRAM banks at 100 % but not complete (host difference) |
