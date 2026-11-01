@@ -1523,3 +1523,18 @@ default: add one here only once a unit of this ROM proves it with mwccarm.
   registers; try all permutations (`func_020a1aa4`: year, day, month, not day, month, year).
 - An access by the static object's own name, compiled as an offset in the unit's `.bss`:
   define the object after its uses (`func_020a1aa4`).
+
+## Library code (2026-11-01)
+
+- `beq top` + `b next` in the original where ours has `bne next` + `b top`: write the
+  exit first, `if (x) { break; } continue;` (or `goto` a label in front of the code
+  after the `if`), not `if (!x) { continue; }`. It also fixed the order of the hoisted
+  `add rN, sp, #...` in `FindExceptionHandler`.
+- `dsd` splits a catch block or a function tail into its own symbol: the `.exceptix`
+  entries give the real function sizes.
+- A whole file off by one pattern is a build setting: `mov pc, lr` against `bx lr` was
+  `-interworking`; a register-level gap in only some functions was a service pack (sweep
+  the compilers on the function before changing the source).
+- CI builds under wibo: a function compiled to 100 % on Windows can differ there (jump
+  table on the density limit, `notes/COMPILER.md`). Check the CI run before building on
+  a new `complete` file.
