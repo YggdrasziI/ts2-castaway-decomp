@@ -144,3 +144,4 @@
 | 2026-11-01 | 81bd659 | 345072 / 720836 bytes (47.87 %; fuzzy 75.65 %, linked 14.45 %) | 2869 / 4556 | 103 / 240 | Move callback action unit (complete, 10 / 10 functions) |
 | 2026-11-01 | cb32c7b | 347076 / 720836 bytes (48.15 %; fuzzy 75.93 %, linked 14.73 %) | 2894 / 4556 | 104 / 241 | Action base unit (complete, 25 / 25 functions) |
 | 2026-11-01 | 46d19f5 | 347692 / 720836 bytes (48.23 %; fuzzy 76.02 %, linked 14.81 %) | 2897 / 4556 | 105 / 242 | Script commands unit (complete, 3 / 3 functions) |
+| 2026-11-01 | 7aa8fbd | 352444 / 720836 bytes (48.89 %; fuzzy 76.78 %, linked 15.42 %) | 2962 / 4556 | 109 / 247 | Units from `main` to 0x02002144 (five files, four complete; "AdvanceTime" 13 / 14 functions) |
