@@ -109,7 +109,12 @@ void Unk020717b8::func_020718c0(const Unk02098ff0 &pos, const u32 *attr) {
     for (u32 i = 0; i < count; i++) {
         Unk020717b8Slot *s = &slots[i];
         int age = s->age;
-        if (s->kind == 0 || s->kind->life - age < -1) {
+        if (s->kind != 0) {
+            if (s->kind->life - age < -1) {
+                n = i;
+                break;
+            }
+        } else {
             n = i;
             break;
         }
