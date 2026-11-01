@@ -1150,7 +1150,9 @@ int __pformatter(void* (*WriteProc)(void*, const char*, size_t), void* WriteProc
                     wchar_t* wcs_ptr = va_arg(arg, wchar_t*);
 
                     if (wcs_ptr == NULL) {
-                        wcs_ptr = L"";
+                        // The two bytes of L"": with -str reuse, whether L"" and "" share storage
+                        // depends on the host (one pool word less on wibo).
+                        wcs_ptr = (wchar_t*)"\0";
                     }
 
                     if (wcstombs(buff, wcs_ptr, sizeof(buff)) < 0) {
