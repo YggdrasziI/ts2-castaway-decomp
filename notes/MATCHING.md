@@ -1635,3 +1635,7 @@ Link-time constants without relocation (`SDK_IRQ_STACKSIZE`, `SDK_SYS_STACKSIZE`
   its address. The compiled object size shows when neighbouring `.bss` symbols are members.
 - The bytes between the last object and the end of `.data` or `.bss` are section padding,
   not part of a unit.
+- Vectors that the original keeps on the stack while ours go to registers or to the result:
+  hold them in a struct with `int v[3]` (named fields get promoted, arrays do not), and
+  copy that struct to get `ldmia` / `stmia` (`func_0205e87c`).
+- `-a - b` folds to `add` then `rsb`. `int n = -a; n -= b;` keeps `rsb` then `sub`.
