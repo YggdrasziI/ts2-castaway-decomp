@@ -392,3 +392,5 @@ each is only the part of its original file that is written. `libs/nns` builds wi
 like `libs/nitro`, a working choice.
 
 `libs/nitro/src/gx/unit_02078208.c` (VRAM banks, 0x02078208-0x02078B3C) and `unit_02078C48.c` (G3X, 0x02078C48-0x02078FB8): named by address, bounds are a hypothesis.
+
+`libs/nitro/src/mi/unit_02079590.c` (DMA and WRAM bank, 0x02079590-0x02079ABC) and `libs/nitro/src/snd/unit_0207D1F8.c` (sound commands, 0x0207D1F8-0x0207D5CC): named by address, bounds are a hypothesis.

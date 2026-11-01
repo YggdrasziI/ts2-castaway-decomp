@@ -14,7 +14,7 @@ typedef volatile u32 vu32;
 
 extern int OS_DisableInterrupts(void);
 extern int OS_RestoreInterrupts(int);
-extern void func_020795a0(u32 dmaNo, u32 src, u32 size, u32 dir);
+extern void MIi_CheckDma0SourceAddress(u32 dmaNo, u32 src, u32 size, u32 dir);
 
 #define REG_DMA_SRC(n) (*(vu32 *)(0x040000B0 + (n) * 12))
 #define DMA_REGS(n) ((vu32 *)(0x040000B0 + (n) * 12))
@@ -29,7 +29,7 @@ void func_01ff8270(u32 dmaNo, const void *src, u32 size)
     {
         return;
     }
-    func_020795a0(dmaNo, (u32)src, size, 0);
+    MIi_CheckDma0SourceAddress(dmaNo, (u32)src, size, 0);
     ctrl = &((vu32 *)0x040000B0)[dmaNo * 3 + 2];
     while (*ctrl & 0x80000000)
     {

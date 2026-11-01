@@ -115,7 +115,7 @@ void func_0209b9a0(int file, void *p);
 void func_0207e4ec(void *p);
 void *func_0207e074(void *p, int index);
 void func_0207e0bc(void *p, int index, void *value);
-void func_0207d2ec(void *start, void *end);
+void SND_InvalidateWaveData(void *start, void *end);
 void func_0209b094(void *handle, int mask, int value);
 void func_0209b064(void *handle, int value);
 void func_0209b0c4(void *handle, int mask, int value);
@@ -231,7 +231,7 @@ extern "C" void func_020a2374(void *p, u32 size, void *owner, int index) {
     if (p == func_0207e074(owner, index)) {
         func_0207e0bc(owner, index, 0);
     }
-    func_0207d2ec(p, (u8 *)p + size);
+    SND_InvalidateWaveData(p, (u8 *)p + size);
 }
 
 extern "C" void func_020a23bc() {

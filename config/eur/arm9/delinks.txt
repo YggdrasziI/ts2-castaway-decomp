@@ -735,6 +735,14 @@ libs/nitro/src/gx/unit_02078C48.c:
     complete
     .text       start:0x02078c48 end:0x02078fb8
 
+libs/nitro/src/mi/unit_02079590.c:
+    complete
+    .text       start:0x02079590 end:0x02079abc
+
+libs/nitro/src/snd/unit_0207D1F8.c:
+    complete
+    .text       start:0x0207d1f8 end:0x0207d5cc
+
 libs/nitro/src/os/os_mutex.c:
     complete
     .text       start:0x0207b1a8 end:0x0207b3c4

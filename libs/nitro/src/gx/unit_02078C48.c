@@ -40,8 +40,8 @@ extern void G3X_ClearFifo(void);
 extern void G3X_InitMtxStack(void);
 extern void G3X_InitTable(void);
 extern void G3X_ResetMtxStack_2(void);
-extern void func_02079860(u32 dmaNo, void *dest, u32 data, u32 size, MIDmaCallback callback, void *arg);
-extern void func_02079a2c(u32 dmaNo, void *dest, u32 data, u32 size);
+extern void MI_DmaFill32Async(u32 dmaNo, void *dest, u32 data, u32 size, MIDmaCallback callback, void *arg);
+extern void MI_DmaFill32(u32 dmaNo, void *dest, u32 data, u32 size);
 extern void INITi_CpuClear32_0x01ff86fc(u32 data, void *destp, u32 size);
 static inline BOOL G3X_IsGeometryBusy(void)
 {
@@ -216,8 +216,8 @@ void G3X_InitTable (void)
 	int i;
 
 	if (GXi_DmaId != GX_DMA_NOT_USE) {
-		func_02079860(GXi_DmaId, (void *)REG_EDGE_COLOR_0_L_ADDR, 0, 16, NULL, NULL);
-		func_02079a2c(GXi_DmaId, (void *)REG_FOG_TABLE_0_ADDR, 0, 96);
+		MI_DmaFill32Async(GXi_DmaId, (void *)REG_EDGE_COLOR_0_L_ADDR, 0, 16, NULL, NULL);
+		MI_DmaFill32(GXi_DmaId, (void *)REG_FOG_TABLE_0_ADDR, 0, 96);
 	} else {
 		MI_CpuFill32((void *)REG_EDGE_COLOR_0_L_ADDR, 0, 16);
 		MI_CpuFill32((void *)REG_FOG_TABLE_0_ADDR, 0, 96);

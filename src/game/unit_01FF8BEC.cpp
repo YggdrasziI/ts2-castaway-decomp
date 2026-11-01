@@ -30,7 +30,7 @@ extern void (*data_020c7d20)(int);
 extern int data_020c7d1c;
 
 void func_01ff8270(int dma, const void *src, u32 size);
-void func_02079748(int dma);
+void MI_WaitDma(int dma);
 void func_0207a174(int mask, void (*handler)());
 void OS_EnableIrqMask(int mask);
 void func_01ff9404(Unk0208adc0 *set, void *data, Unk020bd014 *file);
@@ -70,10 +70,10 @@ int func_01ff8c64(Unk02089f38 *model, int async, void (*callback)(int), int arg)
     }
     if (async == 0) {
         func_01ff8270(0, model->data, model->size);
-        func_02079748(0);
+        MI_WaitDma(0);
         func_01ff8d4c();
     } else {
-        func_02079748(0);
+        MI_WaitDma(0);
         volatile Unk01ff8becDma *dma = (volatile Unk01ff8becDma *)0x040000B0;
         dma->src = (u32)model->data;
         dma->dest = 0x04000400;
