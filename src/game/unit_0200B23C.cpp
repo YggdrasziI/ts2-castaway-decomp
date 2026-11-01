@@ -1127,8 +1127,10 @@ extern "C" Unk0200dd50 *func_0200dd6c(Unk0200dd50 *v) {
     return v;
 }
 
+extern "C" int func_02097acc(int x);
+
 Unk020b7900 data_020b7900 = {
-    0,
+    func_02097acc(0x6400) + 0x26,
     {"idle", "grab", "grab2", "collect_success", "collect_success2"},
     {
         &Unk0200cec8::func_0200cc60, &Unk0200cec8::func_0200ce18, &Unk0200cec8::func_0200cc60,

@@ -206,7 +206,9 @@ src/game/unit_0200B04C.cpp:
 
 src/game/unit_0200B23C.cpp:
     .text       start:0x0200b23c end:0x0200dd80
+    .init       start:0x020ad024 end:0x020ad044
     .rodata     start:0x020ae52c end:0x020ae634
+    .ctor       start:0x020b6e44 end:0x020b6e48
     .data       start:0x020b7900 end:0x020b7ac8
 
 src/game/unit_0200DD80.cpp:
@@ -647,7 +649,9 @@ src/game/unit_020647B0.cpp:
 
 src/game/unit_02064984.cpp:
     .text       start:0x02064984 end:0x020680d4
+    .init       start:0x020ae28c end:0x020ae2b8
     .rodata     start:0x020af010 end:0x020af1ac
+    .ctor       start:0x020b6e94 end:0x020b6e98
     .data       start:0x020bc620 end:0x020bc7c4
 
 src/game/unit_020680D4.cpp:
@@ -2676,10 +2680,6 @@ src/game/unit_020BE420.c:
     complete
     .bss        start:0x020be420 end:0x020be424
 
-src/game/unit_020C439C.c:
-    complete
-    .bss        start:0x020c439c end:0x020c44a8
-
 src/game/unit_020C44A8.c:
     complete
     .bss        start:0x020c44a8 end:0x020c4770
@@ -2779,3 +2779,7 @@ libs/c/src/unit_020BCCB0.c:
 libs/c/src/unit_020BCCE8.c:
     complete
     .data       start:0x020bcce8 end:0x020bcda8
+
+src/game/unit_020C439C.c:
+    complete
+    .bss        start:0x020c439c end:0x020c44a8

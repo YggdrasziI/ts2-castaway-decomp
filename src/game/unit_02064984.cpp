@@ -404,7 +404,7 @@ extern u8 data_020bfc9c[];
 extern u8 data_020c3fc4[];
 extern u8 data_020c3fd4[];
 extern u8 data_020be184[];
-extern Unk020c43a8 data_020c43a8;
+Unk020c43a8 data_020c43a8;
 
 /* The object whose word at 0x18 holds a sim (data_020c439c). */
 struct Unk020c439c {
