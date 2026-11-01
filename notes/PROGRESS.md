@@ -151,3 +151,4 @@
 | 2026-11-01 | 2cbabfc | 362496 / 720836 bytes (50.29 %; fuzzy 78.29 %, linked 16.73 %) | 3022 / 4556 | 113 / 252 | System object (22 functions and `__sinit`, `.data`, `.bss`), complete; matched code above 50 % |
 
 | 2026-11-01 | 57445f5 | 364576 / 720836 bytes (50.58 %; fuzzy 78.58 %, linked 17.02 %) | 3047 / 4556 | 116 / 256 | Game clock (18 functions and `__sinit`), angle helpers (2) and MT19937 random numbers (3 and `__sinit`), complete; matched code +2080 bytes. |
+| 2026-11-01 | b4fa66f | 369076 / 720836 bytes (51.20 %; fuzzy 79.48 %, linked 17.03 %) | 3098 / 4556 | 116 / 258 | Random helpers, ray box test (0 / 1, 97.93 %) and sound manager (49 / 56, `.text` 99.62 %), not complete; matched code +4500 bytes |
