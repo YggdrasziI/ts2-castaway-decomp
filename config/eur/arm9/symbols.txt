@@ -5476,7 +5476,7 @@ _ZTV11Unk020a8f84 kind:data(any) addr:0x020bdd28
 _ZTV11Unk020a9054 kind:data(any) addr:0x020bdd40
 _ZTV11Unk020a90f8 kind:data(any) addr:0x020bdd58
 _ZTV11Unk020a9914 kind:data(any) addr:0x020bdd78
-data_020bdd98 kind:data(any) addr:0x020bdd98
+@1260 kind:data(any) addr:0x020bdd98 local
 data_020bdda4 kind:data(any) addr:0x020bdda4
 data_020bddac kind:data(any) addr:0x020bddac
 data_020bddb4 kind:data(any) addr:0x020bddb4

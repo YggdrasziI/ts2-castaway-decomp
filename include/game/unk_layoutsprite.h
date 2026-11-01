@@ -28,6 +28,7 @@ public:
 class Unk0208db14 {
 public:
     Unk0208d304 *func_0208dc44(Unk02095140 *file, int flag, int charBase, int index);
+    static Unk0208db14 *func_0208dc08(int main);
     void func_0208df4c(Unk0208d304 *layer);
 };
 
@@ -80,6 +81,23 @@ public:
     int frame;
     u32 hash;
     int count;
+};
+
+class Unk020a90f8 : public Unk020a690c {
+public:
+    Unk020a90f8();
+    virtual ~Unk020a90f8();
+    virtual void func_08(Unk020a9d58 *layout, int on);
+    virtual void func_0c(Unk020a9d58 *layout);
+    virtual int func_10();
+    virtual int func_14();
+
+    int angle;
+    int scaleX;
+    int scaleY;
+    int order;
+    int priority;
+    Unk0208f8b0 *object;
 };
 
 class Unk020a6a00 : public Unk020a690c {

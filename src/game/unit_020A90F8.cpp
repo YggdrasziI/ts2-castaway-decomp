@@ -6,23 +6,6 @@
  */
 #include "game/unk_layoutsprite.h"
 
-class Unk020a90f8 : public Unk020a690c {
-public:
-    Unk020a90f8();
-    virtual ~Unk020a90f8();
-    virtual void func_08(Unk020a9d58 *layout, int on);
-    virtual void func_0c(Unk020a9d58 *layout);
-    virtual int func_10();
-    virtual int func_14();
-
-    int angle;
-    int scaleX;
-    int scaleY;
-    int order;
-    int priority;
-    Unk0208f8b0 *object;
-};
-
 extern "C" {
 Unk02093648 *func_020aa064(Unk020a9d58 *l);
 int func_020aa034(Unk020a9d58 *l, int type);

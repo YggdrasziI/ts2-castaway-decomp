@@ -31,13 +31,24 @@ public:
     int used;
 };
 
-/* A layout of one screen (0x7C bytes). */
+class Unk020a7aa0;
+class Unk020a6dd8;
+
+typedef void *(*Unk020a9d58Text)(u32 id, void *user);
+
+/* A layout of one screen (0x7C bytes): the sprites of each of its thirteen types. */
 class Unk020a9d58 {
 public:
     Unk020a9d58(Unk02093648 *archive, int screen);
     ~Unk020a9d58();
 
-    u8 unk0[0x7c];
+    Unk020a7aa0 **items[13];
+    int counts[13];
+    Unk02093648 *archive;
+    Unk020a9d58Text text;
+    void *user;
+    volatile u32 flags;
+    Unk020a6dd8 *button;
 };
 
 /*
@@ -200,8 +211,6 @@ public:
     int mode;
     int counter;
 };
-
-typedef void *(*Unk020a9d58Text)(u32 id, void *user);
 
 extern "C" {
 void func_020aba38(Unk02093648 *archive, u32 hash, Unk020a9d58 *layout, Unk020a7af4 *names);
