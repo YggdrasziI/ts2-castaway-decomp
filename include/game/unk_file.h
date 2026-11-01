@@ -38,13 +38,13 @@ struct Unk0209487cEntry {
     int offset;
 };
 
-/* The 8 bytes kept at 0x34 and passed by value to func_02077514. */
+/* The 8 bytes kept at 0x34 and passed by value to FS_OpenFileFast. */
 struct Unk0209487cFileId {
     void *unk0;
     u32 unk4;
 };
 
-/* The 0x48-byte file object of the file system functions (func_020777bc...). */
+/* The 0x48-byte file object of the file system functions (FS_InitFile...). */
 struct Unk0209487cFile {
     u32 unk[0x12];
 };
