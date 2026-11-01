@@ -43,14 +43,6 @@ jobs:
       - name: Progress badges
         run: python tools/progress_badges.py --version ${{ matrix.version }} --report build/${{ matrix.version }}/report.json --out build/${{ matrix.version }}/progress_badges
 
-      - name: Upload compiled printf object
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: printf_object
-          path: build/${{ matrix.version }}/libs/c/src/printf.o
-          retention-days: 1
-
       - name: Upload progress badges
         uses: actions/upload-artifact@v4
         with:

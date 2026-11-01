@@ -1036,6 +1036,9 @@ int __pformatter(void* (*WriteProc)(void*, const char*, size_t), void* WriteProc
         format_ptr = curr_format;
         format_ptr = parse_format(format_ptr, &arg, &format);
 
+        // This switch sits on mwccarm's jump table density limit (9 cases over 'd'..'u'):
+        // the table ends at 'u' on Windows, as in the ROM, and at 'o' under wibo, so this
+        // file cannot be linked on both hosts.
         switch (format.conversion_char) {
             case 'd':
             case 'i':
@@ -1150,9 +1153,7 @@ int __pformatter(void* (*WriteProc)(void*, const char*, size_t), void* WriteProc
                     wchar_t* wcs_ptr = va_arg(arg, wchar_t*);
 
                     if (wcs_ptr == NULL) {
-                        // The two bytes of L"": with -str reuse, whether L"" and "" share storage
-                        // depends on the host (one pool word less on wibo).
-                        wcs_ptr = (wchar_t*)"\0";
+                        wcs_ptr = L"";
                     }
 
                     if (wcstombs(buff, wcs_ptr, sizeof(buff)) < 0) {

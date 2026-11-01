@@ -115,6 +115,13 @@ function that needs one). CRI middleware (twewy's `libs/cri`) is absent: only 8-
   function`, both `-Cpp_exceptions on`, without `-avoid_byte strb` (the code has
   `strb`). 58 functions were 100 % at the first compile.
 
+- **Host-dependent switch** (2026-11-01): the `switch` of `__pformatter` has 9 cases
+  over the 18 values 'd'..'u', the density limit of the jump table. On Windows the table
+  ends at 'u' (ROM); under wibo (CI) it ends at 'o' and the function is 4 bytes shorter
+  (objects compared through a CI artifact). Cause inside the compiler not known; a
+  floating point difference between the hosts is a hypothesis. `printf.c` stays not
+  `complete`: the CI objdiff report can score `__pformatter` below 100 %.
+
 ## Runtime: software floating point
 
 The game is built with `-fp soft`: mwccarm 2.0/sp1p5 turns `float` operations into

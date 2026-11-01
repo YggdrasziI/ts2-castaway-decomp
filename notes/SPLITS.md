@@ -312,7 +312,8 @@ Commands: `python tools/compiler_sweep.py --ref <project> --compilers 2.0/sp1p5
 
 ### MSL / runtime files (2026-10-25, sources 2026-11-01)
 
-All `complete`.
+All `complete` except `printf.c`: code at 100 % on Windows, but its `__pformatter` compiles
+differently under wibo (`notes/COMPILER.md`), so it stays delinked from the original.
 objdiff scores the `.bss` of `abort_exit_arm_eabi.c` 97 % (section names); the bytes
 are checked by the link.
 
