@@ -9,9 +9,9 @@
  * functions of far files (0x02017150 to 0x02031028) mostly not yet decompiled
  * (slot 7 is in unit_0202FDDC.cpp, slot 9 in unit_02029B80.cpp, slots 12, 13, 16
  * and 17 in unit_02027994.cpp, slot 20 in unit_0202AEF4.cpp): they
- * are declared here under slot names (non-inline), with the arguments and
- * results their callers use, so the base vtable copy is not emitted and the
- * tail of the widget vtables does not match.
+ * are declared here under slot names inline without a body, with the arguments and
+ * results their callers use: that makes every widget file emit its base
+ * vtable copy, as in the ROM.
  */
 #ifndef GAME_UNK_WIDGET_H
 #define GAME_UNK_WIDGET_H
@@ -194,20 +194,20 @@ public:
     virtual Unk02098bc8 *func_10() = 0;
     virtual void func_14(int x, int y) = 0;
     virtual void func_18(bool show) = 0;
-    virtual void func_1c(Unk020b9e88Track *x, Unk020b9e88Track *y);
-    virtual void func_20(int x, int y);
-    virtual void func_24(int x, int y);
-    virtual void func_28(int value);
-    virtual void func_2c(int value);
-    virtual void func_30(int value);
-    virtual void func_34(int value);
-    virtual bool func_38();
-    virtual bool func_3c();
-    virtual bool func_40();
-    virtual bool func_44();
-    virtual bool func_48();
-    virtual bool func_4c();
-    virtual bool func_50();
+    inline virtual void func_1c(Unk020b9e88Track *x, Unk020b9e88Track *y);
+    inline virtual void func_20(int x, int y);
+    inline virtual void func_24(int x, int y);
+    inline virtual void func_28(int value);
+    inline virtual void func_2c(int value);
+    inline virtual void func_30(int value);
+    inline virtual void func_34(int value);
+    inline virtual bool func_38();
+    inline virtual bool func_3c();
+    inline virtual bool func_40();
+    inline virtual bool func_44();
+    inline virtual bool func_48();
+    inline virtual bool func_4c();
+    inline virtual bool func_50();
 
     Unk020b9e88Track *trackX;
     Unk020b9e88Track *trackY;
