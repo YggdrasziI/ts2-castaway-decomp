@@ -2211,3 +2211,23 @@ libs/nitro/src/gx/unit_02079260.c:
 libs/nitro/src/spi/unit_0207EAEC.c:
     complete
     .text       start:0x0207eaec end:0x0207eb8c
+
+libs/nitro/src/spi/unit_0207F590.c:
+    complete
+    .text       start:0x0207f590 end:0x0207f680
+
+libs/nitro/src/spi/unit_0207F680.c:
+    complete
+    .text       start:0x0207f680 end:0x0207f8c0
+
+libs/nns/src/snd/unit_0209ADF4.c:
+    complete
+    .text       start:0x0209adf4 end:0x0209af68
+
+libs/nns/src/snd/unit_0209C814.c:
+    complete
+    .text       start:0x0209c814 end:0x0209c948
+
+libs/nns/src/fnd/unit_0209EE14.c:
+    complete
+    .text       start:0x0209ee14 end:0x0209ee80
