@@ -220,3 +220,7 @@ and `.init` moves. `tools/lcf_keep.py` adds `.exception` to `KEEP_SECTION` after
 - MSL / runtime version (look for `__call_static_initializers`, `_s32_div_f`-style
   helpers; the `%a %b %e %T %Y` / `%I:%M:%S %p` strings look like a C library's
   C-locale `strftime` formats, to compare with MSL sources).
+
+`libs/nitro/src/gx/unit_02078208.c` shows the same host difference with 1.2/sp2p3: all its
+functions are at 100 % on Windows, but under wibo the code before 0x02078368 is 4 bytes longer
+(the file is not `complete` for that reason; hypothesis: the `switch` of `GX_SetBankForSubBG`).
