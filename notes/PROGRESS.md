@@ -164,3 +164,4 @@
 | 2026-11-01 | d89c004 | 386660 / 720836 bytes (53.64 %; fuzzy 82.04 %, linked 19.14 %) | 3370 / 4556 | 135 / 279 | Layout font (11 functions) and frame loader (15), one vtable each, complete |
 | 2026-11-01 | dea3e94 | 388124 / 720836 bytes (53.84 %; fuzzy 82.24 %, linked 19.34 %) | 3406 / 4556 | 138 / 284 | Vector elements (19 functions) and layout text box (17), one vtable each, complete |
 | 2026-11-01 | 7e7b7d2 | 390200 / 720836 bytes (54.13 %; fuzzy 82.53 %, linked 19.63 %) | 3431 / 4556 | 139 / 284 | Layout object sprite (25 functions, vtable), complete |
+| 2026-11-01 | ad78c56 | 391872 / 720836 bytes (54.36 %; fuzzy 83.00 %, linked 19.63 %) | 3453 / 4556 | 139 / 284 | Layout tiled sprite (22/23 functions, vtable), not complete |
