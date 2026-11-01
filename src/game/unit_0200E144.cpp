@@ -857,7 +857,7 @@ inline bool Unk0200ed88::func_18() {
             func_020a69ac(sprites[12], (0x1000 - left) * 0x11 >> 12);
         }
         s = sprites[13];
-        if (paused || func_020978dc(0) || value > fill || func_02010748() || func_0201075c()) {
+        if (paused || func_020978dc(0) || value > full || func_02010748() || func_0201075c()) {
             func_020a7cf0(s, 0);
         } else {
             func_020a7cf0(s, 1);

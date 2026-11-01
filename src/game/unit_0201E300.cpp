@@ -618,7 +618,7 @@ void func_0201ef54(Unk0201e300 *p) {
     p->keyE.func_0204c1b8(0x3d);
     p->keyE.func_0c(0);
     p->keyE.func_0204cfa8();
-    p->keyE.func_20(p->keyE.func_10()->x - 0x2b000, p->keyE.func_10()->y);
+    p->keyE.func_20(p->keyE.func_10()->y - 0x2b000, p->keyE.func_10()->y);
     p->keyE.func_30(0x20);
 
     p->keyF.func_0204c11c((const u32 *)"build/data/screens/livemode/plus_minus.nitro_map");
@@ -633,7 +633,7 @@ void func_0201ef54(Unk0201e300 *p) {
     p->keyF.func_0204c1b8(0x3d);
     p->keyF.func_0c(0);
     p->keyF.func_0204cfa8();
-    p->keyF.func_20(p->keyF.func_10()->x - 0x2b000, p->keyF.func_10()->y);
+    p->keyF.func_20(p->keyF.func_10()->y - 0x2b000, p->keyF.func_10()->y);
     p->keyF.func_30(0x20);
 
     p->keyA.func_0204c11c((const u32 *)"build/data/screens/livemode/survival.nitro_map");
