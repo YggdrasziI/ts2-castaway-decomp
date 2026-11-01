@@ -201,7 +201,7 @@ void func_0206a120(void *p);
 void func_0206af98(void *p, int mode);
 void func_0206c290(Unk020d6240 *system);
 void func_0207a748();
-void func_0207c224();
+void OS_WaitVBlankIntr();
 void func_01ff9924(Unk020c7d38 *pool);
 void func_01ff9dbc(Unk020c7d38 *pool);
 bool func_01ff9ee8(Unk020c7d38 *pool);
@@ -311,7 +311,7 @@ void Unk02072d94::func_02071fdc(int dt) {
         func_0207a748();
     }
     *(volatile u32 *)0x4000540 = 3;
-    func_0207c224();
+    OS_WaitVBlankIntr();
     func_01ffaac4(func_0208c578());
     func_01ff9dbc(pool);
     Unk0208db14::func_0208dbe8()->func_0208e4ec();

@@ -1556,3 +1556,5 @@ default: add one here only once a unit of this ROM proves it with mwccarm.
   give the file order.
 
 Two 32-bit stores through one base register, the high word 0 or the low word 0, come from a single write to a `vu64` register (hardware divider, `libs/nitro/src/fx/unit_02077AE4.c`).
+
+`asm` functions of a file are emitted in source order, after and not reversed like its C functions: keep a mix of both out of one file, and write `asm` functions in address order. A khdays score below 100 % may hide only unrelocated `bl` words; a function exact by bytes may still target other symbols, which only the ROM relocations tell (`.rela.text` in mwccarm objects).

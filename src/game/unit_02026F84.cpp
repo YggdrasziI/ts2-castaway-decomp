@@ -67,8 +67,8 @@ Unk020a80bcLoad func_020a80c4(Unk020a7c90 *s);
 Unk0206bcf0 *func_0206bce0();
 void func_02054360(void *p);
 void DC_FlushRange(const void *start, u32 size);
-void func_020790f0(const void *src, u32 offset, u32 size);
-void func_02079088(void *data, u32 offset, u32 size);
+void GX_LoadBGPltt(const void *src, u32 offset, u32 size);
+void GXS_LoadBGPltt(void *data, u32 offset, u32 size);
 void func_02026f84(const u16 *src, u32 unk, u32 size);
 void func_02027004(const u16 *src, u32 unk, u32 size);
 }
@@ -346,8 +346,8 @@ bool Unk02027044::func_02027644() {
             blend[i] = (r << 10) | (g << 5) | c;
         }
         DC_FlushRange(blend, 0x200);
-        func_020790f0(blend, 0, 0x200);
-        func_02079088(blend, 0, 0x200);
+        GX_LoadBGPltt(blend, 0, 0x200);
+        GXS_LoadBGPltt(blend, 0, 0x200);
         break;
     }
     case 2:

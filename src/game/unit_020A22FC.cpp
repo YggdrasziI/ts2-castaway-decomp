@@ -110,7 +110,7 @@ void *NNSi_SndSeqArcGetSeqInfo(void *arc, int index);
 void func_020897b4(const char *format, ...);
 Unk020081dc func_020081dc(void *player);
 int func_0209be08(void *lock);
-void *func_0209b9bc(int file);
+void *NNS_SndArcGetFileAddress(int file);
 void func_0209b9a0(int file, void *p);
 void func_0207e4ec(void *p);
 void *func_0207e074(void *p, int index);
@@ -134,7 +134,7 @@ void func_0209a7bc();
 void func_0209a788();
 void *func_0209c424(void *buffer, u32 size);
 void func_0209c03c(void *archive, const char *path, void *heap, int d);
-void func_0209d3a4(void *heap);
+void NNS_SndArcPlayerSetup(void *heap);
 void func_0209e654(int count, void *heap);
 void func_0209e56c(void *stream);
 int func_0209e520(void *stream);
@@ -156,8 +156,8 @@ int func_0209cdf4(int id, int a, void *heap, int d, int e);
 int func_0209cc94(int id, int a, void *heap, int d, void *e);
 void func_0209d080(int id, void *heap);
 void func_0209d050(int id, int a, void *heap);
-int func_0209d2b8(void *handle, int a, int b);
-int func_0209d350(void *handle, int a);
+int NNS_SndArcPlayerStartSeqArc(void *handle, int a, int b);
+int NNS_SndArcPlayerStartSeq(void *handle, int a);
 void *func_0209ad38(void *handle, int a, int b);
 void *func_0209ac14(int a, void *b);
 void func_0209ad2c(void *p);
@@ -215,7 +215,7 @@ extern "C" void func_020a22fc(void *p, void *lock, int file) {
     }
     int state = OS_DisableInterrupts();
     lock = (void *)func_0209be08(lock);
-    if (p == func_0209b9bc(file)) {
+    if (p == NNS_SndArcGetFileAddress(file)) {
         func_0209b9a0(file, 0);
     }
     func_0209be08(lock);
@@ -348,7 +348,7 @@ Unk020a267c::Unk020a267c(const char *path, u32 size)
     buffer = new u8[size];
     heap = func_0209c424(buffer, size);
     func_0209c03c(archive, path, heap, 0);
-    func_0209d3a4(heap);
+    NNS_SndArcPlayerSetup(heap);
     func_0209b16c(&music);
     func_0209e654(10, heap);
     func_0209e56c(stream);
@@ -467,7 +467,7 @@ extern "C" int func_020a2a00(Unk020a267c *p, int volume, int offset) {
 
 /* 98.49 %: the original reads the count through the anchor data_020d6c68 + 0x64, registers. */
 extern "C" void *func_020a2a2c(Unk020a267c *p, int file, void *heap, bool lock) {
-    void *data = func_0209b9bc(file);
+    void *data = NNS_SndArcGetFileAddress(file);
     if (data == 0) {
         if (func_0209ba04(file, &data_020d6c94, 0x3c, 0) != 0x3c) {
             return 0;
@@ -586,7 +586,7 @@ extern "C" int func_020a2ce8(Unk020a267c *p, int hash, int volume, bool immediat
     }
     hash = func_020a2e34(p, group);
     void *handle = &p->handles[index];
-    if (func_0209d2b8(handle, hash, id) != 0) {
+    if (NNS_SndArcPlayerStartSeqArc(handle, hash, id) != 0) {
         func_0209b0c4(handle, 0xffff, volume);
         if (immediate) {
             func_0209b094(handle, 0xffff, 0);
@@ -610,13 +610,13 @@ extern "C" int func_020a2e34(Unk020a267c *p, int group) {
     do {
         switch (entry->type) {
         case 3:
-            if (func_0209b9bc(*func_0209bd30(entry->id)) == 0) {
+            if (NNS_SndArcGetFileAddress(*func_0209bd30(entry->id)) == 0) {
                 func_0209cdf4(entry->id, entry->unk1, p->heap, 1, 0);
             }
             result = entry->id;
             break;
         case 1:
-            if (func_0209b9bc(*func_0209bccc(entry->id)) == 0) {
+            if (NNS_SndArcGetFileAddress(*func_0209bccc(entry->id)) == 0) {
                 func_0209cc94(entry->id, entry->unk1, p->heap, 1, 0);
             }
             break;
@@ -643,12 +643,12 @@ extern "C" void func_020a2f28(Unk020a267c *p, int id, void *heap) {
 extern "C" void func_020a2f7c(Unk020a267c *p, int id, int index, void *heap) {
     u16 out[6];
     int *entry = func_0209bccc(id);
-    u8 *table = (u8 *)func_0209b9bc(*entry);
+    u8 *table = (u8 *)NNS_SndArcGetFileAddress(*entry);
     if (table == 0) {
         return;
     }
     Unk020a22fcFile *info = func_0209bc68(*(u16 *)(entry + 1));
-    u8 *data = (u8 *)func_0209b9bc(info->id);
+    u8 *data = (u8 *)NNS_SndArcGetFileAddress(info->id);
     if (func_0207e2f4(table, index, 0, out) == 0) {
         return;
     }
@@ -663,7 +663,7 @@ extern "C" int func_020a3018(Unk020a267c *p, void *handle, int id, int index) {
     if (entry == 0) {
         return 0;
     }
-    u8 *file = (u8 *)func_0209b9bc(*entry);
+    u8 *file = (u8 *)NNS_SndArcGetFileAddress(*entry);
     if (file == 0) {
         return 0;
     }
@@ -844,14 +844,14 @@ extern "C" void func_020a35f0(Unk020a267c *p, int hash, int mode) {
         bool started;
         switch (mode) {
         case 1:
-            if (func_0209b9bc(*func_0209bd94(id)) == 0) {
+            if (NNS_SndArcGetFileAddress(*func_0209bd94(id)) == 0) {
                 func_020897b4(data_020bd978);
                 func_0209d0b8(group, p->heap);
             }
-            started = func_0209d350(&p->music, id) != 0;
+            started = NNS_SndArcPlayerStartSeq(&p->music, id) != 0;
             break;
         case 0:
-            started = func_0209d2b8(&p->music, func_020a2e34(p, group), id) != 0;
+            started = NNS_SndArcPlayerStartSeqArc(&p->music, func_020a2e34(p, group), id) != 0;
             break;
         }
         if (started) {

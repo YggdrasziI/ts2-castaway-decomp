@@ -323,8 +323,8 @@ void *func_020a2994();
 void *func_020a3858(void *sound, u32 hash, int a, int b, int c);
 int func_020a2ce8(void *sound, u32 hash, int volume, int unk);
 int func_020a3514(void *sound, int handle);
-void func_02078fb8(void *data, u32 offset, u32 size);
-void func_02079088(void *data, u32 offset, u32 size);
+void GXS_LoadOBJPltt(void *data, u32 offset, u32 size);
+void GXS_LoadBGPltt(void *data, u32 offset, u32 size);
 void DC_FlushRange(void *data, u32 size);
 
 Unk0206bcf0 *func_0206bce0();
@@ -1202,7 +1202,7 @@ void func_020214cc(Unk0201e300 *p, int t) {
         data_020be3b4[i] = blue | (red << 10 | green << 5);
     }
     DC_FlushRange(data_020be3b4, 0x40);
-    func_02079088(data_020be3b4, 0xe0, 0x40);
+    GXS_LoadBGPltt(data_020be3b4, 0xe0, 0x40);
     for (u32 i = 0; i < 0x10; i++) {
         c0 = p->from2[i];
         c1 = p->to2[i];
@@ -1218,7 +1218,7 @@ void func_020214cc(Unk0201e300 *p, int t) {
         data_020be3f4[i] = blue | (red << 10 | green << 5);
     }
     DC_FlushRange(data_020be3f4, 0x20);
-    func_02078fb8(data_020be3f4, 0xa0, 0x20);
+    GXS_LoadOBJPltt(data_020be3f4, 0xa0, 0x20);
 }
 
 void func_020216e0(Unk0201e300 *p, int from, int to) {
@@ -1305,9 +1305,9 @@ void func_02021888(Unk0201e300 *p) {
     Unk0206bcf0 *state = func_0206bce0();
     if ((state->unk22c & 0x400) != 0 || state->unk21c != 0) {
         DC_FlushRange(data_020be3b4, 0x40);
-        func_02079088(data_020be3b4, 0xe0, 0x40);
+        GXS_LoadBGPltt(data_020be3b4, 0xe0, 0x40);
         DC_FlushRange(data_020be3f4, 0x20);
-        func_02078fb8(data_020be3f4, 0xa0, 0x20);
+        GXS_LoadOBJPltt(data_020be3f4, 0xa0, 0x20);
         return;
     }
 

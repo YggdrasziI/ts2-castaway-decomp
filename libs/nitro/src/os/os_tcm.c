@@ -1,6 +1,6 @@
 /* NitroSDK os_tcm.c: only OS_GetDTCMAddress is linked.
  *
- * Bounds 0x0207B8E4-0x0207B8F8: after the arena setup (func_0207b7cc), before
+ * Bounds 0x0207B8E4-0x0207B8F8: after the arena setup (OS_InitArena), before
  * os_protectionUnit.c. Byte-identical to khdays-decomp's (CC0) version, see
  * notes/PROVENANCE.md; file name from khdays' citation of the NitroSDK source.
  */

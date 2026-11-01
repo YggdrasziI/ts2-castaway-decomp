@@ -159,7 +159,7 @@ Unk020081dc func_020081dc(Unk020c43a8 *owner);
 int func_020691c4();
 Unk020897c0 *func_02063d84(void *p);
 void func_0207a748();
-void func_0207c224();
+void OS_WaitVBlankIntr();
 void func_01ff9924(Unk020c7d38 *pool);
 void func_01ff9dbc(Unk020c7d38 *pool);
 bool func_01ff9ee8(Unk020c7d38 *pool);
@@ -261,7 +261,7 @@ void Unk02071d94::func_02071fdc(int dt) {
         func_0207a748();
     }
     *(volatile u32 *)0x4000540 = 3;
-    func_0207c224();
+    OS_WaitVBlankIntr();
     func_01ffaac4(func_0208c578());
     func_01ff9dbc(pool);
     Unk0208db14::func_0208dbe8()->func_0208e4ec();

@@ -18,13 +18,13 @@ typedef unsigned long u32;
 #define REG_SQRT_PARAM (*(volatile s64 *)0x040002B8)
 #define REG_SQRT_PARAM_L (*(volatile u32 *)0x040002B8)
 
-extern int func_02077c7c(int x);
+extern int FX_Atan2Idx(int x);
 extern int func_02077c44(int x);
 extern const int data_020b38e8[];
 extern const int data_020b38ec[];
 
 short func_02097a58(int x) {
-    return func_02077c7c(x);
+    return FX_Atan2Idx(x);
 }
 
 int func_02097a6c(s64 x) {

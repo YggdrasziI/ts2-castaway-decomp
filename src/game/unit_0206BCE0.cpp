@@ -692,7 +692,7 @@ void func_02059cb0(Unk020599a0 *p, bool on);
 void func_02059d10(Unk020599a0 *p, bool on);
 void func_01ff9924(Unk020c7d38 *pool);
 void func_01ff9dbc(Unk020c7d38 *pool);
-void func_0207c224();
+void OS_WaitVBlankIntr();
 void func_01ffadf8(Unk020916a4 *manager);
 void func_02053100(Unk020bfc3c *p);
 Unk0205fd7c *func_0205fd7c(void *list, int map);
@@ -1276,7 +1276,7 @@ void Unk0206bcf0::func_02071fdc(int dt) {
             func_0207a748();
         }
         *(volatile u32 *)0x4000540 = 3;
-        func_0207c224();
+        OS_WaitVBlankIntr();
         func_01ffaac4(func_0208c578());
         data_020c3ba4.palettes->func_0207005c();
         func_01ff9dbc(pool);

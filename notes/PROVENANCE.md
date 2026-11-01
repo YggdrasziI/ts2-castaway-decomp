@@ -98,3 +98,5 @@ Source: advance-wars-dual-strike-decomp (**CC0-1.0**), local clone at commit
 `libs/nitro/src/fs/unit_02075F70.c`: khdays (CC0) `libs/nitro/fs/{auto,calls}`, per-function sources retyped against `sdk/fs.h`; the functions khdays lacks written from the ROM. Names from khdays, except `FS_RegisterArchiveName` and `FS_InitArchive` from Advance Wars' `symbols.txt` (same order, `FS_RegisterArchiveName` same size) and st's `fs_archive.h`.
 
 `libs/nitro/src/fx/unit_02077AE4.c`: written from the ROM.
+
+Generated NitroSDK / NitroSystem units `libs/{nitro,nns}/src/*/unit_*.c` named after their first address: khdays (CC0) per-function sources of byte-identical functions, merged, with the callee and data symbols of this ROM read from its relocations. `libs/nitro/include/nnsys/*.h`: khdays `include/nnsys`, includes renamed to `sdk/`. A name comes from khdays only when the function is exact, at least 0x20 bytes, and unique; the rest stay address based. Directory names are the khdays module of the first function, not evidence.

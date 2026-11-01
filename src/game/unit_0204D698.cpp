@@ -43,7 +43,7 @@ extern const short data_020af1e8[];
 extern "C" {
 Unk020d6240 *func_020a18e4();
 int func_0209f0a4(Unk020d60c8 *settings);
-void func_0207c224();
+void OS_WaitVBlankIntr();
 u32 func_0209a418(const u8 *str, u32 ch);
 u32 func_0209a550(const u8 *str);
 u32 func_0209a5d8(const u8 *str, int *length);
@@ -603,7 +603,7 @@ void Unk0204d698::func_0204e470(int layout) {
     }
     Unk02095140 *file = (Unk02095140 *)archive->func_02093a9c(id);
     if (file != 0) {
-        func_0207c224();
+        OS_WaitVBlankIntr();
         this->layer = Unk0208db14::func_0208dc08(screen)->func_0208dc44(file, 0, -1, this->layout);
         Unk0208db14::func_0208dc08(screen)->func_0208e058(file, 0, 0x1000);
         if (this->layer != 0) {

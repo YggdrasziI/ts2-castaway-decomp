@@ -398,3 +398,5 @@ like `libs/nitro`, a working choice.
 `libs/nitro/src/fs/unit_02075F70.c` (FS commands, archives, files, 0x02075F70-0x02077AE4): named by address, bounds are a hypothesis; the hardware divider helpers follow it.
 
 `libs/nitro/src/fx/unit_02077AE4.c` (hardware divider helpers, 0x02077AE4-0x02077C08): named by address, bounds are a hypothesis.
+
+Generated units from the runs of byte-identical functions: bounds are a run, not a source file; a real file may span several of them.

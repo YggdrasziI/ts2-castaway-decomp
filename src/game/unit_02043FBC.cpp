@@ -102,7 +102,7 @@ int func_020a0b8c(void *list, void *object);
 void func_020a0b0c(void *list, void *object);
 void func_020a716c(Unk020a7c90 *s, int text);
 void *func_020a2994();
-void func_0209b178(int a, int b);
+void NNS_SndPlayerStopSeqByPlayerNo(int a, int b);
 Unk0206bcf0 *func_0206bce0();
 void func_020662c8(Unk020c43a8 *p, int i, int n);
 int func_0206647c(Unk020c43a8 *p, int i);
@@ -254,9 +254,9 @@ void Unk02044234::func_08() {
     func_02044f24();
     func_020a14e0(func_020a18e4(), 0);
     func_020a2994();
-    func_0209b178(10, 0);
+    NNS_SndPlayerStopSeqByPlayerNo(10, 0);
     func_020a2994();
-    func_0209b178(11, 0);
+    NNS_SndPlayerStopSeqByPlayerNo(11, 0);
 }
 
 bool Unk02044234::func_0c(short a) {

@@ -26,7 +26,7 @@ public:
 };
 
 extern "C" void func_02077e50();
-extern "C" void func_02077e54();
+extern "C" void DispCnt_ApplyPendingMode();
 extern "C" void func_02077ef8();
 extern "C" void GX_VBlankIntr(int enable);
 extern "C" u32 func_0207812c();
@@ -114,7 +114,7 @@ void func_02096b8c() {
     G3X_InitTable();
     G3X_InitMtxStack();
     *(volatile u16 *)0x4000304 = (*(volatile u16 *)0x4000304 & ~0x20e) | 0xe | 0x200;
-    func_02077e54();
+    DispCnt_ApplyPendingMode();
     *(volatile u32 *)0x4001000 |= 0x10000;
     func_02096d78();
     func_0207a174(1, func_02096d5c);

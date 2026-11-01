@@ -6,7 +6,7 @@
  * nodes, used nodes sorted by priority and nodes waiting to be released. It also
  * hands out the 32 affine parameter sets (a bitmask of the sets in use, a user
  * count per set) and loads object palettes through the main or sub screen loader
- * (func_02079020 / func_02078fb8).
+ * (GX_LoadOBJPltt / GXS_LoadOBJPltt).
  *
  * Bounds: hypothesis. func_02091654 just before uses the manager from outside;
  * 0x02092640 starts unit_02092640.cpp (the entry iterator). Only this code uses the
@@ -20,8 +20,8 @@
 extern "C" {
 void func_01ffab9c(Unk0208f8b0 *entry, int unk);
 void func_01ffadf8(Unk020916a4 *manager);
-void func_02078fb8(void *data, u32 offset, u32 size);
-void func_02079020(void *data, u32 offset, u32 size);
+void GXS_LoadOBJPltt(void *data, u32 offset, u32 size);
+void GX_LoadOBJPltt(void *data, u32 offset, u32 size);
 int func_02097b08(int x);
 extern const short data_020af1e8[];
 }
@@ -342,9 +342,9 @@ void Unk020916a4::func_02091eb4(Unk02095140 *file, int index, int mask) {
     m = (u16)mask;
     if (m == 0xffff) {
         if (main) {
-            func_02079020(file->func_02095354(index), 0, 0x200);
+            GX_LoadOBJPltt(file->func_02095354(index), 0, 0x200);
         } else {
-            func_02078fb8(file->func_02095354(index), 0, 0x200);
+            GXS_LoadOBJPltt(file->func_02095354(index), 0, 0x200);
         }
         return;
     }
@@ -361,7 +361,7 @@ void Unk020916a4::func_02091eb4(Unk02095140 *file, int index, int mask) {
                 m >>= 1;
                 size += 0x20;
             }
-            func_02079020(data + offset, offset, size);
+            GX_LoadOBJPltt(data + offset, offset, size);
             offset += size;
         }
     } else {
@@ -375,7 +375,7 @@ void Unk020916a4::func_02091eb4(Unk02095140 *file, int index, int mask) {
                 m >>= 1;
                 size += 0x20;
             }
-            func_02078fb8(data + offset, offset, size);
+            GXS_LoadOBJPltt(data + offset, offset, size);
             offset += size;
         }
     }
@@ -383,9 +383,9 @@ void Unk020916a4::func_02091eb4(Unk02095140 *file, int index, int mask) {
 
 static inline void func_load(int main, void *data, u32 offset, u32 size) {
     if (main) {
-        func_02079020(data, offset, size);
+        GX_LoadOBJPltt(data, offset, size);
     } else {
-        func_02078fb8(data, offset, size);
+        GXS_LoadOBJPltt(data, offset, size);
     }
 }
 
@@ -403,9 +403,9 @@ void Unk020916a4::func_0209201c(Unk02095140 *file, int index, u32 src, u32 dst, 
     data += src;
     n *= 2;
     if (main) {
-        func_02079020(data, dst * 2, n);
+        GX_LoadOBJPltt(data, dst * 2, n);
     } else {
-        func_02078fb8(data, dst * 2, n);
+        GXS_LoadOBJPltt(data, dst * 2, n);
     }
 }
 
@@ -414,9 +414,9 @@ void Unk020916a4::func_02092098(void *data, u32 dst, u32 n) {
         return;
     }
     if (main) {
-        func_02079020(data, dst * 2, n * 2);
+        GX_LoadOBJPltt(data, dst * 2, n * 2);
     } else {
-        func_02078fb8(data, dst * 2, n * 2);
+        GXS_LoadOBJPltt(data, dst * 2, n * 2);
     }
 }
 

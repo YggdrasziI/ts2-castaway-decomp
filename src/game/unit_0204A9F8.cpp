@@ -65,7 +65,7 @@ void *func_020a2994();
 void *func_020a3858(void *sound, u32 hash, int a, int b, int c);
 void func_020a25fc(void *handle);
 void DC_FlushRange(const void *start, u32 size);
-void func_020790f0(const void *src, u32 offset, u32 size);
+void GX_LoadBGPltt(const void *src, u32 offset, u32 size);
 }
 
 class Unk0204a9f8 : public Unk020a07d4 {
@@ -507,7 +507,7 @@ void Unk0204a9f8::func_0204bd6c() {
         return;
     }
     DC_FlushRange(palette, 0x1a0);
-    func_020790f0(palette, 0x60, 0x1a0);
+    GX_LoadBGPltt(palette, 0x60, 0x1a0);
 }
 
 static void *func_0204be78(u32 id, void *user) {

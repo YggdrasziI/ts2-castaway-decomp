@@ -64,10 +64,10 @@ typedef void (*Unk020a80bcLoad)(void *data, u32 offset, u32 size);
 extern "C" {
 extern const int data_020b6d0c[13];
 void func_020a80bc(void *s, Unk020a80bcLoad load);
-void func_02078fb8(void *data, u32 offset, u32 size);
-void func_02079020(void *data, u32 offset, u32 size);
-void func_02079088(void *data, u32 offset, u32 size);
-void func_020790f0(void *data, u32 offset, u32 size);
+void GXS_LoadOBJPltt(void *data, u32 offset, u32 size);
+void GX_LoadOBJPltt(void *data, u32 offset, u32 size);
+void GXS_LoadBGPltt(void *data, u32 offset, u32 size);
+void GX_LoadBGPltt(void *data, u32 offset, u32 size);
 int func_020a6e58(Unk020a6dd8 *s);
 int func_020a6e74(Unk020a6dd8 *s);
 void func_020aa42c(Unk020a9d58 *l);
@@ -131,11 +131,11 @@ extern "C" void func_020a9dc4(Unk020a9d58 *l, int type, int count) {
                 break;
             case 5:
                 new (block[i]) Unk020a7fdc;
-                func_020a80bc(block[i], (l->flags & 2) ? func_02079020 : func_02078fb8);
+                func_020a80bc(block[i], (l->flags & 2) ? GX_LoadOBJPltt : GXS_LoadOBJPltt);
                 break;
             case 6:
                 new (block[i]) Unk020a7fdc;
-                func_020a80bc(block[i], (l->flags & 2) ? func_020790f0 : func_02079088);
+                func_020a80bc(block[i], (l->flags & 2) ? GX_LoadBGPltt : GXS_LoadBGPltt);
                 break;
             case 8:
                 new (block[i]) Unk020a8f84;

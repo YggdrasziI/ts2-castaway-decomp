@@ -21,11 +21,11 @@
 typedef short s16;
 
 extern "C" {
-void func_02077e54();
+void DispCnt_ApplyPendingMode();
 int func_02078114();
 int func_02078174();
-void func_02079088(void *data, u32 offset, u32 size);
-void func_020790f0(void *data, u32 offset, u32 size);
+void GXS_LoadBGPltt(void *data, u32 offset, u32 size);
+void GX_LoadBGPltt(void *data, u32 offset, u32 size);
 void func_02099b84(const void *src, void *dest, u32 size);
 }
 
@@ -395,7 +395,7 @@ Unk0208db14::Unk0208db14(bool main) : used(0), main(main) {
     int i;
 
     if (main) {
-        func_02077e54();
+        DispCnt_ApplyPendingMode();
     } else {
         REG_DB_DISPCNT |= 0x10000;
     }
@@ -567,9 +567,9 @@ void Unk0208db14::func_0208e058(Unk02095140 *file, int index, int mask) {
     m = (u16)mask;
     if (m == 0xFFFF) {
         if (main) {
-            func_020790f0(file->func_02095354(index), 0, 0x200);
+            GX_LoadBGPltt(file->func_02095354(index), 0, 0x200);
         } else {
-            func_02079088(file->func_02095354(index), 0, 0x200);
+            GXS_LoadBGPltt(file->func_02095354(index), 0, 0x200);
         }
         return;
     }
@@ -586,7 +586,7 @@ void Unk0208db14::func_0208e058(Unk02095140 *file, int index, int mask) {
                 m >>= 1;
                 n += 0x20;
             }
-            func_020790f0(data + offset, offset, n);
+            GX_LoadBGPltt(data + offset, offset, n);
             offset += n;
         }
     } else {
@@ -600,7 +600,7 @@ void Unk0208db14::func_0208e058(Unk02095140 *file, int index, int mask) {
                 m >>= 1;
                 n += 0x20;
             }
-            func_02079088(data + offset, offset, n);
+            GXS_LoadBGPltt(data + offset, offset, n);
             offset += n;
         }
     }
@@ -618,9 +618,9 @@ void Unk0208db14::func_0208e1b0(Unk02095140 *file, int index, u32 src, u32 dst, 
     }
     data += src * 2;
     if (main) {
-        func_020790f0(data, dst * 2, n * 2);
+        GX_LoadBGPltt(data, dst * 2, n * 2);
     } else {
-        func_02079088(data, dst * 2, n * 2);
+        GXS_LoadBGPltt(data, dst * 2, n * 2);
     }
 }
 
@@ -629,9 +629,9 @@ void Unk0208db14::func_0208e224(void *data, u32 dst, u32 n) {
         return;
     }
     if (main) {
-        func_020790f0(data, dst * 2, n * 2);
+        GX_LoadBGPltt(data, dst * 2, n * 2);
     } else {
-        func_02079088(data, dst * 2, n * 2);
+        GXS_LoadBGPltt(data, dst * 2, n * 2);
     }
 }
 

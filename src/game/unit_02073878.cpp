@@ -117,7 +117,7 @@ void func_020a15a8(Unk020d6240 *system, int dt);
 bool func_020a1280(Unk020d6240 *system, int a, int b);
 int func_020a0b8c(void *p, void *object);
 void func_0206c290(Unk020d6240 *system);
-void func_0207c224();
+void OS_WaitVBlankIntr();
 void func_01ffadf8(Unk020916a4 *manager);
 }
 
@@ -186,7 +186,7 @@ void Unk02073878::func_02071fdc(int dt) {
     if (dt == 0) {
         return;
     }
-    func_0207c224();
+    OS_WaitVBlankIntr();
     Unk0208db14::func_0208dbe8()->func_0208e4ec();
     Unk0208db14::func_0208dbf8()->func_0208e4ec();
     func_01ffadf8(Unk020916a4::func_02091820());
