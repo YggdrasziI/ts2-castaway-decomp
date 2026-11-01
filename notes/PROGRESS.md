@@ -176,3 +176,4 @@
 | 2026-11-01 | 32db4d6 | 465844 / 723540 bytes (64.38 %; fuzzy 94.19 %, linked 28.32 %) | 3975 / 4577 | 237 / 395 | NitroSDK and NitroSystem units from byte-identical khdays functions |
 | 2026-11-01 | 3db86dd | 475996 / 723540 bytes (65.79 %; fuzzy 95.60 %, linked 29.72 %) | 4077 / 4577 | 294 / 478 | Remaining exact khdays runs (CARD, PXI, TP, CTRDG, OS, FND heap) and near-exact functions fixed to this ROM's layouts |
 | 2026-11-01 | d9ab366 | 484748 / 723540 bytes (67.00 %; fuzzy 96.81 %, linked 30.93 %) | 4125 / 4577 | 340 / 522 | NitroSDK / NitroSystem gaps: RTC, TP, GX init, PM, stream player, thread scheduler, fixed to this ROM's layouts |
+| 2026-11-01 | 8ccede4 | 489788 / 723540 bytes (67.69 %; fuzzy 97.50 %, linked 31.63 %) | 4179 / 4577 | 394 / 556 | NitroSDK / NitroSystem gaps: OS init, PM sleep and LCD power, GX VRAM, sound player main, wave table load, frame heap |

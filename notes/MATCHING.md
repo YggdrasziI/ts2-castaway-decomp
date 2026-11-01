@@ -1567,3 +1567,6 @@ Two 32-bit stores through one base register, the high word 0 or the low word 0, 
 A khdays function off by one or two words is mostly a different field offset, not different code: this ROM's SDK has shorter structures (`NNSSndStrmPlayer` 0x170, one word less than khdays; `OSThreadInfo.list` at 8; `CARD` backup assert at 0x02000B88). Compare the words first, then fix the type, not the code. Note `ldrh` immediates are split: `e1d000b2` is offset 2, not 0xb2.
 
 Link-time constants without relocation (`SDK_IRQ_STACKSIZE`, `SDK_SYS_STACKSIZE`, `SDK_SECTION_ARENA_DTCM_START` as function addresses) cannot be written as C constants, the compiler folds them: `func_0207b5f4` stays unmatched until they exist at link time.
+
+- Value read through an inline helper is loaded before the operands of the comparison: `v == get()` with an inline `get` loads the register first, unlike a macro (`PM_GoSleepMode` VBlank loops). Likewise `SND_CalcDecibel` as an inline keeps one saved register per term (`NNSi_SndPlayerMain`); a plain table read saves fewer registers and shrinks the function.
+- `block + size` on a `char *` keeps the pointer as first operand whatever the source order; write `size + (u32)block` to get `add rd, size, block` (frame heap head allocator).
