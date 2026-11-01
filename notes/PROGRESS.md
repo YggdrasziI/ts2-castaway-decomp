@@ -162,3 +162,4 @@
 | 2026-11-01 | a59a482 | 384520 / 720836 bytes (53.34 %; fuzzy 81.74 %, linked 18.84 %) | 3298 / 4556 | 128 / 272 | Layout text (29 functions, vtable), complete; matched code +2288 bytes |
 | 2026-11-01 | 658628a | 385456 / 720836 bytes (53.47 %; fuzzy 81.87 %, linked 18.97 %) | 3344 / 4556 | 133 / 277 | Layout elements, their bases and the name list (5 units, 46 functions, four vtables), complete; matched code +936 bytes |
 | 2026-11-01 | d89c004 | 386660 / 720836 bytes (53.64 %; fuzzy 82.04 %, linked 19.14 %) | 3370 / 4556 | 135 / 279 | Layout font (11 functions) and frame loader (15), one vtable each, complete |
+| 2026-11-01 | dea3e94 | 388124 / 720836 bytes (53.84 %; fuzzy 82.24 %, linked 19.34 %) | 3406 / 4556 | 138 / 284 | Vector elements (19 functions) and layout text box (17), one vtable each, complete |
