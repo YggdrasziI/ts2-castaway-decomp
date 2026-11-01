@@ -858,7 +858,7 @@ bool Unk0200c308::func_0200cb60() {
 }
 
 void Unk0200c308::func_0200cba8() {
-    int f = func_0200b150(&anim, 0x1000);
+    const int f = func_0200b150(&anim, 0x1000);
     for (int i = 0; i < 2; i++) {
         func_020a69ac(sprites[i], f);
     }

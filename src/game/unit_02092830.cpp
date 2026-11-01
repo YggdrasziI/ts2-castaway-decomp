@@ -28,14 +28,13 @@ Unk02092830::Unk02092830(const char *text, Unk02092830Font *font) {
     func_02092854();
 }
 
-/* 98.97 %: the text pointer and the character swap registers (r8 / r6). */
 void Unk02092830::func_02092854() {
-    const u8 *p;
-    int n;
-    u32 c;
-    int len;
 
-    if (font == 0 || text == 0) {
+    int len;
+    u32 c;
+    int n;
+    const u8 *p;
+    if (font == 0 || 0 == text) {
         return;
     }
     length = func_0209a418((const u8 *)text, 0);

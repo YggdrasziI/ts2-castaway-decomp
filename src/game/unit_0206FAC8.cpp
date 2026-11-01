@@ -185,9 +185,10 @@ void Unk0206fac8::func_0207005c() {
     }
 }
 
-/* 98.33 %: the original keeps n in r1, ours in r0. */
 void Unk0206fac8::func_02070114(Unk0208c050 *tex, int key) {
-    int n = tex->func_0208c1a4() >> 1;
+    Unk0206fac8Record *r;
+    int n;
+    n = tex->func_0208c1a4() >> 1;
     if (n > 0x100) {
         return;
     }
@@ -206,7 +207,7 @@ void Unk0206fac8::func_02070114(Unk0208c050 *tex, int key) {
     if (tex->format() == 7) {
         return;
     }
-    Unk0206fac8Record *r = &records[recordCount++];
+    r = &records[recordCount++];
     r->key = key;
     r->start = 0xffff;
     for (u32 j = 0; j < capacity; j++) {

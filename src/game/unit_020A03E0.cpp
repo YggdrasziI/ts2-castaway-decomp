@@ -81,15 +81,16 @@ extern "C" void func_020a04a4(Unk020a03e0 *o, int key, int button) {
     }
 }
 
-/*
- * 99.90 %: `lower` and `any` swapped between r2 and r1 at the two `mov`. The first constants
- * only stay when they are assigned apart from the declarations; 30 declaration, type and
- * assignment forms tried.
- */
 extern "C" void func_020a04d4(Unk020a03e0 *o) {
-    int i;
+    int flags;
     func_02097100();
+    bool down;
+    bool last;
+    bool any;
+    int i;
+    u16 state;
     func_02097464();
+    bool lower;
     for (i = 0; i < 15; i++) {
         o->keys[i].flags &= ~0x10;
     }
@@ -101,12 +102,10 @@ extern "C" void func_020a04d4(Unk020a03e0 *o) {
     if (func_020978dc(0) || func_02097298(3) || func_02097298(0)) {
         o->keys[7].flags |= 0x10;
     }
-    int flags = data_020d6240.screen->flags;
-    bool any;
-    bool lower;
-    lower = true;
     any = true;
-    if (!(flags & 8) && !(flags & 4)) {
+    lower = true;
+    flags = data_020d6240.screen->flags;
+    if (!(8 & flags) && !(4 & flags)) {
         lower = false;
     }
     if (!lower && !(flags & 2)) {

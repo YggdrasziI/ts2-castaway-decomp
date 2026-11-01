@@ -886,9 +886,10 @@ extern "C" void *func_020a2a2c(Unk020a267c *p, int file, void *heap, bool lock) 
     return data;
 }
 
-/* 99.27 %: offset and size registers swapped. */
 extern "C" bool func_020a2b38(Unk020a267c *p, u8 *table, u32 index, int file, void *heap) {
+    u32 size;
     u32 count = func_0207e0f4(table);
+    u32 end;
     if (index > count) {
         return false;
     }
@@ -897,9 +898,9 @@ extern "C" bool func_020a2b38(Unk020a267c *p, u8 *table, u32 index, int file, vo
     }
     int *entry = (int *)table + (*(int *)(table + 0x38) + index);
     int offset = entry[0xf];
-    u32 end = index < count - 1 ? entry[0x10] : *(int *)(table + 8);
-    u32 size = end - offset;
-    if (heap == 0) {
+    end = index < count - 1 ? entry[0x10] : *(int *)(table + 8);
+    size = end - offset;
+    if (0 == heap) {
         return false;
     }
     void *data = func_0209c2d8(heap, size + 0x20, (void *)func_020a2374, table, index);

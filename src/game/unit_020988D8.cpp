@@ -33,12 +33,13 @@ int Unk020988d8::func_020988f4() const {
     return func_02097a6c(((w * w) >> 12) + ((x * x) >> 12) + ((y * y) >> 12) + ((z * z) >> 12));
 }
 
-/* 99.26 %: the three w products land in other registers (original: w * z in r9,
- * w * x in r8, w * y in r10). Declaration orders (150 sampled) and inline products
- * were tried. */
 Unk02097b6c Unk020988d8::func_02098934() const {
-    int norm = func_020988f4();
+    int yy;
     int s;
+    int wz;
+    const int norm = func_020988f4();
+    int xy;
+    int xz;
     int d = norm - 0x1000;
 
     if (d <= 0) {
@@ -53,10 +54,11 @@ Unk02097b6c Unk020988d8::func_02098934() const {
         int xx = (x * x) >> 12;
         int yy = (y * y) >> 12;
         int zz = (z * z) >> 12;
-        int xy = (x * y) >> 12;
-        int xz = (x * z) >> 12;
-        int yz = (y * z) >> 12;
+        xy = (x * y) >> 12;
+        xz = (x * z) >> 12;
         int wy = (w * y) >> 12;
+        int yz = (y * z) >> 12;
+        int wy_ = wy;
         int wx = (w * x) >> 12;
         int wz = (w * z) >> 12;
 

@@ -275,14 +275,14 @@ Unk0209487c *Unk02093648::func_02093a58(int index) {
     return files[index];
 }
 
-/*
- * 99.47 %: register allocation of the data pointer, size, base and offset; best
- * declaration order of 720 tried.
- */
 Unk0209487c *Unk02093648::func_02093a9c(int index) {
-    u8 *data;
     int h;
+    Unk0209487cFile file;
+    int offset;
+    int base;
+    u8 *data;
 
+    Unk02093648Entry *e;
     if (!func_02094f88()) {
         return 0;
     }
@@ -290,13 +290,9 @@ Unk0209487c *Unk02093648::func_02093a9c(int index) {
         return 0;
     }
     data = datas[index];
-    if (data == 0) {
-        Unk0209487cFile file;
-        bool ok;
-        Unk02093648Entry *e;
-        int base;
-        int offset;
+    if (0 == data) {
         int size;
+        bool ok;
 
         FS_InitFile(&file);
         ok = FS_OpenFileFast(&file, func_02094fec());
