@@ -360,6 +360,7 @@ src/game/unit_02033EE0.cpp:
     .bss        start:0x020be424 end:0x020be428
 
 src/game/unit_02035FEC.cpp:
+    complete
     .text       start:0x02035fec end:0x02038bcc
     .init       start:0x020ad0d8 end:0x020ad18c
     .ctor       start:0x020b6e50 end:0x020b6e54

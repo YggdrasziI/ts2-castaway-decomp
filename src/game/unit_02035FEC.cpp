@@ -22,8 +22,7 @@
  * (filled by the static initializer 0x020AD0D8), this class's vtable with
  * its header and the formats of the text function. Real file name unknown.
  *
- * Not complete: three functions are below 100 % (comments above them); the
- * last word of `.rodata` (0x020AE8D8, 0x50, never loaded) is a local `static
+ * The last word of `.rodata` (0x020AE8D8, 0x50, never loaded) is a local `static
  * const`, as in unit_0203C2E8.cpp.
  */
 
@@ -397,20 +396,14 @@ bool Unk02035fec::func_10() {
     return false;
 }
 
-/*
- * 98.72 %: the original keeps the palette in r9, the found flag in r7 and
- * the tab index in r8, with the tab counter at sp + 4 and the palette base
- * at sp; here r7, r8 and r9 are rotated and the two stack slots swapped.
- * Declaring the base first and the palette after the colours gained 8 %;
- * moving or retyping the found flag and the tab counter changed nothing.
- */
 void Unk02035fec::func_02037000() {
     int t;
+    bool found;
     int k;
+    int base;
     if (flags & 2) {
         return;
     }
-    int base = 0;
     for (int i = 0; i < 5; i++) {
         for (int j = 0; j < 6; j++) {
             keys[i][j] = 0;
@@ -418,6 +411,7 @@ void Unk02035fec::func_02037000() {
     }
     int colors[5] = {0xe, 0xe, 0xe, 0xe, 0xe};
     int palette = 0;
+    base = palette;
     tabCount = 0;
     switch (mode) {
     case 0:
@@ -493,7 +487,7 @@ void Unk02035fec::func_02037000() {
         keys[3][3] = data_020b9480[2][8];
         break;
     }
-    bool found = false;
+    found = false;
     tab = 0;
     if (data_020b947c != 0) {
         for (t = 0; t < tabCount && !found; t++) {
