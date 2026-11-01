@@ -20533,7 +20533,7 @@ from:0x020a7024 kind:arm_call to:0x02090c84 module:main
 from:0x020a7040 kind:arm_call to:0x02090c8c module:main
 from:0x020a7048 kind:arm_call to:0x0208fbe0 module:main
 from:0x020a70e4 kind:arm_call to:0x020a7c10 module:main
-from:0x020a711c kind:load to:0x020bdc58 module:main
+from:0x020a711c kind:load to:0x020bdc50 add:0x8 module:main
 from:0x020a7128 kind:arm_call to:0x020a7c7c module:main
 from:0x020a713c kind:arm_call to:0x020a7c7c module:main
 from:0x020a7144 kind:arm_call to:0x02099858 module:main

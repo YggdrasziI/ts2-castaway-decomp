@@ -630,6 +630,10 @@ default: add one here only once a unit of this ROM proves it with mwccarm.
 - A call that passes a word where the shared prototype truncates it to `u16`: call through a cast function pointer
   with an `int` parameter; the output is still a direct `bl` (`func_020a6bcc`, 88.34 % -> 100 %).
 
+- A short branch with a conditional return (`ldreq`, `orreq`, `streq`, `popeq`) that stays a `bne` over the same
+  code: an inline helper with `if (x != 0) { ... } else { ... }` gives the conditional form (`func_020a727c`,
+  93.68 % -> 100 %); early returns and the inverted test do not.
+
 ## Data layout
 
 - Vtables of a file come out in reverse order of the classes: vtables in class order in `.data` mean one file for
