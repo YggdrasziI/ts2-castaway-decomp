@@ -455,8 +455,9 @@ void Unk020680d4::func_08(Unk02098ff0 rot) {
  */
 void Unk020680d4::func_10(Unk020680d4Cell c) {
     Unk020c3ba4 *world = &data_020c3ba4;
-    if (world->map == cell.pos.unk3 && world->maps[world->map] != 0 &&
-        func_02057e18(world->maps[world->map], &cell)) {
+    int map = world->map;
+    if (cell.pos.unk3 == map && world->maps[map] != 0 &&
+        func_02057e18(world->maps[map], &cell)) {
         func_02057df8(func_02058788(world, world->map), &cell, id + 4);
     }
     if (c.pos.unk3 == world->map && world->maps[world->map] != 0 && func_02057e18(world->maps[world->map], &c)) {
@@ -467,7 +468,7 @@ void Unk020680d4::func_10(Unk020680d4Cell c) {
     pos.x += 0x800;
     pos.z += 0x800;
     Unk02056ed0 *layer = func_02056ed0(func_02058788(world, world->map), &c);
-    u32 *tile = layer->func_tile(c.xy.x, c.xy.y);
+    u32 *tile = &layer->tiles[(u32)c.xy.y * layer->info->width + c.xy.x];
     bool wall = true;
     u32 kind = *tile & 0xc000;
     if (kind != 0x8000 && kind != 0x4000 && kind != 0xc000) {
