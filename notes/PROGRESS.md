@@ -147,3 +147,4 @@
 | 2026-11-01 | 7aa8fbd | 352444 / 720836 bytes (48.89 %; fuzzy 76.78 %, linked 15.42 %) | 2962 / 4556 | 109 / 247 | Units from `main` to 0x02002144 (five files, four complete; "AdvanceTime" 13 / 14 functions) |
 | 2026-11-01 | 504a45b | 352444 / 720836 bytes (48.89 %; fuzzy 76.78 %, linked 15.50 %) | 2962 / 4556 | 110 / 247 | File factory unit now complete (5 / 5 functions, vtables in the original order) |
 | 2026-11-01 | e5c5e1b | 353608 / 720836 bytes (49.06 %; fuzzy 77.06 %, linked 15.50 %) | 2974 / 4556 | 110 / 250 | First units of game block 2: text table (all functions, `.data` order open) and input state (7 / 9) |
+| 2026-11-01 | ccca12c | 359076 / 720836 bytes (49.81 %; fuzzy 77.82 %, linked 16.26 %) | 2999 / 4556 | 112 / 252 | Application object (17 functions, `.data`, `.bss`) and screen stack (7 functions), both complete |
