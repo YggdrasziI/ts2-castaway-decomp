@@ -10,7 +10,7 @@
  * 0x02093544 starts unit_02093544.cpp. The functions only call each other, the
  * UTF-8 helpers of unit_0209A32C.c and the rectangle constructors. Real file name
  * unknown.
- * Not complete: four functions do not match yet (see above them).
+ * Not complete: two functions do not match yet (see above them).
  */
 
 #include "game/unk_text.h"
@@ -246,29 +246,23 @@ Unk02098bc8 Unk02092830::func_02092db0(int hAlign, int vAlign, int width, int he
     return Unk02098bc8(minX, minY, maxX - minX, maxY - minY);
 }
 
-/*
- * 69.50 %: the original keeps width in a callee-saved register across the call to
- * func_02092b78 (and saves r3-r8); this one reads it from the stack twice.
- */
 Unk020930e8 Unk02092830::func_02092ee8(int hAlign, int vAlign, int width, int height,
                                        int spacing, int lineSpacing) {
-    return Unk020930e8(text, font, func_02092b78(width, spacing), hAlign, vAlign, width,
-                       height, spacing, lineSpacing);
+    const int w = width;
+    return Unk020930e8(text, font, func_02092b78(w, spacing), hAlign, vAlign, w, height, spacing, lineSpacing);
 }
 
-/*
- * 78.81 %: as in func_02092ee8, the original keeps width (in a stack slot) and
- * height (in r9) as locals; this one reads the stack arguments.
- */
 Unk020930e8 Unk02092830::func_02092f50(int hAlign, int vAlign, int width, int height,
                                        int spacing, int lineSpacing, int pages) {
-    Unk02092b94 lines = func_02092b78(width, spacing);
+    const int w = width;
+    Unk02092b94 lines = func_02092b78(w, spacing);
     int lineHeight = font->func_24();
     int i;
     int h;
 
     for (i = 0; i < pages; i++) {
-        h = height;
+        const int hh = height;
+        h = hh;
         while (lines.func_02092d3c()) {
             h -= lineHeight;
             if (h < 0) {
@@ -277,8 +271,7 @@ Unk020930e8 Unk02092830::func_02092f50(int hAlign, int vAlign, int width, int he
             lines.func_02092d54();
         }
     }
-    return Unk020930e8(text, font, lines, hAlign, vAlign, width, height, spacing,
-                       lineSpacing);
+    return Unk020930e8(text, font, lines, hAlign, vAlign, w, height, spacing, lineSpacing);
 }
 
 int Unk02092830::func_0209303c(int hAlign, int vAlign, int width, u32 height, int spacing,
