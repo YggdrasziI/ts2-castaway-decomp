@@ -467,13 +467,14 @@ extern "C" int func_020a2a00(Unk020a267c *p, int volume, int offset) {
 
 /* 98.49 %: the original reads the count through the anchor data_020d6c68 + 0x64, registers. */
 extern "C" void *func_020a2a2c(Unk020a267c *p, int file, void *heap, bool lock) {
+    u32 total;
     void *data = NNS_SndArcGetFileAddress(file);
     if (data == 0) {
         if (func_0209ba04(file, &data_020d6c94, 0x3c, 0) != 0x3c) {
             return 0;
         }
         u32 size = data_020d6c94.count << 2;
-        u32 total = size << 1;
+        total = size << 1;
         if (heap == 0) {
             return 0;
         }

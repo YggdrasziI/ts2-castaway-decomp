@@ -215,9 +215,10 @@ void Unk02093648::func_02094f0c() {
  * 99.15 %: the loop index and the sub-file position swap registers (r7 / r6).
  */
 void Unk02093648::func_020938d4() {
+    int pos;
+    int i;
     Unk0209487cFile file;
     bool ok;
-    int i;
 
     if (types == 0) {
         return;
@@ -229,7 +230,7 @@ void Unk02093648::func_020938d4() {
     }
     Unk0209487cEntry first;
     for (i = 0; i < getCount(); i++) {
-        int pos = dataOffset2 + subEntries[i].offset;
+        pos = dataOffset2 + subEntries[i].offset;
         DC_FlushRange(&first, 0xc);
         FS_SeekFile(&file, pos + 0xc, 0);
         FS_ReadFile(&file, &first, 0xc);

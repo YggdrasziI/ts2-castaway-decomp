@@ -1151,13 +1151,15 @@ u16 func_0205c3d0(Unk02099c0c *node) {
  * code is the same otherwise.
  */
 u16 func_0205c3f4(Unk02099c0c *node) {
+    Unk02099c78Var *var;
     int key;
+    Unk020956f8 *script;
     Unk02099c0cOwner *owner;
     if (node->func_02099c0c(&key, 0x971e15d6) && (owner = node->owner) != 0) {
-        Unk020956f8 *script = owner->script;
+        script = owner->script;
         int index = script->func_020958bc(key);
         if (index >= 0) {
-            Unk02099c78Var *var = &script->func_0209585c()[index];
+            var = &script->func_0209585c()[index];
             s16 range = var->max - var->min;
             if (range > 0) {
                 owner->func_08(index, var->min + (s16)(func_020a1f84(&data_020d62a4) % range));

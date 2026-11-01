@@ -782,6 +782,9 @@ inline Unk0200ed88::Unk0200ed88(Unk02093648 *file, Unk0200ed88Arg *args, int n)
 }
 
 inline bool Unk0200ed88::func_18() {
+    Unk020a7c90 *o;
+    Unk020a7c90 *s;
+    void *sim;
     func_020aa158(&layout0);
     func_020aa158(&layout1);
     if (!paused && !func_020a7d1c(texts[0])) {
@@ -792,7 +795,8 @@ inline bool Unk0200ed88::func_18() {
                 func_020a7cf0(s, 0);
             } else {
                 func_020a7cf0(s, 1);
-                int f = func_020a69cc(sprites[1]);
+                int f;
+                f = func_020a69cc(sprites[1]);
                 if (value < 0x4f6) {
                     func_020a69ac(s, 1);
                 } else if (value < 0x51f) {
@@ -816,11 +820,12 @@ inline bool Unk0200ed88::func_18() {
         } else {
             timer0 = timer0 - 1;
         }
-        Unk020a7c90 *s = sprites[2];
+        s = sprites[2];
         if (func_020a7d1c(s)) {
             if (timer1 == 0) {
+                u32 f;
                 timer1 = 5;
-                int f = func_020a69cc(s);
+                f = func_020a69cc(s);
                 func_020a69ac(s, f == 0x10 ? 0xa : f + 1);
             } else {
                 timer1 = timer1 - 1;
@@ -830,7 +835,7 @@ inline bool Unk0200ed88::func_18() {
         func_02010784(sprites[4], 6, 0, &timers[1]);
         func_02010784(sprites[5], 8, 0, &timer2);
         for (u8 i = 0; i < 6; i++) {
-            Unk020a7c90 *o = sprites[i + 6];
+            o = sprites[i + 6];
             if (func_020a7d1c(o)) {
                 func_02010784(o, data_020ae634[i], 1, &sparks[i]);
                 if (func_02010778()->func_02010770()) {
@@ -916,7 +921,7 @@ inline bool Unk0200ed88::func_18() {
     } else {
         (this->*state)();
         if (state != 0) {
-            void *sim = func_0200f168()->func_020106c4();
+            sim = func_0200f168()->func_020106c4();
             switch (anim) {
             case 0:
             case 7:

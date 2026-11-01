@@ -739,8 +739,8 @@ bool func_0203e314(u32 key) {
  * step orders.
  */
 void Unk0203c2e8::func_0203e37c(Unk02050640 *buttons, int page) {
-    int k = page * 12;
-    int i;
+    u32 i;
+    u32 k = page * 12;
     for (i = 0; k < count && i < 12; i++, k++) {
         buttons[i].func_020508ac(func_0206446c(records[k].icon));
         buttons[i].func_02050c48(func_020644bc(records[k].icon), -1, -1);

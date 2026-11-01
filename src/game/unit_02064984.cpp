@@ -846,12 +846,13 @@ void func_02065eb8(Unk020c43a8 *p) {
 
 /* 99.0 %: register allocation of the loop pointers (r7 / r8 / r9 swapped). */
 void func_02066090(Unk020c43a8 *p) {
+    u32 i;
     Unk020af138 t[6] = {
         {1, 1, 0x57713c5b}, {2, 2, 0x890f1fb8}, {0, 4, 0x9b3ea8ad},
         {1, 8, 0x764f589f}, {1, 0x10, 0x5dc93a88}, {1, 0x20, 0x8086f1f9},
     };
     func_0205803c(func_02058788(&data_020c3ba4, data_020c3ba4.map), &p->save.cell);
-    for (int i = 0; i < 6; i++) {
+    for (i = 0; i < 6; i++) {
         if (!p->unk14c && p->motives[i].value <= 0 && p->unk1c[i] == 0) {
             if (func_02054dc4(data_020bfc9c,
                               func_0205f6f8(data_020c3fc4,

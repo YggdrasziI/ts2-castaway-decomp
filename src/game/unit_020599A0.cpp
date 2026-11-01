@@ -536,18 +536,21 @@ void func_0205a5c8(Unk020599a0 *p, Unk020a4c4c *save) {
  * effect loop's temporary keeps a different slot.
  */
 void func_0205a6cc(Unk020599a0 *p, Unk020a4c4c *save) {
-    for (int i = 0; i < p->effectCount; i++) {
+    int index;
+    Unk0202071c last;
+    Unk0205a5c8Block *b;
+    int i;
+    for (i = 0; i < p->effectCount; i++) {
         func_020a4e14(save, &p->effects[i].flags, 4);
-        Unk0202071c last;
         func_020a4e14(save, &last, 4);
         p->effects[i].last = last;
     }
     func_020a4d2c(save, 2);
-    Unk0205a5c8Block *b = func_020a4ce0(save, 6);
+    b = func_020a4ce0(save, 6);
     p->hour = b->hour;
     p->duration = b->duration;
     p->visible = b->visible;
-    int index = -1;
+    index = -1;
     func_020a4e14(save, &index, 4);
     p->current = 0;
     if (index > -1 && index < p->weatherCount) {
