@@ -2259,3 +2259,19 @@ libs/nitro/src/card/unit_02074F64.c:
 libs/nitro/src/card/unit_02074008.c:
     complete
     .text       start:0x02074008 end:0x02074108
+
+libs/nitro/src/snd/unit_0207E2F4.c:
+    complete
+    .text       start:0x0207e2f4 end:0x0207e4ec
+
+libs/nitro/src/snd/unit_0207D974.c:
+    complete
+    .text       start:0x0207d974 end:0x0207db34
+
+libs/nitro/src/pm/unit_0207F130.c:
+    complete
+    .text       start:0x0207f130 end:0x0207f270
+
+libs/nitro/src/pm/unit_0207F2B4.c:
+    complete
+    .text       start:0x0207f2b4 end:0x0207f390
