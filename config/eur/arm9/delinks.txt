@@ -2329,3 +2329,47 @@ libs/nitro/src/os/unit_0207BB4C.c:
 libs/nns/src/snd/unit_0209BA04.c:
     complete
     .text       start:0x0209ba04 end:0x0209ba88
+
+libs/nitro/src/os/unit_0207C124.c:
+    complete
+    .text       start:0x0207c124 end:0x0207c194
+
+libs/nitro/src/os/unit_0207BEB8.c:
+    complete
+    .text       start:0x0207beb8 end:0x0207bf14
+
+libs/nitro/src/os/unit_0207BCBC.c:
+    complete
+    .text       start:0x0207bcbc end:0x0207bd0c
+
+libs/nitro/src/os/unit_0207C03C.c:
+    complete
+    .text       start:0x0207c03c end:0x0207c088
+
+libs/nitro/src/os/unit_0207BC70.c:
+    complete
+    .text       start:0x0207bc70 end:0x0207bcbc
+
+libs/nitro/src/os/unit_0207C004.c:
+    complete
+    .text       start:0x0207c004 end:0x0207c03c
+
+libs/nitro/src/gx/unit_02079434.c:
+    complete
+    .text       start:0x02079434 end:0x020794b4
+
+libs/nitro/src/rtc/unit_0207D0D0.c:
+    complete
+    .text       start:0x0207d0d0 end:0x0207d148
+
+libs/nitro/src/card/unit_02075328.c:
+    complete
+    .text       start:0x02075328 end:0x02075384
+
+libs/nns/src/snd/unit_0209E520.c:
+    complete
+    .text       start:0x0209e520 end:0x0209e56c
+
+libs/nns/src/fnd/unit_0209EE80.c:
+    complete
+    .text       start:0x0209ee80 end:0x0209eed0
