@@ -625,7 +625,15 @@ default: add one here only once a unit of this ROM proves it with mwccarm.
 - A constant loaded before an unrelated store and used right after (`mov r1, #0x10`, `str r5`, `strh r1`): the
   assignment sits inside the next condition, `if (unk4 > (unk6 = 0x10))` (`Unk020a6588::func_0c`, 95.24 % -> 100 %).
 
+- Registers permuted among locals: declare them up front, without initializers, and try the orders
+  (`func_020a6d38`: `archive`, `file`, `layer`; `Unk020a6dd8::func_0c`: `sprite`, `i`, then `show`).
+- A call that passes a word where the shared prototype truncates it to `u16`: call through a cast function pointer
+  with an `int` parameter; the output is still a direct `bl` (`func_020a6bcc`, 88.34 % -> 100 %).
+
 ## Data layout
+
+- Vtables of a file come out in reverse order of the classes: vtables in class order in `.data` mean one file for
+  each class (0x020A690C, 0x020A6A00, 0x020A6DD8).
 
 - A vtable starts 8 bytes before the address the constructor loads: `_ZTV` goes on the two zero words, the reloc takes
   `add:0x8`, and the unit's `.data` ends at the last slot (the zeros after it belong to the next vtable).

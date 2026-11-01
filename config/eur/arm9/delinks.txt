@@ -1140,3 +1140,18 @@ src/game/unit_020A6588.cpp:
     complete
     .text       start:0x020a6588 end:0x020a690c
     .data       start:0x020bdb68 end:0x020bdbf8
+
+src/game/unit_020A690C.cpp:
+    complete
+    .text       start:0x020a690c end:0x020a6a00
+    .data       start:0x020bdbf8 end:0x020bdc18
+
+src/game/unit_020A6A00.cpp:
+    complete
+    .text       start:0x020a6a00 end:0x020a6dd8
+    .data       start:0x020bdc18 end:0x020bdc38
+
+src/game/unit_020A6DD8.cpp:
+    complete
+    .text       start:0x020a6dd8 end:0x020a70dc
+    .data       start:0x020bdc38 end:0x020bdc50
