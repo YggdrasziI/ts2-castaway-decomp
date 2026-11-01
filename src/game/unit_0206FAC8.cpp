@@ -65,8 +65,12 @@ Unk0206fac8::~Unk0206fac8() {
     delete[] records;
 }
 
-/* 88.69 %: the original computes the copy destination and size before calling
- * func_0209608c and swaps the registers of recordCount and records (r3/r7). */
+static inline void func_copy(void *src, void *dst, u32 size) {
+    MIi_CpuCopy16(src, dst, size);
+}
+
+/* 95.77 %: the registers of recordCount and records are swapped (r3 / r7). The inline
+ * copy wrapper computes the destination and size before func_0209608c, as the original. */
 void Unk0206fac8::func_0206fd2c(Unk02095fdc *file) {
     Unk020c7f48 *m = func_0208c578();
     int id = m->func_0208ccc0(file->func_020960d4());
@@ -81,7 +85,7 @@ void Unk0206fac8::func_0206fd2c(Unk02095fdc *file) {
             if (!(r->flags & 2)) {
                 return;
             }
-            MIi_CpuCopy16(file->func_0209608c(), colors + r->start, r->count * 2);
+            func_copy(file->func_0209608c(), colors + r->start, r->count * 2);
             func_02070318(records[i].start, records[i].count);
             records[i].flags &= ~2;
             return;
