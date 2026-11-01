@@ -19,8 +19,8 @@
 #define reg_GX_VRAMCNT_G    (*(REGType8v *)0x04000246)
 #define reg_GX_VRAMCNT_H    (*(REGType8v *)0x04000248)
 #define reg_GX_VRAMCNT_I    (*(REGType8v *)0x04000249)
-extern GX_State data_020446d4;
-#define gGXState data_020446d4
+extern GX_State data_020c5700;
+#define gGXState data_020c5700
 extern void GX_VRAMCNT_SetLCDC_(int lcdc);
 static inline void GX_VRAMCNT_SetBG_ (GXVRamBG bg)
 {
@@ -543,8 +543,6 @@ static inline void GxSetBankForSubOBJ (GXVRamSubOBJ sub_obj)
 	GX_VRAMCNT_SetSubOBJ_(sub_obj);
 	GX_VRAMCNT_SetLCDC_(gGXState.vramCnt.lcdc);
 }
-extern void disableBankForX_(void *p);
-extern int data_020446d6;
 
 void GX_VRAMCNT_SetLCDC_ (int lcdc)
 {
@@ -592,8 +590,8 @@ void GX_SetBankForTex (GXVRamTex tex)
 }
 
 void GX_SetBankForTexPltt(int bank) {
-    data_020446d4.vramCnt.lcdc = (u16)(((data_020446d4.vramCnt.lcdc | data_020446d4.vramCnt.texPltt)) & ~bank);
-    data_020446d4.vramCnt.texPltt = (u16)bank;
+    data_020c5700.vramCnt.lcdc = (u16)(((data_020c5700.vramCnt.lcdc | data_020c5700.vramCnt.texPltt)) & ~bank);
+    data_020c5700.vramCnt.texPltt = (u16)bank;
     switch (bank) {
     case 0x00:
         break;
@@ -616,7 +614,7 @@ void GX_SetBankForTexPltt(int bank) {
         writeE(0x83);
         break;
     }
-    GX_VRAMCNT_SetLCDC_(data_020446d4.vramCnt.lcdc);
+    GX_VRAMCNT_SetLCDC_(data_020c5700.vramCnt.lcdc);
 }
 
 void GX_SetBankForSubBG (GXVRamSubBG sub_bg)
@@ -640,6 +638,3 @@ int resetBankForX_ (u16 *g3bit)
 	return rval;
 }
 
-void GX_DisableBankForBG(void) {
-    disableBankForX_(&data_020446d6);
-}

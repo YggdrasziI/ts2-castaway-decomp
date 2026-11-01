@@ -35,7 +35,7 @@ typedef enum { MI_PROCESSOR_ARM9 = 0, MI_PROCESSOR_ARM7 } MIProcessor;
 
 #define MI_CpuClear8(dst, size) MI_CpuFill8((dst), 0, (size))
 
-#define MI_CpuFill32(dest, data, size) INITi_CpuClear32_0x01ff86fc((data), (dest), (size))
+#define MI_CpuFill32(dest, data, size) MI_CpuFillU32((data), (dest), (size))
 
 typedef struct {
     u8 * destp;
@@ -132,7 +132,7 @@ typedef struct {
 
 #define MI_DMA_MAX_NUM          3
 
-#define MI_CpuClear32(dst, size) INITi_CpuClear32_0x01ff86fc(0, (dst), (size))
+#define MI_CpuClear32(dst, size) MI_CpuFillU32(0, (dst), (size))
 
 #define MI_CpuClear16(dst, size) MIi_CpuClear16(0, (dst), (size))
 
