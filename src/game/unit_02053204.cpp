@@ -7,12 +7,11 @@
  * for 3002.
  *
  * Bounds: hypothesis. Before 0x02053204 is unit_02052814.cpp (no call to or
- * from this code); the implicit destructors this file emits (factory D0, then
- * D1 / D0 of Unk020533d8) close it, as in unit_02095BF4.cpp; 0x02053408
+ * from this code); the destructors this file emits (factory D0, then D1 / D0 of
+ * Unk020533d8) close it, as in unit_02095BF4.cpp; 0x02053408
  * starts the lot file class. `.data` is the two vtables. The factory D1 in
- * the vtable is the kept copy 0x02002128 of a far file (the one that builds the
- * factory object, 0x02000C60), so this file cannot link as complete while that
- * one is assembly. Real file name unknown.
+ * the vtable is the kept copy 0x02002128 of unit_02001FDC.cpp. Real file name
+ * unknown.
  */
 
 #include "game/unk_file.h"
@@ -38,12 +37,6 @@ public:
     void *records2;
 };
 
-/* A file of the kind 3002: the file class alone. */
-class Unk020533d8 : public Unk0209487c {
-public:
-    Unk020533d8(void *data) : Unk0209487c(data) {}
-};
-
 class Unk02095c74Base {
 public:
     virtual ~Unk02095c74Base() {}
@@ -55,6 +48,17 @@ class Unk02053204 : public Unk02095c74Base {
 public:
     int func_02095c74(int id);
     Unk0209487c *func_02095cd0(void *data, int kind);
+};
+
+/*
+ * A file of the kind 3002: the file class alone. Defined after the factory, so the vtables
+ * come out in the original order (this class first).
+ * The destructor is written out for D1 before D0.
+ */
+class Unk020533d8 : public Unk0209487c {
+public:
+    Unk020533d8(void *data) : Unk0209487c(data) {}
+    ~Unk020533d8() {}
 };
 
 int Unk02053204::func_02095c74(int id) {

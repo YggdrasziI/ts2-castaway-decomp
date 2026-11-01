@@ -866,6 +866,10 @@ default: add one here only once a unit of this ROM proves it with mwccarm.
   D1, then D0 comes from a destructor declared in the class and defined
   (`~T() {}`) at the end of the file (`unit_02053408.cpp`: with the implicit one
   the link put D0 first and `check symbols` failed).
+- Two classes in one file whose destructors are only emitted at its end: the vtables of
+  the classes and the destructor pairs are ordered by the class definitions. The class
+  defined last has its vtable first and its destructors last. In `unit_02053204.cpp` the
+  factory is defined before the file class, whose written-out `~T() {}` gives D1, then D0.
 - A switch whose original jump table covers ids that an earlier test already
   excludes (`if (id < 0) return 0x10;`, then `sub r0, r1, =0xFFFEFEF7`): the
   source lists those negative cases too, written `(int)0xfffefef7` and so on
