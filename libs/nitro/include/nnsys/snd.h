@@ -182,7 +182,7 @@ typedef struct NNSSndStrmPlayer {
     NNSSndStrmHandle * handle;
     int prio;
     int initVolume;
-    int extVolume;
+    int volume;
     u32 curSample;
     OpenStreamFunc openStreamFunc;
     CloseStreamFunc closeStreamFunc;
