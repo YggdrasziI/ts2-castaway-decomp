@@ -71,7 +71,6 @@ Reading them is fine (structure, names to confirm, build patterns); the code is 
 | `pokeheartgold` | [pret/pokeheartgold](https://github.com/pret/pokeheartgold) | none | not checked | not checked | little library source in `lib/` (ee26049b9) |
 | `pokeplatinum` | [pret/pokeplatinum](https://github.com/pret/pokeplatinum) | none | not checked | not checked | little library source in `lib/` (c6689696d) |
 | `pokeranger2` | [Kuruyia/pokeranger2](https://github.com/Kuruyia/pokeranger2) | none | not checked | not checked | little library source in `lib/` (55b4e0c) |
-| `pmd-red` | [pret/pmd-red](https://github.com/pret/pmd-red) | none | not checked | GBA | not a DS game, no use here (ce5a84a02) |
 
 Other platforms:
 
@@ -87,6 +86,6 @@ Other platforms:
 ## Reuse permissions
 
 - **Reusable**: CC0 (twewy, ph, khdays-decomp, advance-wars-dual-strike-decomp) and Unlicense (dqix-decomp): allowed by the owner (2026-10-26 and 2026-11-01), logged in `notes/PROVENANCE.md`.
-- **Hints only**: no license (DQIV-DECOMP, fe11-us, pokediamond, pmd-sky, pokeheartgold, pokeplatinum, pokeranger2, pmd-red) or GPL (pokebw2): no code copied (owner, 2026-11-01).
-- zeldaret/st is CC0, but its CONTRIBUTING forbids AI use for its library decompilation: kept in hints only unless the owner decides otherwise.
+- **Hints only**: no license (DQIV-DECOMP, fe11-us, pokediamond, pmd-sky, pokeheartgold, pokeplatinum, pokeranger2) or GPL (pokebw2): no code copied (owner, 2026-11-01).
+- zeldaret/st is CC0, but its CONTRIBUTING forbids AI use for its library decompilation: kept in hints only (owner, 2026-11-01).
 - A clone that gains a license later moves table after checking it again.
