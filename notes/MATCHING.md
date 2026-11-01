@@ -1639,3 +1639,8 @@ Link-time constants without relocation (`SDK_IRQ_STACKSIZE`, `SDK_SYS_STACKSIZE`
   hold them in a struct with `int v[3]` (named fields get promoted, arrays do not), and
   copy that struct to get `ldmia` / `stmia` (`func_0205e87c`).
 - `-a - b` folds to `add` then `rsb`. `int n = -a; n -= b;` keeps `rsb` then `sub`.
+- A stack parameter the original loads into a register (and maybe spills) while ours reads
+  the stack each time: `const int w = width;` survives where a plain local is copy-propagated
+  away. Inside a loop the same form stays in the loop and gets hoisted (`func_02092f50`).
+- Clock field writes that go through a hoisted address: `volatile u32 *p = &v;` in the inline,
+  not a cast at each access (`func_tick` of unit_0200B23C).
