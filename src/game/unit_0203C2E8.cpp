@@ -581,12 +581,6 @@ bool Unk0203c2e8::func_3c(bool done) {
     return done;
 }
 
-/*
- * 98.62 %: in the four mirrored copy loops the original gives the record
- * index r8 and the two button pointers r9 / r10 (here r10, r8 / r9), and
- * schedules the index sum one register over. The mirrored column is a second
- * counter stepped in the loop header (91.6 % with `3 - col`).
- */
 void Unk0203c2e8::func_38(bool active) {
     if (!active) {
         return;
@@ -647,8 +641,9 @@ void Unk0203c2e8::func_38(bool active) {
                         int m = c + row * 4;
                         u32 k = page * 12 + m;
                         if (grid[m].unk64 < 0) {
-                            grid[m].func_02050bf0(grid2[n].unk64, -1, -1, -1, -1, -1);
-                            if (k < count) {
+                            int v = grid2[n].unk64;
+                            grid[m].func_02050bf0(v, -1, -1, -1, -1, -1);
+                            if ((int)k < count) {
                                 grid[m].func_020514f0();
                                 if (records[k].result != 0 &&
                                     (func_0205d340(records[k].result, data_020ae7cc[8]) ||
@@ -669,8 +664,9 @@ void Unk0203c2e8::func_38(bool active) {
                         int m = c + row * 4;
                         u32 k = page * 12 + m;
                         if (grid2[m].unk64 < 0) {
-                            grid2[m].func_02050bf0(grid[n].unk64, -1, -1, -1, -1, -1);
-                            if (k < count) {
+                            int v = grid[n].unk64;
+                            grid2[m].func_02050bf0(v, -1, -1, -1, -1, -1);
+                            if ((int)k < count) {
                                 grid2[m].func_020514f0();
                                 if (records[k].result != 0 &&
                                     (func_0205d340(records[k].result, data_020ae7cc[8]) ||
@@ -686,7 +682,8 @@ void Unk0203c2e8::func_38(bool active) {
             int n = 0;
             for (int row = 0; row < 3; row++) {
                 for (int col = 0, c = 3; col < 4; col++, c--, n++) {
-                    grid2[c + row * 4].func_02050bf0(grid[n].unk64, -1, -1, -1, -1, -1);
+                    int v = grid[n].unk64;
+                    grid2[c + row * 4].func_02050bf0(v, -1, -1, -1, -1, -1);
                 }
             }
             panel102c.func_18(true);
@@ -701,7 +698,8 @@ void Unk0203c2e8::func_38(bool active) {
             int n = 0;
             for (int row = 0; row < 3; row++) {
                 for (int col = 0, c = 3; col < 4; col++, c--, n++) {
-                    grid[c + row * 4].func_02050bf0(grid2[n].unk64, -1, -1, -1, -1, -1);
+                    int v = grid2[n].unk64;
+                    grid[c + row * 4].func_02050bf0(v, -1, -1, -1, -1, -1);
                 }
             }
         }

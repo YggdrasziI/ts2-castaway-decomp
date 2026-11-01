@@ -599,13 +599,6 @@ bool Unk02035fec::func_3c(bool done) {
     return done;
 }
 
-/*
- * 98.86 %: in the mirrored loops of the func_44 and func_40 branches the
- * original schedules the mla of the grid index before the stack arguments
- * (same gap as func_38 of unit_02038BCC.cpp), and in the func_4c branch it
- * reads the argument before the button address. Tried: a short local for
- * the argument, a button pointer, the index written in place.
- */
 void Unk02035fec::func_38(bool active) {
     if (!active) {
         return;
@@ -667,7 +660,8 @@ void Unk02035fec::func_38(bool active) {
                         int m = c + row * 4;
                         int k = page * 12 + m;
                         if (grid[m].unk64 < 0) {
-                            grid[m].func_02050bf0(grid2[n].unk64, -1, -1, -1, -1, -1);
+                            int v = grid2[n].unk64;
+                            grid[m].func_02050bf0(v, -1, -1, -1, -1, -1);
                             if (k < count) {
                                 grid[m].func_020514f0();
                                 if (mode == 1 && (keys[tab][0] == data_020ae7cc[8] || keys[tab][0] == data_020ae7cc[9])) {
@@ -687,7 +681,8 @@ void Unk02035fec::func_38(bool active) {
                         int m = c + row * 4;
                         int k = page * 12 + m;
                         if (grid2[m].unk64 < 0) {
-                            grid2[m].func_02050bf0(grid[n].unk64, -1, -1, -1, -1, -1);
+                            int v = grid[n].unk64;
+                            grid2[m].func_02050bf0(v, -1, -1, -1, -1, -1);
                             if (k < count) {
                                 grid2[m].func_020514f0();
                                 if (mode == 1 && (keys[tab][0] == data_020ae7cc[8] || keys[tab][0] == data_020ae7cc[9])) {
@@ -702,7 +697,8 @@ void Unk02035fec::func_38(bool active) {
             int n = 0;
             for (int row = 0; row < 3; row++) {
                 for (int col = 0, c = 3; col < 4; col++, c--, n++) {
-                    grid2[c + row * 4].func_02050bf0(grid[n].unk64, -1, -1, -1, -1, -1);
+                    int v = grid[n].unk64;
+                    grid2[c + row * 4].func_02050bf0(v, -1, -1, -1, -1, -1);
                 }
             }
             panel.func_18(true);
@@ -717,7 +713,8 @@ void Unk02035fec::func_38(bool active) {
             int n = 0;
             for (int row = 0; row < 3; row++) {
                 for (int col = 0, c = 3; col < 4; col++, c--, n++) {
-                    grid[c + row * 4].func_02050bf0(grid2[n].unk64, -1, -1, -1, -1, -1);
+                    int v = grid2[n].unk64;
+                    grid[c + row * 4].func_02050bf0(v, -1, -1, -1, -1, -1);
                 }
             }
         }

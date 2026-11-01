@@ -449,6 +449,17 @@ offsets after it. With `int x;` declared before these two and assigned in the in
 `x` take their registers. This took the screen constructors of `unit_02035FEC`, `unit_02038BCC` and
 `unit_0203C2E8` to 100 %.
 
+### An `int` local for a `short` argument
+
+`int v = a[n].unk64; b[m].f(v, -1, -1);` makes the original read the argument before it computes the
+receiver, and moves the `mla` of the receiver before the stack arguments. A `short` local gives nothing: the
+`int` widening is what changes the order (`func_38` of three screens, `unit_02035FEC`, 98.86 % -> 100 %).
+
+### A `u32` index against a signed count
+
+`bge` with the index in the unsigned register order: keep `u32 k` and compare `(int)k < count`. With `int k`
+the branches match but the registers rotate.
+
 ### A captured loop test
 
 A `volatile` count read by the loop test and again just after it is reused by the original through
