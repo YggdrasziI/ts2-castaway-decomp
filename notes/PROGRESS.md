@@ -143,3 +143,4 @@
 | 2026-11-01 | 78355c2 | 343524 / 720836 bytes (47.66 %; fuzzy 75.44 %, linked 14.24 %) | 2859 / 4556 | 102 / 239 | Crafting action unit (complete, 12 / 12 functions) |
 | 2026-11-01 | 81bd659 | 345072 / 720836 bytes (47.87 %; fuzzy 75.65 %, linked 14.45 %) | 2869 / 4556 | 103 / 240 | Move callback action unit (complete, 10 / 10 functions) |
 | 2026-11-01 | cb32c7b | 347076 / 720836 bytes (48.15 %; fuzzy 75.93 %, linked 14.73 %) | 2894 / 4556 | 104 / 241 | Action base unit (complete, 25 / 25 functions) |
+| 2026-11-01 | 46d19f5 | 347692 / 720836 bytes (48.23 %; fuzzy 76.02 %, linked 14.81 %) | 2897 / 4556 | 105 / 242 | Script commands unit (complete, 3 / 3 functions) |
