@@ -149,3 +149,5 @@
 | 2026-11-01 | e5c5e1b | 353608 / 720836 bytes (49.06 %; fuzzy 77.06 %, linked 15.50 %) | 2974 / 4556 | 110 / 250 | First units of game block 2: text table (all functions, `.data` order open) and input state (7 / 9) |
 | 2026-11-01 | ccca12c | 359076 / 720836 bytes (49.81 %; fuzzy 77.82 %, linked 16.26 %) | 2999 / 4556 | 112 / 252 | Application object (17 functions, `.data`, `.bss`) and screen stack (7 functions), both complete |
 | 2026-11-01 | 2cbabfc | 362496 / 720836 bytes (50.29 %; fuzzy 78.29 %, linked 16.73 %) | 3022 / 4556 | 113 / 252 | System object (22 functions and `__sinit`, `.data`, `.bss`), complete; matched code above 50 % |
+
+| 2026-11-01 | 57445f5 | 364576 / 720836 bytes (50.58 %; fuzzy 78.58 %, linked 17.02 %) | 3047 / 4556 | 116 / 256 | Game clock (18 functions and `__sinit`), angle helpers (2) and MT19937 random numbers (3 and `__sinit`), complete; matched code +2080 bytes. |
