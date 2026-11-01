@@ -13,7 +13,9 @@ class Unk0205cf00 {
 public:
     s16 w;
     s16 h;
-    u8 unk4[0xc];
+    s16 unk4;
+    s16 unk6;
+    u8 unk8[8];
     Unk020956f8 *script;
 };
 

@@ -615,6 +615,13 @@ default: add one here only once a unit of this ROM proves it with mwccarm.
   written `if (x) return true; return false;` keeps it; `return x != 0;` folds into the test
   (`func_020a5bec`, 83.89 % -> 100 %). Assigning the helper's result to an `int` local gives the same output.
 
+- A flag word read again right after its test with no store between (`ldr`, `tst`, `ldreq`, `orreq`, `streq`): a
+  `volatile` member gives it (`func_020a5d7c`, 97.3 % -> 100 %). That the field was volatile is a hypothesis.
+- Copy of an 8-byte value through two registers (`ldr r1`, `ldr r0`, `str r1`, `str r0`): the block
+  copy of a wrapper struct, as in `func_set` (`func_020a5f28`).
+- Zero words in a vtable are pure functions in this compiler; a virtual that has no inline copy in a derived class's
+  unit but sits last in the text is an ordinary definition placed last (`Unk020a5ccc::func_08`): written inline it clashes.
+
 ## Data layout
 
 - Statics addressed from one anchor but in a different order than declared: one static struct fixes the layout

@@ -298,7 +298,7 @@ public:
     }
 
     virtual ~Unk0200cec8() {
-        func_0205e1b8(*(void **)(unk8 + 4), &data_020c43a8);
+        func_0205e1b8(item, &data_020c43a8);
         if (sound != 0) {
             func_020a2964(func_020a2994(), sound, 1);
             sound = 0;
