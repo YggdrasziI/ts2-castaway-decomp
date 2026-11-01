@@ -36,6 +36,9 @@ default: add one here only once a unit of this ROM proves it with mwccarm.
   level: put the local in its own `{ }` block (`func_28` of `unit_020080C0.cpp`).
 ## Registers and stack
 
+- r0 / r1 flipping on a repeated pattern (`mov r1, r0, lsl #16` at every 5th or so of many identical statements, no visible rule) follows the number of virtual registers before the site: on 30 identical statements the sites repeat with a period set by the statement form alone. So forms that emit the same instructions can still move it: a local for the result and a `u32` local for the index (`func_sprite` in `include/game/unk_screen.h`) fixed nine constructors (98.9-99.9 % -> 100 %). Measure the pattern on a long run of statements, and count the `mov` words in the object rather than reading diffs. An inline stops being expanded past a budget in the longest constructors: there write the locals in a block (`unit_0202E0EC.cpp`). `({ ... })` is an internal compiler error.
+- Inline slots of a class come out in the declaration order of their overrides: declare them first in the class to get the original tail (`func_34`, `func_2c`, then `func_1c`, ...; `Unk0204a9f8`). This only works for slots declared in a base: moving a new virtual changes the vtable while objdiff still scores `.text` 100 %.
+
 - A value set to 0 in a branch before its only use (`moveq r4, #0`) may be a ternary in the
   argument: `f(o, flag ? actor : 0)` also gave `actor` a lower register than `this`
   (`func_18` of `unit_0200825C.cpp`, 99.08 % to 99.73 %).
@@ -1213,18 +1216,6 @@ default: add one here only once a unit of this ROM proves it with mwccarm.
 
 ## Unsolved patterns
 
-- Name lookups whose `u16` index is truncated through r1 in the original
-  (`mov r1, r0, lsl #16; mov r2, r1, lsr #16`) and through r0 here, or the
-  reverse, in long constructors that chain `func_020aa040(layout, type,
-  func_020a7b50(&names, hash))`: which lookups get r1 follows no visible rule
-  (not the repeated hashes, not a fixed period). A `u16` local, a cast and a
-  sprite local change nothing (the screen and page constructors
-  0x020450D4-0x0204A9F8, 98.9-99.9 %).
-  What is measured (`unit_020450D4.cpp`, 2026-11-01): the r1 sites follow the lookup's rank, not its hash
-  (ours 3, 8, 9 when sites are added or removed, the original 3, 7, 8): roughly every 5th lookup here against
-  every 4th in the original, in all the long constructors. Ruled out: every 2.0 service pack (same score on 8 functions),
-  flags (`-sym`, `-inline`, `-opt`, `-O`, `-ipa`, `-bool`), inline wrappers and casts around the lookup, locals for
-  index, key, sprite or panel, non-void return types of the setters. Only forms that add real instructions move the pattern.
 - mwccarm gives such vtable copies (and other multiply-defined objects) symbol
   binding 13. While the first copy is still assembly, dsd emits it as a global or
   weak symbol: a global one clashes ("Multiply-defined") and a weak one loses to
