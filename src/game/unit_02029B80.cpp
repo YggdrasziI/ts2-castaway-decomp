@@ -79,7 +79,7 @@ void func_020a7ce0(Unk020a7c90 *s);
 int func_020a7d44(Unk020a7c90 *s);
 void func_020292c0(Unk0203c188Owner *owner, int a);
 void func_02028eec(Unk0203c188Owner *owner, int a, Unk0205cf00 *def, void *item);
-int func_02082a2c(char *buf, const char *fmt, ...);
+int sprintf(char *buf, const char *fmt, ...);
 void func_0202ae50(Unk0205cf00 *def);
 }
 
@@ -453,11 +453,11 @@ static void *func_0202ae60(u32 id, void *user) {
     Unk02029b80 *screen = (Unk02029b80 *)user;
     int n = id - 0x800000;
     if (n == 1) {
-        func_02082a2c(screen->num, "%d", screen->page + 1);
+        sprintf(screen->num, "%d", screen->page + 1);
         return screen->num;
     }
     if (n == 2) {
-        func_02082a2c(screen->num, "/%d", screen->pages);
+        sprintf(screen->num, "/%d", screen->pages);
         return screen->num;
     }
     return (void *)func_020a00a0(func_0201ba94(), id);

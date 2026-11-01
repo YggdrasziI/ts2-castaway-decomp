@@ -125,10 +125,10 @@ Unk02054dc4 *func_02054dc4(Unk020bfc9c *p, Unk0205cf00 *def, int a);
 void func_0202918c(Unk0203c188Owner *owner);
 void func_020291e4(Unk0203c188Owner *owner);
 void func_0202923c(Unk0203c188Owner *owner);
-int func_02082a2c(char *buf, const char *fmt, ...);
+int sprintf(char *buf, const char *fmt, ...);
 char *func_02082e90(const char *s, const char *sub);
 int func_020833ac(const char *s);
-int func_02082c0c(const char *s);
+int strlen(const char *s);
 char *strncpy(char *dst, const char *src, unsigned long n);
 char *strcpy(char *dst, const char *src);
 u16 func_020a7164(Unk020a78cc *t);
@@ -609,7 +609,7 @@ static inline void func_parse(char *p, const int &id) {
         }
         src = end + 1;
     }
-    if (func_02082c0c(src) == 0) {
+    if (strlen(src) == 0) {
         *p = 0;
     } else {
         strcpy(p, src);
@@ -756,16 +756,16 @@ static void *func_02035ef4(u32 id, void *user) {
     switch (id - 0x800000) {
     case 1:
         if (self->selected < 0) {
-            func_02082a2c(self->num, "%d", self->page + 1);
+            sprintf(self->num, "%d", self->page + 1);
         } else {
-            func_02082a2c(self->num, "%d", self->textPage + 1);
+            sprintf(self->num, "%d", self->textPage + 1);
         }
         return self->num;
     case 2:
         if (self->selected < 0) {
-            func_02082a2c(self->num, "/%d", self->pages);
+            sprintf(self->num, "/%d", self->pages);
         } else {
-            func_02082a2c(self->num, "/%d", self->textPages);
+            sprintf(self->num, "/%d", self->textPages);
         }
         return self->num;
     }

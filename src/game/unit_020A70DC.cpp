@@ -42,7 +42,7 @@ struct Unk020a70dcLayout {
 };
 
 extern "C" {
-int func_0208299c(char *buf, int size, const char *fmt, va_list args);
+int vsnprintf(char *buf, int size, const char *fmt, va_list args);
 int func_020a705c(int align);
 int func_020a709c(int align);
 void func_020a6fd4(Unk02090308 *c, int flip);
@@ -305,7 +305,7 @@ extern "C" void func_020a78cc(Unk020a70dc *s, Unk020a70dcFont *font, const char 
         return;
     }
     va_start(args, fmt);
-    func_0208299c(buf, 0x200, fmt, args);
+    vsnprintf(buf, 0x200, fmt, args);
     va_end(args);
     s->canvas->func_020909c8(font->font, buf);
 }
@@ -321,7 +321,7 @@ extern "C" bool func_020a793c(Unk020a70dc *s, int page, Unk020a70dcFont *font, c
         return false;
     }
     va_start(args, fmt);
-    func_0208299c(buf, 0x200, fmt, args);
+    vsnprintf(buf, 0x200, fmt, args);
     va_end(args);
     return s->canvas->func_02090b08(page, font->font, buf);
 }

@@ -32,7 +32,7 @@ struct Unk020d60c8;
 
 extern "C" {
 int func_0209f0a4(Unk020d60c8 *settings);
-int func_0208299c(char *buf, int size, const char *fmt, va_list args);
+int vsnprintf(char *buf, int size, const char *fmt, va_list args);
 const char *func_020a0134(Unk020a0014 *o, int n);
 void func_020a0104(Unk020a0014 *o, const char *fmt, ...);
 extern Unk020d60c8 data_020d60c8;
@@ -68,7 +68,7 @@ extern "C" const char *func_020a00a0(Unk020a0014 *o, u32 id) {
 extern "C" void func_020a0104(Unk020a0014 *o, const char *fmt, ...) {
     va_list args;
     va_start(args, fmt);
-    func_0208299c(o->buffer, 0x100, fmt, args);
+    vsnprintf(o->buffer, 0x100, fmt, args);
 }
 
 /*

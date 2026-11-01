@@ -55,7 +55,7 @@ public:
 
 extern "C" {
 Unk020d6240 *func_020a18e4();
-int func_02082a04(char *buf, int size, const char *format, ...);
+int snprintf(char *buf, int size, const char *format, ...);
 u32 func_0209a32c(const u32 *str, u32 last, u32 end);
 
 void func_020643b8(Unk02064330 *set, int screen);
@@ -114,7 +114,7 @@ void func_02064444(Unk02064330 *set) {
 
 u32 func_0206446c(int key) {
     char buf[256];
-    func_02082a04(buf, 256, "build/data/icons/%d.nitro_map", key & 0xfff);
+    snprintf(buf, 256, "build/data/icons/%d.nitro_map", key & 0xfff);
     return func_0209a32c((const u32 *)buf, 0, 0);
 }
 
@@ -135,7 +135,7 @@ Unk02064730 *func_020644cc(Unk02064330 *set, int key, int palette, int priority)
             set->entries[i].palette = key >> 12;
             set->entries[i].frame = key >> 16;
             char buf[256];
-            func_02082a04(buf, 256, "build/data/icons/%d.nitro_map", set->entries[i].file);
+            snprintf(buf, 256, "build/data/icons/%d.nitro_map", set->entries[i].file);
             Unk02095140 *file = (Unk02095140 *)set->archive->func_02093c18((const u32 *)buf);
             if (file == 0 || !file->func_020951a8(set->entries[i].frame)) {
                 set->entries[i].file = 0;

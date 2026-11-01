@@ -37,7 +37,7 @@ extern const u32 data_020aefe0[];
 extern const u32 data_020aefe8[];
 
 extern "C" {
-void func_02080824(void *dest, int value, u32 size);
+void memset(void *dest, int value, u32 size);
 Unk0205d000 *func_0205f714(void *db, u32 type, Unk0205d000 *prev);
 int func_0205f780(void *db, u32 type);
 Unk0205d000 *func_0205f6f8(void *db, int id);
@@ -59,8 +59,8 @@ Unk020724cc::Unk020724cc(Unk020c43a8 *owner) {
     others = 0;
     otherCount = 0;
     this->owner = owner;
-    func_02080824(counts, 0, sizeof(counts));
-    func_02080824(items, 0, sizeof(items));
+    memset(counts, 0, sizeof(counts));
+    memset(items, 0, sizeof(items));
     for (Unk0205d000 *item = func_0205f714(data_020c3fc4, 0x8f3c48fd, 0); item != 0;
          item = func_0205f714(data_020c3fc4, 0x8f3c48fd, item)) {
         for (int part = 0; part < 6; part++) {

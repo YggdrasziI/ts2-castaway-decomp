@@ -119,7 +119,7 @@ void func_020292c0(Unk0203c188Owner *owner, int a);
 void func_02028eec(Unk0203c188Owner *owner, int a, Unk0205cf00 *def, void *item);
 Unk0205cf00 *func_02028ebc();
 void func_02033ea0(Unk0205cf00 *item);
-int func_02082a2c(char *buf, const char *fmt, ...);
+int sprintf(char *buf, const char *fmt, ...);
 const char *func_020a00a0(void *texts, int id);
 void func_0203b388(Unk0205cf00 *def);
 }
@@ -822,13 +822,13 @@ static void *func_0203b148(u32 id, void *user) {
         if (n < self->count) {
             c = self->records[n].count;
         }
-        func_02082a2c(self->text, "%d", c);
+        sprintf(self->text, "%d", c);
         return self->text;
     } else if (k == 0x19) {
-        func_02082a2c(self->text, "%d", self->page + 1);
+        sprintf(self->text, "%d", self->page + 1);
         return self->text;
     } else if (k == 0x1a) {
-        func_02082a2c(self->text, "/%d", self->pages);
+        sprintf(self->text, "/%d", self->pages);
         return self->text;
     }
     return (void *)func_020a00a0(func_0201ba94(), id);

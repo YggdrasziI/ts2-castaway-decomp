@@ -60,7 +60,7 @@ const char *func_020a00a0(void *texts, int id);
 bool func_020a075c(Unk020a0774 *input, int index);
 bool func_020a078c(Unk020a0774 *input, int index);
 Unk02098e70 func_020a07bc(Unk020a0774 *input, int index);
-int func_0208299c(char *buf, int size, const char *fmt, va_list args);
+int vsnprintf(char *buf, int size, const char *fmt, va_list args);
 }
 
 static inline Unk02093648 *func_archive() {
@@ -271,7 +271,7 @@ void Unk0204beec::func_0204c280(const char *fmt, ...) {
     va_list args;
 
     va_start(args, fmt);
-    func_0208299c(buf, 0x80, fmt, args);
+    vsnprintf(buf, 0x80, fmt, args);
     textId = 0;
     func_0204c2d4(buf, 0x80, false);
 }

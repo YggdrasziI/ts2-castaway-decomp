@@ -25,7 +25,7 @@ typedef char *va_list;
 #define va_end(ap) ((void)0)
 
 extern "C" {
-int func_0208299c(char *buf, int size, const char *fmt, va_list args);
+int vsnprintf(char *buf, int size, const char *fmt, va_list args);
 }
 
 void func_0208ff50(Unk0208f8b0 *entry, Unk02095140 *file, int index, int x, int y);
@@ -449,7 +449,7 @@ void Unk02090308::func_02090a10(Unk02092830Font *font, const char *fmt, va_list 
     Unk02095140 *file;
     int bottom;
 
-    func_0208299c(buf, 0x200, fmt, args);
+    vsnprintf(buf, 0x200, fmt, args);
     file = font->func_34();
     Unk02092830 text(buf, font);
     Unk020930e8 layout =
@@ -481,7 +481,7 @@ bool Unk02090308::func_02090b64(int pages, Unk02092830Font *font, const char *fm
     Unk02095140 *file;
     int bottom;
 
-    func_0208299c(buf, 0x200, fmt, args);
+    vsnprintf(buf, 0x200, fmt, args);
     file = font->func_34();
     Unk02092830 text(buf, font);
     Unk020930e8 layout = text.func_02092f50(hAlign, vAlign, rect.w, rect.h, spacing,

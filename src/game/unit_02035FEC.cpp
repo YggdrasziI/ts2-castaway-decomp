@@ -131,7 +131,7 @@ void func_020292c0(Unk0203c188Owner *owner, int a);
 void func_02028eec(Unk0203c188Owner *owner, int a, Unk0205cf00 *def, void *item);
 Unk0206bce0 *func_0206bce0();
 void func_02055220(Unk02055118 *p, int state, int count);
-int func_02082a2c(char *buf, const char *fmt, ...);
+int sprintf(char *buf, const char *fmt, ...);
 const char *func_020a00a0(void *texts, int id);
 void func_02038b38(Unk0205cf00 *def);
 int func_02038b48(Unk0205cf00 *def);
@@ -898,18 +898,18 @@ static void *func_020388c8(u32 id, void *user) {
         if (n < self->count) {
             c = self->records[n].count;
         }
-        func_02082a2c(self->text, "%d", c);
+        sprintf(self->text, "%d", c);
         return self->text;
     } else if (k == 0x19) {
-        func_02082a2c(self->text, "%d", self->page + 1);
+        sprintf(self->text, "%d", self->page + 1);
         return self->text;
     } else if (k == 0x1a) {
-        func_02082a2c(self->text, "/%d", self->pages);
+        sprintf(self->text, "/%d", self->pages);
         return self->text;
     } else if (k == 0x1b || k == 0x1c) {
         const char *title = func_020a00a0(func_0201ba94(), self->title);
         const char *tab = func_020a00a0(func_0201ba94(), self->tabTexts[self->tab]);
-        func_02082a2c(self->text, "%s - %s", title, tab);
+        sprintf(self->text, "%s - %s", title, tab);
         return self->text;
     }
     return (void *)func_020a00a0(func_0201ba94(), id);

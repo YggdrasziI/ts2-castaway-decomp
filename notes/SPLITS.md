@@ -308,9 +308,13 @@ Commands: `python tools/compiler_sweep.py --ref <project> --compilers 2.0/sp1p5
 | `libs/nitro/src/os/os_protectionRegion.c` | 0x0207B918-0x0207B93C (before the exception handler 0x0207B93C) | `OS_SetDPermissionsForProtectionRegion`, `OS_SetProtectionRegion1`, `OS_SetProtectionRegion2` | complete |
 | `libs/nitro/src/os/os_system.c` | 0x0207C194-0x0207C224 (hypothesis: the file may go on; `OS_Halt` 0x0207C3A8 is `os_terminate_proc.c`) | interrupt masks, `OS_GetProcMode`, `OS_SpinWait` (8) | complete |
 | `libs/nitro/src/os/os_terminate_proc.c` | 0x0207C3A8-0x0207C3C8 (after a data initializer, before a tail call) | `OS_Halt`, `OS_Terminate` | complete (1.2/sp2p3) |
-| `libs/c/src/*`, `libs/runtime/src/*` (14 files, below) | see `delinks.txt` | MSL C and runtime, not decompiled | delinked, no source |
+| `libs/c/src/*`, `libs/runtime/src/*` (16 files, below) | see `delinks.txt` | MSL C and runtime, code at 100 % (`notes/PROVENANCE.md`) | see `delinks.txt` |
 
-### MSL / runtime files (2026-10-25)
+### MSL / runtime files (2026-10-25, sources 2026-11-01)
+
+All `complete` except `printf.c` (code at 100 %, its `.data` is not delinked yet).
+objdiff scores the `.bss` of `abort_exit_arm_eabi.c` 97 % (section names); the bytes
+are checked by the link.
 
 Function bounds are exact (every function of 0x02080114-0x02085EEC has a `.exceptix`
 entry with its address and size). File bounds come from twewy's file layout (its
@@ -326,24 +330,26 @@ none here either.
 
 | File | `.text` | Matched in order (twewy names) |
 |---|---|---|
-| `abort_exit_arm_eabi.c` | 0x02080114-0x020802AC | `abort`, `exit`, `__exit` |
+| `abort_exit_arm_eabi.c` | 0x02080114-0x020802AC, `.bss` 0x020C77A8-0x020C78B8 | `abort`, `exit`, `__exit` |
 | `file_io.c` | 0x0208063C-0x02080724 | `fflush` |
 | `mbstring.c` | 0x02080724-0x02080804 | `__mbtowc_noconv`, `__wctomb_noconv`, `wctomb`, `wcstombs` |
 | `mem.c` | 0x02080804-0x02080864 | `memcpy`, `memset`, `memchr` |
 | `mem_funcs.c` | 0x02080864-0x02080914 | `__fill_mem` |
 | `printf.c` | 0x02080914-0x02082A58 | `parse_format` ... `sprintf` (11) |
 | `scanf.c` | 0x02082A58-0x02082ADC | `__StringRead` only |
-| `signal.c` | 0x02082ADC-0x02082C0C | `raise` |
+| `critical_regions.c` | no code, `.bss` 0x020C78B8-0x020C79D8 | `__cs_id`, `__cs_ref`, `__cs` |
+| `signal.c` | 0x02082ADC-0x02082C0C, `.bss` 0x020C7CDC-0x020C7CF8 | `raise` |
 | `string.c` | 0x02082C0C-0x02082E90 | `strlen`, `strcpy`, `strncpy`, `strcmp`, `strchr` |
 | `console_io.c` | 0x020841B4-0x02084278 | `sys_*`, `__read_console`, `__write_console`, `__close_console` |
 | `CompressedNumbers.cpp` | 0x02084278-0x02084390 | `__DecodeSignedNumber`, `__DecodeUnsignedNumber` |
-| `ExceptionHandler.cpp` | 0x02084390-0x02085750 | `BinarySearch` ... `func_02058614` |
-| `MWException.cpp` | 0x02085B34-0x02085D24 | `dthandler`, `duhandler`, `terminate`, `unexpected`, `__throw_catch_compare` |
-| `ExceptionHandlerTS.cpp` | 0x02085D24-0x02085EA0 | `__PopStackFrame` ... `__TransferControl` |
+| `ExceptionHandler.cpp` | 0x02084390-0x020856D4 | `BinarySearch` ... `__end_catch` (`.exceptix` -0x020ACF64); `func_02085148` was the end of `UnwindStack` |
+| `StaticInitializers.cpp` | 0x020856D4-0x02085744 | `__call_static_initializers`, `__destroy_global_chain` (crt0 and `exit` call them) |
+| `cxxabi_alloc.cpp` | 0x0208575C-0x02085B34 | `DestroyArrayRange`, `__cxa_vec_new` ... `__cxa_vec_delete2`; the three catch blocks dsd split off belong to their functions (`.exceptix` sizes) |
+| `MWException.cpp` | 0x02085B34-0x02085D24 | `dthandler`, `duhandler`, `terminate`, `__register_global_object`, `__throw_catch_compare` |
+| `ExceptionHandlerTS.cpp` | 0x02085D24-0x02085EEC | `__PopStackFrame` ... `__TransferControl`, `__rethrow` |
 
 Left in gaps (no anchor on one side): 0x020802AC-0x0208063C (`ansi_files.c`,
 `buffer_io.c` and unknown functions), 0x02082E90-0x020841B4 (`strtoul.c`, `fabs`,
-`pool_alloc.c`, unknown), 0x02085750-0x02085B34 (`New.cpp`, `StaticInitializers.cpp`
-region, sizes differ), 0x02085EA0-0x02089780 (end of `ExceptionHandlerTS.cpp`, FP
-emulation, division helpers). Function names stay `func_<addr>` where only the size
+`pool_alloc.c`, unknown), 0x02085744-0x0208575C (two 12-byte getters, unknown file),
+0x02085EEC-0x02089780 (FP emulation, division helpers). Function names stay `func_<addr>` where only the size
 matches (`SPEC.md`).

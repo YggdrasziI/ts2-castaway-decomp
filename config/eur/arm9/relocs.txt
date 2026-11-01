@@ -17204,7 +17204,7 @@ from:0x02082b00 kind:arm_call to:0x0207b1f0 module:main
 from:0x02082b64 kind:arm_call to:0x0207b31c module:main
 from:0x02082bb8 kind:arm_call to:0x0207b2ac module:main
 from:0x02082be4 kind:arm_call to:0x02080138 module:main
-from:0x02082bf8 kind:load to:0x020c79a8 module:main
+from:0x02082bf8 kind:load to:0x020c7900 add:0xa8 module:main
 from:0x02082bfc kind:load to:0x020c57b0 module:main
 from:0x02082c00 kind:load to:0x020c78b8 module:main
 from:0x02082c04 kind:load to:0x020c78dc module:main

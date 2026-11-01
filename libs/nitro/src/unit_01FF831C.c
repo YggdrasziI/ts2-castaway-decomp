@@ -13,7 +13,7 @@
 
 extern unsigned long data_027e0000[];
 extern unsigned long data_027e0060[];
-extern unsigned short data_020c57b0[];
+extern unsigned short ThreadInfo[];
 extern void CP_SaveContext(void *context);
 extern void CPi_RestoreContext(void *context);
 void func_01ff8374(void);
@@ -63,11 +63,11 @@ asm void func_01ff8374(void)
     ldr     ip, =data_027e0060
     str     r3, [ip, #0]
     str     r3, [ip, #4]
-    ldr     ip, =data_020c57b0
+    ldr     ip, =ThreadInfo
     mov     r1, #1
     strh    r1, [ip, #0]
 @2:
-    ldr     ip, =data_020c57b0
+    ldr     ip, =ThreadInfo
     ldrh    r1, [ip, #0]
     cmp     r1, #0
     ldreq   pc, [sp], #4

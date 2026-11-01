@@ -58,7 +58,7 @@ int func_020a0b8c(void *list, void *object);
 void func_020a0b0c(void *list, void *object);
 const char *func_020a00a0(void *texts, int id);
 void *func_0202fdb0(Unk020d6240 *system);
-int func_02082a2c(char *buf, const char *fmt, ...);
+int sprintf(char *buf, const char *fmt, ...);
 void func_020292c0(Unk0203c188Owner *owner, int a);
 u16 func_020a7164(Unk020a78cc *t);
 void func_020a716c(Unk020a7c90 *s, int text);
@@ -351,10 +351,10 @@ static void *func_0203c0f0(u32 id, void *user) {
     Unk0203b3b8 *self = (Unk0203b3b8 *)user;
     u32 k = id - 0x800000;
     if (k == 1) {
-        func_02082a2c(self->buf, "%d", self->page + 1);
+        sprintf(self->buf, "%d", self->page + 1);
         return self->buf;
     } else if (k == 2) {
-        func_02082a2c(self->buf, "/%d", self->pages);
+        sprintf(self->buf, "/%d", self->pages);
         return self->buf;
     }
     return (void *)func_020a00a0(func_0202fdb0(func_020a18e4()), id);

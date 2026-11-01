@@ -113,9 +113,23 @@ DEFAULT_COMPILER_CONFIG = CompilerConfig(
 # alike, sp2p3 is a working choice. 1.2 rejects "-ipa file".
 SDK_CC_FLAGS = " ".join((*COMMON_CC_FLAGS, "-str reuse", "-Cpp_exceptions off"))
 
+# MSL C and the C++ runtime are the only code with exception tables (notes/COMPILER.md).
+# MWCC 2.0/base ... sp1p2 only: longlong2str is 89 % from sp1p5 on (notes/COMPILER.md).
+MSL_COMPILER_VERSION = "2.0/sp1p2"
+
+# Built without "-interworking": leaf functions return with "mov pc, lr", not "bx lr".
+# The later flags override COMMON_CC_FLAGS.
+_MSL_COMMON_CC_FLAGS = tuple(flag for flag in COMMON_CC_FLAGS if flag != "-interworking")
+MSL_CC_FLAGS = " ".join((*_MSL_COMMON_CC_FLAGS, "-ipa file", "-str reuse", "-Cpp_exceptions on"))
+RUNTIME_CC_FLAGS = " ".join(
+    (*_MSL_COMMON_CC_FLAGS, "-char unsigned", "-ipa function", "-str reuse", "-Cpp_exceptions on")
+)
+
 # Configurations for when a file or directory needs different settings than the project default
 COMPILER_CONFIGS: dict[Path, CompilerConfig] = {
     Path("libs/nitro"): CompilerConfig(version="1.2/sp2p3", flags=SDK_CC_FLAGS),
+    Path("libs/c"): CompilerConfig(version=MSL_COMPILER_VERSION, flags=MSL_CC_FLAGS),
+    Path("libs/runtime"): CompilerConfig(version=MSL_COMPILER_VERSION, flags=RUNTIME_CC_FLAGS),
 }
 
 # Passed to all modules and final arm9.o link

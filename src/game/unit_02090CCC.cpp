@@ -25,7 +25,7 @@ typedef char *va_list;
 #define va_end(ap) ((void)0)
 
 extern "C" {
-int func_0208299c(char *buf, int size, const char *fmt, va_list args);
+int vsnprintf(char *buf, int size, const char *fmt, va_list args);
 int func_0209a670(const u8 *str, u32 *out, int max);
 }
 
@@ -93,7 +93,7 @@ void Unk02090ccc::func_02090dc4(Unk02092830Font *font, const char *fmt, va_list 
     char buf[0x80];
     int n;
 
-    n = func_0209a670((const u8 *)buf, chars, func_0208299c(buf, 0x80, fmt, args));
+    n = func_0209a670((const u8 *)buf, chars, vsnprintf(buf, 0x80, fmt, args));
     if (n > maxLength) {
         n = maxLength;
     }

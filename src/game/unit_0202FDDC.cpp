@@ -206,7 +206,7 @@ int func_020a7d44(Unk020a7c90 *s);
 void func_0203c254(int value, int index, int main);
 void func_020292c0(Unk0203c188Owner *owner, int a);
 void func_02028eec(Unk0203c188Owner *owner, int a, Unk0205cf00 *def, void *item);
-int func_02082a2c(char *buf, const char *fmt, ...);
+int sprintf(char *buf, const char *fmt, ...);
 void func_02033718(Unk0205cf00 *def);
 Unk0205cf00 *func_02033e88();
 void func_02033ea0(Unk0205cf00 *def);
@@ -798,7 +798,7 @@ void Unk0202fddc::func_0203161c() {
             if (def != 0 && (func_0205d340(def, data_020ae7cc[8]) || func_0205d340(def, data_020ae7cc[9]))) {
                 if (func_02054dc4(&data_020bfc9c, data_020b93bc.cur, 0)->count > 1) {
                     buttonCount = 0;
-                    func_02082a2c(buf, func_020a18e4()->func_text(0xfe6));
+                    sprintf(buf, func_020a18e4()->func_text(0xfe6));
                     func_020a7cf0(s234, true);
                     func_020a7cac(s234, 0x8c000);
                 }
@@ -865,7 +865,7 @@ void Unk0202fddc::func_0203161c() {
                 Unk020d6240 *system2 = func_020a18e4();
                 Unk020d6240 *system = func_020a18e4();
                 const char *fmt = system->func_text(0xd62);
-                func_02082a2c(buf, fmt, system2->func_text(textId));
+                sprintf(buf, fmt, system2->func_text(textId));
                 func_020a7cf0(s234, true);
                 func_020a7cf0(s23c, true);
                 func_020a7cf0(s238, true);
@@ -1310,10 +1310,10 @@ static void *func_02033628(u32 id, void *user) {
     Unk0202fddc *self = (Unk0202fddc *)user;
     switch (id - 0x800000) {
     case 3:
-        func_02082a2c(self->num, "%d", self->count);
+        sprintf(self->num, "%d", self->count);
         return self->num;
     case 4:
-        func_02082a2c(self->num, "%d%", self->value);
+        sprintf(self->num, "%d%", self->value);
         static const int frames = 0x3c000;
         func_020a69ac(self->s1b4, func_fxmul(func_fxdiv(FX32(self->value), 0x64000), frames) >> 12);
         return self->num;

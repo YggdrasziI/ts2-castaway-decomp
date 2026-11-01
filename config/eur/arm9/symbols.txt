@@ -2664,10 +2664,10 @@ func_0207b0f4 kind:function(arm,size=0x8) addr:0x0207b0f4
 func_0207b0fc kind:function(arm,size=0xac) addr:0x0207b0fc
 OSi_DequeueItem kind:function(arm,size=0x24) addr:0x0207b1a8
 OSi_EnqueueTail kind:function(arm,size=0x24) addr:0x0207b1cc
-func_0207b1f0 kind:function(arm,size=0x74) addr:0x0207b1f0
+OS_TryLockMutex kind:function(arm,size=0x74) addr:0x0207b1f0
 func_0207b264 kind:function(arm,size=0x48) addr:0x0207b264
-func_0207b2ac kind:function(arm,size=0x70) addr:0x0207b2ac
-func_0207b31c kind:function(arm,size=0x8c) addr:0x0207b31c
+OS_UnlockMutex kind:function(arm,size=0x70) addr:0x0207b2ac
+OS_LockMutex kind:function(arm,size=0x8c) addr:0x0207b31c
 func_0207b3a8 kind:function(arm,size=0x1c) addr:0x0207b3a8
 DC_FlushAll kind:function(arm,size=0x34) addr:0x0207b3c4
 DC_InvalidateRange kind:function(arm,size=0x1c) addr:0x0207b3f8
@@ -2853,47 +2853,47 @@ func_02080028 kind:function(arm,size=0x54) addr:0x02080028
 func_0208007c kind:function(arm,size=0x8) addr:0x0208007c
 func_02080084 kind:function(arm,size=0x40) addr:0x02080084
 func_020800c4 kind:function(arm,size=0x50) addr:0x020800c4
-func_02080114 kind:function(arm,size=0x24) addr:0x02080114
-func_02080138 kind:function(arm,size=0x4c) addr:0x02080138
-func_02080184 kind:function(arm,size=0x128) addr:0x02080184
+abort kind:function(arm,size=0x24) addr:0x02080114
+exit kind:function(arm,size=0x4c) addr:0x02080138
+__exit kind:function(arm,size=0x128) addr:0x02080184
 func_020802ac kind:function(arm,size=0x108) addr:0x020802ac
 func_020803b4 kind:function(arm,size=0x3c) addr:0x020803b4
 func_020803f0 kind:function(arm,size=0x40) addr:0x020803f0
 func_02080430 kind:function(arm,size=0x40) addr:0x02080430
 func_02080470 kind:function(arm,size=0x50) addr:0x02080470
 func_020804c0 kind:function(arm,size=0x4c) addr:0x020804c0
-func_0208050c kind:function(arm,size=0x68) addr:0x0208050c
+__flush_all kind:function(arm,size=0x68) addr:0x0208050c
 func_02080574 kind:function(arm,size=0xc) addr:0x02080574
 func_02080580 kind:function(arm,size=0x4) addr:0x02080580
 func_02080584 kind:function(arm,size=0x30) addr:0x02080584
-func_020805b4 kind:function(arm,size=0x88) addr:0x020805b4
-func_0208063c kind:function(arm,size=0xe8) addr:0x0208063c
-func_02080724 kind:function(arm,size=0x38) addr:0x02080724
-func_0208075c kind:function(arm,size=0x14) addr:0x0208075c
-func_02080770 kind:function(arm,size=0x1c) addr:0x02080770
-func_0208078c kind:function(arm,size=0x78) addr:0x0208078c
-func_02080804 kind:function(arm,size=0x20) addr:0x02080804
-func_02080824 kind:function(arm,size=0x14) addr:0x02080824
-func_02080838 kind:function(arm,size=0x2c) addr:0x02080838
-func_02080864 kind:function(arm,size=0xb0) addr:0x02080864
-func_02080914 kind:function(arm,size=0x590) addr:0x02080914
-func_02080ea4 kind:function(arm,size=0x24c) addr:0x02080ea4
-func_020810f0 kind:function(arm,size=0x2e0) addr:0x020810f0
-func_020813d0 kind:function(arm,size=0x4dc) addr:0x020813d0
+__flush_buffer kind:function(arm,size=0x88) addr:0x020805b4
+fflush kind:function(arm,size=0xe8) addr:0x0208063c
+__mbtowc_noconv kind:function(arm,size=0x38) addr:0x02080724
+__wctomb_noconv kind:function(arm,size=0x14) addr:0x0208075c
+wctomb kind:function(arm,size=0x1c) addr:0x02080770
+wcstombs kind:function(arm,size=0x78) addr:0x0208078c
+memcpy kind:function(arm,size=0x20) addr:0x02080804
+memset kind:function(arm,size=0x14) addr:0x02080824
+memchr kind:function(arm,size=0x2c) addr:0x02080838
+__fill_mem kind:function(arm,size=0xb0) addr:0x02080864
+parse_format kind:function(arm,size=0x590) addr:0x02080914
+long2str kind:function(arm,size=0x24c) addr:0x02080ea4
+longlong2str kind:function(arm,size=0x2e0) addr:0x020810f0
+double2hex kind:function(arm,size=0x4dc) addr:0x020813d0
 round_decimal kind:function(arm,size=0x124) addr:0x020818ac
-func_020819d0 kind:function(arm,size=0x764) addr:0x020819d0
-func_02082134 kind:function(arm,size=0x824) addr:0x02082134
-func_02082958 kind:function(arm,size=0x44) addr:0x02082958
-func_0208299c kind:function(arm,size=0x68) addr:0x0208299c
-func_02082a04 kind:function(arm,size=0x28) addr:0x02082a04
-func_02082a2c kind:function(arm,size=0x2c) addr:0x02082a2c
-func_02082a58 kind:function(arm,size=0x84) addr:0x02082a58
-func_02082adc kind:function(arm,size=0x130) addr:0x02082adc
-func_02082c0c kind:function(arm,size=0x1c) addr:0x02082c0c
+float2str kind:function(arm,size=0x764) addr:0x020819d0
+__pformatter kind:function(arm,size=0x824) addr:0x02082134
+__StringWrite kind:function(arm,size=0x44) addr:0x02082958
+vsnprintf kind:function(arm,size=0x68) addr:0x0208299c
+snprintf kind:function(arm,size=0x28) addr:0x02082a04
+sprintf kind:function(arm,size=0x2c) addr:0x02082a2c
+__StringRead kind:function(arm,size=0x84) addr:0x02082a58
+raise kind:function(arm,size=0x130) addr:0x02082adc
+strlen kind:function(arm,size=0x1c) addr:0x02082c0c
 strcpy kind:function(arm,size=0xc8) addr:0x02082c28
 strncpy kind:function(arm,size=0x50) addr:0x02082cf0
 strcmp kind:function(arm,size=0x114) addr:0x02082d40
-func_02082e54 kind:function(arm,size=0x3c) addr:0x02082e54
+strchr kind:function(arm,size=0x3c) addr:0x02082e54
 func_02082e90 kind:function(arm,size=0x6c) addr:0x02082e90
 func_02082efc kind:function(arm,size=0x3e8) addr:0x02082efc
 func_020832e4 kind:function(arm,size=0xc8) addr:0x020832e4
@@ -2915,54 +2915,50 @@ func_02083ff4 kind:function(arm,size=0xa8) addr:0x02083ff4
 func_0208409c kind:function(arm,size=0x94) addr:0x0208409c
 func_02084130 kind:function(arm,size=0x14) addr:0x02084130
 func_02084144 kind:function(arm,size=0x70) addr:0x02084144
-sys_WriteChar kind:function(arm,size=0x14) addr:0x020841b4
-sys_ReadChar kind:function(arm,size=0x14) addr:0x020841c8
+sys_WriteChar kind:function(arm,size=0x14) addr:0x020841b4 local
+sys_ReadChar kind:function(arm,size=0x14) addr:0x020841c8 local
 sys_Exit kind:function(arm,size=0x10) addr:0x020841dc
-func_020841ec kind:function(arm,size=0x50) addr:0x020841ec
-func_0208423c kind:function(arm,size=0x34) addr:0x0208423c
-func_02084270 kind:function(arm,size=0x8) addr:0x02084270
+__read_console kind:function(arm,size=0x50) addr:0x020841ec
+__write_console kind:function(arm,size=0x34) addr:0x0208423c
+__close_console kind:function(arm,size=0x8) addr:0x02084270
 _Z20__DecodeSignedNumberPcPl kind:function(arm,size=0x8c) addr:0x02084278
 _Z22__DecodeUnsignedNumberPcPm kind:function(arm,size=0x8c) addr:0x02084304
-func_02084390 kind:function(arm,size=0x64) addr:0x02084390
-func_020843f4 kind:function(arm,size=0x108) addr:0x020843f4
-func_020844fc kind:function(arm,size=0x1c) addr:0x020844fc
-func_02084518 kind:function(arm,size=0x388) addr:0x02084518
-func_020848a0 kind:function(arm,size=0x8a8) addr:0x020848a0
-func_02085148 kind:function(arm,size=0x8) addr:0x02085148
-func_02085150 kind:function(arm,size=0x154) addr:0x02085150
-func_020852a4 kind:function(arm,size=0x84) addr:0x020852a4
-func_02085328 kind:function(arm,size=0x60) addr:0x02085328
-func_02085388 kind:function(arm,size=0x1dc) addr:0x02085388
-func_02085564 kind:function(arm,size=0x5c) addr:0x02085564
-func_020855c0 kind:function(arm,size=0xec) addr:0x020855c0
-func_020856ac kind:function(arm,size=0x28) addr:0x020856ac
-func_020856d4 kind:function(arm,size=0x2c) addr:0x020856d4
-func_02085700 kind:function(arm,size=0x44) addr:0x02085700
+_Z12BinarySearchP19ExceptionTableIndexmPc kind:function(arm,size=0x64) addr:0x02084390 local
+_Z19FindExceptionRecordPcP13ExceptionInfo kind:function(arm,size=0x108) addr:0x020843f4 local
+_Z13CurrentActionPK14ActionIterator kind:function(arm,size=0x1c) addr:0x020844fc local
+_Z10NextActionP14ActionIterator kind:function(arm,size=0x388) addr:0x02084518 local
+_Z11UnwindStackP12ThrowContextP13ExceptionInfoPc kind:function(arm,size=0x8b0) addr:0x020848a0 local
+_Z23FindMostRecentExceptionP12ThrowContextP13ExceptionInfo kind:function(arm,size=0x154) addr:0x02085150 local
+_Z17IsInSpecificationPKcP16ex_specification kind:function(arm,size=0x84) addr:0x020852a4 local
+_Z16HandleUnexpectedP12ThrowContextP13ExceptionInfoP16ex_specificationPc kind:function(arm,size=0x60) addr:0x02085328 local
+_Z20FindExceptionHandlerP12ThrowContextP13ExceptionInfoPl kind:function(arm,size=0x1dc) addr:0x02085388 local
+_Z14SetupCatchInfoP12ThrowContextll kind:function(arm,size=0x5c) addr:0x02085564 local
+_Z14__ThrowHandlerP12ThrowContext kind:function(arm,size=0xec) addr:0x020855c0
+__end__catch kind:function(arm,size=0x28) addr:0x020856ac
+__call_static_initializers kind:function(arm,size=0x2c) addr:0x020856d4
+__destroy_global_chain kind:function(arm,size=0x44) addr:0x02085700
 func_02085744 kind:function(arm,size=0xc) addr:0x02085744
 func_02085750 kind:function(arm,size=0xc) addr:0x02085750
-func_0208575c kind:function(arm,size=0x48) addr:0x0208575c
-func_020857a4 kind:function(arm,size=0x14) addr:0x020857a4
+_Z17DestroyArrayRangePhS_jPFvPvE kind:function(arm,size=0x5c) addr:0x0208575c
 __cxa_vec_new kind:function(arm,size=0xb8) addr:0x020857b8
 __cxa_vec_newinit kind:function(arm,size=0xbc) addr:0x02085870
 __cxa_vec_ctor kind:function(arm,size=0xb0) addr:0x0208592c
-func_020859dc kind:function(arm,size=0x48) addr:0x020859dc
-func_02085a24 kind:function(arm,size=0x48) addr:0x02085a24
-__cxa_vec_cleanup kind:function(arm,size=0x48) addr:0x02085a6c
-func_02085ab4 kind:function(arm,size=0x14) addr:0x02085ab4
+__cxa_vec_dtor kind:function(arm,size=0x90) addr:0x020859dc
+__cxa_vec_cleanup kind:function(arm,size=0x5c) addr:0x02085a6c
 __cxa_vec_delete kind:function(arm,size=0x34) addr:0x02085ac8
 __cxa_vec_delete2 kind:function(arm,size=0x38) addr:0x02085afc
-func_02085b34 kind:function(arm,size=0x4) addr:0x02085b34
-func_02085b38 kind:function(arm,size=0x4) addr:0x02085b38
-func_02085b3c kind:function(arm,size=0x18) addr:0x02085b3c
+_ZSt9dthandlerv kind:function(arm,size=0x4) addr:0x02085b34 local
+_ZSt9duhandlerv kind:function(arm,size=0x4) addr:0x02085b38 local
+_ZSt9terminatev kind:function(arm,size=0x18) addr:0x02085b3c
 __register_global_object kind:function(arm,size=0x20) addr:0x02085b54
-func_02085b74 kind:function(arm,size=0x1b0) addr:0x02085b74
+__throw_catch_compare kind:function(arm,size=0x1b0) addr:0x02085b74
 _Z15__PopStackFrameP12ThrowContextP13ExceptionInfo kind:function(arm,size=0x5c) addr:0x02085d24
-func_02085d80 kind:function(arm,size=0xa0) addr:0x02085d80
-func_02085e20 kind:function(arm,size=0x20) addr:0x02085e20
-func_02085e40 kind:function(arm,size=0x30) addr:0x02085e40
-func_02085e70 kind:function(arm,size=0x30) addr:0x02085e70
-func_02085ea0 kind:function(arm,size=0x4c) addr:0x02085ea0
-func_02085eec kind:function(arm,size=0x4) addr:0x02085eec
+_Z16__SetupFrameInfoP12ThrowContextP13ExceptionInfo kind:function(arm,size=0xa0) addr:0x02085d80
+_Z20__FindExceptionTableP13ExceptionInfoPc kind:function(arm,size=0x20) addr:0x02085e20
+_Z16__SkipUnwindInfoPc kind:function(arm,size=0x30) addr:0x02085e40
+_Z17__TransferControlP12ThrowContextP13ExceptionInfoPc kind:function(arm,size=0x30) addr:0x02085e70
+__rethrow kind:function(arm,size=0x4c) addr:0x02085ea0
+_ExitProcess kind:function(arm,size=0x4) addr:0x02085eec
 func_02085ef0 kind:function(arm,size=0x59c) addr:0x02085ef0
 func_0208648c kind:function(arm,size=0x16c) addr:0x0208648c
 func_020865f8 kind:function(arm,size=0x2dc) addr:0x020865f8
@@ -5313,7 +5309,7 @@ data_020bccb8 kind:data(any) addr:0x020bccb8
 data_020bccc8 kind:data(any) addr:0x020bccc8
 data_020bcce8 kind:data(any) addr:0x020bcce8
 data_020bcda8 kind:data(any) addr:0x020bcda8
-data_020bcdb4 kind:data(any) addr:0x020bcdb4
+_current_locale kind:data(any) addr:0x020bcdb4
 data_020bcdc0 kind:data(any) addr:0x020bcdc0
 data_020bcdcc kind:data(any) addr:0x020bcdcc
 data_020bcddc kind:data(any) addr:0x020bcddc
@@ -5350,7 +5346,7 @@ data_020bcfc0 kind:data(any) addr:0x020bcfc0
 data_020bcfc4 kind:data(any) addr:0x020bcfc4
 data_020bcfc8 kind:data(any) addr:0x020bcfc8
 data_020bcfcc kind:data(any) addr:0x020bcfcc
-data_020bcfd0 kind:data(word[2]) addr:0x020bcfd0
+_ZSt8thandler kind:data(word[2]) addr:0x020bcfd0 local
 _ZTV11Unk0208b41c kind:data(any) addr:0x020bcfd8
 _ZTV11Unk020bd014 kind:data(any) addr:0x020bd014
 data_020bd048 kind:data(byte[13]) addr:0x020bd048 local
@@ -5718,7 +5714,7 @@ data_020c57a0 kind:bss addr:0x020c57a0
 data_020c57a4 kind:bss addr:0x020c57a4
 data_020c57a8 kind:bss addr:0x020c57a8
 data_020c57ac kind:bss addr:0x020c57ac
-data_020c57b0 kind:bss addr:0x020c57b0
+ThreadInfo kind:bss addr:0x020c57b0
 data_020c57b4 kind:bss addr:0x020c57b4
 data_020c57c0 kind:bss addr:0x020c57c0
 data_020c5880 kind:bss addr:0x020c5880
@@ -5777,18 +5773,17 @@ data_020c7758 kind:bss addr:0x020c7758
 data_020c7768 kind:bss addr:0x020c7768
 data_020c7780 kind:bss addr:0x020c7780
 data_020c7784 kind:bss addr:0x020c7784
-data_020c77a8 kind:bss addr:0x020c77a8
-data_020c77b8 kind:bss addr:0x020c77b8
-data_020c78b8 kind:bss addr:0x020c78b8
-data_020c78dc kind:bss addr:0x020c78dc
-data_020c7900 kind:bss addr:0x020c7900
-data_020c79a8 kind:bss addr:0x020c79a8
+__console_exit kind:bss addr:0x020c77a8
+__atexit_funcs kind:bss addr:0x020c77b8 local
+__cs_id kind:bss addr:0x020c78b8
+__cs_ref kind:bss addr:0x020c78dc
+__cs kind:bss addr:0x020c7900
 data_020c79d8 kind:bss addr:0x020c79d8
 data_020c7ad8 kind:bss addr:0x020c7ad8
 data_020c7bd8 kind:bss addr:0x020c7bd8
 data_020c7cd8 kind:bss addr:0x020c7cd8
-data_020c7cdc kind:bss addr:0x020c7cdc
-data_020c7cf8 kind:bss addr:0x020c7cf8
+signal_funcs kind:bss addr:0x020c7cdc
+__global_destructor_chain kind:bss addr:0x020c7cf8
 data_020c7cfc kind:bss addr:0x020c7cfc
 data_020c7d00 kind:bss addr:0x020c7d00
 data_020c7d1c kind:bss addr:0x020c7d1c

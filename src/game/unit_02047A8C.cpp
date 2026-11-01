@@ -135,7 +135,7 @@ Unk02098e70 func_020a07bc(Unk020a0774 *input, int index);
 int func_0209f0a4(Unk020d60c8 *settings);
 Unk0209f8d0 *func_0209f8d0(Unk020d60c8 *settings, int index);
 void *func_020a00a0(void *texts, u32 id);
-int func_02082a2c(char *buf, const char *fmt, ...);
+int sprintf(char *buf, const char *fmt, ...);
 u32 func_020a69a4(Unk020a7c90 *s);
 void func_020a69ac(Unk020a7c90 *s, int palette);
 void func_020a6980(Unk020a7c90 *s, u32 hash);
@@ -834,17 +834,17 @@ static void *func_0204a754(u32 id, void *user) {
     case 0x800002: {
         u8 minutes = func_0209f8d0(&data_020d60c8, self->selected)->unk6;
         if (minutes < 10) {
-            func_02082a2c(self->text, "%d:0%d", func_0209f8d0(&data_020d60c8, self->selected)->unk4, minutes);
+            sprintf(self->text, "%d:0%d", func_0209f8d0(&data_020d60c8, self->selected)->unk4, minutes);
         } else {
-            func_02082a2c(self->text, "%d:%d", func_0209f8d0(&data_020d60c8, self->selected)->unk4, minutes);
+            sprintf(self->text, "%d:%d", func_0209f8d0(&data_020d60c8, self->selected)->unk4, minutes);
         }
         return self->text;
     }
     case 0x800003:
-        func_02082a2c(self->text, "%d", func_0209f8d0(&data_020d60c8, self->selected)->unk0);
+        sprintf(self->text, "%d", func_0209f8d0(&data_020d60c8, self->selected)->unk0);
         return self->text;
     case 0x800004:
-        func_02082a2c(self->text, "%d%", func_0209f8d0(&data_020d60c8, self->selected)->unk7);
+        sprintf(self->text, "%d%", func_0209f8d0(&data_020d60c8, self->selected)->unk7);
         return self->text;
     default:
         return func_020a00a0(func_0201ba94(), id);

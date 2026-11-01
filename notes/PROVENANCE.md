@@ -47,3 +47,23 @@ this ROM by `tools/compiler_sweep.py`, then checked at 100 % in objdiff and link
 | `libs/nitro/src/os/os_protectionRegion.c` | khdays `libs/nitro/os/asm_stubs/auto/OS_{SetDPermissionsForProtectionRegion,SetProtectionRegion1,SetProtectionRegion2}.c` | one file |
 | `libs/nitro/src/os/os_terminate_proc.c` | khdays `libs/nitro/os/asm_stubs/auto/OS_Halt.c`, `libs/nitro/os/calls/OS_Terminate.c` | one file; built with 1.2/sp2p3 |
 | `libs/nitro/src/mi/cpumem.c` | khdays `libs/nitro/mi/asm_stubs/auto/{MIi_CpuCopy16,MIi_CpuCopy32,MIi_CpuClearFast,MIi_CpuCopyFast,MI_Copy36B,MI_CpuFill8,MI_CpuCopy8}.c`; twewy `libs/nitro/src/mi/cpumem.c` (`MI_CpuFillU32`, `MI_CpuSwap` body) | one file; `MI_CpuSwap` named `MI_SwapWord` (khdays' name) |
+
+## MSL C and C++ runtime (`libs/c`, `libs/runtime`, `libs/cpp/include`, `libs/nitro/include`)
+
+Source: twewy (**CC0-1.0**), local clone at commit
+`3f916f1a2d31f29bd7ec6fd89f3a87b696e79b9b`, taken on 2026-11-01. Every function was
+checked at 100 % in objdiff against this ROM.
+
+| Our files | Their files | Changes |
+|---|---|---|
+| `libs/c/include/*`, `libs/runtime/include/*`, `libs/cpp/include/*` | same paths | none |
+| `libs/nitro/include/nitro/{types.h,os/mutex.h,os/thread.h,os/context.h}` | same paths | none; needed by `critical_regions.h` |
+| `libs/c/src/{abort_exit_arm_eabi,critical_regions,file_io,mem,mem_funcs,signal,string}.c` | same paths | none |
+| `libs/c/src/mbstring.c` | same path | `mbtowc` removed (not in this ROM, it was kept by the link) |
+| `libs/c/src/scanf.c` | same path | reduced to `__StringRead`, the only function linked here |
+| `libs/c/src/printf.c` | same path | `vsprintf` replaced by `snprintf` (written from the ROM); `%s` path rewritten from the ROM: wide strings rejoin the narrow path, `strptr` merged into `buff_ptr`; `case 'p'` dropped (jump table end) |
+| `libs/runtime/src/{console_io.c,CompressedNumbers.cpp,StaticInitializers.cpp}` | same paths | none |
+| `libs/runtime/src/ExceptionHandler.cpp` | same path | `__unexpected` removed (not in this ROM); two `continue` tests rewritten for the branch order (`break`, `goto`); `__end_catch` renamed `__end__catch`, the name the compiler calls |
+| `libs/runtime/src/ExceptionHandlerTS.cpp` | same path | `mov pc, address` instead of `bx address` |
+| `libs/runtime/src/MWException.cpp` | same path | `unexpected` removed; `__register_global_object` written from the ROM |
+| `libs/runtime/src/cxxabi_alloc.cpp` | same path | `__cxa_vec_newinit`, `__cxa_vec_ctor`, `__cxa_vec_cleanup`, `__cxa_vec_delete2` written from the ROM |

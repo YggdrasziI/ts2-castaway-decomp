@@ -1,9 +1,10 @@
 # Compiler, SDK and runtime evidence
 
-Status: **mwccarm 2.0 family** for game code, MSL / runtime and the engine block;
-**1.2 family (base ... sp2p3)** for NitroSDK and NitroSystem (2026-10-25, below).
-Service packs not settled; `tools/configure.py` uses 2.0/sp1p5 by default and
-1.2/sp2p3 for `libs/nitro` (`COMPILER_CONFIGS`).
+Status: **mwccarm 2.0 family** for game code and the engine block; **2.0/base ...
+sp1p2** for MSL / runtime (2026-11-01, below); **1.2 family (base ... sp2p3)** for
+NitroSDK and NitroSystem (2026-10-25, below). Service packs not settled;
+`tools/configure.py` uses 2.0/sp1p5 by default, 2.0/sp1p2 for `libs/c` and
+`libs/runtime`, 1.2/sp2p3 for `libs/nitro` (`COMPILER_CONFIGS`).
 
 ## NitroSDK and NitroSystem: 1.2 family
 
@@ -101,6 +102,18 @@ console I/O, `CompressedNumbers.cpp`, `ExceptionHandlerTS.cpp`), NitroSystem at
 Only 0x02080114-0x02085EEC (MSL / runtime) has `.exceptix` entries: that code is
 built with C++ exception tables, the game and the other libraries are not (or have no
 function that needs one). CRI middleware (twewy's `libs/cri`) is absent: only 8-byte or mid-function hits.
+
+### MSL / runtime build (2026-11-01)
+
+- **Older compiler than the game**: a sweep of the 25 mwccarm on twewy's `printf.c`
+  gives `longlong2str` 100 % with 2.0/base, sp1, sp1p2 and 89.45 % from sp1p5 on; DSi
+  compilers stay under 94 %, the 1.2 compilers reject the flags. 2.0/sp1p2 is the
+  working choice.
+- **No `-interworking`**: leaf functions return with `mov pc, lr` where the game has
+  `bx lr`; with the flag removed, every such difference in the 16 files is gone.
+- Flags kept from twewy: `libs/c` `-ipa file`, `libs/runtime` `-char unsigned -ipa
+  function`, both `-Cpp_exceptions on`, without `-avoid_byte strb` (the code has
+  `strb`). 58 functions were 100 % at the first compile.
 
 ## Runtime: software floating point
 

@@ -77,7 +77,7 @@ bool func_020a5538(Unk020d60c8Items *items);
 void func_020a4c4c(void *p);
 bool func_0209fa80(Unk020d60c8 *settings, int index);
 Unk0209f8d0 *func_0209f8d0(Unk020d60c8 *settings, int index);
-int func_02082a2c(char *buf, const char *fmt, ...);
+int sprintf(char *buf, const char *fmt, ...);
 void *func_020a00a0(void *texts, u32 id);
 void *func_0202fdb0(Unk020d6240 *system);
 }
@@ -523,41 +523,41 @@ static void *func_02041870(u32 id, void *user) {
     switch (id) {
     case 0x800001:
         if (func_020a5248(data_020d60c8.items, 0)) {
-            func_02082a2c(self->text, "1. %s", func_0209f8d0(&data_020d60c8, 0)->name);
+            sprintf(self->text, "1. %s", func_0209f8d0(&data_020d60c8, 0)->name);
         } else {
-            func_02082a2c(self->text, "1. %s", func_020a00a0(data_020d60c8.texts, 0xf95));
+            sprintf(self->text, "1. %s", func_020a00a0(data_020d60c8.texts, 0xf95));
         }
         return self->text;
     case 0x800002:
         if (func_020a5248(data_020d60c8.items, 1)) {
-            func_02082a2c(self->text, "2. %s", func_0209f8d0(&data_020d60c8, 1)->name);
+            sprintf(self->text, "2. %s", func_0209f8d0(&data_020d60c8, 1)->name);
         } else {
-            func_02082a2c(self->text, "2. %s", func_020a00a0(data_020d60c8.texts, 0xf95));
+            sprintf(self->text, "2. %s", func_020a00a0(data_020d60c8.texts, 0xf95));
         }
         return self->text;
     case 0x800003:
         if (func_020a5248(data_020d60c8.items, 2)) {
-            func_02082a2c(self->text, "3. %s", func_0209f8d0(&data_020d60c8, 2)->name);
+            sprintf(self->text, "3. %s", func_0209f8d0(&data_020d60c8, 2)->name);
         } else {
-            func_02082a2c(self->text, "3. %s", func_020a00a0(data_020d60c8.texts, 0xf95));
+            sprintf(self->text, "3. %s", func_020a00a0(data_020d60c8.texts, 0xf95));
         }
         return self->text;
     case 0x800004:
     case 0x800005:
     case 0x800006:
         if (func_020a5248(data_020d60c8.items, id - 0x800004)) {
-            func_02082a2c(self->text, "%d", func_0209f8d0(&data_020d60c8, id - 0x800004)->unk0);
+            sprintf(self->text, "%d", func_0209f8d0(&data_020d60c8, id - 0x800004)->unk0);
         } else {
-            func_02082a2c(self->text, "--");
+            sprintf(self->text, "--");
         }
         return self->text;
     case 0x800007:
     case 0x800008:
     case 0x800009:
         if (func_020a5248(data_020d60c8.items, id - 0x800007)) {
-            func_02082a2c(self->text, "%d%", func_0209f8d0(&data_020d60c8, id - 0x800007)->unk7);
+            sprintf(self->text, "%d%", func_0209f8d0(&data_020d60c8, id - 0x800007)->unk7);
         } else {
-            func_02082a2c(self->text, "--");
+            sprintf(self->text, "--");
         }
         return self->text;
     default:

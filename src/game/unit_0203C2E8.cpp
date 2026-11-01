@@ -160,7 +160,7 @@ void func_020291e4(Unk0203c188Owner *owner);
 void func_0202923c(Unk0203c188Owner *owner);
 void func_020292c0(Unk0203c188Owner *owner, int a);
 void func_02028eec(Unk0203c188Owner *owner, int a, Unk0205cf00 *def, void *item);
-int func_02082a2c(char *buf, const char *fmt, ...);
+int sprintf(char *buf, const char *fmt, ...);
 void *func_020a00a0(void *texts, u32 id);
 void *func_0202fdb0(Unk020d6240 *system);
 bool func_0203e314(u32 key);
@@ -873,10 +873,10 @@ static void *func_0203ea8c(u32 id, void *user) {
     Unk0203c2e8 *self = (Unk0203c2e8 *)user;
     switch (id) {
     case 0x800001:
-        func_02082a2c(self->text, "%d", self->page + 1);
+        sprintf(self->text, "%d", self->page + 1);
         return self->text;
     case 0x800002:
-        func_02082a2c(self->text, "/%d", self->pages);
+        sprintf(self->text, "/%d", self->pages);
         return self->text;
     case 0x800003:
     case 0x800004:
@@ -884,7 +884,7 @@ static void *func_0203ea8c(u32 id, void *user) {
             return func_020a00a0(func_0201ba94(), data_020ae934[self->choice]);
         } else {
             void *a = func_020a00a0(func_0202fdb0(func_020a18e4()), 0xe00);
-            func_02082a2c(self->text, "%s - %s", a, func_020a00a0(func_0201ba94(), data_020ae934[self->choice]));
+            sprintf(self->text, "%s - %s", a, func_020a00a0(func_0201ba94(), data_020ae934[self->choice]));
             return self->text;
         }
     case 0x800000:

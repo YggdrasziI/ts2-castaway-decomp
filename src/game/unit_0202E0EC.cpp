@@ -111,7 +111,7 @@ void func_02029128(Unk0203c188Owner *owner, int a);
 void func_020292c0(Unk0203c188Owner *owner, int a);
 void func_02028eec(Unk0203c188Owner *owner, int a, Unk0205cf00 *def, void *item);
 void func_02028edc(Unk0203c188Owner *owner, u32 value);
-int func_02082a2c(char *buf, const char *fmt, ...);
+int sprintf(char *buf, const char *fmt, ...);
 void func_02033ea0(Unk0205cf00 *def);
 void func_0202fd18(Unk0205cf00 *def);
 void func_0202fd28(Unk020be420 *p);
@@ -536,7 +536,7 @@ void Unk0202e0ec::func_0202f2ac() {
             func_020a69ac(sub2.func_02051ad0(3), 2);
         }
     }
-    func_02082a2c(text, func_020a00a0(texts, id), value);
+    sprintf(text, func_020a00a0(texts, id), value);
     int height = title->func_14() >> 12;
     Unk02092830 lines(text, ((Unk020aa040Font *)font)->font);
     int hAlign = func_020a705c(func_020a72c8(title));
@@ -654,11 +654,11 @@ static void *func_0202fd38(u32 id, void *user) {
     Unk0202e0ec *screen = (Unk0202e0ec *)user;
     u32 n = id - 0x800000;
     if (n == 1) {
-        func_02082a2c(screen->num, "%d", screen->page + 1);
+        sprintf(screen->num, "%d", screen->page + 1);
         return screen->num;
     }
     if (n == 2) {
-        func_02082a2c(screen->num, "/%d", screen->pages);
+        sprintf(screen->num, "/%d", screen->pages);
         return screen->num;
     }
     func_020a18e4();

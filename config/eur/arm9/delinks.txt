@@ -733,22 +733,28 @@ libs/nitro/src/os/os_terminate_proc.c:
     .text       start:0x0207c3a8 end:0x0207c3c8
 
 libs/c/src/abort_exit_arm_eabi.c:
+    complete
     .text       start:0x02080114 end:0x020802ac
     .exceptix   start:0x020acd24 end:0x020acd48
+    .bss        start:0x020c77a8 end:0x020c78b8
 
 libs/c/src/file_io.c:
+    complete
     .text       start:0x0208063c end:0x02080724
     .exceptix   start:0x020acda8 end:0x020acdb4
 
 libs/c/src/mbstring.c:
+    complete
     .text       start:0x02080724 end:0x02080804
     .exceptix   start:0x020acdb4 end:0x020acdcc
 
 libs/c/src/mem.c:
+    complete
     .text       start:0x02080804 end:0x02080864
     .exceptix   start:0x020acdcc end:0x020acdd8
 
 libs/c/src/mem_funcs.c:
+    complete
     .text       start:0x02080864 end:0x02080914
 
 libs/c/src/printf.c:
@@ -757,33 +763,59 @@ libs/c/src/printf.c:
     .exceptix   start:0x020acdd8 end:0x020ace44
 
 libs/c/src/scanf.c:
+    complete
     .text       start:0x02082a58 end:0x02082adc
 
+libs/c/src/critical_regions.c:
+    complete
+    .bss        start:0x020c78b8 end:0x020c79d8
+
 libs/c/src/signal.c:
+    complete
     .text       start:0x02082adc end:0x02082c0c
     .exceptix   start:0x020ace44 end:0x020ace50
+    .bss        start:0x020c7cdc end:0x020c7cf8
 
 libs/c/src/string.c:
+    complete
     .text       start:0x02082c0c end:0x02082e90
 
 libs/runtime/src/console_io.c:
+    complete
     .text       start:0x020841b4 end:0x02084278
     .exceptix   start:0x020acee0 end:0x020acef8
 
 libs/runtime/src/CompressedNumbers.cpp:
+    complete
     .text       start:0x02084278 end:0x02084390
 
 libs/runtime/src/ExceptionHandler.cpp:
-    .text       start:0x02084390 end:0x02085750
+    complete
+    .text       start:0x02084390 end:0x020856d4
     .exception  start:0x020acc68 end:0x020acc98
-    .exceptix   start:0x020acef8 end:0x020acf7c
+    .exceptix   start:0x020acef8 end:0x020acf64
+
+libs/runtime/src/StaticInitializers.cpp:
+    complete
+    .text       start:0x020856d4 end:0x02085744
+    .exceptix   start:0x020acf64 end:0x020acf7c
+    .bss        start:0x020c7cf8 end:0x020c7cfc
+
+libs/runtime/src/cxxabi_alloc.cpp:
+    complete
+    .text       start:0x0208575c end:0x02085b34
+    .exception  start:0x020acc98 end:0x020acd24
+    .exceptix   start:0x020acf7c end:0x020acfdc
 
 libs/runtime/src/MWException.cpp:
+    complete
     .text       start:0x02085b34 end:0x02085d24
     .exceptix   start:0x020acfdc end:0x020ad000
+    .data       start:0x020bcfd0 end:0x020bcfd8
 
 libs/runtime/src/ExceptionHandlerTS.cpp:
-    .text       start:0x02085d24 end:0x02085ea0
+    complete
+    .text       start:0x02085d24 end:0x02085eec
     .exceptix   start:0x020ad000 end:0x020ad018
 
 src/game/unit_020897C0.cpp:

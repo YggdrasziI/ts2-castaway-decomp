@@ -93,7 +93,7 @@ void func_020a7d30(Unk020a7c90 *s, int frame);
 void func_02029128(Unk0203c188Owner *owner, int a);
 void func_020292c0(Unk0203c188Owner *owner, int a);
 void func_02028eec(Unk0203c188Owner *owner, int a, Unk0205cf00 *def, void *item);
-int func_02082a2c(char *buf, const char *fmt, ...);
+int sprintf(char *buf, const char *fmt, ...);
 void func_02033ea0(Unk0205cf00 *def);
 bool func_0203e314(u32 key);
 void func_0202e0dc(Unk0205cf00 *def);
@@ -441,7 +441,7 @@ static void *func_0202e038(u32 id, void *user) {
     Unk0202cdf0 *screen = (Unk0202cdf0 *)user;
     int n = id - 0x800000;
     if (n > 0 && n < 6) {
-        func_02082a2c(screen->num, "%d", screen->recipe->counts[n - 1]);
+        sprintf(screen->num, "%d", screen->recipe->counts[n - 1]);
         return screen->num;
     }
     if (n > 5) {
@@ -450,7 +450,7 @@ static void *func_0202e038(u32 id, void *user) {
         if (e != 0) {
             have = e->count;
         }
-        func_02082a2c(screen->num, "%d", have);
+        sprintf(screen->num, "%d", have);
         return screen->num;
     }
     return (void *)func_020a00a0(func_0201ba94(), id);
