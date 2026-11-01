@@ -1106,3 +1106,12 @@ src/game/unit_020A3E40.cpp:
 src/game/unit_020A3F8C.cpp:
     complete
     .text       start:0x020a3f8c end:0x020a414c
+
+src/game/unit_020A414C.cpp:
+    complete
+    .text       start:0x020a414c end:0x020a4c0c
+    .bss        start:0x020d6cfc end:0x020d6d00
+
+src/game/unit_020A4C0C.cpp:
+    complete
+    .text       start:0x020a4c0c end:0x020a4e60
