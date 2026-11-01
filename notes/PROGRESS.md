@@ -173,3 +173,4 @@
 | 2026-11-01 | 1653e8a | 434936 / 723540 bytes (60.11 %; fuzzy 89.92 %, linked 24.37 %) | 3686 / 4577 | 196 / 329 | Last MSL / runtime code, `os_mutex.c`, first NitroSDK and NitroSystem units |
 | 2026-11-01 | 5930484 | 438172 / 723540 bytes (60.56 %; fuzzy 90.37 %, linked 24.49 %) | 3701 / 4577 | 197 / 333 | NitroSDK G3X complete, VRAM banks at 100 % but not complete (host difference) |
 | 2026-11-01 | 98edb88 | 447796 / 723540 bytes (61.89 %; fuzzy 91.70 %, linked 25.82 %) | 3780 / 4577 | 201 / 339 | NitroSDK MI DMA, FS, SND commands and divider helpers, all complete |
+| 2026-11-01 | 32db4d6 | 465844 / 723540 bytes (64.38 %; fuzzy 94.19 %, linked 28.32 %) | 3975 / 4577 | 237 / 395 | NitroSDK and NitroSystem units from byte-identical khdays functions |
