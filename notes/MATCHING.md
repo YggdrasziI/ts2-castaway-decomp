@@ -1546,3 +1546,6 @@ default: add one here only once a unit of this ROM proves it with mwccarm.
 - objdiff stays below 100 % on such files (`_fdiv` 91.08 %) with identical bytes: data
   decoded as `<illegal>` in the original, `dcd` branches, pool targets. `Check ARM9
   main: OK` is the proof there.
+- Two `.bss` objects in the wrong order whatever the definition order: `.bss` is sorted by
+  size inside an object, so they are two files (`fp_status.c`, `fp_handlers.c`). dsd also
+  wants a `.bss` symbol of `symbols.txt` global: no `static`.

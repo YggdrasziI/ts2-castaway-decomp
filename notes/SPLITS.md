@@ -374,3 +374,11 @@ split); the file names are that project's, not proven. `func_02087eec` and
 `func_02088d0c` (and `_drsb`) swap the operands and fall into the next function:
 reversed operations, labels in `symbols.txt` because dsd refuses a function that
 starts with `eor`.
+
+### Last MSL / runtime gaps (2026-11-01)
+
+`libs/c/src/fp_trap.c` 0x020802AC-0x0208050C (six `.exceptix` entries), `fp_status.c`
+0x02085744 (`.bss` 0x020C7CFC) and `fp_handlers.c` 0x02085750 (`.bss` 0x020C7D00-0x020C7D1C),
+`__arm_eabi_init.c` 0x02085EEC, `fp_control.c` 0x02089758-0x020897B4, game side
+`src/game/unit_020897B4.c`. All file names except `__arm_eabi_init.c` are hypotheses. All
+of the code 0x02080114-0x02089780 now comes from sources.

@@ -83,3 +83,6 @@ Source: advance-wars-dual-strike-decomp (**CC0-1.0**), local clone at commit
 | `_dadd.c`, `ll_ufrom_d.c`, `_dmul.c`, `_dsub.c`, `fadd.c`, `fdiv.c`, `ffix.c`, `fflt.c`, `ffltu.c`, `fmul.c`, `fsub.c`, `ll_sdiv.c`, `ll_udiv.c`, `s32_div_f.c`, `u32_div_f.c` | same names | `__MWERKS__` branch only; helper names not proven replaced by address names; `#pragma force_active on`; hand-encoded branches recomputed for this ROM's layout; swap entry added before `_fdiv` and `_fsub` |
 | `ffix_tail.c` | `func_02128438.c` | same changes, renamed for its role |
 | `fp_compare.c` | none | written from this ROM: the reference has other functions in another order |
+
+`libs/runtime/src/__arm_eabi_init.c`: twewy (CC0, commit in the MSL section), `_ExitProcess` only, include replaced by a declaration.
+`libs/c/src/fp_trap.c`, `fp_status.c`, `fp_handlers.c`, `fp_control.c`: written from this ROM.

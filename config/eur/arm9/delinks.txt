@@ -738,6 +738,11 @@ libs/c/src/abort_exit_arm_eabi.c:
     .exceptix   start:0x020acd24 end:0x020acd48
     .bss        start:0x020c77a8 end:0x020c78b8
 
+libs/c/src/fp_trap.c:
+    complete
+    .text       start:0x020802ac end:0x0208050c
+    .exceptix   start:0x020acd48 end:0x020acd90
+
 libs/c/src/ansi_files.c:
     complete
     .text       start:0x0208050c end:0x02080574
@@ -851,6 +856,16 @@ libs/runtime/src/StaticInitializers.cpp:
     .exceptix   start:0x020acf64 end:0x020acf7c
     .bss        start:0x020c7cf8 end:0x020c7cfc
 
+libs/runtime/src/fp_status.c:
+    complete
+    .text       start:0x02085744 end:0x02085750
+    .bss        start:0x020c7cfc end:0x020c7d00
+
+libs/runtime/src/fp_handlers.c:
+    complete
+    .text       start:0x02085750 end:0x0208575c
+    .bss        start:0x020c7d00 end:0x020c7d1c
+
 libs/runtime/src/cxxabi_alloc.cpp:
     complete
     .text       start:0x0208575c end:0x02085b34
@@ -867,6 +882,11 @@ libs/runtime/src/ExceptionHandlerTS.cpp:
     complete
     .text       start:0x02085d24 end:0x02085eec
     .exceptix   start:0x020ad000 end:0x020ad018
+
+libs/runtime/src/__arm_eabi_init.c:
+    complete
+    .text       start:0x02085eec end:0x02085ef0
+    .exceptix   start:0x020ad018 end:0x020ad024
 
 libs/runtime/src/_dadd.c:
     complete
@@ -935,6 +955,14 @@ libs/runtime/src/s32_div_f.c:
 libs/runtime/src/u32_div_f.c:
     complete
     .text       start:0x02089574 end:0x02089758
+
+libs/runtime/src/fp_control.c:
+    complete
+    .text       start:0x02089758 end:0x020897b4
+
+src/game/unit_020897B4.c:
+    complete
+    .text       start:0x020897b4 end:0x020897c0
 
 src/game/unit_020897C0.cpp:
     complete
