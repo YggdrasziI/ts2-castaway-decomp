@@ -668,6 +668,11 @@ explicit `if (n > 0)` around the `for` then adds a third test (`cmpgt`): drop it
   holds data no relocation reaches shifts every later address (0x194 bytes for the digit strings 0x020B59F4).
   Keep such data in the same range as a referenced object.
 
+- A static `u8` array can land in its own `.bss` section, apart from the other statics of the file, and
+  the anchored offsets then skip it (`[r0, #0x3c]` for `[r0, #0x64]`). objdiff still shows the `.bss` at 100 %
+  because it is all zeros. A `u32` array of the same size stays in the common section
+  (`data_020d6c6c`, `unit_020A22FC.cpp`).
+
 - A file boundary from a static: mwccarm addresses all the function-local statics of a
   file from one anchor, so a second static is loaded as `[r0, #0x14]`. If the original
   loads it at offset 0 with its own pool word, the two statics are in two files

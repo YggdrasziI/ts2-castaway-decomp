@@ -589,7 +589,7 @@ void func_020a23bc();
 }
 
 static Unk020a267c *data_020d6c68;
-static u8 data_020d6c6c[0x28];
+static u32 data_020d6c6c[10];
 static Unk020a22fcHeader data_020d6c94;
 
 /* 98 %: lock, state and file in other registers. */
@@ -849,7 +849,6 @@ extern "C" int func_020a2a00(Unk020a267c *p, int volume, int offset) {
     return volume;
 }
 
-/* 98.49 %: the original reads the count through the anchor data_020d6c68 + 0x64, registers. */
 extern "C" void *func_020a2a2c(Unk020a267c *p, int file, void *heap, bool lock) {
     u32 total;
     void *data = NNS_SndArcGetFileAddress(file);
@@ -872,7 +871,8 @@ extern "C" void *func_020a2a2c(Unk020a267c *p, int file, void *heap, bool lock) 
         if (data == 0) {
             return 0;
         }
-        if (size + 0x3c != func_0209ba04(file, data, size + 0x3c, 0)) {
+        int got = func_0209ba04(file, data, size + 0x3c, 0);
+        if (got != size + 0x3c) {
             return 0;
         }
         Unk020a22fcHeader *header = (Unk020a22fcHeader *)data;
@@ -937,7 +937,6 @@ extern "C" int func_020a2c14(Unk020a267c *p, int hash, int *group, int *id, int 
     return 0;
 }
 
-/* 99.47 %: the result is selected directly into r0 in the original. */
 extern "C" int func_020a2c9c(Unk020a267c *p) {
     int i = 0;
     bool found = false;
@@ -950,7 +949,7 @@ extern "C" int func_020a2c9c(Unk020a267c *p) {
         }
     }
     if (i == 12) {
-        i = -1;
+        return -1;
     }
     return i;
 }
