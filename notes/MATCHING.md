@@ -1558,3 +1558,7 @@ default: add one here only once a unit of this ROM proves it with mwccarm.
 Two 32-bit stores through one base register, the high word 0 or the low word 0, come from a single write to a `vu64` register (hardware divider, `libs/nitro/src/fx/unit_02077AE4.c`).
 
 `asm` functions of a file are emitted in source order, after and not reversed like its C functions: keep a mix of both out of one file, and write `asm` functions in address order. A khdays score below 100 % may hide only unrelocated `bl` words; a function exact by bytes may still target other symbols, which only the ROM relocations tell (`.rela.text` in mwccarm objects).
+
+A khdays function off by one or two words is mostly a different field offset, not different code: this ROM's SDK has shorter structures (`NNSSndStrmPlayer` 0x170, one word less than khdays; `OSThreadInfo.list` at 8; `CARD` backup assert at 0x02000B88). Compare the words first, then fix the type, not the code. Note `ldrh` immediates are split: `e1d000b2` is offset 2, not 0xb2.
+
+Link-time constants without relocation (`SDK_IRQ_STACKSIZE`, `SDK_SYS_STACKSIZE`, `SDK_SECTION_ARENA_DTCM_START` as function addresses) cannot be written as C constants, the compiler folds them: `func_0207b5f4` stays unmatched until they exist at link time.
