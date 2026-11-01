@@ -1564,9 +1564,6 @@ int func_02067b70() {
     }
 }
 
-/* 98.5 %: the original tests the three keys in the order 0xB0E8A958,
- * 0xED32B5E6, 0x18A7F0FA (the last one falling through to its case); no
- * order of the cases or if / else chain gave it. */
 void func_02067bc4(Unk020c43a8 *p, const Unk0209674c *node, int index) {
     if (index >= 10) {
         return;

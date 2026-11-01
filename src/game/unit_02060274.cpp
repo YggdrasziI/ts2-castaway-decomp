@@ -177,11 +177,6 @@ int func_020606a0(Unk020c409c *o, int id) {
     return -1;
 }
 
-/*
- * 99.69 %: registers. The original keeps the model library in r7 and the
- * first loop counter in r6; swapped here (declaration orders, a shared
- * counter, the switch as if / else and other index forms tried).
- */
 void func_020606e0(Unk020c409c *o, int group) {
     int i;
     if (group < 0 || group >= o->groupCount) {

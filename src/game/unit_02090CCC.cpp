@@ -317,7 +317,6 @@ void Unk02090ccc::func_020927bc() {
     }
 }
 
-/* 99.85 %: dx and adv swap registers (best of the declaration orders tried). */
 void Unk02090ccc::func_02092788() {
     Unk0208f8b0 *e = 0;
     int i = 0;
