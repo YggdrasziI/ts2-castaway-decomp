@@ -45,8 +45,16 @@ struct Unk0205d8d8Vec {
     int z;
 };
 
+struct Unk0205d8d8Arr {
+    int v[3];
+};
+
 /* A box: corner and size. */
 struct Unk0205d8d8Box {
+    Unk0205d8d8Box(const Unk0205d8d8Arr &a, const Unk0205d8d8Arr &b) {
+        *(Unk0205d8d8Arr *)&this->a = a;
+        *(Unk0205d8d8Arr *)&this->b = b;
+    }
     Unk0205d8d8Box(const Unk0205d8d8Vec &a, const Unk0205d8d8Vec &b) : a(a), b(b) {}
 
     Unk0205d8d8Vec a;
@@ -767,73 +775,96 @@ int Unk02061d08Item::func_28() {
 extern "C" {
 
 /*
- * 74.46 %: the original keeps two vectors on the stack (corner at sp+0x1C,
- * size at sp+0x10) and copies them into the result with ldmia/stmia; here
- * the result is built in place. Separate locals (kept in registers),
- * pointers, references, by-value constructor and helpers tried.
+ * 99.70 %: in the rotation cases 3 and 1 two temporaries are swapped in r1-r3.
+ * The two vectors stay on the stack as arrays (struct locals with named
+ * fields go to registers). `range` is `volatile` as a hypothesis: the original
+ * reloads the block fields at the bottom of the loop only. The negation apart
+ * from the subtraction keeps `rsb` and `sub` (the single expression folds to
+ * `add` and `rsb`).
  */
 Unk0205d8d8Box func_0205e87c(Unk02061d08Item *item) {
     Unk020956f8 *script = item->def->script;
-    Unk0205d8d8Box box(Unk0205d8d8Vec(0, 0, 0), Unk0205d8d8Vec(0, 0, 0));
+    Unk0205d8d8Arr a;
+    a.v[0] = 0;
+    a.v[1] = 0;
+    a.v[2] = 0;
+    Unk0205d8d8Arr b;
+    b.v[0] = 0;
+    b.v[1] = 0;
+    b.v[2] = 0;
     Unk02099c78Block *block = (Unk02099c78Block *)script->func_02095a3c(0x75d11eb1);
     if (block == 0) {
-        return box;
+        return Unk0205d8d8Box(a, b);
     }
     Unk02099c78Value *values = script->func_02095ab0();
-    for (int i = block->start; i < block->start + block->count; i++) {
-        switch (values[i].unk0) {
-        case 0x4cd76e93:
-            box.a.x = values[i].unk4;
-            break;
-        case 0x8706ee93:
-            box.a.y = values[i].unk4;
-            break;
-        case 0xc1366e93:
-            box.a.z = values[i].unk4;
-            break;
-        case 0x4c23274d:
-            box.b.x = values[i].unk4;
-            break;
-        case 0x8652a74d:
-            box.b.y = values[i].unk4;
-            break;
-        case 0xc082274d:
-            box.b.z = values[i].unk4;
-            break;
-        }
+    volatile short *range = (volatile short *)&block->start;
+    int i = range[0];
+    if (i < i + block->count) {
+        do {
+            switch (values[i].unk0) {
+            case 0x4cd76e93:
+                a.v[0] = values[i].unk4;
+                break;
+            case 0x8706ee93:
+                a.v[1] = values[i].unk4;
+                break;
+            case 0xc1366e93:
+                a.v[2] = values[i].unk4;
+                break;
+            case 0x4c23274d:
+                b.v[0] = values[i].unk4;
+                break;
+            case 0x8652a74d:
+                b.v[1] = values[i].unk4;
+                break;
+            case 0xc082274d:
+                b.v[2] = values[i].unk4;
+                break;
+            }
+            i++;
+        } while (i < range[0] + range[1]);
     }
     Unk020680d4Dir dir = item->func_1c();
     switch (dir.v) {
     case 0:
         break;
     case 3: {
-        int x = box.a.x;
-        int bz = box.b.z;
-        box.a.x = -box.a.z - box.b.z;
-        box.a.z = x;
-        box.b.z = box.b.x;
-        box.b.x = bz;
+        int x = a.v[0];
+        int z = a.v[2];
+        int bz = b.v[2];
+        int bx = b.v[0];
+        a.v[2] = x;
+        b.v[2] = bx;
+        b.v[0] = bz;
+        { int n = -z; n -= bz; a.v[0] = n; }
         break;
     }
     case 1: {
-        int z = box.a.z;
-        int bz = box.b.z;
-        box.a.z = -box.a.x - box.b.x;
-        box.a.x = z;
-        box.b.z = box.b.x;
-        box.b.x = bz;
+        int x = a.v[0];
+        int z = a.v[2];
+        int bx = b.v[0];
+        int bz = b.v[2];
+        a.v[0] = z;
+        b.v[2] = bx;
+        b.v[0] = bz;
+        { int n = -x; n -= bx; a.v[2] = n; }
         break;
     }
-    case 2:
-        box.a.x = -box.a.x - box.b.x;
-        box.a.z = -box.a.z - box.b.z;
+    case 2: {
+        int n = -a.v[0];
+        int m = -a.v[2];
+        n -= b.v[0];
+        m -= b.v[2];
+        a.v[0] = n;
+        a.v[2] = m;
         break;
+    }
     }
     Unk0205d8d8Vec pos = item->func_04();
-    box.a.x += pos.x;
-    box.a.y += pos.y;
-    box.a.z += pos.z;
-    return box;
+    a.v[0] += pos.x;
+    a.v[1] += pos.y;
+    a.v[2] += pos.z;
+    return Unk0205d8d8Box(a, b);
 }
 
 }
