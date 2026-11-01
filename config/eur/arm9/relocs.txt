@@ -306,7 +306,7 @@ from:0x02002bc0 kind:load to:0x020b70e0 module:main
 from:0x02002bc4 kind:load to:0x020be05c module:main
 from:0x02002bd0 kind:arm_call to:0x020023b8 module:main
 from:0x02002c30 kind:arm_call to:0x02008064 module:main
-from:0x02002c48 kind:load to:0x020b70f0 module:main
+from:0x02002c48 kind:load to:0x020b70e8 add:0x8 module:main
 from:0x02002c4c kind:load to:0x020b38b0 module:main
 from:0x02002c5c kind:arm_call to:0x02002414 module:main
 from:0x02002c90 kind:arm_call to:0x02002438 module:main
