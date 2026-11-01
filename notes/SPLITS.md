@@ -312,7 +312,7 @@ Commands: `python tools/compiler_sweep.py --ref <project> --compilers 2.0/sp1p5
 
 ### MSL / runtime files (2026-10-25, sources 2026-11-01)
 
-All `complete` except `printf.c` (code at 100 %, its `.data` is not delinked yet).
+All `complete`.
 objdiff scores the `.bss` of `abort_exit_arm_eabi.c` 97 % (section names); the bytes
 are checked by the link.
 
@@ -331,15 +331,22 @@ none here either.
 | File | `.text` | Matched in order (twewy names) |
 |---|---|---|
 | `abort_exit_arm_eabi.c` | 0x02080114-0x020802AC, `.bss` 0x020C77A8-0x020C78B8 | `abort`, `exit`, `__exit` |
+| `ansi_files.c` | 0x0208050C-0x02080574, `.data` 0x020BCBBC-0x020BCCA0, `.bss` 0x020C79D8-0x020C7CD8 | `__flush_all`, `__files`, console buffers |
+| `arith.c` | 0x02080574-0x02080580 | `abs` |
+| `buffer_io.c` | 0x02080580-0x0208063C | `__convert_from_newlines`, `__prep_buffer`, `__flush_buffer` |
 | `file_io.c` | 0x0208063C-0x02080724 | `fflush` |
 | `mbstring.c` | 0x02080724-0x02080804 | `__mbtowc_noconv`, `__wctomb_noconv`, `wctomb`, `wcstombs` |
 | `mem.c` | 0x02080804-0x02080864 | `memcpy`, `memset`, `memchr` |
 | `mem_funcs.c` | 0x02080864-0x02080914 | `__fill_mem` |
-| `printf.c` | 0x02080914-0x02082A58 | `parse_format` ... `sprintf` (11) |
+| `printf.c` | 0x02080914-0x02082A58, `.data` 0x020BCEBC-0x020BCEFC | `parse_format` ... `sprintf` (11) |
 | `scanf.c` | 0x02082A58-0x02082ADC | `__StringRead` only |
 | `critical_regions.c` | no code, `.bss` 0x020C78B8-0x020C79D8 | `__cs_id`, `__cs_ref`, `__cs` |
 | `signal.c` | 0x02082ADC-0x02082C0C, `.bss` 0x020C7CDC-0x020C7CF8 | `raise` |
-| `string.c` | 0x02082C0C-0x02082E90 | `strlen`, `strcpy`, `strncpy`, `strcmp`, `strchr` |
+| `string.c` | 0x02082C0C-0x02082EFC | `strlen`, `strcpy`, `strncpy`, `strcmp`, `strchr`, `strstr` |
+| `strtoul.c` | 0x02082EFC-0x020833B8 | `__strtoul`, `strtol`, `atoi` |
+| `math/s_copysign.c`, `s_fabs.c`, `s_frexp.c`, `s_ldexp.c` | 0x020833B8-0x02083708 | fingerprints or sizes |
+| `ansi_fp.c` | 0x02083708-0x0208409C, `.data` 0x020BCEFC-0x020BCFD0 | `__must_round` ... `__num2dec` |
+| `math_api.c` | 0x0208409C-0x020841B4 | `__msl_generic_count_bits64`, `__signbitd`, `__fpclassifyd` |
 | `console_io.c` | 0x020841B4-0x02084278 | `sys_*`, `__read_console`, `__write_console`, `__close_console` |
 | `CompressedNumbers.cpp` | 0x02084278-0x02084390 | `__DecodeSignedNumber`, `__DecodeUnsignedNumber` |
 | `ExceptionHandler.cpp` | 0x02084390-0x020856D4 | `BinarySearch` ... `__end_catch` (`.exceptix` -0x020ACF64); `func_02085148` was the end of `UnwindStack` |
@@ -348,8 +355,8 @@ none here either.
 | `MWException.cpp` | 0x02085B34-0x02085D24 | `dthandler`, `duhandler`, `terminate`, `__register_global_object`, `__throw_catch_compare` |
 | `ExceptionHandlerTS.cpp` | 0x02085D24-0x02085EEC | `__PopStackFrame` ... `__TransferControl`, `__rethrow` |
 
-Left in gaps (no anchor on one side): 0x020802AC-0x0208063C (`ansi_files.c`,
-`buffer_io.c` and unknown functions), 0x02082E90-0x020841B4 (`strtoul.c`, `fabs`,
-`pool_alloc.c`, unknown), 0x02085744-0x0208575C (two 12-byte getters, unknown file),
+Left in gaps: 0x020802AC-0x0208050C (six functions with exception entries, unknown
+file: a table of six operations selected by bits of the last argument),
+0x02085744-0x0208575C (two 12-byte getters, unknown file),
 0x02085EEC-0x02089780 (FP emulation, division helpers). Function names stay `func_<addr>` where only the size
 matches (`SPEC.md`).

@@ -61,6 +61,11 @@ checked at 100 % in objdiff against this ROM.
 | `libs/c/src/{abort_exit_arm_eabi,critical_regions,file_io,mem,mem_funcs,signal,string}.c` | same paths | none |
 | `libs/c/src/mbstring.c` | same path | `mbtowc` removed (not in this ROM, it was kept by the link) |
 | `libs/c/src/scanf.c` | same path | reduced to `__StringRead`, the only function linked here |
+| `libs/c/src/{ansi_files,buffer_io,math_api}.c`, `libs/c/src/math/{s_copysign,s_fabs,s_frexp,s_ldexp}.c` | same paths | none |
+| `libs/c/src/ansi_fp.c` | same path | `__equals_dec`, `__less_dec`, `__minus_dec`, `__dec2num` removed (not in this ROM) |
+| `libs/c/src/strtoul.c` | same path | `__strtoull`, `strtoul` removed (not in this ROM); `strtol`, `atoi` written from the ROM |
+| `libs/c/src/string.c` | same path | `strstr` written from the ROM |
+| `libs/c/src/arith.c` | none | `abs` written from the ROM; file name from the header `arith.h` |
 | `libs/c/src/printf.c` | same path | `vsprintf` replaced by `snprintf` (written from the ROM); `%s` path rewritten from the ROM: wide strings rejoin the narrow path, `strptr` merged into `buff_ptr`; `case 'p'` dropped (jump table end) |
 | `libs/runtime/src/{console_io.c,CompressedNumbers.cpp,StaticInitializers.cpp}` | same paths | none |
 | `libs/runtime/src/ExceptionHandler.cpp` | same path | `__unexpected` removed (not in this ROM); two `continue` tests rewritten for the branch order (`break`, `goto`); `__end_catch` renamed `__end__catch`, the name the compiler calls |

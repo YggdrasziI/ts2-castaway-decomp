@@ -28,7 +28,7 @@ void func_0207f390();
 void func_0207ff64();
 int func_0207f968(int a);
 int func_0207f270(int a, short *out);
-u32 func_02080574(int value);
+u32 abs(int value);
 void func_020897b4(const char *format, ...);
 }
 
@@ -56,7 +56,7 @@ extern "C" void func_020a3eb4(Unk020a3e40 *p) {
     if (func_0207f270(3, &sample) != 0) {
         return;
     }
-    p->level = func_02080574(sample);
+    p->level = abs(sample);
     if (p->level > p->threshold) {
         p->lowCount = 0;
         if (p->flags & 1) {

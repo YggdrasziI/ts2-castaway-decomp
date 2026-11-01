@@ -738,6 +738,22 @@ libs/c/src/abort_exit_arm_eabi.c:
     .exceptix   start:0x020acd24 end:0x020acd48
     .bss        start:0x020c77a8 end:0x020c78b8
 
+libs/c/src/ansi_files.c:
+    complete
+    .text       start:0x0208050c end:0x02080574
+    .data       start:0x020bcbbc end:0x020bcca0
+    .bss        start:0x020c79d8 end:0x020c7cd8
+    .exceptix   start:0x020acd90 end:0x020acd9c
+
+libs/c/src/arith.c:
+    complete
+    .text       start:0x02080574 end:0x02080580
+
+libs/c/src/buffer_io.c:
+    complete
+    .text       start:0x02080580 end:0x0208063c
+    .exceptix   start:0x020acd9c end:0x020acda8
+
 libs/c/src/file_io.c:
     complete
     .text       start:0x0208063c end:0x02080724
@@ -758,9 +774,11 @@ libs/c/src/mem_funcs.c:
     .text       start:0x02080864 end:0x02080914
 
 libs/c/src/printf.c:
+    complete
     .text       start:0x02080914 end:0x02082a58
     .exception  start:0x020acc60 end:0x020acc68
     .exceptix   start:0x020acdd8 end:0x020ace44
+    .data       start:0x020bcebc end:0x020bcefc
 
 libs/c/src/scanf.c:
     complete
@@ -778,7 +796,40 @@ libs/c/src/signal.c:
 
 libs/c/src/string.c:
     complete
-    .text       start:0x02082c0c end:0x02082e90
+    .text       start:0x02082c0c end:0x02082efc
+
+libs/c/src/strtoul.c:
+    complete
+    .text       start:0x02082efc end:0x020833b8
+    .exceptix   start:0x020ace50 end:0x020ace74
+
+libs/c/src/math/s_copysign.c:
+    complete
+    .text       start:0x020833b8 end:0x020833e0
+
+libs/c/src/math/s_fabs.c:
+    complete
+    .text       start:0x020833e0 end:0x02083400
+
+libs/c/src/math/s_frexp.c:
+    complete
+    .text       start:0x02083400 end:0x020834bc
+    .exceptix   start:0x020ace74 end:0x020ace80
+
+libs/c/src/math/s_ldexp.c:
+    complete
+    .text       start:0x020834bc end:0x02083708
+    .exceptix   start:0x020ace80 end:0x020ace8c
+
+libs/c/src/ansi_fp.c:
+    complete
+    .text       start:0x02083708 end:0x0208409c
+    .data       start:0x020bcefc end:0x020bcfd0
+    .exceptix   start:0x020ace8c end:0x020acee0
+
+libs/c/src/math_api.c:
+    complete
+    .text       start:0x0208409c end:0x020841b4
 
 libs/runtime/src/console_io.c:
     complete

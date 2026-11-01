@@ -240,3 +240,29 @@ char* strchr(const char* str, int chr) {
 
     return (c ? 0 : (char*)(p - 1));
 }
+
+char* strstr(const char* str, const char* pat) {
+    const unsigned char* s1 = (const unsigned char*)str;
+    const unsigned char* p1 = (const unsigned char*)pat;
+    unsigned char        firstc, c1, c2;
+
+    if ((pat == 0) || (!(firstc = *p1++))) {
+        return (char*)str;
+    }
+
+    while (c1 = *s1++) {
+        if (c1 == firstc) {
+            const unsigned char* s2 = s1;
+            const unsigned char* p2 = p1;
+
+            while (((c1 = *s2++) == (c2 = *p2++)) && c1) {
+            }
+
+            if (!c2) {
+                return (char*)s1 - 1;
+            }
+        }
+    }
+
+    return 0;
+}
