@@ -1120,3 +1120,13 @@ src/game/unit_020A4E60.cpp:
     complete
     .text       start:0x020a4e60 end:0x020a5694
     .bss        start:0x020d6d00 end:0x020d7100
+
+src/game/unit_020A5694.cpp:
+    complete
+    .text       start:0x020a5694 end:0x020a5948
+
+src/game/unit_020A5948.cpp:
+    complete
+    .text       start:0x020a5948 end:0x020a5ccc
+    .data       start:0x020bda44 end:0x020bdad0
+    .bss        start:0x020d7100 end:0x020d710c

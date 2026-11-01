@@ -611,7 +611,14 @@ default: add one here only once a unit of this ROM proves it with mwccarm.
   (`g(h(x), loop ? 1 : 2)` computes the select first); a local for the call's
   result keeps the original order (`func_02055c60`, 62.4 % -> 100 %).
 
+- A bool kept in a register then tested again (`tst`, `movne #1`, `moveq #0`, `cmp r0, #0`): an inline helper
+  written `if (x) return true; return false;` keeps it; `return x != 0;` folds into the test
+  (`func_020a5bec`, 83.89 % -> 100 %). Assigning the helper's result to an `int` local gives the same output.
+
 ## Data layout
+
+- Statics addressed from one anchor but in a different order than declared: one static struct fixes the layout
+  (`unit_020A5948.cpp`: `.bss` 50 % -> 100 %). A `const char *const` goes to `.rodata`, a `const char *` to `.data`.
 
 - `-dead` strips a whole unreferenced `.rodata` section of a gap object: splitting a range so that a gap only
   holds data no relocation reaches shifts every later address (0x194 bytes for the digit strings 0x020B59F4).
