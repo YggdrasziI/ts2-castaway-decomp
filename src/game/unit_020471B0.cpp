@@ -41,6 +41,15 @@ class Unk020471b0 : public Unk020a07d4 {
 public:
     Unk020471b0();
     virtual ~Unk020471b0();
+    virtual bool func_3c(bool done) {
+        return true;
+    }
+    virtual bool func_34() {
+        return false;
+    }
+    virtual bool func_2c() {
+        return fade.func_hidden();
+    }
     virtual void func_08();
     virtual bool func_0c(short);
     virtual bool func_10();
@@ -56,17 +65,8 @@ public:
     }
     virtual void func_24() {}
     virtual bool func_28();
-    virtual bool func_2c() {
-        return fade.func_hidden();
-    }
     virtual bool func_30();
-    virtual bool func_34() {
-        return false;
-    }
     virtual void func_38(bool active);
-    virtual bool func_3c(bool done) {
-        return true;
-    }
 
     void func_020476e4();
     void func_02047764();

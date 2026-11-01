@@ -72,6 +72,12 @@ class Unk0204a9f8 : public Unk020a07d4 {
 public:
     Unk0204a9f8(Unk02093648 *archive, int first, int last);
     virtual ~Unk0204a9f8();
+    virtual bool func_34() {
+        return false;
+    }
+    virtual bool func_2c() {
+        return fade.func_hidden();
+    }
     virtual void func_08();
     virtual bool func_0c(short);
     virtual bool func_10();
@@ -85,13 +91,7 @@ public:
     }
     virtual void func_24() {}
     virtual bool func_28();
-    virtual bool func_2c() {
-        return fade.func_hidden();
-    }
     virtual bool func_30();
-    virtual bool func_34() {
-        return false;
-    }
     virtual void func_38(bool active);
     virtual bool func_3c(bool done);
 

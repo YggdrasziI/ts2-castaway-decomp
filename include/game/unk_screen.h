@@ -434,6 +434,12 @@ class Unk020465bc : public Unk020a07d4 {
 public:
     Unk020465bc(Unk02044234 *owner);
     virtual ~Unk020465bc();
+    virtual bool func_34() {
+        return true;
+    }
+    virtual bool func_2c() {
+        return fade.func_hidden();
+    }
     virtual void func_08();
     virtual bool func_0c(short a);
     virtual bool func_10();
@@ -450,12 +456,6 @@ public:
     virtual void func_24() {}
     virtual bool func_28() {
         return fade.func_shown();
-    }
-    virtual bool func_2c() {
-        return fade.func_hidden();
-    }
-    virtual bool func_34() {
-        return true;
     }
     virtual void func_38(bool active);
     virtual bool func_3c(bool done);
