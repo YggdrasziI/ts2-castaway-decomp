@@ -2015,3 +2015,35 @@ libs/nitro/src/pxi/unit_0207C4F8.c:
 libs/nitro/src/os/unit_0207ACFC.c:
     complete
     .text       start:0x0207acfc end:0x0207ade8
+
+libs/nitro/src/spi/unit_0207ED80.c:
+    complete
+    .text       start:0x0207ed80 end:0x0207ee10
+
+libs/nitro/src/rtc/unit_0207CF0C.c:
+    complete
+    .text       start:0x0207cf0c end:0x0207cf94
+
+libs/nitro/src/spi/unit_0207FF64.c:
+    complete
+    .text       start:0x0207ff64 end:0x02080028
+
+libs/nitro/src/spi/unit_0207F390.c:
+    complete
+    .text       start:0x0207f390 end:0x0207f41c
+
+libs/nitro/src/spi/unit_02080084.c:
+    complete
+    .text       start:0x02080084 end:0x020800c4
+
+libs/nitro/src/os/unit_0207A884.c:
+    complete
+    .text       start:0x0207a884 end:0x0207a904
+
+libs/nitro/src/card/unit_0207553C.c:
+    complete
+    .text       start:0x0207553c end:0x020755bc
+
+libs/nitro/src/ctrdg/unit_02075A3C.c:
+    complete
+    .text       start:0x02075a3c end:0x02075abc
