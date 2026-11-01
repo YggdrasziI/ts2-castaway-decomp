@@ -708,6 +708,26 @@ libs/nitro/src/os/os_context.c:
     complete
     .text       start:0x0207afe0 end:0x0207b0dc
 
+libs/nitro/src/os/unit_02079FF4.c:
+    complete
+    .text       start:0x02079ff4 end:0x0207a0dc
+
+libs/nitro/src/os/unit_0207AE98.c:
+    complete
+    .text       start:0x0207ae98 end:0x0207afc8
+
+libs/nitro/src/pm/unit_0207F47C.c:
+    complete
+    .text       start:0x0207f47c end:0x0207f570
+
+libs/nns/src/snd/unit_0209E798.c:
+    complete
+    .text       start:0x0209e798 end:0x0209e854
+
+libs/nns/src/fnd/unit_0209E854.c:
+    complete
+    .text       start:0x0209e854 end:0x0209ea7c
+
 libs/nitro/src/os/os_mutex.c:
     complete
     .text       start:0x0207b1a8 end:0x0207b3c4

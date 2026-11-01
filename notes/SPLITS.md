@@ -384,3 +384,9 @@ starts with `eor`.
 of the code 0x02080114-0x02089780 now comes from sources.
 
 `libs/nitro/src/os/os_mutex.c`: `.text` 0x0207B1A8-0x0207B3C4, seven functions in reverse source order (`OSi_DequeueItem` first, `OS_InitMutex` last); `OSi_UnlockAllMutex` and `OS_InitMutex` are named from khdays' fingerprints of the same code.
+
+First NitroSDK / NitroSystem units from khdays' fingerprints: `libs/nitro/src/os/unit_02079FF4.c`
+(IRQ masks), `os/unit_0207AE98.c` (thread queue links), `pm/unit_0207F47C.c` (power manager lists),
+`libs/nns/src/snd/unit_0209E798.c` (fader), `libs/nns/src/fnd/unit_0209E854.c` (lists). Named by address:
+each is only the part of its original file that is written. `libs/nns` builds with 1.2/sp2p3
+like `libs/nitro`, a working choice.

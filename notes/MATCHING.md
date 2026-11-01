@@ -1549,3 +1549,8 @@ default: add one here only once a unit of this ROM proves it with mwccarm.
 - Two `.bss` objects in the wrong order whatever the definition order: `.bss` is sorted by
   size inside an object, so they are two files (`fp_status.c`, `fp_handlers.c`). dsd also
   wants a `.bss` symbol of `symbols.txt` global: no `static`.
+- Library functions with few hits in a sweep: score each undelinked function against every
+  compiled reference function of about the same size instead of requiring an exact match.
+  It finds the SDK function behind most `func_` names, and the rest of the gap is usually
+  names, constants or `.bss` offsets. Functions compiled in reverse source order (1.2)
+  give the file order.

@@ -128,6 +128,7 @@ RUNTIME_CC_FLAGS = " ".join(
 # Configurations for when a file or directory needs different settings than the project default
 COMPILER_CONFIGS: dict[Path, CompilerConfig] = {
     Path("libs/nitro"): CompilerConfig(version="1.2/sp2p3", flags=SDK_CC_FLAGS),
+    Path("libs/nns"): CompilerConfig(version="1.2/sp2p3", flags=SDK_CC_FLAGS),
     Path("libs/c"): CompilerConfig(version=MSL_COMPILER_VERSION, flags=MSL_CC_FLAGS),
     Path("libs/runtime"): CompilerConfig(version=MSL_COMPILER_VERSION, flags=RUNTIME_CC_FLAGS),
 }
