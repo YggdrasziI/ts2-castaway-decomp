@@ -1077,8 +1077,17 @@ src/game/unit_020A1E68.cpp:
 
 src/game/unit_020A1F20.cpp:
     complete
-    .text       start:0x020a1f20 end:0x020a20bc
+    .text       start:0x020a1f20 end:0x020a2118
     .init       start:0x020ae4d0 end:0x020ae4e8
     .ctor       start:0x020b6ebc end:0x020b6ec0
     .data       start:0x020bd898 end:0x020bd8a0
     .bss        start:0x020d62a4 end:0x020d6c68
+
+src/game/unit_020A2118.cpp:
+    .text       start:0x020a2118 end:0x020a22fc
+
+src/game/unit_020A22FC.cpp:
+    .text       start:0x020a22fc end:0x020a3a44
+    .rodata     start:0x020b59f4 end:0x020b6d0c
+    .data       start:0x020bd8a0 end:0x020bda20
+    .bss        start:0x020d6c68 end:0x020d6cd0

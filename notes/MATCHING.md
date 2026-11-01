@@ -613,6 +613,10 @@ default: add one here only once a unit of this ROM proves it with mwccarm.
 
 ## Data layout
 
+- `-dead` strips a whole unreferenced `.rodata` section of a gap object: splitting a range so that a gap only
+  holds data no relocation reaches shifts every later address (0x194 bytes for the digit strings 0x020B59F4).
+  Keep such data in the same range as a referenced object.
+
 - A file boundary from a static: mwccarm addresses all the function-local statics of a
   file from one anchor, so a second static is loaded as `[r0, #0x14]`. If the original
   loads it at offset 0 with its own pool word, the two statics are in two files

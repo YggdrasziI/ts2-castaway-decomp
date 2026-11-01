@@ -1,5 +1,5 @@
 /*
- * Unit 0x020A1F20-0x020A20BC: the random numbers of the game (static object data_020d62a4,
+ * Unit 0x020A1F20-0x020A2118: the random numbers of the game (static object data_020d62a4,
  * 0x9C4 bytes, with its `__sinit`): a Mersenne Twister (the constants of MT19937: 624 words,
  * shift 397, matrix 0x9908B0DF, seed multiplier 0x6C078965, default seed 5489). Bounds:
  * hypothesis (the static initializer 0x020AE4D0 sets its index; `.data` is the matrix table).
@@ -15,7 +15,18 @@ public:
     int index;
 };
 
+struct Unk020a20f0Time {
+    u32 unk0;
+    u32 unk4;
+    u32 unk8;
+};
+
+static inline int func_fxmul(int a, int b) {
+    return (int)(((long long)a * b) >> 12);
+}
+
 extern "C" void func_020a1f3c(Unk020a20f0 *o, u32 seed);
+extern "C" void func_0207ce4c(Unk020a20f0Time *time);
 
 Unk020a20f0 data_020d62a4;
 
@@ -58,4 +69,16 @@ extern "C" u32 func_020a1f84(Unk020a20f0 *o) {
     y ^= (y << 15) & 0xefc60000;
     y ^= y >> 18;
     return y;
+}
+
+/* A number between min and max, from twelve random bits taken as a 20.12 fraction. */
+extern "C" int func_020a20bc(Unk020a20f0 *o, int min, int max) {
+    return min + func_fxmul(max - min, func_020a1f84(o) & 0xfff);
+}
+
+/* Seeds from the third word of the system clock reading. */
+extern "C" void func_020a20f0(Unk020a20f0 *o) {
+    Unk020a20f0Time time;
+    func_0207ce4c(&time);
+    func_020a1f3c(o, time.unk8);
 }
