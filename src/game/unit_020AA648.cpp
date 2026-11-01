@@ -138,10 +138,11 @@ extern "C" int func_020aa648(const Unk0209674c *node, u32 hash) {
             if (total > 0) {                                                                           \
                 for (; i < total; i++) {                                                               \
                     Unk0209674c child = node->func_02096774(i);                                        \
+                    Unk0209674c *c = &child;                                                           \
                     void *s = GET(l, type, index);                                                     \
-                    if (hash == child.func_02096800()) {                                               \
-                        func_020ab680(&child, s, names, index | (type << 16));                         \
-                        ok = (ok | reader(&child, s, names)) != 0;                                     \
+                    if (hash == c->func_02096800()) {                                                  \
+                        func_020ab680(c, s, names, index | (type << 16));                              \
+                        ok = (ok | reader(c, s, names)) != 0;                                          \
                         index++;                                                                       \
                     }                                                                                  \
                 }                                                                                      \
