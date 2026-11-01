@@ -58,6 +58,14 @@ Commands: `python tools/compiler_sweep.py --ref <project> --compilers 2.0/sp1p5
 --min-size 8 --json out.json <sources>` (khdays: add `--include
 <khdays>/include/{nitro,nnsys,game}`, and batches of ~150 files on Windows).
 
+## Data-only units (2026-11-01)
+
+Hypothesis on the bounds: each `unit_<address>.c` without `.text` holds one ascending run of
+`.bss` or `.data` sizes, which marks one original object (`notes/MATCHING.md`, data sections).
+Their real files are the neighbouring library or game files; names and types stay unknown,
+the directory only follows the code that uses them. `libs/nitro/src/fx/unit_020AF1E8.c` is
+the sine and cosine table: every entry equals the rounded value, checked by script.
+
 ## Units
 
 | Unit | Bounds | Content | Status |

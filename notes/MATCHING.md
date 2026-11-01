@@ -1563,3 +1563,22 @@ Link-time constants without relocation (`SDK_IRQ_STACKSIZE`, `SDK_SYS_STACKSIZE`
 
 - Value read through an inline helper is loaded before the operands of the comparison: `v == get()` with an inline `get` loads the register first, unlike a macro (`PM_GoSleepMode` VBlank loops). Likewise `SND_CalcDecibel` as an inline keeps one saved register per term (`NNSi_SndPlayerMain`); a plain table read saves fewer registers and shrinks the function.
 - `block + size` on a `char *` keeps the pointer as first operand whatever the source order; write `size + (u32)block` to get `add rd, size, block` (frame heap head allocator).
+
+## Data sections (2026-11-01)
+
+- The compilers put each `.bss` and `.data` variable in its own section and sort them by
+  size inside an object. In the binary, a drop in size between neighbours therefore marks a
+  file boundary. Equal sizes keep an odd order: try the declaration permutations.
+- Initialized objects with relocations sort apart from those without, so a run mixing the
+  two needs separate objects (`locale.c` split in three).
+- A variable that is all zero goes to `.bss`, even initialized. Merge it with a non-zero
+  neighbour when the binary has it in `.data` (`data_020bcca0`).
+- The linker aligns each object section to 4: two 2-byte-aligned neighbours cannot be two
+  objects. They are members of one object: drop the inner symbols, use `add:` relocations
+  (`data_020c5700`, 28 bytes).
+- A code literal naming an inner address can force two objects: `data_020b38e8[i + 1]`
+  reuses one literal and loses 4 bytes of code, so the arc cosine table stays two arrays.
+- objdiff pairs data by symbol. In a partly matched unit, a literal only scores once the
+  target symbol has the `@<n>` name of the object and the exact size (`data(byte[<n>])`),
+  without padding. Pair them on bytes, or on the relocated function for a method pointer
+  constant, never by guess. Keep the name of a symbol used from another unit.
