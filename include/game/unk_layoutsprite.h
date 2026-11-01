@@ -42,6 +42,22 @@ public:
     int unk8;
 };
 
+struct Unk020a8f84Vec {
+    int x;
+    int y;
+    int z;
+};
+
+class Unk020a8f84 : public Unk020a7aa0 {
+public:
+    Unk020a8f84();
+    virtual ~Unk020a8f84();
+    virtual void func_08(Unk020a9d58 *layout, int on);
+    virtual void func_0c(Unk020a9d58 *layout);
+
+    Unk020a8f84Vec pos;
+};
+
 class Unk020a7c10 : public Unk020a7aa0 {
 public:
     Unk020a7c10();
