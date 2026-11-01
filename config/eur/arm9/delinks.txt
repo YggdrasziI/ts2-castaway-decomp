@@ -2711,3 +2711,71 @@ src/game/unit_020C8048.c:
 src/game/unit_020C8058.c:
     complete
     .bss        start:0x020c8058 end:0x020c8068
+
+src/game/unit_020AE7CC.c:
+    complete
+    .rodata     start:0x020ae7cc end:0x020ae874
+
+src/game/unit_020AEFE0.c:
+    complete
+    .rodata     start:0x020aefe0 end:0x020aefe8
+
+src/game/unit_020AEFE8.c:
+    complete
+    .rodata     start:0x020aefe8 end:0x020af000
+
+src/game/unit_020AF000.c:
+    complete
+    .rodata     start:0x020af000 end:0x020af010
+
+libs/nitro/src/card/unit_020BCB64.c:
+    complete
+    .data       start:0x020bcb64 end:0x020bcb68
+
+libs/nitro/src/fs/unit_020BCB68.c:
+    complete
+    .data       start:0x020bcb68 end:0x020bcb70
+
+libs/nitro/src/gx/unit_020BCB70.c:
+    complete
+    .data       start:0x020bcb70 end:0x020bcb74
+
+libs/nitro/src/gx/unit_020BCB74.c:
+    complete
+    .data       start:0x020bcb74 end:0x020bcb78
+
+libs/nitro/src/os/unit_020BCB78.c:
+    complete
+    .data       start:0x020bcb78 end:0x020bcb88
+
+libs/nitro/src/rtc/unit_020BCB88.c:
+    complete
+    .data       start:0x020bcb88 end:0x020bcbbc
+
+libs/c/src/locale.c:
+    complete
+    .data       start:0x020bcca0 end:0x020bccb0
+
+libs/nns/src/snd/unit_020B58EC.c:
+    complete
+    .rodata     start:0x020b58ec end:0x020b59b0
+
+src/game/unit_020B59B0.c:
+    complete
+    .rodata     start:0x020b59b0 end:0x020b59c4
+
+libs/c/src/unit_020BCDA8.c:
+    complete
+    .data       start:0x020bcda8 end:0x020bcdc0
+
+libs/c/src/unit_020BCDC0.c:
+    complete
+    .data       start:0x020bcdc0 end:0x020bcebc
+
+libs/c/src/unit_020BCCB0.c:
+    complete
+    .data       start:0x020bccb0 end:0x020bcce8
+
+libs/c/src/unit_020BCCE8.c:
+    complete
+    .data       start:0x020bcce8 end:0x020bcda8
