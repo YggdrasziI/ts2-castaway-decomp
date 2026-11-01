@@ -41,9 +41,6 @@ class Unk020471b0 : public Unk020a07d4 {
 public:
     Unk020471b0();
     virtual ~Unk020471b0();
-    virtual bool func_3c(bool done) {
-        return true;
-    }
     virtual bool func_34() {
         return false;
     }
@@ -67,6 +64,9 @@ public:
     virtual bool func_28();
     virtual bool func_30();
     virtual void func_38(bool active);
+    virtual bool func_3c(bool done) {
+        return true;
+    }
 
     void func_020476e4();
     void func_02047764();
@@ -83,11 +83,6 @@ public:
     Unk020a7c90 *message;
 };
 
-/*
- * 98.81 %: one instruction scheduled differently; the original sets r1 to 1
- * after the store of the widget flags, here it is set before the `bic`
- * (local, inline setter and reuse of the field tried).
- */
 Unk020471b0::Unk020471b0() : flags(0), bottom(0), top(0), counter(0), text(0) {
     Unk020a7af4Entry bottomEntries[10];
     Unk020a7af4Entry topEntries[10];

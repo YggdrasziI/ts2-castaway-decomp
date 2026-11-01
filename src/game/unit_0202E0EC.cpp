@@ -165,12 +165,6 @@ public:
 
 static void *func_0202fd38(u32 id, void *user);
 
-/*
- * 98.46 %: registers of the second icon block (key r5, sprite r4, palette r8 in
- * the original), some name lookups truncate through r0 where the original uses
- * r1 or the reverse, and a few instructions are scheduled differently. Tried:
- * declaration order of that block, reusing `key`, a local for mode - 3.
- */
 Unk0202e0ec::Unk0202e0ec(Unk0203c188Owner *owner, int mode)
     : Unk0203c188(owner), mode(mode), toolDef(0), itemDef(0) {
     static const int size = 0x32;

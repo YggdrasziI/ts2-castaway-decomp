@@ -282,10 +282,6 @@ public:
 
 static void *func_02033628(u32 id, void *user);
 
-/*
- * 97.79 %: some name lookups truncate their index through r0 where the
- * original uses r1 or the reverse (see the unsolved patterns).
- */
 Unk0202fddc::Unk0202fddc(Unk0203c188Owner *owner, int mode)
     : Unk0203c188(owner), def(0), count(0), mode(mode), recipe(0) {
     if (mode == 0x1b) {

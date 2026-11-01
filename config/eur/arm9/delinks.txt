@@ -410,22 +410,27 @@ src/game/unit_020450D4.cpp:
     .data       start:0x020b9814 end:0x020b9870
 
 src/game/unit_020455A0.cpp:
+    complete
     .text       start:0x020455a0 end:0x02045bac
     .data       start:0x020b9870 end:0x020b98cc
 
 src/game/unit_02045BAC.cpp:
+    complete
     .text       start:0x02045bac end:0x02046104
     .data       start:0x020b98cc end:0x020b9928
 
 src/game/unit_02046104.cpp:
+    complete
     .text       start:0x02046104 end:0x020465bc
     .data       start:0x020b9928 end:0x020b9984
 
 src/game/unit_020465BC.cpp:
+    complete
     .text       start:0x020465bc end:0x02046b7c
     .data       start:0x020b9984 end:0x020b99e0
 
 src/game/unit_02046B7C.cpp:
+    complete
     .text       start:0x02046b7c end:0x020471b0
     .data       start:0x020b99e0 end:0x020b9a3c
 
@@ -438,6 +443,7 @@ src/game/unit_02047A8C.cpp:
     .data       start:0x020b9a84 end:0x020b9ae4
 
 src/game/unit_0204A9F8.cpp:
+    complete
     .text       start:0x0204a9f8 end:0x0204beec
     .rodata     start:0x020ae9a4 end:0x020aea74
     .data       start:0x020b9ae4 end:0x020b9b2c

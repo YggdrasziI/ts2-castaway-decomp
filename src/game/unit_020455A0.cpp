@@ -54,10 +54,6 @@ public:
     Unk020a7c90 *mark1;
 };
 
-/*
- * 98.90 %: registers only; four name lookups truncate their index through
- * the other register of r0 / r1 than the original, as in the other pages.
- */
 Unk020455a0::Unk020455a0(Unk02044234 *owner) : Unk020465bc(owner) {
     Unk020a7af4Entry entries[0x14];
     Unk020a7af4 names(entries, 0x14);

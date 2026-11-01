@@ -41,10 +41,6 @@ public:
     Unk02050640 buttons[3];
 };
 
-/*
- * 99.90 %: registers only; two name lookups truncate their index through
- * the other register of r0 / r1 than the original, as in unit_02046104.cpp.
- */
 Unk02045bac::Unk02045bac(Unk02044234 *owner) : Unk020465bc(owner) {
     Unk020a7af4Entry entries[0x14];
     Unk020a7af4 names(entries, 0x14);

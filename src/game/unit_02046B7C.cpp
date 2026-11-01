@@ -63,11 +63,6 @@ public:
     int selected;
 };
 
-/*
- * 98.89 %: registers only; four of the name lookups truncate their index
- * through r1 in the original (`mov r1, r0, lsl #16`) and through r0 here, as
- * in the constructor of unit_0204A9F8.cpp.
- */
 Unk02046b7c::Unk02046b7c(Unk02044234 *owner) : Unk020465bc(owner), selected(-1) {
     Unk020a7af4Entry entries[0x14];
     Unk020a7af4 names(entries, 0x14);

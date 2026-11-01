@@ -42,10 +42,6 @@ public:
     Unk02050640 buttons[2];
 };
 
-/*
- * 99.94 %: registers only; one name lookup truncates its index through the
- * other register of r0 / r1 than the original, as in the other pages.
- */
 Unk020450d4::Unk020450d4(Unk02044234 *owner) : Unk020465bc(owner) {
     Unk020a7af4Entry entries[0x14];
     Unk020a7af4 names(entries, 0x14);

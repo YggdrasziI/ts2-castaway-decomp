@@ -110,13 +110,6 @@ public:
     short pages;
 };
 
-/*
- * 98.32 %: the original moves the rectangle of next.func_10() to r1 before it
- * loads the pager's vtable and reads y from it; here y is read from r0 at
- * once, one instruction less (the literal pool is shifted by 4). The same
- * statement matches in unit_0203C2E8.cpp. Tried: a rectangle or y local, a
- * base or panel pointer, a qualified call, an inline helper.
- */
 Unk0203b3b8::Unk0203b3b8(Unk0203c188Owner *owner, int mode) : Unk0203c188(owner), mode(mode) {
     textId = 0;
     Unk020a7af4Entry entries[0x32];

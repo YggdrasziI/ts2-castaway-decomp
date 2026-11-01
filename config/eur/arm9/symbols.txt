@@ -4562,8 +4562,8 @@ data_020ae96c kind:data(any) addr:0x020ae96c
 data_020ae97c kind:data(any) addr:0x020ae97c
 data_020ae98c kind:data(any) addr:0x020ae98c
 data_020ae9a0 kind:data(any) addr:0x020ae9a0
-data_020ae9a4 kind:data(any) addr:0x020ae9a4
-data_020ae9cc kind:data(any) addr:0x020ae9cc
+@597 kind:data(any) addr:0x020ae9a4 local
+@599 kind:data(any) addr:0x020ae9cc local
 data_020ae9fc kind:data(any) addr:0x020ae9fc
 data_020aea38 kind:data(any) addr:0x020aea38
 data_020aea74 kind:data(any) addr:0x020aea74 local
@@ -5647,7 +5647,7 @@ data_020be41c kind:bss addr:0x020be41c
 data_020be420 kind:bss addr:0x020be420
 data_020be424 kind:bss addr:0x020be424
 data_020be428 kind:bss addr:0x020be428
-data_020be42c kind:bss addr:0x020be42c
+data_020be42c kind:bss addr:0x020be42c local
 data_020bfc2c kind:bss addr:0x020bfc2c local
 @127 kind:bss addr:0x020bfc30 local
 data_020bfc3c kind:bss addr:0x020bfc3c

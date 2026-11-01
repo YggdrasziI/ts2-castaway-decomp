@@ -144,11 +144,6 @@ static void func_0204bcf4(const u16 *src, u32 unk, u32 size);
 static void func_0204bd30(const u16 *src, u32 unk, u32 size);
 static void *func_0204be78(u32 id, void *user);
 
-/*
- * 99.45 %: register choices only. Several lookups truncate their index in r1
- * where this code uses r0 (and once the reverse), and one `sub r3` is scheduled
- * before `mov r1`; a lookup helper and a u16 result were tried.
- */
 Unk0204a9f8::Unk0204a9f8(Unk02093648 *archive, int first, int last)
     : flags(0), top(archive, 0), bottom(archive, 1), page(first), lastPage(last), sound(0) {
     const u32 spriteNames[10] = {0x0c7425c2, 0x0c7425c3, 0x0c7425c4, 0x0c7425c5, 0x0c7425c6,

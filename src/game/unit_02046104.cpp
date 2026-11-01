@@ -40,11 +40,6 @@ public:
     Unk02050640 buttons[2];
 };
 
-/*
- * 99.88 %: registers only; two of the name lookups truncate their index
- * through r1 in the original and through r0 here (a u16 local, a cast and a
- * sprite local change nothing), as in unit_02046B7C.cpp.
- */
 Unk02046104::Unk02046104(Unk02044234 *owner) : Unk020465bc(owner) {
     Unk020a7af4Entry entries[0x14];
     Unk020a7af4 names(entries, 0x14);
