@@ -1554,3 +1554,5 @@ default: add one here only once a unit of this ROM proves it with mwccarm.
   It finds the SDK function behind most `func_` names, and the rest of the gap is usually
   names, constants or `.bss` offsets. Functions compiled in reverse source order (1.2)
   give the file order.
+
+Two 32-bit stores through one base register, the high word 0 or the low word 0, come from a single write to a `vu64` register (hardware divider, `libs/nitro/src/fx/unit_02077AE4.c`).
