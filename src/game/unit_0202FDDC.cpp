@@ -110,7 +110,7 @@ struct Unk02056ed0 {
     u32 *tiles;
 
     u32 *func_tile(int x, int y) {
-        return &tiles[y * info->width + x];
+        return &tiles[y * (u32)info->width + x];
     }
 };
 
@@ -615,9 +615,7 @@ static inline Unk0205367c *func_recipe() {
 }
 
 /*
- * 98.69 %: the comparison of an outfit part with the object id reads
- * `cmp id, part` here and `cmp part, id` in the original (operand order, int /
- * u32 id tried); registers of the formatted text at the end of case 0x17.
+ * 99.75 %: one stack argument of func_0209201c is stored later in the original.
  */
 void Unk0202fddc::func_0203161c() {
     if (flags & 2) {
@@ -668,7 +666,8 @@ void Unk0202fddc::func_0203161c() {
         kinds[0] = icon;
         Unk020081dc outfit = func_020081dc(&data_020c43a8);
         for (int i = 0; i < 6; i++) {
-            if (outfit.parts.v[i] == data_020b93bc.cur->id && (u32)(i - 2) <= 1) {
+            int part = outfit.parts.v[i];
+            if (part == data_020b93bc.cur->id && (u32)(i - 2) <= 1) {
                 ids[0] = 0xeef;
                 if (func_0209f0a4(&data_020d60c8) == 5) {
                     buttons[0].func_02050838(s5e8, false);
@@ -869,12 +868,14 @@ void Unk0202fddc::func_0203161c() {
                 func_020a69ac(s238, func_020644bc(key));
                 int palette = func_020644b0(key);
                 Unk02093648 *archive = func_020a18e4()->archive;
-                Unk0209487c *file = func_020a18e4()->archive->func_02093a9c(archive->func_02093e9c(func_020a69a4(s238)));
+                Unk02093648 *archive2 = func_020a18e4()->archive;
+                Unk0209487c *file = archive2->func_02093a9c(archive->func_02093e9c(func_020a69a4(s238)));
                 Unk020916a4 *oam = Unk020916a4::func_02091830();
                 int index = func_020a69cc(s238);
                 oam->func_0209201c((Unk02095140 *)file, index, palette << 4, func_020a7d44(s238) << 4, 0x10);
                 archive = func_020a18e4()->archive;
-                func_020a18e4()->archive->func_02093c58(archive->func_02093e9c(func_020a69a4(s238)));
+                archive2 = func_020a18e4()->archive;
+                archive2->func_02093c58(archive->func_02093e9c(func_020a69a4(s238)));
             }
         } else {
             data_020b93bc.cur = this->def;
@@ -883,7 +884,7 @@ void Unk0202fddc::func_0203161c() {
     }
     func_020a69ac(back.func_02050a40(0), icon);
     if (mode == 0x1a) {
-        func_020a6980(buttons[0].sprite, 0x929195c3);
+        func_020a6980(buttons[0].icon, 0x929195c3);
         buttons[0].func_02050c64(0, 1, 2);
         func_020a716c(buttons[0].func_02050a40(0), 0x74);
         buttons[0].func_18(true);
