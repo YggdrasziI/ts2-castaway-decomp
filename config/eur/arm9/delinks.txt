@@ -868,6 +868,74 @@ libs/runtime/src/ExceptionHandlerTS.cpp:
     .text       start:0x02085d24 end:0x02085eec
     .exceptix   start:0x020ad000 end:0x020ad018
 
+libs/runtime/src/_dadd.c:
+    complete
+    .text       start:0x02085ef0 end:0x0208648c
+
+libs/runtime/src/ll_ufrom_d.c:
+    complete
+    .text       start:0x0208648c end:0x020865f8
+
+libs/runtime/src/_dmul.c:
+    complete
+    .text       start:0x020865f8 end:0x02086d00
+
+libs/runtime/src/_dsub.c:
+    complete
+    .text       start:0x02086d00 end:0x02087268
+
+libs/runtime/src/fadd.c:
+    complete
+    .text       start:0x02087268 end:0x020876c8
+
+libs/runtime/src/fp_compare.c:
+    complete
+    .text       start:0x020876c8 end:0x02087eec
+
+libs/runtime/src/fdiv.c:
+    complete
+    .text       start:0x02087eec end:0x020885e8
+
+libs/runtime/src/ffix.c:
+    complete
+    .text       start:0x020885e8 end:0x02088684
+
+libs/runtime/src/ffix_tail.c:
+    complete
+    .text       start:0x02088684 end:0x020886e4
+
+libs/runtime/src/fflt.c:
+    complete
+    .text       start:0x020886e4 end:0x020887b0
+
+libs/runtime/src/ffltu.c:
+    complete
+    .text       start:0x020887b0 end:0x0208882c
+
+libs/runtime/src/fmul.c:
+    complete
+    .text       start:0x0208882c end:0x02088d0c
+
+libs/runtime/src/fsub.c:
+    complete
+    .text       start:0x02088d0c end:0x02089160
+
+libs/runtime/src/ll_sdiv.c:
+    complete
+    .text       start:0x02089160 end:0x02089320
+
+libs/runtime/src/ll_udiv.c:
+    complete
+    .text       start:0x02089320 end:0x02089368
+
+libs/runtime/src/s32_div_f.c:
+    complete
+    .text       start:0x02089368 end:0x02089574
+
+libs/runtime/src/u32_div_f.c:
+    complete
+    .text       start:0x02089574 end:0x02089758
+
 src/game/unit_020897C0.cpp:
     complete
     .text       start:0x020897c0 end:0x020899a4

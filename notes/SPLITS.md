@@ -359,5 +359,18 @@ none here either.
 Left in gaps: 0x020802AC-0x0208050C (six functions with exception entries, unknown
 file: a table of six operations selected by bits of the last argument),
 0x02085744-0x0208575C (two 12-byte getters, unknown file),
-0x02085EEC-0x02089780 (FP emulation, division helpers). Function names stay `func_<addr>` where only the size
+0x02085EEC-0x02085EF0 (`_ExitProcess`), 0x02089758-0x02089780. FP emulation and division helpers 0x02085EF0-0x02089758 are 17 `complete` files in the `asm` of Advance Wars and of the ROM (below). Function names stay `func_<addr>` where only the size
 matches (`SPEC.md`).
+
+### Runtime FP and division (2026-11-01)
+
+Order, all `.text` without `.exceptix`: `_dadd.c` 0x02085EF0, `ll_ufrom_d.c` 0x0208648C,
+`_dmul.c` 0x020865F8 (with `_drsb`), `_dsub.c` 0x02086D00, `fadd.c` 0x02087268,
+`fp_compare.c` 0x020876C8, `fdiv.c` 0x02087EEC, `ffix.c` 0x020885E8, `ffix_tail.c`
+0x02088684, `fflt.c` 0x020886E4, `ffltu.c` 0x020887B0, `fmul.c` 0x0208882C, `fsub.c`
+0x02088D0C, `ll_sdiv.c` 0x02089160, `ll_udiv.c` 0x02089320, `s32_div_f.c` 0x02089368,
+`u32_div_f.c` 0x02089574-0x02089758. File bounds are a hypothesis (Advance Wars'
+split); the file names are that project's, not proven. `func_02087eec` and
+`func_02088d0c` (and `_drsb`) swap the operands and fall into the next function:
+reversed operations, labels in `symbols.txt` because dsd refuses a function that
+starts with `eor`.

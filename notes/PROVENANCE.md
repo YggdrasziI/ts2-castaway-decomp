@@ -72,3 +72,14 @@ checked at 100 % in objdiff against this ROM.
 | `libs/runtime/src/ExceptionHandlerTS.cpp` | same path | `mov pc, address` instead of `bx address` |
 | `libs/runtime/src/MWException.cpp` | same path | `unexpected` removed; `__register_global_object` written from the ROM |
 | `libs/runtime/src/cxxabi_alloc.cpp` | same path | `__cxa_vec_newinit`, `__cxa_vec_ctor`, `__cxa_vec_cleanup`, `__cxa_vec_delete2` written from the ROM |
+
+## Runtime FP and division helpers (`libs/runtime/src`)
+
+Source: advance-wars-dual-strike-decomp (**CC0-1.0**), local clone at commit
+`47864817dc01b491422fe6e9f02c8be6752efa7e`, `src/sdk/runtime`, taken on 2026-11-01.
+
+| Our files | Their files | Changes |
+|---|---|---|
+| `_dadd.c`, `ll_ufrom_d.c`, `_dmul.c`, `_dsub.c`, `fadd.c`, `fdiv.c`, `ffix.c`, `fflt.c`, `ffltu.c`, `fmul.c`, `fsub.c`, `ll_sdiv.c`, `ll_udiv.c`, `s32_div_f.c`, `u32_div_f.c` | same names | `__MWERKS__` branch only; helper names not proven replaced by address names; `#pragma force_active on`; hand-encoded branches recomputed for this ROM's layout; swap entry added before `_fdiv` and `_fsub` |
+| `ffix_tail.c` | `func_02128438.c` | same changes, renamed for its role |
+| `fp_compare.c` | none | written from this ROM: the reference has other functions in another order |

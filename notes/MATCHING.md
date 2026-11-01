@@ -1538,3 +1538,11 @@ default: add one here only once a unit of this ROM proves it with mwccarm.
 - CI builds under wibo: a function compiled to 100 % on Windows can differ there (jump
   table on the density limit, `notes/COMPILER.md`). Check the CI run before building on
   a new `complete` file.
+
+- Hand-written library `asm`: a function nothing calls is dropped by the `-dead` link and
+  every later address moves; `#pragma force_active on` keeps it. Without `global` labels,
+  a label reached from another block must be its own `asm` function; a branch into the
+  middle of another function is a `dcd`, whose value depends on the layout.
+- objdiff stays below 100 % on such files (`_fdiv` 91.08 %) with identical bytes: data
+  decoded as `<illegal>` in the original, `dcd` branches, pool targets. `Check ARM9
+  main: OK` is the proof there.
