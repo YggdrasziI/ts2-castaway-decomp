@@ -895,6 +895,42 @@ libs/nitro/src/os/unit_0207A21C.c:
     complete
     .text       start:0x0207a21c end:0x0207a228
 
+libs/nitro/src/pxi/unit_0207C3C8.c:
+    complete
+    .text       start:0x0207c3c8 end:0x0207c4f8
+
+libs/nitro/src/snd/unit_0207E5D8.c:
+    complete
+    .text       start:0x0207e5d8 end:0x0207e6b4
+
+libs/nns/src/snd/unit_0209A740.c:
+    complete
+    .text       start:0x0209a740 end:0x0209a7bc
+
+libs/nitro/src/card/unit_02073ED0.c:
+    complete
+    .text       start:0x02073ed0 end:0x02073f60
+
+libs/nitro/src/card/unit_02074108.c:
+    complete
+    .text       start:0x02074108 end:0x02074290
+
+libs/nitro/src/card/unit_02074A18.c:
+    complete
+    .text       start:0x02074a18 end:0x02074bdc
+
+libs/nitro/src/card/unit_02074C88.c:
+    complete
+    .text       start:0x02074c88 end:0x02074cf0
+
+libs/nitro/src/card/unit_0207513C.c:
+    complete
+    .text       start:0x0207513c end:0x02075328
+
+libs/nitro/src/card/unit_02075384.c:
+    complete
+    .text       start:0x02075384 end:0x02075438
+
 libs/nitro/src/os/os_mutex.c:
     complete
     .text       start:0x0207b1a8 end:0x0207b3c4

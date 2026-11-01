@@ -108,7 +108,28 @@ typedef struct CARDiCommandArg {
     u32 src;                      /* 0x0c */
     u32 dst;                      /* 0x10 */
     u32 len;                      /* 0x14 */
-} CARDiCommandArg;
+    struct {                      /* 0x18: the backup device spec */
+        u32 total_size;           /* 0x18 */
+        u32 sect_size;            /* 0x1c */
+        u32 subsect_size;         /* 0x20 */
+        u32 page_size;            /* 0x24 */
+        u32 addr_width;           /* 0x28 */
+        u32 program_page;         /* 0x2c */
+        u32 write_page;           /* 0x30 */
+        u32 write_page_total;     /* 0x34 */
+        u32 erase_chip;           /* 0x38 */
+        u32 erase_chip_total;     /* 0x3c */
+        u32 erase_sector;         /* 0x40 */
+        u32 erase_sector_total;   /* 0x44 */
+        u32 erase_subsector;      /* 0x48 */
+        u32 erase_subsector_total;/* 0x4c */
+        u32 erase_page;           /* 0x50 */
+        u8 initial_status;        /* 0x54 */
+        u8 padding1[3];
+        u32 caps;                 /* 0x58 */
+        u8 padding2[4];
+    } spec;
+} CARDiCommandArg;                /* 0x60 */
 
 typedef struct CARDiCommon {
     CARDiCommandArg *cmd;         /* 0x00 */
@@ -121,7 +142,21 @@ typedef struct CARDiCommon {
     u32 dst;                      /* 0x20 */
     u32 len;                      /* 0x24 */
     u32 dma;                      /* 0x28 */
-} CARDiCommon;
+    CARDRequest req_type;         /* 0x2c */
+    int req_retry;                /* 0x30 */
+    int req_mode;                 /* 0x34 */
+    void (*callback)(void *);     /* 0x38 */
+    void *callback_arg;           /* 0x3c */
+    void (*task_func)(struct CARDiCommon *);   /* 0x40 */
+    u8 thread[0xc0];              /* 0x44 */
+    struct OSThread *cur_th;      /* 0x104 */
+    u32 priority;                 /* 0x108 */
+    OSThreadQueue busy_q[1];      /* 0x10c */
+    volatile u32 flag;            /* 0x114 */
+    u32 flush_threshold_ic;       /* 0x118 */
+    u32 flush_threshold_dc;       /* 0x11c */
+    u8 backup_cache_page_buf[256] __attribute__((aligned(32)));   /* 0x120 */
+} CARDiCommon;                    /* 0x220 */
 
 typedef struct CARDRomStat {
     void (*read_func)(struct CARDRomStat *);   /* 0x00 */
