@@ -238,8 +238,9 @@ Unk02035fec::Unk02035fec(Unk0203c188Owner *owner, int mode)
     { u32 i_ = func_020a7b50(&names, 0x96b55b60); Unk020a7c90 *s_ = func_020aa040(layout, 0xb, i_); panel2.func_02051858(s_); }
 
     int x;
-    int i = 0;
-    for (int row = 0; row < 3; row++) {
+    int row = 0;
+    int i = row;
+    for (; row < 3; row++) {
         for (int col = 0; col < 4; col++) {
             x = FX32(col * 40);
             int y = FX32(row * 50);
