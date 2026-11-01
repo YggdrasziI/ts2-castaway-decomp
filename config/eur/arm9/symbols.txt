@@ -4522,7 +4522,7 @@ __sinit_unit_020A3E40.cpp kind:function(arm,size=0x2c) addr:0x020ae4e8 local
 @814 kind:data(any) addr:0x020ae520 local
 data_020ae52c kind:data(any) addr:0x020ae52c
 data_020ae568 kind:data(any) addr:0x020ae568
-data_020ae5cc kind:data(any) addr:0x020ae5cc
+data_020ae5cc kind:data(byte[100]) addr:0x020ae5cc
 data_020ae634 kind:data(byte[6]) addr:0x020ae634
 data_020ae63c kind:data(any) addr:0x020ae63c
 data_020ae648 kind:data(any) addr:0x020ae648
@@ -4785,8 +4785,6 @@ data_020b8188 kind:data(any) addr:0x020b8188
 data_020b8198 kind:data(any) addr:0x020b8198
 data_020b81a8 kind:data(any) addr:0x020b81a8
 data_020b81b8$2103 kind:data(any) addr:0x020b81b8 local
-data_020b8258 kind:data(any) addr:0x020b8258
-data_020b8280 kind:data(any) addr:0x020b8280
 @2104 kind:data(byte[13]) addr:0x020b8288 local
 @2105 kind:data(byte[14]) addr:0x020b8298 local
 @2106 kind:data(byte[14]) addr:0x020b82a8 local
@@ -4838,9 +4836,6 @@ _ZZN11Unk0201a2c810func_soundEiiiiE13data_020b8624 kind:data(any) addr:0x020b862
 @1462 kind:data(any) addr:0x020b86e0 local
 @1084 kind:data(any) addr:0x020b8740 local
 @755 kind:data(any) addr:0x020b8748 local
-data_020b8788 kind:data(any) addr:0x020b8788
-data_020b87b0 kind:data(any) addr:0x020b87b0
-data_020b87bc kind:data(any) addr:0x020b87bc
 _ZZN11Unk0201a4e08func_dieEvEs kind:data(byte[9]) addr:0x020b87c4
 @2491 kind:data(byte[15]) addr:0x020b87d0 local
 @2490 kind:data(any) addr:0x020b87e0 local
