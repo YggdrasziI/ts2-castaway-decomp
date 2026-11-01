@@ -887,6 +887,11 @@ default: add one here only once a unit of this ROM proves it with mwccarm.
   (`func_0209f880`, 59.6 % -> 100 %, the form of `unit_02055118.cpp`).
 - A member sub-object whose first field is set before its arrays are built: the sub-object's
   initializer list, not its constructor body (`Unk0209f0ac`).
+- A value read before a flag that tests it, with the value kept for later tests: `bool moving =
+  true; int state = ...; if (state != 0 && state != 3) moving = false;`. The declaration order
+  picks the two registers (`func_020a15a8`, 96.7 % -> 100 %).
+- `delete p` with a null test on a class with no destructor code: an empty inline destructor in the
+  class. Without one the `delete` is a bare call (`func_020a0f0c`).
 - A switch whose original jump table covers ids that an earlier test already
   excludes (`if (id < 0) return 0x10;`, then `sub r0, r1, =0xFFFEFEF7`): the
   source lists those negative cases too, written `(int)0xfffefef7` and so on
