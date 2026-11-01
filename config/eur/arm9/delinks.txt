@@ -851,6 +851,50 @@ libs/nns/src/snd/unit_0209E05C.c:
     complete
     .text       start:0x0209e05c end:0x0209e2bc
 
+libs/nitro/src/gx/unit_0207D5CC.c:
+    complete
+    .text       start:0x0207d5cc end:0x0207d688
+
+libs/nns/src/snd/unit_0209A8B0.c:
+    complete
+    .text       start:0x0209a8b0 end:0x0209adf4
+
+libs/nns/src/snd/unit_0209BB3C.c:
+    complete
+    .text       start:0x0209bb3c end:0x0209c03c
+
+libs/nns/src/snd/unit_0209C194.c:
+    complete
+    .text       start:0x0209c194 end:0x0209c814
+
+libs/nns/src/snd/unit_0209C948.c:
+    complete
+    .text       start:0x0209c948 end:0x0209cf10
+
+libs/nitro/src/snd/unit_0207DB7C.c:
+    complete
+    .text       start:0x0207db7c end:0x0207e2f4
+
+libs/nitro/src/spi/unit_0207F980.c:
+    complete
+    .text       start:0x0207f980 end:0x0207fc18
+
+libs/nitro/src/os/unit_0207A228.c:
+    complete
+    .text       start:0x0207a228 end:0x0207a280
+
+libs/nitro/src/os/unit_0207A280.c:
+    complete
+    .text       start:0x0207a280 end:0x0207a4e4
+
+libs/nitro/src/os/unit_0207A0DC.c:
+    complete
+    .text       start:0x0207a0dc end:0x0207a21c
+
+libs/nitro/src/os/unit_0207A21C.c:
+    complete
+    .text       start:0x0207a21c end:0x0207a228
+
 libs/nitro/src/os/os_mutex.c:
     complete
     .text       start:0x0207b1a8 end:0x0207b3c4
