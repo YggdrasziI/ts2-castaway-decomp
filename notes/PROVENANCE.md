@@ -95,6 +95,6 @@ Source: advance-wars-dual-strike-decomp (**CC0-1.0**), local clone at commit
 
 `libs/nitro/src/mi/unit_02079590.c`, `libs/nitro/src/snd/unit_0207D1F8.c`: written from the ROM; khdays (CC0) `libs/nitro/{mi,snd}` for the loop shapes and the names.
 
-`libs/nitro/src/fs/unit_02075F70.c`: khdays (CC0) `libs/nitro/fs/{auto,calls}`, per-function sources retyped against `sdk/fs.h`; the functions khdays lacks written from the ROM. Names from khdays, except `FS_RegisterArchiveName` and `FS_InitArchive` given from the NitroSDK prototype shape of the call in the ROM init.
+`libs/nitro/src/fs/unit_02075F70.c`: khdays (CC0) `libs/nitro/fs/{auto,calls}`, per-function sources retyped against `sdk/fs.h`; the functions khdays lacks written from the ROM. Names from khdays, except `FS_RegisterArchiveName` and `FS_InitArchive` from Advance Wars' `symbols.txt` (same order, `FS_RegisterArchiveName` same size) and st's `fs_archive.h`.
 
 `libs/nitro/src/fx/unit_02077AE4.c`: written from the ROM.
