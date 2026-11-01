@@ -66,8 +66,8 @@ Reading them is fine (structure, names to confirm, build patterns); the code is 
 | `pokebw2` | [fuddlesworth/pokebw2](https://github.com/fuddlesworth/pokebw2) | GPL-3.0 | fork | dsi/1.1p1 | `docs/configs.md` (ambiguous relocs); `lib/{nitro,nnsys,msl}` |
 | `DQIV-DECOMP` | [GoldieLeGenie/DQIV-DECOMP](https://github.com/GoldieLeGenie/DQIV-DECOMP) | none | 0.10.2 | 2.0/sp1p6, libs 2.0/sp1p2 | libs MSL, NitroSDK, NitroSystem, Runtime |
 | `fe11-us` | [Eebit/fe11-us](https://github.com/Eebit/fe11-us) | none | 0.12.0 | 2.0/sp2p2 | game code |
-| `pokediamond` | [pret/pokediamond](https://github.com/pret/pokediamond) | none | not checked | not checked | `arm9/lib/NitroSDK`, `libnns`, `MSL_C`: (b623abef1) |
-| `pmd-sky` | [pret/pmd-sky](https://github.com/pret/pmd-sky) | none | not checked | not checked | `lib/NitroSDK`: (e3f02199) |
+| `pokediamond` | [pret/pokediamond](https://github.com/pret/pokediamond) | none | not checked | not checked | `arm9/lib/NitroSDK`, `libnns`, `MSL_C` (b623abef1) |
+| `pmd-sky` | [pret/pmd-sky](https://github.com/pret/pmd-sky) | none | not checked | not checked | `lib/NitroSDK` (e3f02199) |
 | `pokeheartgold` | [pret/pokeheartgold](https://github.com/pret/pokeheartgold) | none | not checked | not checked | little library source in `lib/` (ee26049b9) |
 | `pokeplatinum` | [pret/pokeplatinum](https://github.com/pret/pokeplatinum) | none | not checked | not checked | little library source in `lib/` (c6689696d) |
 | `pokeranger2` | [Kuruyia/pokeranger2](https://github.com/Kuruyia/pokeranger2) | none | not checked | not checked | little library source in `lib/` (55b4e0c) |
