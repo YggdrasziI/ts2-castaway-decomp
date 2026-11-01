@@ -154,3 +154,4 @@
 | 2026-11-01 | b4fa66f | 369076 / 720836 bytes (51.20 %; fuzzy 79.48 %, linked 17.03 %) | 3098 / 4556 | 116 / 258 | Random helpers, ray box test (0 / 1, 97.93 %) and sound manager (49 / 56, `.text` 99.62 %), not complete; matched code +4500 bytes |
 | 2026-11-01 | e9c58ed | 370328 / 720836 bytes (51.37 %; fuzzy 79.73 %, linked 17.15 %) | 3124 / 4556 | 118 / 261 | Microphone (6 functions and `__sinit`) and loaded sub-files (7), complete; animation sound events 13 / 14; matched code +1252 bytes |
 | 2026-11-01 | 7654140 | 373676 / 720836 bytes (51.84 %; fuzzy 80.20 %, linked 17.61 %) | 3165 / 4556 | 120 / 264 | Backup memory (33 functions) and byte stream (8), complete; matched code +3348 bytes |
+| 2026-11-01 | 61d0738 | 375776 / 720836 bytes (52.13 %; fuzzy 80.49 %, linked 17.90 %) | 3181 / 4556 | 121 / 265 | Save files (16 functions, CRC table in `.bss`), complete; matched code +2100 bytes |
