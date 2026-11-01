@@ -9,7 +9,7 @@
 BOOL FS_OpenFileFast(FSFile * p_file, FSFileID file_id);
 s32 func_0209ba04(u32 fileId, void * buffer, s32 size, s32 offset);
 FSFileID NNS_SndArcGetFileID(void);
-u32 func_0209bab0(u32 fileId);
+u32 NNS_SndArcGetFileOffset(u32 fileId);
 extern NNSSndStrmThread * sPrepareThread;
 extern BOOL data_0204ad8c;
 extern u8 * sDecodeBuffer;
@@ -34,7 +34,7 @@ BOOL OpenFileStream (NNSSndStrmPlayer * player, u32 fileId)
     if (!FS_OpenFileFast(&player->file, NNS_SndArcGetFileID())) {
         return FALSE;
     }
-    player->fileOffset = func_0209bab0(fileId);
+    player->fileOffset = NNS_SndArcGetFileOffset(fileId);
 
     return TRUE;
 }

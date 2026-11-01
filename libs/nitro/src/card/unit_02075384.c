@@ -39,7 +39,7 @@ extern CARDiCommon data_020c4800;
 extern int func_0207c4f8(int tag, u32 data, BOOL err);
 extern void func_02075438(s32 count);
 extern struct OSThread;
-extern void func_0207a850(struct OSThread *thread);
+extern void OS_WakeupThreadDirect(struct OSThread *thread);
 extern struct CARDiCommon data_020c4800;
 void func_020753d4(u32 data, u32 wait);
 void func_02075384(PXIFifoTag tag, u32 data, BOOL error);
@@ -57,6 +57,6 @@ void func_02075384(PXIFifoTag tag, u32 data, BOOL error)
     if ((tag == PXI_FIFO_TAG_FS) && error) {
         struct CARDiCommon *const common = &data_020c4800;
         common->flag &= ~CARD_STAT_REQ;
-        func_0207a850(common->cur_th);
+        OS_WakeupThreadDirect(common->cur_th);
     }
 }

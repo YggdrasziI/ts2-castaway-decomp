@@ -1,6 +1,6 @@
 /* NitroSDK os_terminate_proc.c: halt and terminate.
  *
- * Bounds 0x0207C3A8-0x0207C3C8: after a data initializer (func_0207c374), before a
+ * Bounds 0x0207C3A8-0x0207C3C8: after a data initializer (OSi_InitVramExclusive), before a
  * tail call (func_0207c3c8). Byte-identical to khdays-decomp's (CC0) versions, see
  * notes/PROVENANCE.md; file name from khdays' citation of the NitroSDK source.
  */

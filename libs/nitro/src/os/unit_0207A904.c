@@ -32,12 +32,12 @@ extern void * data_020c5798;
 extern OSThreadInfo ThreadInfo;
 extern OSThread ** data_020c57a8;
 void OS_Terminate();
-void func_0207a804(void);
+void OS_RescheduleThread(void);
 void func_0207a884(OSThreadQueue * queue);
 u32 OS_DisableScheduler(void);
 u32 OS_EnableScheduler(void);
 void OSi_UnlockAllMutex(OSThread * thread);
-extern void func_0207ade8(OSThread * thread);
+extern void OSi_RemoveThreadFromList(OSThread * thread);
 extern OSThread * OSi_RemoveSpecifiedLinkFromQueue (OSThreadQueue * queue, OSThread * thread);
 extern OSIntrMode OS_RestoreInterrupts(OSIntrMode state);
 extern void func_0207acfc(void);
@@ -107,7 +107,7 @@ void func_0207a958 (void)
         (void)OSi_RemoveSpecifiedLinkFromQueue(currentThread->queue, currentThread);
     }
 
-    func_0207ade8(currentThread);
+    OSi_RemoveThreadFromList(currentThread);
 
 #ifndef SDK_THREAD_INFINITY
     ThreadInfo.entry[currentThread->id] = NULL;
@@ -124,7 +124,7 @@ void func_0207a958 (void)
     (void)OS_EnableScheduler();
 #endif
 
-    func_0207a804();
+    OS_RescheduleThread();
     OS_Terminate();
 }
 

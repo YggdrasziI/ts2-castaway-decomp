@@ -23,7 +23,7 @@ static inline void Card_WaitTask(struct CARDiCommon *common,
     common->callback_arg = callbackArgument;
     OS_RestoreInterrupts(interruptState);
 }
-extern void func_02073fcc(void);
+extern void CARD_CheckEnabled(void);
 extern void MI_StopDma(u32 channel);
 extern BOOL func_02074df0(struct CARDRomStat *state);
 extern void func_02074248(void (*task)(struct CARDiCommon *common));
@@ -49,7 +49,7 @@ void func_02074ab4(u32 dma, const void *source, void *destination, u32 length,
     struct CARDRomStat *const state = &data_020c4e40;
     struct CARDiCommon *const common = &data_020c4800;
 
-    func_02073fcc();
+    CARD_CheckEnabled();
     Card_WaitTask(common, callback, callbackArgument);
 
     common->dma = dma;

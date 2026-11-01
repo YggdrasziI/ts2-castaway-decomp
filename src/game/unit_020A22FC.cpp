@@ -112,7 +112,7 @@ Unk020081dc func_020081dc(void *player);
 int func_0209be08(void *lock);
 void *NNS_SndArcGetFileAddress(int file);
 void func_0209b9a0(int file, void *p);
-void func_0207e4ec(void *p);
+void SND_DestroyWaveArc(void *p);
 void *func_0207e074(void *p, int index);
 void func_0207e0bc(void *p, int index, void *value);
 void SND_InvalidateWaveData(void *start, void *end);
@@ -154,7 +154,7 @@ int *func_0209bd94(int id);
 Unk020a22fcFile *func_0209bc68(int id);
 int func_0209cdf4(int id, int a, void *heap, int d, int e);
 int func_0209cc94(int id, int a, void *heap, int d, void *e);
-void func_0209d080(int id, void *heap);
+void NNS_SndArcLoadBank(int id, void *heap);
 void func_0209d050(int id, int a, void *heap);
 int NNS_SndArcPlayerStartSeqArc(void *handle, int a, int b);
 int NNS_SndArcPlayerStartSeq(void *handle, int a);
@@ -224,7 +224,7 @@ extern "C" void func_020a22fc(void *p, void *lock, int file) {
 
 extern "C" void func_020a2354(void *p, int unused, void *lock, int file) {
     func_020a22fc(p, lock, file);
-    func_0207e4ec(p);
+    SND_DestroyWaveArc(p);
 }
 
 extern "C" void func_020a2374(void *p, u32 size, void *owner, int index) {
@@ -630,7 +630,7 @@ extern "C" int func_020a2e34(Unk020a267c *p, int group) {
 
 extern "C" void func_020a2f04(Unk020a267c *p, int id, void *heap) {
     func_0209bd30(id);
-    func_0209d080(id, heap);
+    NNS_SndArcLoadBank(id, heap);
 }
 
 extern "C" void func_020a2f28(Unk020a267c *p, int id, void *heap) {

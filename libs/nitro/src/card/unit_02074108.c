@@ -26,7 +26,7 @@ static inline void CARDi_SetRomOpReadPage1(u32 src)
 }
 extern struct CARDiCommon data_020c4800;
 extern int func_0207a694(void *target, int newval);
-extern void func_0207a850(void *thread);
+extern void OS_WakeupThreadDirect(void *thread);
 extern u32 data_020bcb64;
 extern OSIntrMode OS_DisableInterrupts(void);
 extern OSIntrMode OS_RestoreInterrupts(OSIntrMode state);
@@ -51,7 +51,7 @@ void func_02074248(void (*task)(struct CARDiCommon *common))
     common->cur_th = (struct OSThread *)common->thread;
     common->task_func = task;
     common->flag |= 8;
-    func_0207a850(common->thread);
+    OS_WakeupThreadDirect(common->thread);
 }
 
 void func_020741ac(CARDiOwner owner, CARDTargetMode target)

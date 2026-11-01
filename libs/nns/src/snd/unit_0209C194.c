@@ -18,7 +18,7 @@ void SND_InvalidateSeqData(const void *start, const void *end);
 void SND_InvalidateBankData(const void *start, const void *end);
 void func_0207e538(struct SNDBankData * bank);
 void SND_InvalidateWaveData(const void *start, const void *end);
-void func_0207e4ec(struct SNDBankData * bank);
+void SND_DestroyWaveArc(struct SNDBankData * bank);
 void func_0207e0bc(struct SNDWaveArc * waveArc, int index, const SNDWaveData * address);
 const SNDWaveData * func_0207e074(const struct SNDWaveArc * waveArc, int index);
 extern struct SNDWaveArc;
@@ -102,7 +102,7 @@ void func_0209c6fc (void * mem, u32 size, u32 data1, u32 data2)
     func_0209c7a8(mem, arc, fileId);
     SND_InvalidateWaveData(mem, (u8 *)mem + size);
 
-    func_0207e4ec(bank);
+    SND_DestroyWaveArc(bank);
 }
 
 void func_0209c6d8 (void * mem, u32 size, u32 data1, u32 data2)
@@ -114,7 +114,7 @@ void func_0209c6d8 (void * mem, u32 size, u32 data1, u32 data2)
     (void)size;
 
     func_0209c7a8(mem, arc, fileId);
-    func_0207e4ec((SNDBankData *)waveArc);
+    SND_DestroyWaveArc((SNDBankData *)waveArc);
 }
 
 void func_0209c684 (void * mem, u32 size, u32 data1, u32 data2)

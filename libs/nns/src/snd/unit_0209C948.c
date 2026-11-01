@@ -17,7 +17,7 @@ extern SNDWaveArc * func_0209c814(u32 fileId, NNSSndHeapHandle heap, BOOL bSetAd
 void DC_StoreRange(const void * startAddr, u32 nBytes);
 void * func_0209c2d8(NNSSndHeapHandle heap, u32 size, NNSSndHeapDisposeCallback callback, u32 data1, u32 data2);
 s32 func_0209ba04(u32 fileId, void * buffer, s32 size, s32 offset);
-u32 func_0209ba88(u32 fileId);
+u32 NNS_SndArcGetFileSize(u32 fileId);
 NNSSndArc * func_0209bdf8(void);
 void func_0209b9a0(u32 fileId, void * address);
 extern void func_0209c774(void * mem, u32 size, u32 data1, u32 data2);
@@ -165,7 +165,7 @@ void * func_0209cb38 (u32 fileId, NNSSndHeapDisposeCallback callback, u32 data1,
     void * buffer;
     u32 len;
 
-    len = func_0209ba88(fileId);
+    len = NNS_SndArcGetFileSize(fileId);
     if (len == 0) return NULL;
 
     if (heap == NNS_SND_HEAP_INVALID_HANDLE) return NULL;

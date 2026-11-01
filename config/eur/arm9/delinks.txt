@@ -967,6 +967,86 @@ libs/nns/src/fnd/unit_0209EA7C.c:
     complete
     .text       start:0x0209ea7c end:0x0209ecb8
 
+libs/nitro/src/card/unit_02073FBC.c:
+    complete
+    .text       start:0x02073fbc end:0x02074008
+
+libs/nitro/src/ctrdg/unit_02075968.c:
+    complete
+    .text       start:0x02075968 end:0x020759bc
+
+libs/nitro/src/ctrdg/unit_02075A1C.c:
+    complete
+    .text       start:0x02075a1c end:0x02075a3c
+
+libs/nitro/src/gx/unit_020781E0.c:
+    complete
+    .text       start:0x020781e0 end:0x02078208
+
+libs/nitro/src/gx/unit_02078B3C.c:
+    complete
+    .text       start:0x02078b3c end:0x02078b98
+
+libs/nitro/src/os/unit_0207A804.c:
+    complete
+    .text       start:0x0207a804 end:0x0207a824
+
+libs/nitro/src/os/unit_0207A850.c:
+    complete
+    .text       start:0x0207a850 end:0x0207a884
+
+libs/nitro/src/os/unit_0207ADE8.c:
+    complete
+    .text       start:0x0207ade8 end:0x0207ae30
+
+libs/nitro/src/os/unit_0207B4E0.c:
+    complete
+    .text       start:0x0207b4e0 end:0x0207b508
+
+libs/nitro/src/os/unit_0207B724.c:
+    complete
+    .text       start:0x0207b724 end:0x0207b74c
+
+libs/nitro/src/os/unit_0207C374.c:
+    complete
+    .text       start:0x0207c374 end:0x0207c3a8
+
+libs/nitro/src/snd/unit_0207E4EC.c:
+    complete
+    .text       start:0x0207e4ec end:0x0207e538
+
+libs/nitro/src/spi/unit_0207F570.c:
+    complete
+    .text       start:0x0207f570 end:0x0207f590
+
+libs/nitro/src/spi/unit_0207FC98.c:
+    complete
+    .text       start:0x0207fc98 end:0x0207fcd4
+
+libs/nns/src/snd/unit_0209BA88.c:
+    complete
+    .text       start:0x0209ba88 end:0x0209bad8
+
+libs/nns/src/snd/unit_0209D080.c:
+    complete
+    .text       start:0x0209d080 end:0x0209d0b8
+
+libs/nns/src/snd/unit_0209D4B0.c:
+    complete
+    .text       start:0x0209d4b0 end:0x0209d4d0
+
+libs/nns/src/snd/unit_0209E3CC.c:
+    complete
+    .text       start:0x0209e3cc end:0x0209e408
+
+libs/nns/src/snd/unit_0209E758.c:
+    complete
+    .text       start:0x0209e758 end:0x0209e798
+
+libs/nns/src/card/unit_0209ED00.c:
+    complete
+    .text       start:0x0209ed00 end:0x0209ed58
+
 libs/nitro/src/os/os_mutex.c:
     complete
     .text       start:0x0207b1a8 end:0x0207b3c4

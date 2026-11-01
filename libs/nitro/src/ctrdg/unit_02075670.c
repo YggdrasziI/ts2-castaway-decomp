@@ -67,7 +67,7 @@ extern int func_0207a320(int owner);
 extern void func_02075438(int count);
 extern void func_0207a21c();
 extern int func_0207c4f8(int tag, u32 data, BOOL err);
-extern int func_02075980(void);
+extern int CTRDG_IsOptionCartridge(void);
 extern void OS_SetDPermissionsForProtectionRegion(int region, int perms);
 extern int data_020c5068;
 void CTRDGi_ChangeLatestAccessCycle(int *saved);
@@ -125,7 +125,7 @@ void CTRDG_Enable(int enable) {
     int enabled = OS_DisableInterrupts();
     int perms;
     data_020c5068 = enable;
-    if (func_02075980() == 0) {
+    if (CTRDG_IsOptionCartridge() == 0) {
         if (enable != 0) {
             perms = 0x1000;
         } else {

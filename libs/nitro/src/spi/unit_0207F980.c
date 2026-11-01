@@ -100,7 +100,7 @@ extern PMLCDPower PM_GetLCDPower(void);
 extern u32 PM_GetBackLight(PMBackLightSwitch *top, PMBackLightSwitch *bottom);
 extern u32 PMi_SendSleepStart(unsigned int trigger, unsigned int keyIntrData);
 extern BOOL PMi_SetLCDPower(PMLCDPower sw, PMLEDStatus led, BOOL skip, BOOL isSync);
-extern BOOL func_0207f570(PMLCDPower sw);
+extern BOOL PM_SetLCDPower(PMLCDPower sw);
 u32 func_0207fbdc (u16 registerAddr, u16 * buffer);
 int func_0207fb74(int arg0, void *arg1, void *arg2);
 u32 func_0207fb38 (PMLEDStatus status);
@@ -205,7 +205,7 @@ u32 func_0207f9bc (PMCallback callback, void * arg)
         if (bottom != PM_BACKLIGHT_OFF)
             (void)func_0207fa6c(PM_LCD_BOTTOM, PM_BACKLIGHT_OFF);
 
-        while (!func_0207f570(PM_LCD_POWER_ON)) {
+        while (!PM_SetLCDPower(PM_LCD_POWER_ON)) {
             OS_SpinWait(PMi_LCD_POWER_WAIT_TICK);
         }
     }

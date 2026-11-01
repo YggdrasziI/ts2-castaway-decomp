@@ -4,7 +4,7 @@
 
 
 extern void func_0207aa98(void *thread, void (*func)(void *), void *arg, void *stack, unsigned stackSize, unsigned prio);
-extern void func_0207a850(void *thread);
+extern void OS_WakeupThreadDirect(void *thread);
 extern int OS_DisableInterrupts(void);
 extern void OS_RestoreInterrupts(int state);
 extern void func_02075de0(void *arg);
@@ -23,7 +23,7 @@ void CTRDGi_InitTaskThread(char *p) {
         func_02075ecc(&data_020c524c);
         *(int *)(p + 0xc0) = 0;
         func_0207aa98(p, func_02075de0, p, &data_020c5670, 0x400, 0x14);
-        func_0207a850(p);
+        OS_WakeupThreadDirect(p);
     }
     OS_RestoreInterrupts(state);
 }

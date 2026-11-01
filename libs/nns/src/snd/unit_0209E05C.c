@@ -23,7 +23,7 @@ extern NNSSndStrmThread * sPrepareThread;
 extern BOOL data_0204ad8c;
 extern u8 * sDecodeBuffer;
 void func_0207aa98(OSThread * thread, void (*func)(void *), void * arg, void * stack, u32 stackSize, u32 prio);
-void func_0207a850(OSThread * thread);
+void OS_WakeupThreadDirect(OSThread * thread);
 void OS_InitMutex(OSMutex * mutex);
 void NNS_FndInitList(NNSFndList * list, u16 offset);
 extern void StrmThread(void * arg);
@@ -72,7 +72,7 @@ void CreateThread (NNSSndStrmThread * thread, u32 threadPrio)
     NNS_FND_INIT_LIST(&thread->commandList, LoadCommand, link);
     OS_InitMutex(&thread->mutex);
     OS_InitThreadQueue(&thread->threadQ);
-    func_0207a850(&thread->thread);
+    OS_WakeupThreadDirect(&thread->thread);
 }
 
 void RemoveCommandByPlayer (NNSFndList * commandList, const NNSSndStrmPlayer * player)
