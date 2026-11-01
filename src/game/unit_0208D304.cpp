@@ -230,7 +230,7 @@ void Unk0208d304::func_0208d570() {
     Unk02098bc8 parts[4];
     u32 i;
 
-    for (i = 0; i < view.func_02098c98(rect, parts); i++) {
+    for (i = 0; (int)i < view.func_02098c98(rect, parts); i++) {
         int sx = parts[i].x - mapW * (func_fxdiv(parts[i].x, mapW) >> 12);
         int sy = parts[i].y - mapH * (func_fxdiv(parts[i].y, mapH) >> 12);
         func_0208d8a4(sx, sy, parts[i].x, parts[i].y, parts[i].w, parts[i].h);
