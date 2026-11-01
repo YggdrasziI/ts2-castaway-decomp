@@ -4523,8 +4523,6 @@ __sinit_unit_020A3E40.cpp kind:function(arm,size=0x2c) addr:0x020ae4e8 local
 data_020ae52c kind:data(any) addr:0x020ae52c
 data_020ae568 kind:data(any) addr:0x020ae568
 data_020ae5cc kind:data(any) addr:0x020ae5cc
-data_020ae5d8 kind:data(any) addr:0x020ae5d8
-data_020ae5dc kind:data(any) addr:0x020ae5dc
 data_020ae634 kind:data(byte[6]) addr:0x020ae634
 data_020ae63c kind:data(any) addr:0x020ae63c
 data_020ae648 kind:data(any) addr:0x020ae648
@@ -4724,9 +4722,6 @@ data_020b78d0 kind:data(any) addr:0x020b78d0
 _ZTV11Unk0200ad40 kind:data(any) addr:0x020b78c8
 _ZTV11Unk0200ad70 kind:data(any) addr:0x020b78f4
 data_020b7900 kind:data(any) addr:0x020b7900
-data_020b7904 kind:data(any) addr:0x020b7904
-data_020b7990 kind:data(any) addr:0x020b7990
-data_020b79e0 kind:data(any) addr:0x020b79e0
 _ZTV11Unk0200cec8 kind:data(any) addr:0x020b7a2c
 _ZTV11Unk0200c308 kind:data(any) addr:0x020b7a54
 @2986 kind:data(byte[5]) addr:0x020b7a60 local
