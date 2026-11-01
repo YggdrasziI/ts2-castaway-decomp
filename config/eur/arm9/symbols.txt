@@ -5372,7 +5372,7 @@ _ZTV11Unk020bd014 kind:data(any) addr:0x020bd014
 @685 kind:data(byte[11]) addr:0x020bd0e0 local
 _ZTV11Unk0208e570 kind:data(any) addr:0x020bd0ec
 _ZTV15Unk02092830Font kind:data(any) addr:0x020bd130
-data_020bd174 kind:data(byte[28]) addr:0x020bd174 local
+@283 kind:data(byte[28]) addr:0x020bd174 local
 @311 kind:data(byte[10]) addr:0x020bd194 local
 @312 kind:data(byte[11]) addr:0x020bd1a0 local
 @375 kind:data(byte[5]) addr:0x020bd1ac local
@@ -5423,7 +5423,7 @@ _ZTV11Unk02099c78 kind:data(any) addr:0x020bd57c
 @121 kind:data(byte[10]) addr:0x020bd758 local
 @202 kind:data(byte[2]) addr:0x020bd764 local
 @203 kind:data(byte[3]) addr:0x020bd768 local
-data_020bd76c kind:data(any) addr:0x020bd76c
+@201 kind:data(byte[1]) addr:0x020bd76c local
 @204 kind:data(byte[2]) addr:0x020bd770 local
 @205 kind:data(any) addr:0x020bd774 local
 @206 kind:data(byte[2]) addr:0x020bd778 local
@@ -5480,71 +5480,20 @@ _ZTV11Unk020a9054 kind:data(any) addr:0x020bdd40
 _ZTV11Unk020a90f8 kind:data(any) addr:0x020bdd58
 _ZTV11Unk020a9914 kind:data(any) addr:0x020bdd78
 @1260 kind:data(any) addr:0x020bdd98 local
-data_020bdda4 kind:data(any) addr:0x020bdda4
-data_020bddac kind:data(any) addr:0x020bddac
-data_020bddb4 kind:data(any) addr:0x020bddb4
-data_020bddbc kind:data(any) addr:0x020bddbc
-data_020bddc4 kind:data(any) addr:0x020bddc4
-data_020bddcc kind:data(any) addr:0x020bddcc
-data_020bddd4 kind:data(any) addr:0x020bddd4
-data_020bdddc kind:data(any) addr:0x020bdddc
-data_020bdde4 kind:data(any) addr:0x020bdde4
-data_020bddec kind:data(any) addr:0x020bddec
-data_020bddf4 kind:data(any) addr:0x020bddf4
-data_020bddfc kind:data(any) addr:0x020bddfc
-data_020bde04 kind:data(any) addr:0x020bde04
-data_020bde0c kind:data(any) addr:0x020bde0c
-data_020bde14 kind:data(any) addr:0x020bde14
-data_020bde1c kind:data(any) addr:0x020bde1c
-data_020bde24 kind:data(any) addr:0x020bde24
-data_020bde2c kind:data(any) addr:0x020bde2c
-data_020bde34 kind:data(any) addr:0x020bde34
-data_020bde3c kind:data(any) addr:0x020bde3c
-data_020bde44 kind:data(any) addr:0x020bde44
-data_020bde4c kind:data(any) addr:0x020bde4c
-data_020bde54 kind:data(any) addr:0x020bde54
-data_020bde5c kind:data(any) addr:0x020bde5c
-data_020bde64 kind:data(any) addr:0x020bde64
-data_020bde6c kind:data(any) addr:0x020bde6c
-data_020bde74 kind:data(any) addr:0x020bde74
-data_020bde7c kind:data(any) addr:0x020bde7c
-data_020bde84 kind:data(any) addr:0x020bde84
-data_020bde8c kind:data(any) addr:0x020bde8c
-data_020bde94 kind:data(any) addr:0x020bde94
-data_020bde9c kind:data(any) addr:0x020bde9c
-data_020bdea4 kind:data(any) addr:0x020bdea4
-data_020bdeac kind:data(any) addr:0x020bdeac
-data_020bdeb4 kind:data(any) addr:0x020bdeb4
-data_020bdebc kind:data(any) addr:0x020bdebc
-data_020bdec4 kind:data(any) addr:0x020bdec4
-data_020bdecc kind:data(any) addr:0x020bdecc
-data_020bded4 kind:data(any) addr:0x020bded4
-data_020bdedc kind:data(any) addr:0x020bdedc
-data_020bdee4 kind:data(any) addr:0x020bdee4
-data_020bdeec kind:data(any) addr:0x020bdeec
-data_020bdef4 kind:data(any) addr:0x020bdef4
-data_020bdefc kind:data(any) addr:0x020bdefc
-data_020bdf04 kind:data(any) addr:0x020bdf04
-data_020bdf0c kind:data(any) addr:0x020bdf0c
-data_020bdf14 kind:data(any) addr:0x020bdf14
-data_020bdf1c kind:data(any) addr:0x020bdf1c
-data_020bdf24 kind:data(any) addr:0x020bdf24
-data_020bdf2c kind:data(any) addr:0x020bdf2c
-data_020bdf34 kind:data(any) addr:0x020bdf34
-data_020bdf3c kind:data(any) addr:0x020bdf3c
-data_020bdf44 kind:data(any) addr:0x020bdf44
-data_020bdf4c kind:data(any) addr:0x020bdf4c
-data_020bdf54 kind:data(any) addr:0x020bdf54
-data_020bdf5c kind:data(any) addr:0x020bdf5c
-data_020bdf64 kind:data(any) addr:0x020bdf64
-data_020bdf6c kind:data(any) addr:0x020bdf6c
-data_020bdf74 kind:data(any) addr:0x020bdf74
-data_020bdf7c kind:data(any) addr:0x020bdf7c
-data_020bdf84 kind:data(any) addr:0x020bdf84
-data_020bdf8c kind:data(any) addr:0x020bdf8c
-data_020bdf94 kind:data(any) addr:0x020bdf94
-data_020bdf9c kind:data(any) addr:0x020bdf9c
-data_020bdfa4 kind:data(any) addr:0x020bdfa4
+fields$1390 kind:data(any) addr:0x020bdda4 local
+fields$1419 kind:data(any) addr:0x020bddb4 local
+fields$1471 kind:data(any) addr:0x020bdde4 local
+fields$1687 kind:data(any) addr:0x020bddf4 local
+fields$1709 kind:data(any) addr:0x020bde04 local
+fields$1752 kind:data(any) addr:0x020bde2c local
+fields$1780 kind:data(any) addr:0x020bde3c local
+fields$1863 kind:data(any) addr:0x020bde84 local
+fields$1921 kind:data(any) addr:0x020bdeb4 local
+fields$1981 kind:data(any) addr:0x020bdedc local
+fields$2010 kind:data(any) addr:0x020bdef4 local
+fields$2040 kind:data(any) addr:0x020bdf0c local
+fields$2055 kind:data(any) addr:0x020bdf14 local
+fields$2135 kind:data(any) addr:0x020bdf5c local
 data_020bdfac kind:data(any) addr:0x020bdfac
 data_020bdfb4 kind:data(any) addr:0x020bdfb4
 data_020bdfbc kind:data(any) addr:0x020bdfbc
