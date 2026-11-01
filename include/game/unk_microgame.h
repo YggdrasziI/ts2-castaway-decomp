@@ -23,6 +23,9 @@ public:
     virtual void func_24();
     virtual bool func_28();
     virtual bool func_2c();
+    virtual bool func_34();
+    virtual void func_38(int a);
+    virtual bool func_3c();
 
     s16 unk4;
     s16 unk6;

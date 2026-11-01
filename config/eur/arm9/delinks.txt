@@ -1135,3 +1135,8 @@ src/game/unit_020A5CCC.cpp:
     .text       start:0x020a5ccc end:0x020a6588
     .data       start:0x020bdad0 end:0x020bdb68
     .bss        start:0x020d710c end:0x020d7110
+
+src/game/unit_020A6588.cpp:
+    complete
+    .text       start:0x020a6588 end:0x020a690c
+    .data       start:0x020bdb68 end:0x020bdbf8

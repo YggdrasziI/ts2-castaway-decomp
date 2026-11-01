@@ -622,7 +622,13 @@ default: add one here only once a unit of this ROM proves it with mwccarm.
 - Zero words in a vtable are pure functions in this compiler; a virtual that has no inline copy in a derived class's
   unit but sits last in the text is an ordinary definition placed last (`Unk020a5ccc::func_08`): written inline it clashes.
 
+- A constant loaded before an unrelated store and used right after (`mov r1, #0x10`, `str r5`, `strh r1`): the
+  assignment sits inside the next condition, `if (unk4 > (unk6 = 0x10))` (`Unk020a6588::func_0c`, 95.24 % -> 100 %).
+
 ## Data layout
+
+- A vtable starts 8 bytes before the address the constructor loads: `_ZTV` goes on the two zero words, the reloc takes
+  `add:0x8`, and the unit's `.data` ends at the last slot (the zeros after it belong to the next vtable).
 
 - Statics addressed from one anchor but in a different order than declared: one static struct fixes the layout
   (`unit_020A5948.cpp`: `.bss` 50 % -> 100 %). A `const char *const` goes to `.rodata`, a `const char *` to `.data`.
