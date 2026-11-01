@@ -135,10 +135,6 @@ Unk02093648::~Unk02093648() {
     func_02095000();
 }
 
-/*
- * 98.72 %: with count volatile (see the class), count is read again for the last
- * new[]; the original reuses the value of the loop test.
- */
 bool Unk02093648::func_02094df4() {
     int *p;
     Unk0209487cEntry *e;
@@ -172,12 +168,12 @@ bool Unk02093648::func_02094df4() {
     files = new Unk0209487c *[count];
     datas = new u8 *[count];
     unk4c = new void *[count];
-    for (i = 0; i < count; i++) {
+    for (i = 0; i < (n = count); i++) {
         files[i] = 0;
         datas[i] = 0;
         unk4c[i] = 0;
     }
-    types = new int[count];
+    types = new int[n];
     func_020938d4();
     func_02099b28();
     return true;
@@ -211,9 +207,6 @@ void Unk02093648::func_02094f0c() {
     Unk0209487c::func_02094f0c();
 }
 
-/*
- * 99.15 %: the loop index and the sub-file position swap registers (r7 / r6).
- */
 void Unk02093648::func_020938d4() {
     int pos;
     int i;

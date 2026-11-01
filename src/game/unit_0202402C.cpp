@@ -754,7 +754,7 @@ void Unk0202402c::func_38(bool active) {
     if (fade.func_hidden()) {
         return;
     }
-    if (fade.func_shown() || fade.state == 0) {
+    if (fade.func_shown() || fade.func_opening()) {
         if (func_020a1280(func_020a18e4(), 0, 1) || func_020a1280(func_020a18e4(), 1, 1)) {
             func_020a122c(func_020a18e4());
         }
