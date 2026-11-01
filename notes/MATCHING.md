@@ -1582,3 +1582,12 @@ Link-time constants without relocation (`SDK_IRQ_STACKSIZE`, `SDK_SYS_STACKSIZE`
   target symbol has the `@<n>` name of the object and the exact size (`data(byte[<n>])`),
   without padding. Pair them on bytes, or on the relocated function for a method pointer
   constant, never by guess. Keep the name of a symbol used from another unit.
+- A base class whose virtuals live in far files emits no vtable copy in the derived units.
+  Declaring those slots `inline virtual` without a body in the header emits the copy and
+  keeps the far definitions as they are (`unk_element.h`, `unk_widget.h`).
+- Symbols 8 bytes into a vtable are its first slot: drop them and use addends.
+- A static initializer in a gap belongs to the unit that defines the object: the order of
+  `.init` follows the units. Name it `__sinit_<file>`; keep it global when a library uses
+  its address. The compiled object size shows when neighbouring `.bss` symbols are members.
+- The bytes between the last object and the end of `.data` or `.bss` are section padding,
+  not part of a unit.
