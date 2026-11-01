@@ -8,8 +8,8 @@
  * shown test). Its slots 7 to 14 and 16 point to functions of far files
  * (0x0201F648 to 0x0202558C), kept copies too: slot 7 is in unit_0202402C.cpp,
  * the others in unit_0201E300.cpp. They are declared here under slot names
- * (non-inline), so the base vtable copy is not emitted and the tail of the
- * derived vtables does not match.
+ * and marked inline without a body here: that makes every unit emit its base
+ * vtable copy, as in the ROM.
  */
 #ifndef GAME_UNK_ELEMENT_H
 #define GAME_UNK_ELEMENT_H
@@ -88,18 +88,18 @@ public:
         trackX = x;
         trackY = y;
     }
-    virtual void func_1c(int x, int y);
-    virtual void func_20(int a, int b);
-    virtual void func_24(int duration);
-    virtual void func_28(int duration);
-    virtual void func_2c(int duration);
-    virtual void func_30(int duration);
-    virtual bool func_34();
-    virtual bool func_38();
+    inline virtual void func_1c(int x, int y);
+    inline virtual void func_20(int a, int b);
+    inline virtual void func_24(int duration);
+    inline virtual void func_28(int duration);
+    inline virtual void func_2c(int duration);
+    inline virtual void func_30(int duration);
+    inline virtual bool func_34();
+    inline virtual bool func_38();
     virtual bool func_3c() {
         return state == 1;
     }
-    virtual bool func_40();
+    inline virtual bool func_40();
 
     Unk020b9e88Track *trackX;
     Unk020b9e88Track *trackY;
