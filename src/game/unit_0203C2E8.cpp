@@ -230,13 +230,6 @@ static inline bool func_owned(Unk0205cf00 *def) {
     return func_02054dc4(&data_020bfc9c, def, 0) != 0;
 }
 
-/*
- * 98.43 %: the u16 index truncations after func_020a7b50 go through r1 where
- * the original uses r0 (and the reverse) in four places, as in the other
- * screen constructors, and in the grid loop the original gives the counter
- * r8 and x r7 (here r7 and r8). Tried: the row counter declared before the
- * loop (98.57 %), the counter stepped in the loop header.
- */
 Unk0203c2e8::Unk0203c2e8(Unk0203c188Owner *owner)
     : Unk0203c188(owner), page(0), choice(0), selected(-1), count(0), records(0), pages(0) {
     static const int size = 0x46;
@@ -259,10 +252,12 @@ Unk0203c2e8::Unk0203c2e8(Unk0203c188Owner *owner)
     { u32 i_ = func_020a7b50(&names, 0x96b55b60); Unk020a7c90 *s_ = func_020aa040(layout, 0xb, i_); panel1088.func_02051858(s_); }
     { u32 i_ = func_020a7b50(&names, 0xcbddf485); Unk020a7c90 *s_ = func_020aa040(layout, 4, i_); panel1088.func_02051858(s_); }
 
-    int i = 0;
-    for (int row = 0; row < 3; row++) {
+    int x;
+    int row = 0;
+    int i = row;
+    for (; row < 3; row++) {
         for (int col = 0; col < 4; col++) {
-            int x = FX32(col * 40);
+            x = FX32(col * 40);
             int y = FX32(row * 50);
             grid[i].flags |= 2;
             grid[i].func_02050914(1);

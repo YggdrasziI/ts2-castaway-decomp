@@ -207,14 +207,6 @@ public:
 
 static void *func_020388c8(u32 id, void *user);
 
-/*
- * 98.62 %: some name lookups truncate their index through r0 where the
- * original uses r1 or the reverse (see the unsolved patterns), a panel
- * address is computed one instruction apart, and the rectangle of
- * next.func_10() is moved to r1 before the pager's vtable load, as in
- * unit_0203B3B8.cpp. Declaring x before the index gained 0.2 %; other
- * declaration orders of x, y, the index and the row changed nothing.
- */
 Unk02035fec::Unk02035fec(Unk0203c188Owner *owner, int mode)
     : Unk0203c188(owner), mode(mode), records(0), count(0), pages(0), page(0), tabCount(0), tab(0), marked(0) {
     static const int size = 0x50;

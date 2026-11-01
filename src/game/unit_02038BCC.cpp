@@ -187,12 +187,6 @@ static inline bool func_listed(Unk0205cf00 *def, u32 kind) {
            !func_0205d340(def, 0x51a12c57);
 }
 
-/*
- * 97.78 %: in the grid loop the original keeps the button index in r8 and the
- * name result in r7, here the other way round; two address computations of
- * the second grid are also scheduled one instruction apart. Tried: the row
- * and index declared in other orders or in the loop header.
- */
 Unk02038bcc::Unk02038bcc(Unk0203c188Owner *owner, int mode)
     : Unk0203c188(owner), item(0), title(0), mode(mode), records(0), count(0), pages(0), page(0) {
     static const int size = 0x46;
@@ -215,10 +209,12 @@ Unk02038bcc::Unk02038bcc(Unk0203c188Owner *owner, int mode)
     { u32 i_ = func_020a7b50(&names, 0xcbddf485); Unk020a7c90 *s_ = func_020aa040(layout, 4, i_); panel2.func_02051858(s_); }
     { u32 i_ = func_020a7b50(&names, 0x96b55b60); Unk020a7c90 *s_ = func_020aa040(layout, 0xb, i_); panel2.func_02051858(s_); }
 
-    int i = 0;
-    for (int row = 0; row < 3; row++) {
+    int x;
+    int row = 0;
+    int i = row;
+    for (; row < 3; row++) {
         for (int col = 0; col < 4; col++) {
-            int x = FX32(col * 40);
+            x = FX32(col * 40);
             int y = FX32(row * 50);
             grid[i].flags |= 2;
             grid[i].func_02050914(1);

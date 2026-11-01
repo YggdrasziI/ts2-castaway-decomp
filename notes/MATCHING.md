@@ -441,6 +441,19 @@ default: add one here only once a unit of this ROM proves it with mwccarm.
   FX32(n - 1), -0x3000)`), not three assignments (constructor of
   `Unk02041b10`).
 
+### Zero copies of nested grid loops
+
+In a double loop with a running index, `int row = 0; int i = row; for (; row < 3; row++)` gives the
+`mov r0, r8` copy of the zero that `int i = 0; for (int row = 0; ...)` misses, and it fixes the pool
+offsets after it. With `int x;` declared before these two and assigned in the inner loop, the counter and
+`x` take their registers. This took the screen constructors of `unit_02035FEC`, `unit_02038BCC` and
+`unit_0203C2E8` to 100 %.
+
+### A captured loop test
+
+A `volatile` count read by the loop test and again just after it is reused by the original through
+`for (i = 0; i < (n = count); i++)`, then `n` (`func_02094df4`).
+
 ### A pointer alias of a local changes the allocation and the guards
 
 A class local used through a pointer (`T child = ...; T *c = &child;`, then `c->f()`) gives the

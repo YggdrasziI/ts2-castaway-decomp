@@ -240,8 +240,9 @@ Unk0202aef4::Unk0202aef4(Unk0203c188Owner *owner)
     panel2.func_02051858(func_020aa040(layout, 4, func_020a7b50(&names, 0xcbddf485)));
     panel2.func_02051858(func_020aa040(layout, 0xb, func_020a7b50(&names, 0x96b55b60)));
 
-    int n = 0;
-    for (int row = 0; row < 2; row++) {
+    int row = 0;
+    int n = row;
+    for (; row < 2; row++) {
         for (int col = 0; col < 2; col++) {
             int x = FX32(col * 0x5c) + 0x37000;
             int y = FX32(row * 0x4e) + 0x24000;
