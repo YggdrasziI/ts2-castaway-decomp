@@ -1644,3 +1644,17 @@ Link-time constants without relocation (`SDK_IRQ_STACKSIZE`, `SDK_SYS_STACKSIZE`
   away. Inside a loop the same form stays in the loop and gets hoisted (`func_02092f50`).
 - Clock field writes that go through a hoisted address: `volatile u32 *p = &v;` in the inline,
   not a cast at each access (`func_tick` of unit_0200B23C).
+
+## Source permuter
+
+`python tools/permute.py <unit> <symbol> [--seconds N] [--workers N] [--out DIR]` searches
+random source edits of one function (swapped statements, moved declarations, split
+initializers, `const`, commuted operators, local copies) and scores each compiled variant
+against the original bytes, masking relocated words. On a hit it reverts the edits that are not
+needed and writes the body to `<out>/<symbol>.txt`; it never writes into the repository.
+
+- Use it for a same-size function whose gap is registers only: it found `func_02093a9c` in 20 s
+  after 720 hand-tried orders. A 60 s pass over the 245 unmatched functions matched 7 (2152 bytes).
+- Its result proves the bytes, not the source: declarations it moves can look unnatural, and
+  an unused declaration can be what makes the match. Keep them only if the report stays at 100 %.
+- A function whose size differs starts at a score above 5000: the gap is structural, fix that first.
