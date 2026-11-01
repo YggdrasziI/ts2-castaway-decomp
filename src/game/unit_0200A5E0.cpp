@@ -288,8 +288,9 @@ int Unk0200ad40::func_18() {
             if (func_0200273c(this)) {
                 Unk0200ad40Anim *p = (Unk0200ad40Anim *)func_02007340(data_020be184, 4);
                 if (p != 0) {
+                    bool v = unk49;
                     p->unk20 = unk40;
-                    p->unk25 = unk49;
+                    p->unk25 = v;
                     func_02007ea4(func_02002438(this)->list, p);
                 }
             }
