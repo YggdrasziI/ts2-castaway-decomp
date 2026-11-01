@@ -148,7 +148,8 @@ void Unk0204f798::func_08() {
         int lo = 0;
         hi = func_020a69d4(sprites[i]) - 1;
         if (first >= 0 && last >= 0) {
-            hi = last;
+            hi;
+            i = last;
             lo = first;
         }
         int p = func_020a69cc(sprites[i]) + step;

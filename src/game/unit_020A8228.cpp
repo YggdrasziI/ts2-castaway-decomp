@@ -250,8 +250,8 @@ extern "C" void func_020a87f4(Unk020a8228 *s, Unk020a9d58 *l) {
     }
     s->total = s->rows * s->cols;
     s->objects = new Unk0208f8b0 *[s->total];
-    int r;
     int c;
+    int r;
     int i;
     i = 0;
     for (r = 0; r < s->rows && i < s->total; r++) {

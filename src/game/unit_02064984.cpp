@@ -1573,7 +1573,7 @@ void func_02067bc4(Unk020c43a8 *p, const Unk0209674c *node, int index) {
     p->needs[index].motive = 6;
     for (int i = 0; i < node->func_020967ec(); i++) {
         Unk0209674c c = node->func_02096774(i);
-        u32 hash = c.func_02096800();
+        int hash = c.func_02096800();
         if (hash == 0x2fd6225b) {
             continue;
         }

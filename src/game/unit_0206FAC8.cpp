@@ -250,8 +250,8 @@ void Unk0206fac8::func_0207024c(Unk0208c050 *tex, int key) {
  * the tint pointer, r5/r6). */
 void Unk0206fac8::func_02070318(u32 start, int count) {
     int t = tint * 3;
-    u16 *src = colors + start;
     int *p = &tints[t];
+    u16 *src = colors + start;
     int tr = p[0];
     int tg = p[1];
     int tb = p[2];

@@ -650,7 +650,7 @@ void Unk0203c2e8::func_38(bool active) {
                     if (grid2[n].func_10()->x >= panel102c.func_10()->x) {
                         grid2[n].func_18(false);
                         int m = c + row * 4;
-                        int k = page * 12 + m;
+                        u32 k = page * 12 + m;
                         if (grid[m].unk64 < 0) {
                             grid[m].func_02050bf0(grid2[n].unk64, -1, -1, -1, -1, -1);
                             if (k < count) {
@@ -672,7 +672,7 @@ void Unk0203c2e8::func_38(bool active) {
                     if (grid[n].func_10()->x >= 0x100000) {
                         grid[n].func_18(false);
                         int m = c + row * 4;
-                        int k = page * 12 + m;
+                        u32 k = page * 12 + m;
                         if (grid2[m].unk64 < 0) {
                             grid2[m].func_02050bf0(grid[n].unk64, -1, -1, -1, -1, -1);
                             if (k < count) {
@@ -853,7 +853,7 @@ void Unk0203c2e8::func_0203e4e4(int page) {
         grid[i].func_02050bf0(i, -1, -1, -1, -1, -1);
         if (grid[i].func_02050a24()) {
             grid[i].func_020514f0();
-            int k = this->page * 12 + i;
+            u32 k = this->page * 12 + i;
             if (records[k].result != 0 &&
                 (func_0205d340(records[k].result, data_020ae7cc[8]) || func_0205d340(records[k].result, data_020ae7cc[9]))) {
                 func_0203c254(func_0205d134(records[k].result, 0x2b3e6dd7), grid[i].unk64, 0);

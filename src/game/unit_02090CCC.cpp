@@ -206,14 +206,14 @@ void Unk02090ccc::func_020910a4(Unk02092830Font *font, int n) {
  * lineCount twice (once through a pointer kept in r4) for each new line.
  */
 void Unk02090ccc::func_020927bc() {
+    int breakEnd;
     Unk0208f8b0 *e;
-    int i;
+    int maxWidth;
+    u32 i;
     u32 info;
     int breakAt;
     int lineStart;
     bool newLine;
-    int maxWidth;
-    int breakEnd;
     bool fetch;
     int width;
     bool afterBreak;
@@ -327,8 +327,8 @@ void Unk02090ccc::func_02092788() {
     int y = rect.y;
     int w = rect.w;
     bool fetch = true;
-    int dx;
     u32 adv;
+    int dx;
     int align;
     u32 info;
     int lw;
@@ -350,8 +350,8 @@ void Unk02090ccc::func_02092788() {
             e = (Unk0208f8b0 *)it.func_02092678();
         }
         info = infos[i];
-        adv = (info & 0x3f00000) >> 20;
         dx = (info & 0xfc000000) >> 26;
+        adv = (info & 0x3f00000) >> 20;
         dy = (int)((info & 0xffc00) << 12) >> 22;
         if (i == 0 || (info & INFO_LINE)) {
             align = unk4 & 3;

@@ -751,8 +751,8 @@ extern "C" int func_020a32ac(Unk020a267c *p, int hash, void *heap, int volume, b
     }
     func_group(&group);
     Unk020a22fcList *list = func_0209bad8(group);
-    u32 count = list->count;
     u32 i = 0;
+    int count = list->count;
     if (count != 0) {
         Unk020a22fcEntry *entry = list->entries;
         do {

@@ -412,6 +412,8 @@ bool Unk02035fec::func_10() {
  * moving or retyping the found flag and the tab counter changed nothing.
  */
 void Unk02035fec::func_02037000() {
+    int t;
+    int k;
     if (flags & 2) {
         return;
     }
@@ -422,7 +424,7 @@ void Unk02035fec::func_02037000() {
         }
     }
     int colors[5] = {0xe, 0xe, 0xe, 0xe, 0xe};
-    u32 palette = 0;
+    int palette = 0;
     tabCount = 0;
     switch (mode) {
     case 0:
@@ -501,8 +503,8 @@ void Unk02035fec::func_02037000() {
     bool found = false;
     tab = 0;
     if (data_020b947c != 0) {
-        for (int t = 0; t < tabCount && !found; t++) {
-            for (int k = 0; k < 6 && !found; k++) {
+        for (t = 0; t < tabCount && !found; t++) {
+            for (k = 0; k < 6 && !found; k++) {
                 if (keys[t][k] == 0) {
                     break;
                 }

@@ -364,7 +364,8 @@ void Unk0201a4e0::func_02018900() {
     int d = move.dir.func_02098e84() * 0x2aa;
     int a = angle;
     Unk02098e70 p = unkb0.func_02098fa8(func_02018668(unka8, a * 6));
-    Unk02098e70 q = func_02018668(unka8, data_020af1e8[(u16)a >> 4 << 1] * func_0200af10(this));
+    Unk02098e70 q;
+    q = func_02018668(unka8, data_020af1e8[(u16)a >> 4 << 1] * func_0200af10(this));
     func_set(pos, Unk02098e70(p.x - q.y, p.y + q.x));
     a = angle + (d >> 12);
     Unk02098e70 r = unkb0.func_02098fa8(func_02018668(unka8, a * 6));
@@ -707,7 +708,7 @@ bool Unk0201a4e0::func_02019ea0() {
 }
 
 void Unk0201a4e0::func_02019ee8() {
-    int f = func_0200b150(&anim, 0x1000);
+    u32 f = func_0200b150(&anim, 0x1000);
     for (int i = 0; i < 2; i++) {
         func_020a69ac((&sprite)[i], f);
     }
@@ -960,6 +961,7 @@ void Unk0201af9c::func_0201af9c(Unk0201a2c8 *o, Unk020a7c90 *s, Unk020a7c90 *t) 
 }
 
 bool Unk0201a2c8::func_18() {
+    int i;
     if (!shown.func_get()) {
         return true;
     }
@@ -984,7 +986,7 @@ bool Unk0201a2c8::func_18() {
             hidden = 0;
             if (buttons[3].touch.flags & 8) {
                 Unk0201a4e0 *f = fish;
-                for (int i = 0; i < 3; i++, f++) {
+                for (i = 0; i < 3; i++, f++) {
                     f->func_flee();
                 }
                 state = &Unk0201a2c8::func_02019fa0;

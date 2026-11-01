@@ -499,8 +499,8 @@ void Unk0202e0ec::func_0202f2ac() {
             func_020a69ac(sub2.func_02051ad0(3), 1);
         } else {
             Unk0202071c now = func_0202071c(&data_020d6298);
-            int hour = (now.value & 0x7c0) >> 6;
             int left = 0;
+            int hour = (now.value & 0x7c0) >> 6;
             Unk02099c78Var *var = data_020b9364->script->func_02095888(0x109966ff);
             if (var != 0) {
                 left = var->max - func_0205ecc0(data_020be420, 0x109966ff) - 1;

@@ -295,13 +295,13 @@ Unk02089f38 *Unk0208a0a8::func_0208a4c8(int key) {
  * forms, and local declaration orders (this one is the best found).
  */
 void Unk0208a0a8::func_0208a5d8(int key) {
+    Unk0208ab98 *m;
+    u32 i;
     int last;
     Unk0208a4b0 *slot;
     int next;
-    int i;
     int left;
     Unk02089f38 *model;
-    Unk0208ab98 *m;
     int parent;
 
     if (map == 0) {

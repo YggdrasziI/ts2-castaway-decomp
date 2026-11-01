@@ -1256,11 +1256,13 @@ void Unk0206bcf0::func_02071fdc(int dt) {
             }
         }
         Unk020d6298 *clock = &data_020d6298;
-        Unk0202071c t = func_0202071c(clock);
+        Unk0202071c t;
+        t = func_0202071c(clock);
         int hour = t.func_hour();
         if (unk224 > 0 || (p->unk3d4 == 0 && unk144 == 0) || !func_020a19cc(clock, step)) {
             func_020a194c(clock, step);
-            Unk0202071c t2 = func_0202071c(clock);
+            Unk0202071c t2;
+            t2 = func_0202071c(clock);
             if (hour != t2.func_hour()) {
                 func_0206f0d8();
             }

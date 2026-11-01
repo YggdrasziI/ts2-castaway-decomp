@@ -228,7 +228,7 @@ void Unk0208d304::func_0208d570() {
     }
     Unk02098bc8 view(-x >> 15, -y >> 15, viewW, viewH);
     Unk02098bc8 parts[4];
-    int i;
+    u32 i;
 
     for (i = 0; i < view.func_02098c98(rect, parts); i++) {
         int sx = parts[i].x - mapW * (func_fxdiv(parts[i].x, mapW) >> 12);
@@ -350,13 +350,12 @@ void Unk0208d304::func_0208d8a4(int srcX, int srcY, int dstX, int dstY, int w, i
 void Unk0208d304::func_0208d9bc(int srcX, int srcY, int dstX, int dstY, int n) {
     int size = (bgcnt >> 14) & 3;
     int end = 0x20;
-    u16 *dst;
-    u32 *src = &map[srcY * mapW + srcX];
     int count;
+    u32 *src = &map[srcY * mapW + srcX];
 
     dstY &= 0x3F;
     dstX &= 0x3F;
-    dst = func_0208d82c() + ((dstY & 0x1F) << 5);
+    u16 *dst = func_0208d82c() + ((dstY & 0x1F) << 5);
     if (size & 2) {
         dst += (dstY & 0x20) << ((size & 1) ? 6 : 5);
     }

@@ -153,13 +153,13 @@ extern "C" int func_020a5ef0(int min, int max) {
 
 extern "C" Unk02098e70 func_020a5f28(int inside, int margin) {
     Unk02098e70 point;
-    int m = margin >> 12;
+    u32 m = margin >> 12;
     if (inside == 1) {
         point.x = func_020a5ef0(m, 0x100 - m);
         point.y = func_020a5ef0(m, 0xc0 - m);
     } else {
         int x = func_020a5ef0(0, (m << 2) + 0x100) - (m << 1);
-        int y = func_020a5ef0(0, (m << 2) + 0xc0) - (m << 1);
+        u32 y = func_020a5ef0(0, (m << 2) + 0xc0) - (m << 1);
         bool onX = x >= -m && x < m + 0x100;
         bool onY = y >= -m && y < m + 0xc0;
         if (onX & onY) {

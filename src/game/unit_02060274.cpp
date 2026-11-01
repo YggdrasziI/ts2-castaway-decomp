@@ -183,6 +183,7 @@ int func_020606a0(Unk020c409c *o, int id) {
  * counter, the switch as if / else and other index forms tried).
  */
 void func_020606e0(Unk020c409c *o, int group) {
+    int i;
     if (group < 0 || group >= o->groupCount) {
         return;
     }
@@ -197,7 +198,7 @@ void func_020606e0(Unk020c409c *o, int group) {
     }
     Unk0208a0a8 *library = data_020c7d24;
     Unk020c7f48 *textures = func_0208c578();
-    for (int i = 0; i < g->count; i++) {
+    for (i = 0; i < g->count; i++) {
         int index = o->entries[i + g->first].index;
         switch (o->resources->func_02093fbc(index)) {
         case 4:
