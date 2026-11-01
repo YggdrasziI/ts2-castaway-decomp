@@ -2231,3 +2231,23 @@ libs/nns/src/snd/unit_0209C814.c:
 libs/nns/src/fnd/unit_0209EE14.c:
     complete
     .text       start:0x0209ee14 end:0x0209ee80
+
+libs/nitro/src/card/unit_02073F60.c:
+    complete
+    .text       start:0x02073f60 end:0x02073fbc
+
+libs/nitro/src/card/unit_02074BDC.c:
+    complete
+    .text       start:0x02074bdc end:0x02074c88
+
+libs/nitro/src/card/unit_020754B4.c:
+    complete
+    .text       start:0x020754b4 end:0x0207552c
+
+libs/nitro/src/card/unit_02074F64.c:
+    complete
+    .text       start:0x02074f64 end:0x02075044
+
+libs/nitro/src/card/unit_02074008.c:
+    complete
+    .text       start:0x02074008 end:0x02074108
