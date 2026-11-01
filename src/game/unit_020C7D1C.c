@@ -1,0 +1,7 @@
+/*
+ * Data-only unit 0x020C7D1C-0x020C7D20 (ascending .bss sizes mark one original object).
+ * The file it belongs to and the types are unknown.
+ */
+#pragma force_active on
+
+unsigned char data_020c7d1c[4];

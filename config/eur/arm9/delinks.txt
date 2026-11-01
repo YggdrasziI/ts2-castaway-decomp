@@ -2659,3 +2659,55 @@ libs/nns/src/snd/unit_020D5AE0.c:
 libs/nns/src/fnd/unit_020D60AC.c:
     complete
     .bss        start:0x020d60ac end:0x020d60bc
+
+src/game/unit_020BE23C.c:
+    complete
+    .bss        start:0x020be23c end:0x020be2f0
+
+src/game/unit_020BE370.c:
+    complete
+    .bss        start:0x020be370 end:0x020be374
+
+src/game/unit_020BE41C.c:
+    complete
+    .bss        start:0x020be41c end:0x020be420
+
+src/game/unit_020BE420.c:
+    complete
+    .bss        start:0x020be420 end:0x020be424
+
+src/game/unit_020C439C.c:
+    complete
+    .bss        start:0x020c439c end:0x020c44a8
+
+src/game/unit_020C44A8.c:
+    complete
+    .bss        start:0x020c44a8 end:0x020c4770
+
+src/game/unit_020C4770.c:
+    complete
+    .bss        start:0x020c4770 end:0x020c4780
+
+libs/c/src/unit_020C7CD8.c:
+    complete
+    .bss        start:0x020c7cd8 end:0x020c7cdc
+
+src/game/unit_020C7D1C.c:
+    complete
+    .bss        start:0x020c7d1c end:0x020c7d20
+
+src/game/unit_020C7D20.c:
+    complete
+    .bss        start:0x020c7d20 end:0x020c7d24
+
+src/game/unit_020C7D24.c:
+    complete
+    .bss        start:0x020c7d24 end:0x020c7d28
+
+src/game/unit_020C8048.c:
+    complete
+    .bss        start:0x020c8048 end:0x020c8058
+
+src/game/unit_020C8058.c:
+    complete
+    .bss        start:0x020c8058 end:0x020c8068
