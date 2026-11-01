@@ -159,3 +159,4 @@
 | 2026-11-01 | 3fc0d1c | 379332 / 720836 bytes (52.62 %; fuzzy 81.02 %, linked 18.12 %) | 3212 / 4556 | 123 / 267 | Game mode base (21/22 functions, `.data`, `.bss`), not complete: `func_020a5f28` 97.43 %, registers; matched code +1964 bytes |
 | 2026-11-01 | d3e5124 | 380232 / 720836 bytes (52.75 %; fuzzy 81.14 %, linked 18.25 %) | 3228 / 4556 | 124 / 268 | Game mode screen (16 functions, `.data`), complete; matched code +900 bytes |
 | 2026-11-01 | 06cb038 | 382232 / 720836 bytes (53.03 %; fuzzy 81.42 %, linked 18.52 %) | 3269 / 4556 | 127 / 271 | Layout sprite classes (3 units, 41 functions, three vtables), complete; matched code +2000 bytes |
+| 2026-11-01 | a59a482 | 384520 / 720836 bytes (53.34 %; fuzzy 81.74 %, linked 18.84 %) | 3298 / 4556 | 128 / 272 | Layout text (29 functions, vtable), complete; matched code +2288 bytes |
