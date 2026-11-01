@@ -1220,6 +1220,11 @@ default: add one here only once a unit of this ROM proves it with mwccarm.
   (not the repeated hashes, not a fixed period). A `u16` local, a cast and a
   sprite local change nothing (the screen and page constructors
   0x020450D4-0x0204A9F8, 98.9-99.9 %).
+  What is measured (`unit_020450D4.cpp`, 2026-11-01): the r1 sites follow the lookup's rank, not its hash
+  (ours 3, 8, 9 when sites are added or removed, the original 3, 7, 8): roughly every 5th lookup here against
+  every 4th in the original, in all the long constructors. Ruled out: every 2.0 service pack (same score on 8 functions),
+  flags (`-sym`, `-inline`, `-opt`, `-O`, `-ipa`, `-bool`), inline wrappers and casts around the lookup, locals for
+  index, key, sprite or panel, non-void return types of the setters. Only forms that add real instructions move the pattern.
 - mwccarm gives such vtable copies (and other multiply-defined objects) symbol
   binding 13. While the first copy is still assembly, dsd emits it as a global or
   weak symbol: a global one clashes ("Multiply-defined") and a weak one loses to
