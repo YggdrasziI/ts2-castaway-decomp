@@ -634,6 +634,10 @@ default: add one here only once a unit of this ROM proves it with mwccarm.
   code: an inline helper with `if (x != 0) { ... } else { ... }` gives the conditional form (`func_020a727c`,
   93.68 % -> 100 %); early returns and the inverted test do not.
 
+- A value tested twice with the bool materialized the second time (`ands`, `popeq`, `cmp r0, #0`, `movne r0, #1`,
+  `moveq r0, #0`, `cmp r0, #1`): an `int` local keeps it, `int c = f != 0; if (c == 1)`; a `bool` local folds into the
+  first test (`Unk020a7d74::func_0c`, 75 % -> 100 %).
+
 ## Data layout
 
 - Vtables of a file come out in reverse order of the classes: vtables in class order in `.data` mean one file for

@@ -1184,3 +1184,13 @@ src/game/unit_020A7C10.cpp:
     complete
     .text       start:0x020a7c10 end:0x020a7d74
     .data       start:0x020bdcb8 end:0x020bdcd8
+
+src/game/unit_020A7D74.cpp:
+    complete
+    .text       start:0x020a7d74 end:0x020a7fdc
+    .data       start:0x020bdcd8 end:0x020bdcf0
+
+src/game/unit_020A7FDC.cpp:
+    complete
+    .text       start:0x020a7fdc end:0x020a8228
+    .data       start:0x020bdcf0 end:0x020bdd08
