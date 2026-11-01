@@ -852,7 +852,7 @@ void func_02066090(Unk020c43a8 *p) {
         {1, 8, 0x764f589f}, {1, 0x10, 0x5dc93a88}, {1, 0x20, 0x8086f1f9},
     };
     func_0205803c(func_02058788(&data_020c3ba4, data_020c3ba4.map), &p->save.cell);
-    for (i = 0; i < 6; i++) {
+    for (i = 0; (int)i < 6; i++) {
         if (!p->unk14c && p->motives[i].value <= 0 && p->unk1c[i] == 0) {
             if (func_02054dc4(data_020bfc9c,
                               func_0205f6f8(data_020c3fc4,
@@ -961,7 +961,7 @@ void func_02066374(Unk020c43a8 *p, int row) {
         func_02069124(sim, a, 0, false);
         return;
     }
-    for (int i = 0; i < 6; i++) {
+    for (u32 i = 0; i < 6; i++) {
         func_020662c8(p, i, p->table[row][i]);
     }
 }
