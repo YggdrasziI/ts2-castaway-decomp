@@ -2,7 +2,7 @@
  * Unit 0x0208F16C-0x0208F8B0: a font (Unk0208f16c) implementing the font interface
  * of the text layout (Unk02092830Font, include/game/unk_text.h). It keeps the
  * glyph file (Unk02095140) and reads its metrics from a data tree file
- * (Unk02096348): the characters of "FontMetrics.CharacterString", sorted by code,
+ * (Unk02096348): the characters of "FontMetrics.Characters.String", sorted by code,
  * then per "Character" node its "Char", break flags ("AlwaysBreak", "CanBreak",
  * "Whitespace") and "Kerning", and the "Dimensions" node ("Width", "Height",
  * "Baseline"). Characters are found by binary search.
@@ -81,7 +81,7 @@ void Unk0208f16c::func_0208f2c8(Unk02096348 *script) {
     int prev;
     int len;
 
-    key = script->func_0209645c((const u32 *)"FontMetrics.CharacterString", -1);
+    key = script->func_0209645c((const u32 *)"FontMetrics.Characters.String", -1);
     if (!script->func_02096538(key, 0)) {
         return;
     }

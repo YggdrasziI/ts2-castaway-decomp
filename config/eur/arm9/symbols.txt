@@ -5329,8 +5329,8 @@ data_020bce34 kind:data(any) addr:0x020bce34
 @1612 kind:data(byte[5]) addr:0x020bcee4 local
 @1613 kind:data(any) addr:0x020bceec local
 @1614 kind:data(any) addr:0x020bcef0 local
-@2009 kind:data(any) addr:0x020bcef4 local
-@2010 kind:data(any) addr:0x020bcef8 local
+@2009 kind:data(byte[2]) addr:0x020bcef4 local
+@2010 kind:data(byte[1]) addr:0x020bcef8 local
 @492 kind:data(any) addr:0x020bcefc local
 @493 kind:data(any) addr:0x020bcf2c local
 @494 kind:data(any) addr:0x020bcf54 local
@@ -5372,7 +5372,7 @@ _ZTV11Unk020bd014 kind:data(any) addr:0x020bd014
 @685 kind:data(byte[11]) addr:0x020bd0e0 local
 _ZTV11Unk0208e570 kind:data(any) addr:0x020bd0ec
 _ZTV15Unk02092830Font kind:data(any) addr:0x020bd130
-@283 kind:data(byte[28]) addr:0x020bd174 local
+@283 kind:data(byte[30]) addr:0x020bd174 local
 @311 kind:data(byte[10]) addr:0x020bd194 local
 @312 kind:data(byte[11]) addr:0x020bd1a0 local
 @375 kind:data(byte[5]) addr:0x020bd1ac local
@@ -5494,10 +5494,8 @@ fields$2010 kind:data(any) addr:0x020bdef4 local
 fields$2040 kind:data(any) addr:0x020bdf0c local
 fields$2055 kind:data(any) addr:0x020bdf14 local
 fields$2135 kind:data(any) addr:0x020bdf5c local
-data_020bdfac kind:data(any) addr:0x020bdfac
-data_020bdfb4 kind:data(any) addr:0x020bdfb4
-data_020bdfbc kind:data(any) addr:0x020bdfbc
-data_020bdfc4 kind:data(any) addr:0x020bdfc4
+fields$2225 kind:data(byte[32]) addr:0x020bdfac local
+data_020bdfcc kind:data(any) addr:0x020bdfcc
 _ZGVdesc$770 kind:bss addr:0x020bdfe0 local
 desc$770 kind:bss addr:0x020bdfe4 local
 _ZGVdesc$927 kind:bss addr:0x020bdff4 local
@@ -5828,7 +5826,7 @@ data_020d6cfc kind:bss addr:0x020d6cfc
 data_020d6d00 kind:bss addr:0x020d6d00
 data_020d7100 kind:bss addr:0x020d7100 local
 data_020d710c kind:bss addr:0x020d710c local
-data_020d7110 kind:bss addr:0x020d7110
+_ZGVfields$1390 kind:bss addr:0x020d7110 local
 __stdio_exit kind:bss addr:0x020c77ac
 __atexit_curr_func kind:bss addr:0x020c77b0 local
 __aborting kind:bss addr:0x020c77b4
@@ -5915,3 +5913,17 @@ _ZTV11Unk02015790 kind:data(any) addr:0x020b8278
 _ZTV11Unk0201a2c8 kind:data(any) addr:0x020b8780
 _ZTV11Unk0201af9c kind:data(any) addr:0x020b87a8
 _ZTV11Unk0201a4e0 kind:data(any) addr:0x020b87b4
+_ZGVfields$1419 kind:bss addr:0x020d7114 local
+_ZGVfields$1471 kind:bss addr:0x020d7118 local
+_ZGVfields$1687 kind:bss addr:0x020d711c local
+_ZGVfields$1709 kind:bss addr:0x020d7120 local
+_ZGVfields$1752 kind:bss addr:0x020d7124 local
+_ZGVfields$1780 kind:bss addr:0x020d7128 local
+_ZGVfields$1863 kind:bss addr:0x020d712c local
+_ZGVfields$1921 kind:bss addr:0x020d7130 local
+_ZGVfields$1981 kind:bss addr:0x020d7134 local
+_ZGVfields$2010 kind:bss addr:0x020d7138 local
+_ZGVfields$2040 kind:bss addr:0x020d713c local
+_ZGVfields$2055 kind:bss addr:0x020d7140 local
+_ZGVfields$2135 kind:bss addr:0x020d7144 local
+_ZGVfields$2225 kind:bss(size=0x4) addr:0x020d7148 local
