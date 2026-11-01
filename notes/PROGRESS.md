@@ -161,3 +161,4 @@
 | 2026-11-01 | 06cb038 | 382232 / 720836 bytes (53.03 %; fuzzy 81.42 %, linked 18.52 %) | 3269 / 4556 | 127 / 271 | Layout sprite classes (3 units, 41 functions, three vtables), complete; matched code +2000 bytes |
 | 2026-11-01 | a59a482 | 384520 / 720836 bytes (53.34 %; fuzzy 81.74 %, linked 18.84 %) | 3298 / 4556 | 128 / 272 | Layout text (29 functions, vtable), complete; matched code +2288 bytes |
 | 2026-11-01 | 658628a | 385456 / 720836 bytes (53.47 %; fuzzy 81.87 %, linked 18.97 %) | 3344 / 4556 | 133 / 277 | Layout elements, their bases and the name list (5 units, 46 functions, four vtables), complete; matched code +936 bytes |
+| 2026-11-01 | d89c004 | 386660 / 720836 bytes (53.64 %; fuzzy 82.04 %, linked 19.14 %) | 3370 / 4556 | 135 / 279 | Layout font (11 functions) and frame loader (15), one vtable each, complete |
