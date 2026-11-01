@@ -3,8 +3,6 @@
  * are sprites, each kind with its own child hash; every sprite is read through a table of hashed
  * field names and then linked to the sprites it names. Bounds: hypothesis (the functions called from
  * func_020aba38, down to the last field reader). All names are placeholders. Real file name unknown.
- * Not complete: the twelve sprite readers (95.56 %) and func_020ab57c (95.08 %) miss a second test
- * of the count before their loop, with the registers it shifts.
  */
 #include "game/unk_datatree.h"
 #include "game/unk_screen.h"
@@ -215,31 +213,30 @@ READ_SPRITES(func_020ab480, func_020ac9dc)
 extern "C" void func_020ab57c(const Unk0209674c *node, const Unk020ab57cField *fields, int *values, int count) {
     int total = node->func_020967ec();
     int i = 0;
-    if (total > 0) {
-        for (i = 0; i < total; i++) {
-            Unk0209674c child = node->func_02096774(i);
-            if (child.func_02096864()) {
-            u32 hash = child.func_02096800();
+    for (; i < total; i++) {
+        Unk0209674c child = node->func_02096774(i);
+        Unk0209674c *c = &child;
+        if (child.func_02096864()) {
+            u32 hash = c->func_02096800();
             for (int j = 0; j < count; j++) {
                 if (hash == fields[j].hash) {
                     switch (fields[j].type) {
                     case 0:
-                        values[j] = child.func_020968a0();
+                        values[j] = c->func_020968a0();
                         break;
                     case 1:
-                        values[j] = child.func_02096910();
+                        values[j] = c->func_02096910();
                         break;
                     case 2:
-                        values[j] = child.func_02096948();
+                        values[j] = c->func_02096948();
                         break;
                     case 3:
-                        values[j] = child.func_020968d8();
+                        values[j] = c->func_020968d8();
                         break;
                     }
                 }
             }
         }
-    }
     }
 }
 

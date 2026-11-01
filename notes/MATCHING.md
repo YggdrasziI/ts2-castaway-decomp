@@ -441,6 +441,16 @@ default: add one here only once a unit of this ROM proves it with mwccarm.
   FX32(n - 1), -0x3000)`), not three assignments (constructor of
   `Unk02041b10`).
 
+### A pointer alias of a local changes the allocation and the guards
+
+A class local used through a pointer (`T child = ...; T *c = &child;`, then `c->f()`) gives the
+address its own register, hoisted out of the loop, and can add the second loop guard that a plain
+local misses: `cmp rN, #0; ble end; cmp rN, #0; add rM, sp, #x; ble end`. The twelve sprite readers
+and `func_020ab57c` of `unit_020AA648` went to 100 % this way. A use made directly on the local
+stays `add r0, sp, #x`; a use through the alias is `mov r0, rM`, so the listing shows which calls
+go through which. A `const T &child = f()` reference gives part of the effect (99.37 %). An
+explicit `if (n > 0)` around the `for` then adds a third test (`cmpgt`): drop it.
+
 ## Inlining and emission order
 
 - Inline virtual functions called through an object's vtable are emitted right after

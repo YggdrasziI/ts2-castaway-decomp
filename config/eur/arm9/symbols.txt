@@ -4603,7 +4603,7 @@ data_020b59c4 kind:data(any) addr:0x020b59c4 local
 data_020b59f4 kind:data(any) addr:0x020b59f4
 data_020b5b84 kind:data(any) addr:0x020b5b84
 data_020b6d0c kind:data(any) addr:0x020b6d0c
-data_020b6d40 kind:data(any) addr:0x020b6d40
+@1497 kind:data(any) addr:0x020b6d40 local
 @1801 kind:data(any) addr:0x020b6d60 local
 @1878 kind:data(any) addr:0x020b6d84 local
 @1934 kind:data(any) addr:0x020b6d9c local
