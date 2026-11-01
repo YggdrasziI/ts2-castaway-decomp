@@ -185,3 +185,4 @@
 | 2026-11-01 | c80013f | 513416 / 723540 bytes (70.96 %; fuzzy 98.69 %, linked 34.82 %) | 4235 / 4577 | 536 / 656 | Data unit by unit: matched data 96.52 % -> 99.94 %, base vtable copies emitted, two static initializers attached |
 | 2026-11-01 | 95dff76 | 522388 / 723540 bytes (72.20 %; fuzzy 98.71 %, linked 36.11 %) | 4254 / 4577 | 537 / 656 | Code pass on the near matches: local alias, loop test capture, static array type; unit_020AA648 complete |
 | 2026-11-01 | 0bd35f3 | 541256 / 723540 bytes (74.81 %; fuzzy 98.73 %, linked 36.11 %) | 4265 / 4577 | 537 / 656 | Grid screens: zero copies of nested loops, `int` argument locals, signed casts; three constructors and four func_38 at 100 % |
+| 2026-11-01 | e8f1c87 | 543172 / 723540 bytes (75.07 %; fuzzy 98.74 %, linked 36.11 %) | 4270 / 4577 | 537 / 656 | Signed bounds, unsigned tile index, split map reads |

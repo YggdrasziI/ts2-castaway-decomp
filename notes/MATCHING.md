@@ -460,6 +460,11 @@ receiver, and moves the `mla` of the receiver before the stack arguments. A `sho
 `bge` with the index in the unsigned register order: keep `u32 k` and compare `(int)k < count`. With `int k`
 the branches match but the registers rotate.
 
+### Multiplying two shorts
+
+`smlabb` where the original has `mla`: both operands are known shorts. Cast one to `u32`
+(`(u32)c.xy.y * layer->info->width`): an `int` local does not help, the compiler still sees the shorts.
+
 ### A captured loop test
 
 A `volatile` count read by the loop test and again just after it is reused by the original through
