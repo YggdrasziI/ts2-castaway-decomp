@@ -1160,3 +1160,27 @@ src/game/unit_020A70DC.cpp:
     complete
     .text       start:0x020a70dc end:0x020a79cc
     .data       start:0x020bdc50 end:0x020bdc70
+
+src/game/unit_020A79CC.cpp:
+    complete
+    .text       start:0x020a79cc end:0x020a7aa0
+    .data       start:0x020bdc70 end:0x020bdc88
+
+src/game/unit_020A7AA0.cpp:
+    complete
+    .text       start:0x020a7aa0 end:0x020a7af4
+    .data       start:0x020bdc88 end:0x020bdca0
+
+src/game/unit_020A7AF4.cpp:
+    complete
+    .text       start:0x020a7af4 end:0x020a7b94
+
+src/game/unit_020A7B94.cpp:
+    complete
+    .text       start:0x020a7b94 end:0x020a7c10
+    .data       start:0x020bdca0 end:0x020bdcb8
+
+src/game/unit_020A7C10.cpp:
+    complete
+    .text       start:0x020a7c10 end:0x020a7d74
+    .data       start:0x020bdcb8 end:0x020bdcd8

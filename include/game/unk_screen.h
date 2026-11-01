@@ -26,7 +26,9 @@ public:
     Unk020a7af4(Unk020a7af4Entry *entries, int count);
     ~Unk020a7af4();
 
-    u32 unk0[3];
+    Unk020a7af4Entry *entries;
+    int count;
+    int used;
 };
 
 /* A layout of one screen (0x7C bytes). */
