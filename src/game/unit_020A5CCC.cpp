@@ -159,9 +159,9 @@ extern "C" Unk02098e70 func_020a5f28(int inside, int margin) {
         point.y = func_020a5ef0(m, 0xc0 - m);
     } else {
         int x = func_020a5ef0(0, (m << 2) + 0x100) - (m << 1);
-        u32 y = func_020a5ef0(0, (m << 2) + 0xc0) - (m << 1);
-        bool onX = x >= -m && x < m + 0x100;
-        bool onY = y >= -m && y < m + 0xc0;
+        int y = func_020a5ef0(0, (m << 2) + 0xc0) - (m << 1);
+        bool onX = x >= (int)-m && x < (int)(m + 0x100);
+        bool onY = y >= (int)-m && y < (int)(m + 0xc0);
         if (onX & onY) {
             if (func_020a5ec0() & 1) {
                 point.x = x > 0x80 ? m + 0x100 : -m;
