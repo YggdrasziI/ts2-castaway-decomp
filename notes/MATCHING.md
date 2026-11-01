@@ -1460,3 +1460,13 @@ default: add one here only once a unit of this ROM proves it with mwccarm.
   of the neighbouring locals (`func_02001fdc`, 98.9 % -> 100 %).
 - A local declared without its initializer, above another local, swaps their registers
   (`Unk02001f08::func_14`, 99.6 % -> 100 %).
+- A `__sinit` that keeps the address of a sub-object in a register instead of folding it into
+  the object's offset: write the inline constructor of the sub-object through a local pointer
+  (`T *self = this; self->a = ...; self->b = ...;`). Initializer list and plain assignments
+  all fold (`unit_020A18F0.cpp`, `__sinit` 45 % -> 100 %).
+- A table entry read into its own local before the expression (`u32 mag = table[y & 1];`)
+  gives the expression a free register (`func_020a1f84`, 96.2 % -> 100 %).
+- Fields read from one word: the order of the locals sets the order of the masks and the
+  registers; try all permutations (`func_020a1aa4`: year, day, month, not day, month, year).
+- An access by the static object's own name, compiled as an offset in the unit's `.bss`:
+  define the object after its uses (`func_020a1aa4`).
