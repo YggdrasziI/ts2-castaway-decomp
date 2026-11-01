@@ -16285,9 +16285,9 @@ from:0x02078170 kind:load to:0x0207818c module:main
 from:0x02078184 kind:load to:0x020c5700 module:main
 from:0x02078188 kind:load to:0x0207818c module:main
 from:0x020781ec kind:load to:0x02078208 module:main
-from:0x020781f0 kind:load to:0x020c570a module:main
+from:0x020781f0 kind:load to:0x020c5700 add:0xa module:main
 from:0x02078200 kind:load to:0x02078208 module:main
-from:0x02078204 kind:load to:0x020c5708 module:main
+from:0x02078204 kind:load to:0x020c5700 add:0x8 module:main
 from:0x0207822c kind:arm_call to:0x02078a84 module:main
 from:0x0207823c kind:load to:0x020c5700 module:main
 from:0x020782a0 kind:arm_call to:0x02078a84 module:main

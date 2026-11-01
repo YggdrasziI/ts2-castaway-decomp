@@ -5715,8 +5715,6 @@ data_020c569c kind:bss addr:0x020c569c
 data_020c56f8 kind:bss addr:0x020c56f8
 data_020c56fc kind:bss addr:0x020c56fc
 data_020c5700 kind:bss addr:0x020c5700
-data_020c5708 kind:bss addr:0x020c5708
-data_020c570a kind:bss addr:0x020c570a
 data_020c571c kind:bss addr:0x020c571c
 data_020c5720 kind:bss addr:0x020c5720
 data_020c5724 kind:bss addr:0x020c5724

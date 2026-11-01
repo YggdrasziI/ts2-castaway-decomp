@@ -2403,3 +2403,259 @@ libs/nitro/src/rtc/unit_0207D148.c:
 libs/nitro/src/pm/unit_0208007C.c:
     complete
     .text       start:0x0208007c end:0x02080084
+
+libs/nitro/src/card/unit_020C4784.c:
+    complete
+    .bss        start:0x020c4784 end:0x020c4e20
+
+libs/nitro/src/card/unit_020C4E20.c:
+    complete
+    .bss        start:0x020c4e20 end:0x020c5060
+
+libs/nitro/src/card/unit_020C5060.c:
+    complete
+    .bss        start:0x020c5060 end:0x020c5068
+
+libs/nitro/src/ctrdg/unit_020C5068.c:
+    complete
+    .bss        start:0x020c5068 end:0x020c506c
+
+libs/nitro/src/ctrdg/unit_020C506C.c:
+    complete
+    .bss        start:0x020c506c end:0x020c5074
+
+libs/nitro/src/ctrdg/unit_020C5074.c:
+    complete
+    .bss        start:0x020c5074 end:0x020c507c
+
+libs/nitro/src/ctrdg/unit_020C507C.c:
+    complete
+    .bss        start:0x020c507c end:0x020c50a0
+
+libs/nitro/src/ctrdg/unit_020C50A0.c:
+    complete
+    .bss        start:0x020c50a0 end:0x020c5248
+
+libs/nitro/src/ctrdg/unit_020C5248.c:
+    complete
+    .bss        start:0x020c5248 end:0x020c5670
+
+libs/nitro/src/mi/unit_020C5670.c:
+    complete
+    .bss        start:0x020c5670 end:0x020c5674
+
+libs/nitro/src/fs/unit_020C5674.c:
+    complete
+    .bss        start:0x020c5674 end:0x020c5680
+
+libs/nitro/src/fs/unit_020C5680.c:
+    complete
+    .bss        start:0x020c5680 end:0x020c56f8
+
+libs/nitro/src/gx/unit_020C56F8.c:
+    complete
+    .bss        start:0x020c56f8 end:0x020c571c
+
+libs/nitro/src/gx/unit_020C571C.c:
+    complete
+    .bss        start:0x020c571c end:0x020c5720
+
+libs/nitro/src/gx/unit_020C5720.c:
+    complete
+    .bss        start:0x020c5720 end:0x020c5728
+
+libs/nitro/src/gx/unit_020C5728.c:
+    complete
+    .bss        start:0x020c5728 end:0x020c572c
+
+libs/nitro/src/gx/unit_020C572C.c:
+    complete
+    .bss        start:0x020c572c end:0x020c5734
+
+libs/nitro/src/os/unit_020C5734.c:
+    complete
+    .bss        start:0x020c5734 end:0x020c5764
+
+libs/nitro/src/os/unit_020C5764.c:
+    complete
+    .bss        start:0x020c5764 end:0x020c5794
+
+libs/nitro/src/os/unit_020C5794.c:
+    complete
+    .bss        start:0x020c5794 end:0x020c579c
+
+libs/nitro/src/os/unit_020C579C.c:
+    complete
+    .bss        start:0x020c579c end:0x020c57a0
+
+libs/nitro/src/os/unit_020C57A0.c:
+    complete
+    .bss        start:0x020c57a0 end:0x020c57a8
+
+libs/nitro/src/os/unit_020C57A8.c:
+    complete
+    .bss        start:0x020c57a8 end:0x020c5a08
+
+libs/nitro/src/os/unit_020C5A08.c:
+    complete
+    .bss        start:0x020c5a08 end:0x020c5a0c
+
+libs/nitro/src/os/unit_020C5A0C.c:
+    complete
+    .bss        start:0x020c5a0c end:0x020c5a14
+
+libs/nitro/src/os/unit_020C5A14.c:
+    complete
+    .bss        start:0x020c5a14 end:0x020c5a9c
+
+libs/nitro/src/os/unit_020C5A9C.c:
+    complete
+    .bss        start:0x020c5a9c end:0x020c5aa4
+
+libs/nitro/src/os/unit_020C5AA4.c:
+    complete
+    .bss        start:0x020c5aa4 end:0x020c5ab0
+
+libs/nitro/src/os/unit_020C5AB0.c:
+    complete
+    .bss        start:0x020c5ab0 end:0x020c5ab8
+
+libs/nitro/src/os/unit_020C5AB8.c:
+    complete
+    .bss        start:0x020c5ab8 end:0x020c5ac4
+
+libs/nitro/src/os/unit_020C5AC4.c:
+    complete
+    .bss        start:0x020c5ac4 end:0x020c5acc
+
+libs/nitro/src/os/unit_020C5ACC.c:
+    complete
+    .bss        start:0x020c5acc end:0x020c5ae4
+
+libs/nitro/src/pxi/unit_020C5AE4.c:
+    complete
+    .bss        start:0x020c5ae4 end:0x020c5b68
+
+libs/nitro/src/rtc/unit_020C5B68.c:
+    complete
+    .bss        start:0x020c5b68 end:0x020c5b90
+
+libs/nitro/src/gx/unit_020C5B90.c:
+    complete
+    .bss        start:0x020c5b90 end:0x020c5bac
+
+libs/nitro/src/snd/unit_020C5BAC.c:
+    complete
+    .bss        start:0x020c5bac end:0x020c5bb0
+
+libs/nitro/src/snd/unit_020C5BB0.c:
+    complete
+    .bss        start:0x020c5bb0 end:0x020c5bb8
+
+libs/nitro/src/snd/unit_020C5BB8.c:
+    complete
+    .bss        start:0x020c5bb8 end:0x020c5bbc
+
+libs/nitro/src/snd/unit_020C5BBC.c:
+    complete
+    .bss        start:0x020c5bbc end:0x020c5bc4
+
+libs/nitro/src/snd/unit_020C5BC4.c:
+    complete
+    .bss        start:0x020c5bc4 end:0x020c6e80
+
+libs/nitro/src/snd/unit_020C6E80.c:
+    complete
+    .bss        start:0x020c6e80 end:0x020c7668
+
+libs/nitro/src/snd/unit_020C7668.c:
+    complete
+    .bss        start:0x020c7668 end:0x020c76e0
+
+libs/nitro/src/snd/unit_020C76E0.c:
+    complete
+    .bss        start:0x020c76e0 end:0x020c76e4
+
+libs/nitro/src/spi/unit_020C76E4.c:
+    complete
+    .bss        start:0x020c76e4 end:0x020c7720
+
+libs/nitro/src/spi/unit_020C7720.c:
+    complete
+    .bss        start:0x020c7720 end:0x020c7740
+
+libs/nitro/src/spi/unit_020C7740.c:
+    complete
+    .bss        start:0x020c7740 end:0x020c7748
+
+libs/nitro/src/spi/unit_020C7748.c:
+    complete
+    .bss        start:0x020c7748 end:0x020c7750
+
+libs/nitro/src/spi/unit_020C7750.c:
+    complete
+    .bss        start:0x020c7750 end:0x020c7780
+
+libs/nitro/src/spi/unit_020C7780.c:
+    complete
+    .bss        start:0x020c7780 end:0x020c77a8
+
+libs/nns/src/snd/unit_020D47C0.c:
+    complete
+    .bss        start:0x020d47c0 end:0x020d47c8
+
+libs/nns/src/snd/unit_020D47C8.c:
+    complete
+    .bss        start:0x020d47c8 end:0x020d47e4
+
+libs/nns/src/snd/unit_020D47E4.c:
+    complete
+    .bss        start:0x020d47e4 end:0x020d4c48
+
+libs/nns/src/snd/unit_020D4C48.c:
+    complete
+    .bss        start:0x020d4c48 end:0x020d4c60
+
+libs/nns/src/g3d/unit_020D4C60.c:
+    complete
+    .bss        start:0x020d4c60 end:0x020d4c68
+
+libs/nns/src/snd/unit_020D4C68.c:
+    complete
+    .bss        start:0x020d4c68 end:0x020d50c8
+
+libs/nns/src/snd/unit_020D50C8.c:
+    complete
+    .bss        start:0x020d50c8 end:0x020d5198
+
+libs/nns/src/snd/unit_020D5198.c:
+    complete
+    .bss        start:0x020d5198 end:0x020d5210
+
+libs/nns/src/snd/unit_020D5210.c:
+    complete
+    .bss        start:0x020d5210 end:0x020d5250
+
+libs/nns/src/snd/unit_020D5250.c:
+    complete
+    .bss        start:0x020d5250 end:0x020d5258
+
+libs/nns/src/snd/unit_020D5258.c:
+    complete
+    .bss        start:0x020d5258 end:0x020d5268
+
+libs/nns/src/snd/unit_020D5268.c:
+    complete
+    .bss        start:0x020d5268 end:0x020d5ac8
+
+libs/nns/src/snd/unit_020D5AC8.c:
+    complete
+    .bss        start:0x020d5ac8 end:0x020d5ae0
+
+libs/nns/src/snd/unit_020D5AE0.c:
+    complete
+    .bss        start:0x020d5ae0 end:0x020d60ac
+
+libs/nns/src/fnd/unit_020D60AC.c:
+    complete
+    .bss        start:0x020d60ac end:0x020d60bc

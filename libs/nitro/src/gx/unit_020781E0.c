@@ -4,15 +4,14 @@
 
 
 extern void resetBankForX_(void *p);
-extern int data_020c5708;
-extern int data_020c570a;
+extern unsigned short data_020c5700[];
 void func_020781f4(void);
 void func_020781e0(void);
 
 void func_020781f4(void) {
-    resetBankForX_(&data_020c5708);
+    resetBankForX_(&data_020c5700[4]);
 }
 
 void func_020781e0(void) {
-    resetBankForX_(&data_020c570a);
+    resetBankForX_(&data_020c5700[5]);
 }
