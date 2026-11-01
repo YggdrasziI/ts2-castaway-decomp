@@ -169,3 +169,4 @@
 | 2026-11-01 | 5eab9c8 | 400200 / 720836 bytes (55.52 %; fuzzy 84.59 %, linked 19.95 %) | 3496 / 4556 | 140 / 285 | Layout loader (27/40 functions, field tables), not complete |
 | 2026-11-01 | 14c28da | 400628 / 720836 bytes (55.58 %; fuzzy 84.65 %, linked 20.01 %) | 3500 / 4556 | 141 / 285 | Vector ramp and movement block (4 functions), complete: all game code delinked |
 | 2026-11-01 | 09c21a6 | 424020 / 720836 bytes (58.82 %; fuzzy 87.89 %, linked 22.07 %) | 3596 / 4556 | 167 / 299 | MSL C and C++ runtime sources (twewy), 25 files complete, compiler 2.0/sp1p2 |
+| 2026-11-01 | 79400b3 | 432136 / 723540 bytes (59.73 %; fuzzy 89.53 %, linked 23.98 %) | 3641 / 4577 | 184 / 317 | Runtime FP and division helpers, 17 files complete (seven below 100 % in objdiff, bytes identical) |
