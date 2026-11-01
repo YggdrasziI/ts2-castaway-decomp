@@ -8,43 +8,43 @@ text{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,san
 </style>
 <rect class="bg" x="0.5" y="0.5" width="759" height="349" rx="6"/>
 <text class="t b" x="16" y="34">The Sims 2: Castaway (eur)</text>
-<text class="m" x="744" y="34" text-anchor="end">commit 64ea8e4</text>
+<text class="m" x="744" y="34" text-anchor="end">commit 5df63fa</text>
 <text class="t" x="16" y="60">Code</text>
 <rect class="track" x="186" y="49" width="300" height="12" rx="3"/>
 <rect class="fuzzy" x="186" y="49" width="296.4" height="12" rx="2"/>
-<rect class="perfect" x="186" y="49" width="225.9" height="12" rx="2"/>
-<rect class="linked" x="186" y="49" width="113.1" height="12" rx="2"/>
-<text class="t" x="674" y="60" text-anchor="end">544,732 / 723,540 bytes</text>
-<text class="m" x="744" y="60" text-anchor="end">75.29 %</text>
+<rect class="perfect" x="186" y="49" width="226.8" height="12" rx="2"/>
+<rect class="linked" x="186" y="49" width="114.9" height="12" rx="2"/>
+<text class="t" x="674" y="60" text-anchor="end">546,884 / 723,540 bytes</text>
+<text class="m" x="744" y="60" text-anchor="end">75.58 %</text>
 <text class="t" x="16" y="86">Data</text>
 <rect class="track" x="186" y="75" width="300" height="12" rx="3"/>
 <rect class="fuzzy" x="186" y="75" width="299.8" height="12" rx="2"/>
 <rect class="perfect" x="186" y="75" width="299.8" height="12" rx="2"/>
-<rect class="linked" x="186" y="75" width="246.8" height="12" rx="2"/>
+<rect class="linked" x="186" y="75" width="246.9" height="12" rx="2"/>
 <text class="t" x="674" y="86" text-anchor="end">167,956 / 168,052 bytes</text>
 <text class="m" x="744" y="86" text-anchor="end">99.94 %</text>
 <text class="t" x="16" y="112">Functions</text>
 <rect class="track" x="186" y="101" width="300" height="12" rx="3"/>
-<rect class="fuzzy" x="186" y="101" width="280.1" height="12" rx="2"/>
-<rect class="perfect" x="186" y="101" width="280.1" height="12" rx="2"/>
-<rect class="linked" x="186" y="101" width="160.3" height="12" rx="2"/>
-<text class="t" x="674" y="112" text-anchor="end">4,273 / 4,577</text>
-<text class="m" x="744" y="112" text-anchor="end">93.36 %</text>
+<rect class="fuzzy" x="186" y="101" width="280.5" height="12" rx="2"/>
+<rect class="perfect" x="186" y="101" width="280.5" height="12" rx="2"/>
+<rect class="linked" x="186" y="101" width="162.4" height="12" rx="2"/>
+<text class="t" x="674" y="112" text-anchor="end">4,280 / 4,577</text>
+<text class="m" x="744" y="112" text-anchor="end">93.51 %</text>
 <text class="t b" x="16" y="146">Code by region</text>
 <text class="t" x="16" y="172">Game</text>
 <rect class="track" x="186" y="161" width="300" height="12" rx="3"/>
 <rect class="fuzzy" x="186" y="161" width="297.7" height="12" rx="2"/>
-<rect class="perfect" x="186" y="161" width="211.3" height="12" rx="2"/>
+<rect class="perfect" x="186" y="161" width="212.0" height="12" rx="2"/>
 <rect class="linked" x="186" y="161" width="81.0" height="12" rx="2"/>
-<text class="t" x="674" y="172" text-anchor="end">371,924 / 528,100 bytes</text>
-<text class="m" x="744" y="172" text-anchor="end">70.43 %</text>
+<text class="t" x="674" y="172" text-anchor="end">373,264 / 528,100 bytes</text>
+<text class="m" x="744" y="172" text-anchor="end">70.68 %</text>
 <text class="t" x="16" y="198">Engine block (owner unproven)</text>
 <rect class="track" x="186" y="187" width="300" height="12" rx="3"/>
 <rect class="fuzzy" x="186" y="187" width="298.5" height="12" rx="2"/>
-<rect class="perfect" x="186" y="187" width="260.4" height="12" rx="2"/>
-<rect class="linked" x="186" y="187" width="118.7" height="12" rx="2"/>
-<text class="t" x="674" y="198" text-anchor="end">60,396 / 69,568 bytes</text>
-<text class="m" x="744" y="198" text-anchor="end">86.82 %</text>
+<rect class="perfect" x="186" y="187" width="263.9" height="12" rx="2"/>
+<rect class="linked" x="186" y="187" width="138.0" height="12" rx="2"/>
+<text class="t" x="674" y="198" text-anchor="end">61,208 / 69,568 bytes</text>
+<text class="m" x="744" y="198" text-anchor="end">87.98 %</text>
 <text class="t" x="16" y="224">NitroSDK (+ crt0, ITCM IRQ)</text>
 <rect class="track" x="186" y="213" width="300" height="12" rx="3"/>
 <rect class="fuzzy" x="186" y="213" width="278.8" height="12" rx="2"/>
