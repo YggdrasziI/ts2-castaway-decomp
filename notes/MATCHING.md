@@ -1422,3 +1422,15 @@ default: add one here only once a unit of this ROM proves it with mwccarm.
 - A compare order different from `operator==` (here `+2, +0, +3`, result 1 then cleared)
   is a separate `operator!=`, taking its cell by reference while the parts stay by
   value; the by-value copy comes from an inline around it (`unit_0200A5E0.cpp`).
+
+## File bounds
+
+- Several classes in a row: the compiler writes the vtables of one object in reverse order
+  of their first use and emits their inline functions at its end. Name, vtable and inline
+  functions of each class following each other in the ROM mean one object per class
+  (`unit_02000C68.cpp`, `unit_02000DF0.cpp`); vtables in a block after shared names mean
+  one object for the group (`unit_0200125C.cpp`).
+- A default written `x = x ? x : c;` rather than `if (x == 0) x = c;` swaps the registers
+  of the neighbouring locals (`func_02001fdc`, 98.9 % -> 100 %).
+- A local declared without its initializer, above another local, swaps their registers
+  (`Unk02001f08::func_14`, 99.6 % -> 100 %).

@@ -1,7 +1,7 @@
 /*
  * Unit 0x02002144-0x020023AC: three commands of the script table (names from the table of
  * `unit_0205AF94.cpp`): "PlaySound", "StopSoundEffects" and "AdvanceTime". Bounds:
- * hypothesis (the end of the file holding `main`, whose inline functions end at 0x02002144,
+ * hypothesis (the inline functions of unit_02001FDC.cpp end at 0x02002144,
  * to the class operators of the action base; no data). Layouts come from the code; all
  * names are placeholders.
  */
