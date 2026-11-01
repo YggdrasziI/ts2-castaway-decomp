@@ -198,6 +198,7 @@ Commands: `python tools/compiler_sweep.py --ref <project> --compilers 2.0/sp1p5
 | `src/game/unit_020A7C10.cpp` | `.text` 0x020A7C10-0x020A7D74, `.data` 0x020BDCB8-0x020BDCD8 (hypothesis) | Base of the placed layout elements | complete |
 | `src/game/unit_020A7D74.cpp` | `.text` 0x020A7D74-0x020A7FDC, `.data` 0x020BDCD8-0x020BDCF0 (hypothesis) | Font of a layout | complete |
 | `src/game/unit_020A7FDC.cpp` | `.text` 0x020A7FDC-0x020A8228, `.data` 0x020BDCF0-0x020BDD08 (hypothesis) | Layout element that loads a file frame through a callback | complete |
+| `src/game/unit_020A8228.cpp` | `.text` 0x020A8228-0x020A8F84, `.data` 0x020BDD08-0x020BDD28 (hypothesis) | Sprite tiled from several objects | not complete, `func_020a87f4` 99.39 % (registers) |
 | `src/game/unit_020A8F84.cpp` | `.text` 0x020A8F84-0x020A9054, `.data` 0x020BDD28-0x020BDD40 (hypothesis) | Layout element with a vector | complete |
 | `src/game/unit_020A9054.cpp` | `.text` 0x020A9054-0x020A90F8, `.data` 0x020BDD40-0x020BDD58 (hypothesis) | Vector element with a scale | complete |
 | `src/game/unit_020A90F8.cpp` | `.text` 0x020A90F8-0x020A9914, `.data` 0x020BDD58-0x020BDD78 (hypothesis) | Sprite drawn as one object | complete |
