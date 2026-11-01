@@ -4744,7 +4744,6 @@ _ZTV11Unk02010920 kind:data(any) addr:0x020b7ba4
 data_020b7bb4 kind:data(any) addr:0x020b7bb4
 _ZTV11Unk02011524 kind:data(any) addr:0x020b7bc0
 _ZZN11Unk02011524C1EP11Unk02093648iiEs kind:data(byte[18]) addr:0x020b7be8
-@1277 kind:data(any) addr:0x020b7bfc local
 data_020b7c6c kind:data(any) addr:0x020b7c6c
 _ZTV11Unk020116e0 kind:data(any) addr:0x020b7cdc
 _ZZN11Unk020116e07func_18EvEs_0 kind:data(byte[5]) addr:0x020b7d04
@@ -4782,14 +4781,10 @@ _ZTV11Unk02013258 kind:data(any) addr:0x020b7f18
 @542 kind:data(byte[13]) addr:0x020b8084 local
 @569 kind:data(byte[12]) addr:0x020b8094 local
 _ZTV11Unk02013f8c kind:data(any) addr:0x020b80a0
-@852 kind:data(any) addr:0x020b80c8 local
-@829 kind:data(any) addr:0x020b80d8 local
-@818 kind:data(any) addr:0x020b80e0 local
-@857 kind:data(any) addr:0x020b80e8 local
 data_020b8188 kind:data(any) addr:0x020b8188
 data_020b8198 kind:data(any) addr:0x020b8198
 data_020b81a8 kind:data(any) addr:0x020b81a8
-data_020b81b8 kind:data(any) addr:0x020b81b8
+data_020b81b8$2103 kind:data(any) addr:0x020b81b8 local
 data_020b8258 kind:data(any) addr:0x020b8258
 data_020b8280 kind:data(any) addr:0x020b8280
 @2104 kind:data(byte[13]) addr:0x020b8288 local
@@ -4840,9 +4835,9 @@ data_020b8280 kind:data(any) addr:0x020b8280
 @863 kind:data(byte[26]) addr:0x020b85f4 local
 @864 kind:data(byte[19]) addr:0x020b8610 local
 _ZZN11Unk0201a2c810func_soundEiiiiE13data_020b8624 kind:data(any) addr:0x020b8624 local
-data_020b86e0 kind:data(any) addr:0x020b86e0
-data_020b8740 kind:data(any) addr:0x020b8740
-data_020b8748 kind:data(any) addr:0x020b8748
+@1462 kind:data(any) addr:0x020b86e0 local
+@1084 kind:data(any) addr:0x020b8740 local
+@755 kind:data(any) addr:0x020b8748 local
 data_020b8788 kind:data(any) addr:0x020b8788
 data_020b87b0 kind:data(any) addr:0x020b87b0
 data_020b87bc kind:data(any) addr:0x020b87bc
@@ -5890,51 +5885,67 @@ data_020d6d00 kind:bss addr:0x020d6d00
 data_020d7100 kind:bss addr:0x020d7100 local
 data_020d710c kind:bss addr:0x020d710c local
 data_020d7110 kind:bss addr:0x020d7110
+__stdio_exit kind:bss addr:0x020c77ac
+__atexit_curr_func kind:bss addr:0x020c77b0 local
+__aborting kind:bss addr:0x020c77b4
+_ZGVsounds$523 kind:bss addr:0x020d622c local
+sounds$523 kind:bss addr:0x020d6230 local
 @1393 kind:data(any) addr:0x020b7c1c local
 @1407 kind:data(any) addr:0x020b7c64 local
 @1370 kind:data(any) addr:0x020b7c0c local
-@1362 kind:data(any) addr:0x020b7c0c local
+@1362 kind:data(any) addr:0x020b7c14 local
 @1354 kind:data(any) addr:0x020b7c5c local
 @1387 kind:data(any) addr:0x020b7c24 local
 @1332 kind:data(any) addr:0x020b7c2c local
 @1326 kind:data(any) addr:0x020b7c34 local
-@1315 kind:data(any) addr:0x020b7c1c local
+@1315 kind:data(any) addr:0x020b7c44 local
 @1307 kind:data(any) addr:0x020b7c04 local
-@1304 kind:data(any) addr:0x020b7c1c local
+@1304 kind:data(any) addr:0x020b7c54 local
 @1301 kind:data(any) addr:0x020b7c4c local
-@1349 kind:data(any) addr:0x020b7c04 local
+@1277 kind:data(any) addr:0x020b7bfc local
+@1349 kind:data(any) addr:0x020b7c3c local
+@852 kind:data(any) addr:0x020b80c8 local
 @841 kind:data(any) addr:0x020b80d0 local
+@829 kind:data(any) addr:0x020b80d8 local
+@818 kind:data(any) addr:0x020b80e0 local
+@857 kind:data(any) addr:0x020b80e8 local
+@949 kind:data(any) addr:0x020b80f0 local
+@957 kind:data(any) addr:0x020b80f8 local
 @971 kind:data(any) addr:0x020b8100 local
 @977 kind:data(any) addr:0x020b8108 local
+@1019 kind:data(any) addr:0x020b8110 local
 @1030 kind:data(any) addr:0x020b8118 local
-@1036 kind:data(any) addr:0x020b8100 local
-@1042 kind:data(any) addr:0x020b80d0 local
+@1036 kind:data(any) addr:0x020b8120 local
+@1042 kind:data(any) addr:0x020b8128 local
 @1183 kind:data(any) addr:0x020b8130 local
-@1244 kind:data(any) addr:0x020b8100 local
+@1244 kind:data(any) addr:0x020b8138 local
 @1261 kind:data(any) addr:0x020b8140 local
 @1276 kind:data(any) addr:0x020b8148 local
+@1282 kind:data(any) addr:0x020b8150 local
+@1290 kind:data(any) addr:0x020b8158 local
 @1500 kind:data(any) addr:0x020b8160 local
-@1506 kind:data(any) addr:0x020b8100 local
+@1506 kind:data(any) addr:0x020b8168 local
 @1541 kind:data(any) addr:0x020b8170 local
 @1609 kind:data(any) addr:0x020b8178 local
+@1615 kind:data(any) addr:0x020b8180 local
 @2223 kind:data(any) addr:0x020b8228 local
 @2243 kind:data(any) addr:0x020b8230 local
-@2404 kind:data(any) addr:0x020b8100 local
-@2470 kind:data(any) addr:0x020b8178 local
+@2404 kind:data(any) addr:0x020b8238 local
+@2470 kind:data(any) addr:0x020b8240 local
 @2947 kind:data(any) addr:0x020b8248 local
+_ZTV11Unk02015408 kind:data(any) addr:0x020b8250
+_ZTV11Unk02015790 kind:data(any) addr:0x020b8278
 @770 kind:data(any) addr:0x020b8700 local
 @766 kind:data(any) addr:0x020b8738 local
-@755 kind:data(any) addr:0x020b8738 local
 @749 kind:data(any) addr:0x020b86f0 local
 @741 kind:data(any) addr:0x020b8730 local
 @775 kind:data(any) addr:0x020b8690 local
 @902 kind:data(any) addr:0x020b8720 local
 @912 kind:data(any) addr:0x020b8718 local
 @921 kind:data(any) addr:0x020b8710 local
-@936 kind:data(any) addr:0x020b8738 local
-@949 kind:data(any) addr:0x020b8690 local
-@1070 kind:data(any) addr:0x020b8690 local
-@1084 kind:data(any) addr:0x020b8700 local
+@936 kind:data(any) addr:0x020b8778 local
+@949 kind:data(any) addr:0x020b8708 local
+@1070 kind:data(any) addr:0x020b8728 local
 @1107 kind:data(any) addr:0x020b86d8 local
 @1120 kind:data(any) addr:0x020b86d0 local
 @1135 kind:data(any) addr:0x020b86c8 local
@@ -5943,26 +5954,20 @@ data_020d7110 kind:bss addr:0x020d7110
 @1289 kind:data(any) addr:0x020b86a8 local
 @1294 kind:data(any) addr:0x020b8698 local
 @1321 kind:data(any) addr:0x020b86a0 local
-@1334 kind:data(any) addr:0x020b8698 local
+@1334 kind:data(any) addr:0x020b86b0 local
 @1345 kind:data(any) addr:0x020b8680 local
 @1360 kind:data(any) addr:0x020b8678 local
 @1430 kind:data(any) addr:0x020b8750 local
 @1433 kind:data(any) addr:0x020b8758 local
 @1436 kind:data(any) addr:0x020b8760 local
 @1439 kind:data(any) addr:0x020b8768 local
-@1462 kind:data(any) addr:0x020b86d8 local
-@1482 kind:data(any) addr:0x020b86d8 local
 @1494 kind:data(any) addr:0x020b8660 local
-@1790 kind:data(any) addr:0x020b86f0 local
-@1884 kind:data(any) addr:0x020b8738 local
+@1790 kind:data(any) addr:0x020b86f8 local
 @1949 kind:data(any) addr:0x020b8668 local
-@2069 kind:data(any) addr:0x020b8738 local
 @2334 kind:data(any) addr:0x020b8688 local
-@2538 kind:data(any) addr:0x020b86f0 local
-@2581 kind:data(any) addr:0x020b8698 local
-@2674 kind:data(any) addr:0x020b8660 local
-__stdio_exit kind:bss addr:0x020c77ac
-__atexit_curr_func kind:bss addr:0x020c77b0 local
-__aborting kind:bss addr:0x020c77b4
-_ZGVsounds$523 kind:bss addr:0x020d622c local
-sounds$523 kind:bss addr:0x020d6230 local
+@2538 kind:data(any) addr:0x020b8770 local
+@2581 kind:data(any) addr:0x020b86e8 local
+@2674 kind:data(any) addr:0x020b8670 local
+_ZTV11Unk0201a2c8 kind:data(any) addr:0x020b8780
+_ZTV11Unk0201af9c kind:data(any) addr:0x020b87a8
+_ZTV11Unk0201a4e0 kind:data(any) addr:0x020b87b4
