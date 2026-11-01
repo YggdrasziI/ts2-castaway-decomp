@@ -180,3 +180,4 @@
 | 2026-11-01 | a537175 | 490652 / 723540 bytes (67.81 %; fuzzy 97.62 %, linked 31.74 %) | 4184 / 4577 | 399 / 557 | NitroSDK CARD wait, init, read completion and pulled-out terminate |
 | 2026-11-01 | 3f412e3 | 505400 / 723540 bytes (69.85 %; fuzzy 97.68 %, linked 34.14 %) | 4194 / 4577 | 407 / 557 | Screen constructors: name lookup form found, ten constructors at 100 %, eight units complete |
 | 2026-11-01 | 40a5235 | 510284 / 723540 bytes (70.53 %; fuzzy 98.50 %, linked 34.81 %) | 4223 / 4577 | 436 / 572 | 29 NitroSDK and NitroSystem functions written from the ROM, all complete |
+| 2026-11-01 | 17d8c78 | 512068 / 723540 bytes (70.77 %; fuzzy 98.51 %, linked 34.81 %) | 4229 / 4577 | 436 / 572 | Declaration search over the near matches: six more functions at 100 % |
