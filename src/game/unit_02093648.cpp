@@ -95,10 +95,10 @@ public:
 };
 
 extern "C" {
-void func_020777bc(Unk0209487cFile *file);
-int func_02077514(Unk0209487cFile *file, Unk0209487cFileId id);
-int func_020773a0(Unk0209487cFile *file, void *dst, u32 size);
-int func_020774cc(Unk0209487cFile *file);
+void FS_InitFile(Unk0209487cFile *file);
+int FS_OpenFileFast(Unk0209487cFile *file, Unk0209487cFileId id);
+int FS_ReadFile(Unk0209487cFile *file, void *dst, u32 size);
+int FS_CloseFile(Unk0209487cFile *file);
 int FS_SeekFile(Unk0209487cFile *file, int offset, int whence);
 void DC_FlushRange(const void *start, u32 size);
 void func_02099afc(int id);
@@ -222,8 +222,8 @@ void Unk02093648::func_020938d4() {
     if (types == 0) {
         return;
     }
-    func_020777bc(&file);
-    ok = func_02077514(&file, func_02094fec());
+    FS_InitFile(&file);
+    ok = FS_OpenFileFast(&file, func_02094fec());
     if (!ok) {
         return;
     }
@@ -232,11 +232,11 @@ void Unk02093648::func_020938d4() {
         int pos = dataOffset2 + subEntries[i].offset;
         DC_FlushRange(&first, 0xc);
         FS_SeekFile(&file, pos + 0xc, 0);
-        func_020773a0(&file, &first, 0xc);
+        FS_ReadFile(&file, &first, 0xc);
         types[i] = func_020941e8(first.tag);
     }
     if (ok) {
-        func_020774cc(&file);
+        FS_CloseFile(&file);
     }
 }
 
@@ -304,8 +304,8 @@ Unk0209487c *Unk02093648::func_02093a9c(int index) {
         int offset;
         int size;
 
-        func_020777bc(&file);
-        ok = func_02077514(&file, func_02094fec());
+        FS_InitFile(&file);
+        ok = FS_OpenFileFast(&file, func_02094fec());
         if (!ok) {
             return 0;
         }
@@ -320,10 +320,10 @@ Unk0209487c *Unk02093648::func_02093a9c(int index) {
         if (data != 0) {
             DC_FlushRange(data, size);
             FS_SeekFile(&file, base + offset, 0);
-            func_020773a0(&file, data, size);
+            FS_ReadFile(&file, data, size);
         }
         if (ok) {
-            func_020774cc(&file);
+            FS_CloseFile(&file);
         }
     }
     if (files[index] == 0) {

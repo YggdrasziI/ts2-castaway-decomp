@@ -23,15 +23,15 @@ public:
 Unk020c80b0 *func_02099834();
 
 extern "C" {
-void func_020777bc(Unk0209487cFile *file);
-int func_02077590(Unk0209487cFileId *id, const char *path);
-int func_02077514(Unk0209487cFile *file, Unk0209487cFileId id);
-int func_020773a0(Unk0209487cFile *file, void *dst, u32 size);
-int func_020774cc(Unk0209487cFile *file);
+void FS_InitFile(Unk0209487cFile *file);
+int FS_ConvertPathToFileID(Unk0209487cFileId *id, const char *path);
+int FS_OpenFileFast(Unk0209487cFile *file, Unk0209487cFileId id);
+int FS_ReadFile(Unk0209487cFile *file, void *dst, u32 size);
+int FS_CloseFile(Unk0209487cFile *file);
 int FS_SeekFile(Unk0209487cFile *file, int offset, int whence);
 void DC_FlushRange(const void *start, u32 size);
 void func_020897b4(const char *fmt, ...);
-void func_020777ec(int x);
+void FS_Init(int x);
 }
 
 Unk0209487c::Unk0209487c(const char *path) {
@@ -90,23 +90,23 @@ void Unk0209487c::func_020949b8(const char *path) {
         return;
     }
     func_02099834()->func_0209982c(path);
-    func_020777bc(&file);
-    ok = func_02077590(&fileId, path);
+    FS_InitFile(&file);
+    ok = FS_ConvertPathToFileID(&fileId, path);
     if (!ok) {
         func_020897b4("    File %s", path);
     }
     if (ok) {
-        ok = func_02077514(&file, fileId);
+        ok = FS_OpenFileFast(&file, fileId);
         if (ok) {
             header = new Unk0209487cHeader;
             if (header != 0) {
                 DC_FlushRange(header, 0xc);
-                func_020773a0(&file, header, 0xc);
+                FS_ReadFile(&file, header, 0xc);
                 if (header->magic == 0x4f52544e) {
                     entries = new Unk0209487cEntry[header->count];
                     if (entries != 0) {
                         DC_FlushRange(entries, header->count * 0xc);
-                        func_020773a0(&file, entries, header->count * 0xc);
+                        FS_ReadFile(&file, entries, header->count * 0xc);
                         flags |= 1;
                     }
                     dataOffset = (header->count + 1) * 0xc;
@@ -123,7 +123,7 @@ void Unk0209487c::func_020949b8(const char *path) {
             }
         }
         if (ok) {
-            func_020774cc(&file);
+            FS_CloseFile(&file);
         }
     }
     func_02099834()->func_02099830();
@@ -258,8 +258,8 @@ bool Unk0209487c::func_02094e04(int tag) {
     if (func_02094f88()) {
         return false;
     }
-    func_020777bc(&file);
-    ok = func_02077514(&file, fileId);
+    FS_InitFile(&file);
+    ok = FS_OpenFileFast(&file, fileId);
     if (ok) {
         e = 0;
         if (tag >= 0) {
@@ -279,7 +279,7 @@ bool Unk0209487c::func_02094e04(int tag) {
         if (block != 0) {
             FS_SeekFile(&file, offset, 0);
             DC_FlushRange(block, size);
-            func_020773a0(&file, block, size);
+            FS_ReadFile(&file, block, size);
             blockStart = offset;
             blockSize = size;
             flags |= 2;
@@ -388,5 +388,5 @@ int Unk0209487c::func_02095100() {
 }
 
 extern "C" void func_02095134(int x) {
-    func_020777ec(x);
+    FS_Init(x);
 }
