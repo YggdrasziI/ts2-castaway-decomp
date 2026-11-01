@@ -187,3 +187,4 @@
 | 2026-11-01 | 0bd35f3 | 541256 / 723540 bytes (74.81 %; fuzzy 98.73 %, linked 36.11 %) | 4265 / 4577 | 537 / 656 | Grid screens: zero copies of nested loops, `int` argument locals, signed casts; three constructors and four func_38 at 100 % |
 | 2026-11-01 | e8f1c87 | 543172 / 723540 bytes (75.07 %; fuzzy 98.74 %, linked 36.11 %) | 4270 / 4577 | 537 / 656 | Signed bounds, unsigned tile index, split map reads |
 | 2026-11-01 | 468a0ed | 544392 / 723540 bytes (75.24 %; fuzzy 98.74 %, linked 37.68 %) | 4271 / 4577 | 538 / 656 | func_02037000 matched by declaration placement; unit_02035FEC complete |
+| 2026-11-01 | 9bc6bc5 | 544732 / 723540 bytes (75.29 %; fuzzy 98.78 %, linked 37.68 %) | 4273 / 4577 | 538 / 656 | Low functions: stack vectors, const parameter copies, inline copy wrapper |
