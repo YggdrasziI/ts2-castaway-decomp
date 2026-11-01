@@ -167,3 +167,4 @@
 | 2026-11-01 | ad78c56 | 391872 / 720836 bytes (54.36 %; fuzzy 83.00 %, linked 19.63 %) | 3453 / 4556 | 139 / 284 | Layout tiled sprite (22/23 functions, vtable), not complete |
 | 2026-11-01 | a241db4 | 394160 / 720836 bytes (54.68 %; fuzzy 83.32 %, linked 19.95 %) | 3469 / 4556 | 140 / 284 | Layout (16 functions, table of sizes), complete |
 | 2026-11-01 | 5eab9c8 | 400200 / 720836 bytes (55.52 %; fuzzy 84.59 %, linked 19.95 %) | 3496 / 4556 | 140 / 285 | Layout loader (27/40 functions, field tables), not complete |
+| 2026-11-01 | 14c28da | 400628 / 720836 bytes (55.58 %; fuzzy 84.65 %, linked 20.01 %) | 3500 / 4556 | 141 / 285 | Vector ramp and movement block (4 functions), complete: all game code delinked |
