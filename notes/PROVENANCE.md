@@ -90,3 +90,5 @@ Source: advance-wars-dual-strike-decomp (**CC0-1.0**), local clone at commit
 
 `libs/nitro/src/os/unit_02079FF4.c`, `os/unit_0207AE98.c`, `pm/unit_0207F47C.c`, `libs/nns/src/snd/unit_0209E798.c`,
 `libs/nns/src/fnd/unit_0209E854.c`: khdays (CC0) `libs/nitro/{os,spi,nns}` and `libs/nns/snd`, one file each, retyped with local types.
+
+`libs/nitro/include/sdk/*.h`: khdays (CC0) `include/nitro/*.h`, includes renamed to `sdk/`. `libs/nitro/src/gx/unit_02078208.c`, `unit_02078C48.c`: khdays `libs/nitro/gx/{auto,calls}`, per-function sources merged in reverse address order.

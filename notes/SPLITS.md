@@ -390,3 +390,5 @@ First NitroSDK / NitroSystem units from khdays' fingerprints: `libs/nitro/src/os
 `libs/nns/src/snd/unit_0209E798.c` (fader), `libs/nns/src/fnd/unit_0209E854.c` (lists). Named by address:
 each is only the part of its original file that is written. `libs/nns` builds with 1.2/sp2p3
 like `libs/nitro`, a working choice.
+
+`libs/nitro/src/gx/unit_02078208.c` (VRAM banks, 0x02078208-0x02078B3C) and `unit_02078C48.c` (G3X, 0x02078C48-0x02078FB8): named by address, bounds are a hypothesis.

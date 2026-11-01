@@ -728,6 +728,14 @@ libs/nns/src/fnd/unit_0209E854.c:
     complete
     .text       start:0x0209e854 end:0x0209ea7c
 
+libs/nitro/src/gx/unit_02078208.c:
+    complete
+    .text       start:0x02078208 end:0x02078b3c
+
+libs/nitro/src/gx/unit_02078C48.c:
+    complete
+    .text       start:0x02078c48 end:0x02078fb8
+
 libs/nitro/src/os/os_mutex.c:
     complete
     .text       start:0x0207b1a8 end:0x0207b3c4
