@@ -726,15 +726,10 @@ bool func_0203e314(u32 key) {
     return data_020be428;
 }
 
-/*
- * 98.92 %: the original keeps the record index in r8 and the button in r9
- * (here the reverse). Tried: pointer and index forms, the declaration and
- * step orders.
- */
 void Unk0203c2e8::func_0203e37c(Unk02050640 *buttons, int page) {
-    u32 i;
+    int i;
     u32 k = page * 12;
-    for (i = 0; k < count && i < 12; i++, k++) {
+    for (i = 0; (int)k < count && i < 12; k++, i++) {
         buttons[i].func_020508ac(func_0206446c(records[k].icon));
         buttons[i].func_02050c48(func_020644bc(records[k].icon), -1, -1);
         buttons[i].func_02050bb4(-1, -1, func_020644b0(records[k].icon), -1);
