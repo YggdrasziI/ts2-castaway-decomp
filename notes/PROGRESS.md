@@ -153,3 +153,4 @@
 | 2026-11-01 | 57445f5 | 364576 / 720836 bytes (50.58 %; fuzzy 78.58 %, linked 17.02 %) | 3047 / 4556 | 116 / 256 | Game clock (18 functions and `__sinit`), angle helpers (2) and MT19937 random numbers (3 and `__sinit`), complete; matched code +2080 bytes. |
 | 2026-11-01 | b4fa66f | 369076 / 720836 bytes (51.20 %; fuzzy 79.48 %, linked 17.03 %) | 3098 / 4556 | 116 / 258 | Random helpers, ray box test (0 / 1, 97.93 %) and sound manager (49 / 56, `.text` 99.62 %), not complete; matched code +4500 bytes |
 | 2026-11-01 | e9c58ed | 370328 / 720836 bytes (51.37 %; fuzzy 79.73 %, linked 17.15 %) | 3124 / 4556 | 118 / 261 | Microphone (6 functions and `__sinit`) and loaded sub-files (7), complete; animation sound events 13 / 14; matched code +1252 bytes |
+| 2026-11-01 | 7654140 |  / 720836 bytes ( %; fuzzy  %, linked  %) |  / 4556 |  /  | Backup memory (33 functions) and byte stream (8), complete; matched code +3348 bytes |
