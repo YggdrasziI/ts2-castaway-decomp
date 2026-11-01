@@ -666,7 +666,8 @@ void Unk02015790::func_02014e28() {
         func_goIdle();
         Unk02015408 *g = owner;
         for (int i = 0; i < 3; i++) {
-            if (key == g->kinds[i]) {
+            int kind = g->kinds[i];
+            if (kind == key) {
                 g->counts[i]++;
                 g->func_spawn(0);
                 return;

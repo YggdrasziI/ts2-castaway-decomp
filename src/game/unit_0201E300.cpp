@@ -783,7 +783,6 @@ inline void Unk020b9b80::func_28(int duration) {
     state = 3;
 }
 
-/* 99.60 %: the "%d" literal and the func_0202071c call are shown as different; the instructions are the same. */
 void Unk0201e300::func_38(bool active) {
     if (!active) {
         return;
@@ -832,8 +831,8 @@ void Unk0201e300::func_38(bool active) {
         } else {
             if (queueFade.func_shown()) {
                 queueFade.state = 3;
+                Unk0205cf00 *def = n->def;
                 if (unk1278 == 0) {
-                    Unk0205cf00 *def = n->def;
                     if (func_0205d340(def, 0x99a2c231)) {
                         func_020a3858(func_020a2994(), 0x82d70b47, 0, 0, 0);
                     } else if (func_0205d340(def, 0x3d9aefc0) && !func_0205d340(def, 0x69a133c5)) {
