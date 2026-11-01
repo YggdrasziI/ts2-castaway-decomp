@@ -86,3 +86,4 @@ Source: advance-wars-dual-strike-decomp (**CC0-1.0**), local clone at commit
 
 `libs/runtime/src/__arm_eabi_init.c`: twewy (CC0, commit in the MSL section), `_ExitProcess` only, include replaced by a declaration.
 `libs/c/src/fp_trap.c`, `fp_status.c`, `fp_handlers.c`, `fp_control.c`: written from this ROM.
+`libs/nitro/src/os/os_mutex.c`: khdays (CC0) `libs/nitro/os/{auto,calls}/` mutex functions and twewy (CC0) `libs/nitro/src/os/mutex.c` for the shape, retyped; every function at 100 %.

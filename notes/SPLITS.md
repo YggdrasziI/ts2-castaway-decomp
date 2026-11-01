@@ -382,3 +382,5 @@ starts with `eor`.
 `__arm_eabi_init.c` 0x02085EEC, `fp_control.c` 0x02089758-0x020897B4, game side
 `src/game/unit_020897B4.c`. All file names except `__arm_eabi_init.c` are hypotheses. All
 of the code 0x02080114-0x02089780 now comes from sources.
+
+`libs/nitro/src/os/os_mutex.c`: `.text` 0x0207B1A8-0x0207B3C4, seven functions in reverse source order (`OSi_DequeueItem` first, `OS_InitMutex` last); `OSi_UnlockAllMutex` and `OS_InitMutex` are named from khdays' fingerprints of the same code.
