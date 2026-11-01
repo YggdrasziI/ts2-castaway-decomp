@@ -1492,6 +1492,16 @@ default: add one here only once a unit of this ROM proves it with mwccarm.
   is a separate `operator!=`, taking its cell by reference while the parts stay by
   value; the by-value copy comes from an inline around it (`unit_0200A5E0.cpp`).
 
+- A table of the `.data` that is all zeros in the ROM, filled by code on first use behind one
+  guard word of a shared `.bss` block, one address per element: a `static const` local array of
+  a struct with an inline constructor. Without `const` it goes to `.bss` next to its own guard;
+  without the constructor the stores fold on one base (`unit_020AA648.cpp`). The table sits where
+  it is declared: after a call that comes first in the code.
+- `(int)` of a float computed before a virtual call but converted after it: an inline returning
+  the float, whose body runs before the call (`func_fixed`, `unit_020A8228.cpp`).
+- A local that lives across one loop only: separate loop variables per loop, not one shared set,
+  free the registers of the other loops (`func_020a87f4`, 96.6 % -> 99.3 %).
+
 ## File bounds
 
 - Several classes in a row: the compiler writes the vtables of one object in reverse order

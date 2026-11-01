@@ -1230,3 +1230,7 @@ src/game/unit_020AA648.cpp:
     .rodata     start:0x020b6d40 end:0x020b6e44
     .data       start:0x020bdda4 end:0x020bdfe0
     .bss        start:0x020d7110 end:0x020d7160
+
+src/game/unit_020ACAB4.cpp:
+    complete
+    .text       start:0x020acab4 end:0x020acc60
