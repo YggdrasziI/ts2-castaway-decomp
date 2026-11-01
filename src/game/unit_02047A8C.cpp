@@ -275,6 +275,7 @@ Unk02047a8c::Unk02047a8c(Unk02093648 *archive)
 
     panel170.func_24(0xc0000, 0);
     panel170.func_020518a8(count);
+    int i;
     int x = func_020a7c00(func_get(&bottom, 0xa, &bottomNames, 0xe18ac5e6));
     int y = func_020a7c00(func_get(&bottom, 0xa, &bottomNames, 0xe18ac5e7));
     int step = func_020a7c00(func_get(&bottom, 0xa, &bottomNames, 0xf9cab171));
@@ -284,7 +285,7 @@ Unk02047a8c::Unk02047a8c(Unk02093648 *archive)
     int textY = func_020a7c00(func_get(&bottom, 0xa, &bottomNames, 0xe9bfe636));
     languageY = y;
     languageStep = step;
-    for (int i = 0; i < (int)count; i++) {
+    for (i = 0; i < (int)count; i++) {
         s = func_get(&bottom, 0xb, &bottomNames, 0xe18ac5be + i);
         func_020a7c90(s, x);
         func_020a7cac(s, y);
