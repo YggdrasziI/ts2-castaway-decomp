@@ -15,8 +15,7 @@
  * vtable with its header (the strings before it are the previous screen's).
  * Real file name unknown.
  *
- * Not complete: the constructor is below 100 % (comment above it) and the last
- * word of `.rodata` (0x020AE9A0, 0x1E, never loaded) is the name list size, a
+ * Not complete: the last word of `.rodata` (0x020AE9A0, 0x1E, never loaded) is the name list size, a
  * local `static const` folded into the code. Ending the file at 0x020AE9A0 drops the word from the
  * link and shifts the rest of `.rodata`.
  */
@@ -141,12 +140,11 @@ public:
 };
 
 /*
- * 99.97 %: one u16 index truncation (lookup 0xf64ae6c7) goes through r0 instead
- * of r1, as in the other screen constructors. The u32 button counter fixed the
- * loop registers and the archives declared before id its stack slot. Tried at
- * the lookup: func_sprite, a sprite local, a u16 index block; permute.py 140 s.
- * Three extra calls before the lookup flip it (func_sprite on the two lookups
- * before it counts for two); no code-neutral third form found (notes).
+ * The u32 button counter fixed the loop registers and the archives declared
+ * before id its stack slot. The index truncation of lookup 0xf64ae6c7 takes r1
+ * only when a new basic block starts at its func_020aa040 call: the archive
+ * local and func_sprite on the three lookups add the six code-neutral pcodes
+ * that put the split there (block split rule in notes/MATCHING.md).
  */
 Unk0203ecd4::Unk0203ecd4(Unk0203c188Owner *owner) : Unk0203c188(owner) {
     for (int i = 0; i < 4; i++) {
@@ -157,16 +155,17 @@ Unk0203ecd4::Unk0203ecd4(Unk0203c188Owner *owner) : Unk0203c188(owner) {
     Unk020a7af4 names(entries, size);
 
     layout = new Unk020a9d58(func_020a18e4()->archive, 0);
-    func_020aba38(func_020a18e4()->archive, 0x1cf74cf8, layout, &names);
+    Unk02093648 *archive = func_020a18e4()->archive;
+    func_020aba38(archive, 0x1cf74cf8, layout, &names);
     func_020a9db8(layout, func_020a154c, this);
 
     panel.func_14(-0x23000, 0);
     panel.func_20(-0x146000, -0x23000);
     panel.func_020518a8(8);
     panel.func_02051804(0xf);
-    panel.func_02051858(func_020aa040(layout, 4, func_020a7b50(&names, 0xe0343c1b)));
-    panel.func_02051858(func_020aa040(layout, 0xb, func_020a7b50(&names, 0xea7a08ce)));
-    panel.func_02051858(func_020aa040(layout, 0xb, func_020a7b50(&names, 0xf64ae6c7)));
+    panel.func_02051858(func_sprite(layout, 4, func_020a7b50(&names, 0xe0343c1b)));
+    panel.func_02051858(func_sprite(layout, 0xb, func_020a7b50(&names, 0xea7a08ce)));
+    panel.func_02051858(func_sprite(layout, 0xb, func_020a7b50(&names, 0xf64ae6c7)));
     for (int i = 0; i < 5; i++) {
         icons[i] = func_020aa040(layout, 0xb, func_020a7b50(&names, 0x9574bbdf + i));
         panel.func_02051858(icons[i]);

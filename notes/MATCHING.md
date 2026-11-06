@@ -38,31 +38,8 @@ default: add one here only once a unit of this ROM proves it with mwccarm.
 
 - `tools/decl_search.py` tries declaration orders, splits and types on all near matches: two passes moved 6 functions to 100 % and 20 closer. Its score is not objdiff's: about one applied unit in four regressed and was reverted, so always gate with `report_diff.py`.
 - Library functions written from the ROM (2026-11-01): a register swap between two values read one after the other is often fixed by declaring the second first (`int max = d->max; int min = d->min;`, `int i = 0; const Split *s = ...`, `func_0207e2f4`, `func_0207c004`). Tests sharing one exit with values read on the way are one `if` with assignments in the operands (`(month = d->month) < 1`, `func_0207d164`). A global tick counter that reloads and adds in place is `volatile` (`func_0207bb4c`). A 64-bit product with `mla` on a zero register has both operands cast: `(u64)a * (u64)1000 / (u64)b` (`func_0209e520`). A switch whose table covers case 0 lists `case 0:` next to `default:` (`func_0207e2f4`).
-- r0 / r1 flipping on a repeated pattern (`mov r1, r0, lsl #16` at every 5th or so of many identical statements, no visible rule) follows the number of virtual registers before the site: on 30 identical statements the sites repeat with a period set by the statement form alone. So forms that emit the same instructions can still move it: a local for the result and a `u32` local for the index (`func_sprite` in `include/game/unk_screen.h`) fixed nine constructors (98.9-99.9 % -> 100 %). Measure the pattern on a long run of statements, and count the `mov` words in the object rather than reading diffs. An inline stops being expanded past a budget in the longest constructors: there write the locals in a block (`unit_0202E0EC.cpp`). `({ ... })` is an internal compiler error.
-- Measures of the r0 / r1 flip (2026-11-06, scratch file of 30 identical `add(get(layout, 0xb,
-  look(&names, h)))` statements, `mov r0` / `mov r1, r0, lsl #16` words counted in the object):
-  the r1 sites fall at gaps of 5, 5, 1, 5, 5, 5, 1, ..., a period of about 5.33 statements. It
-  fits a counter of about 6 virtual registers per statement crossing a multiple of 32
-  (hypothesis). Each extra call statement before the run moves the pattern. Forms that emit the
-  same code: `func_sprite` (inline with a result local and a `u32` index) and a block with a
-  `u32` index and a sprite local move it by about one call each. A sprite local alone, an index
-  local alone, a `(u16)` cast, nested inline wrappers and dead locals move nothing.
-- Applied to `Unk0203ecd4` (one r1 site, the third lookup): three extra calls before it flip
-  that site and leave the seven later ones unchanged. `func_sprite` on the two lookups before
-  it gives two of the three (then one call is enough). No code-neutral form found for the
-  third (counter type and locals of the item loop, the name table size, a `new` temporary,
-  locals for the archive, layout and system, the panel set-up calls rewritten, index-first
-  forms at the site). The source keeps the plain lookups: the two sprites alone change no byte.
-- Follow-up: the number of dummy calls needed to move the scratch pattern, measured after 0-8
-  copies of one form, is not monotonic for any form (calls, member calls, lookups, sprite and
-  local forms), so the prefix-counter model above is too simple. In the scratch run a sprite
-  local alone and an index local alone also move it by one call. In `Unk0203ecd4`, no
-  combination of `func_sprite` over the 8 lookups (all, none, after the site, 40 random) and
-  no empty or constant-returning inline call (1-6 of them) moved the third site; an inline
-  pass-through of `layout` changes the code. Open. The front-end IR of the scratch run is the
-  same for every statement (`tools/mwcc_irdump.py`, `notes/COMPILER.md`): the flip is made in
-  the back end, whose dumps are compiled out. Use the IR dump to tell whether a candidate form
-  changes anything before the back end.
+- r0 / r1 flipping on a repeated pattern (`mov r1, r0, lsl #16` at every 5th or so of many identical statements) follows the **basic block splits of the code generator** (found 2026-11-06 with `tools/mwcc_blocks.py`, `notes/COMPILER.md`): at the start of each statement, a block holding more than 100 pcodes is ended, and a truncation at the head of a block takes r1. A C++ expression statement is several statements here (one per call or temporary: `add(get(layout, 0xb, look(&names, h)))` is 7 + 9 + 4 pcodes), so a block can start in the middle of a source line. With the split removed from a copy of the compiler, the 30-statement scratch run has no flip; with the threshold at 50, 80 or 127 its period changes.
+- To move a flip, add or remove pcodes before the site in its block (from the previous label or split) without changing the final code. Each of these is one code-neutral pcode: a local for a call result (`Unk02093648 *archive = func_020a18e4()->archive;`), a `u32` local for an index, `func_sprite` (`include/game/unk_screen.h`). Constants in locals add none (propagated before code generation). Run `tools/mwcc_blocks.py` on the file: the split must fall at the statement start where the original's block starts (`Unk0203ecd4` constructor, 99.97 % -> 100 %: the split moved from before the third lookup's `func_02051858` to before its `func_020aa040` with six pcodes, the archive local and `func_sprite` on the three lookups). This also explains why the earlier forms (`func_sprite` fixing nine constructors, extra calls) moved the pattern unevenly. An inline stops being expanded past a budget in the longest constructors: there write the locals in a block (`unit_0202E0EC.cpp`). `({ ... })` is an internal compiler error.
 - A stack argument stored later in the original (`mov r3, #0x10` then `str r3, [sp, #4]` after
   the register arguments): a call result read into a local just before the call
   (`int index = func_020a69cc(s); oam->func_0209201c(file, index, ...)`) is passed inline in
