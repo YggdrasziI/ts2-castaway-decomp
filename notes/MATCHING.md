@@ -480,6 +480,29 @@ stays `add r0, sp, #x`; a use through the alias is `mov r0, rM`, so the listing 
 go through which. A `const T &child = f()` reference gives part of the effect (99.37 %). An
 explicit `if (n > 0)` around the `for` then adds a third test (`cmpgt`): drop it.
 
+### Small register swaps fixed by the shape of one statement (2026-11-06)
+
+Each fix was found by compiling scratch variants of one function and comparing them with
+`tools/asm_compare.py --objects`:
+
+- **Loop bound in the test.** A limit taken from a shifted argument goes in the test
+  (`for (u32 i = 0; i < size >> 1; i++)`), not in a local before the loop. With the local,
+  the counter and the limit swap r12 / lr. This fixed the twelve palette loaders of
+  `unit_0201E300`.
+- **Declaration order.**
+  - Declare the counter before the accumulator (`int i = 1; int n = a[0]; for (; i < 5; i++)`)
+    in `Unk0200cec8::func_08`.
+  - Declare the saved value at the top (`void *old;` before `int state = OS_DisableInterrupts();`,
+    then `old = f(lock); ... f(old);`) in `func_020a22fc`. Reassigning the parameter
+    (`lock = f(lock)`) puts them in other registers.
+- **Masked word in a local.** A bit field set through a volatile word:
+  `u32 o = *p & ~(0x3f << s); *p = o | x << s;` instead of one expression. This was
+  `Unk0200f174::func_put`, where `func_0200b9c0` and `func_0200ce18` went to 100 %; in
+  `unit_020142E0` it took one user from 96.2 to 99.75 %.
+- **Scale written in the calls.** `GX_LoadOBJPltt(data, dst * 2, n * 2)` in both branches,
+  not `n *= 2;` before the `if`. The stack argument then loads into the original register
+  (`Unk020916a4::func_0209201c`).
+
 ## Inlining and emission order
 
 - Inline virtual functions called through an object's vtable are emitted right after
