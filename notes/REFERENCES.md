@@ -36,6 +36,23 @@
 - GBATEK (problemkaputt.de/gbatek.htm): register-level reference for the same
   purposes.
 
+## Emulators (local clones, source only)
+
+`E:\Projets\Github\Emulateur\NDS\`. **GPL: read only, no code taken** into this
+repository, not even adapted. Not needed for matching (the ROM checksum already proves
+the build); used for dynamic analysis: which code runs on which screen, who writes a
+field, the size and lifetime of an object. What a trace shows is evidence of behaviour,
+not of a name (names still need the proofs of `SPEC.md`). BIOS and firmware dumps they
+need stay outside git, like `arm7_bios.bin`.
+
+| Clone | Upstream | License | Commit | Debug features |
+|---|---|---|---|---|
+| `melonDS` | [melonDS-emu/melonDS](https://github.com/melonDS-emu/melonDS) | GPLv3 | 497aa6cd (2026-11-06) | GDB stub (`src/debug/`, CMake option `ENABLE_GDBSTUB`, on by default); free BIOS replacement in `freebios/` |
+| `desmume` | [TASEmulators/desmume](https://github.com/TASEmulators/desmume) | GPLv2 | fc504ee0 (2026-11-06) | GDB stub (`desmume/src/gdbstub/`), Lua scripting (`lua-engine.cpp`), debugger and memory viewer in the Windows front end |
+
+Neither is built here yet: this machine has MSYS2 (UCRT64 gcc) but no CMake, Qt or SDL,
+and no Visual Studio (the DeSmuME Windows front end is a Visual Studio project).
+
 ## Reference projects (local clones)
 
 Search the local clones (Grep/Glob) before GitHub. A clone may be behind GitHub: ask
