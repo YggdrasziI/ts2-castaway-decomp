@@ -1736,5 +1736,6 @@ needed and writes the body to `<out>/<symbol>.txt`; it never writes into the rep
   loop's invariant locals before longer searches.
 - Loop index and array offset swapped (index r9 and offset r8 where the original has the reverse):
   a `u32` counter swaps them back, and `(int)i < 5` keeps the original's signed `blt`
-  (`Unk0202cdf0` constructor, 99.81 % -> 100 %). A slot pointer local (`Unk02050640 *slot =
+  (`Unk0202cdf0` constructor, 99.81 % -> 100 %; `func_020647f0`, 98.06 % -> 100 %, where a plain
+  `u32` counter gave 99.84 %). A slot pointer local (`Unk02050640 *slot =
   &slots[i]`) moved the slot base to the original's register in `Unk0203fa44` (99.79 % -> 99.85 %).
