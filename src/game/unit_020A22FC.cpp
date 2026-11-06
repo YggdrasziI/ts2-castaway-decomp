@@ -592,17 +592,17 @@ static Unk020a267c *data_020d6c68;
 static u32 data_020d6c6c[10];
 static Unk020a22fcHeader data_020d6c94;
 
-/* 98 %: lock, state and file in other registers. */
 extern "C" void func_020a22fc(void *p, void *lock, int file) {
+    void *old;
     if (lock == 0) {
         return;
     }
     int state = OS_DisableInterrupts();
-    lock = (void *)func_0209be08(lock);
+    old = (void *)func_0209be08(lock);
     if (p == NNS_SndArcGetFileAddress(file)) {
         func_0209b9a0(file, 0);
     }
-    func_0209be08(lock);
+    func_0209be08(old);
     OS_RestoreInterrupts(state);
 }
 
