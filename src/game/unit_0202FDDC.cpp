@@ -615,7 +615,9 @@ static inline Unk0205367c *func_recipe() {
 }
 
 /*
- * 99.75 %: one stack argument of func_0209201c is stored later in the original.
+ * 100 % in the report; `objdiff-cli diff` (tools/asm_compare.py) shows 99.99 %
+ * because it reads the original call to func_020322b4, the next function, as a
+ * branch inside this one (target symbol - 8).
  */
 void Unk0202fddc::func_0203161c() {
     if (flags & 2) {
@@ -871,8 +873,7 @@ void Unk0202fddc::func_0203161c() {
                 Unk02093648 *archive2 = func_020a18e4()->archive;
                 Unk0209487c *file = archive2->func_02093a9c(archive->func_02093e9c(func_020a69a4(s238)));
                 Unk020916a4 *oam = Unk020916a4::func_02091830();
-                int index = func_020a69cc(s238);
-                oam->func_0209201c((Unk02095140 *)file, index, palette << 4, func_020a7d44(s238) << 4, 0x10);
+                oam->func_0209201c((Unk02095140 *)file, func_020a69cc(s238), palette << 4, func_020a7d44(s238) << 4, 0x10);
                 archive = func_020a18e4()->archive;
                 archive2 = func_020a18e4()->archive;
                 archive2->func_02093c58(archive->func_02093e9c(func_020a69a4(s238)));

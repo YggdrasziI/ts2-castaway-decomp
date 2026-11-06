@@ -60,6 +60,14 @@ default: add one here only once a unit of this ROM proves it with mwccarm.
   combination of `func_sprite` over the 8 lookups (all, none, after the site, 40 random) and
   no empty or constant-returning inline call (1-6 of them) moved the third site; an inline
   pass-through of `layout` changes the code. Open.
+- A stack argument stored later in the original (`mov r3, #0x10` then `str r3, [sp, #4]` after
+  the register arguments): a call result read into a local just before the call
+  (`int index = func_020a69cc(s); oam->func_0209201c(file, index, ...)`) is passed inline in
+  the original (`func_0203161c`, 99.75 % -> 100 %; the two other calls of the file keep the
+  local).
+- `objdiff-cli diff` (`tools/asm_compare.py`) can show a `bl` to the next function as an argument
+  mismatch: it reads the original's `target - 8` as a branch inside the caller. The report
+  scores it 100 %; check the word counts with relocations masked (`permute.score`).
 - Inline slots of a class come out in the declaration order of their overrides: declare them first in the class to get the original tail (`func_34`, `func_2c`, then `func_1c`, ...; `Unk0204a9f8`). This only works for slots declared in a base: moving a new virtual changes the vtable while objdiff still scores `.text` 100 %.
 
 - A value set to 0 in a branch before its only use (`moveq r4, #0`) may be a ternary in the
