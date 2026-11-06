@@ -157,6 +157,12 @@ class Unk02047a8c : public Unk020a07d4 {
 public:
     Unk02047a8c(Unk02093648 *archive);
     virtual ~Unk02047a8c();
+    virtual bool func_34() {
+        return false;
+    }
+    virtual bool func_2c() {
+        return fade.func_hidden();
+    }
     virtual void func_08();
     virtual bool func_0c(short);
     virtual bool func_10();
@@ -170,13 +176,7 @@ public:
     }
     virtual void func_24() {}
     virtual bool func_28();
-    virtual bool func_2c() {
-        return fade.func_hidden();
-    }
     virtual bool func_30();
-    virtual bool func_34() {
-        return false;
-    }
     virtual void func_38(bool active);
     virtual bool func_3c(bool done);
 
@@ -233,10 +233,6 @@ static inline Unk020a7c90 *func_get(Unk020a9d58 *layout, int type, Unk020a7af4 *
     return func_sprite(layout, type, func_020a7b50(names, hash));
 }
 
-/*
- * 99.55 %: registers only; the archive and the language index are kept in
- * r5 / r6 instead of r7 / r8, and the button loop counters swap with them.
- */
 Unk02047a8c::Unk02047a8c(Unk02093648 *archive)
     : count(0), flags(0), bottom(archive, 1), top(archive, 0), selected(-1), mode(-1), guide(0) {
     count = 7;
@@ -276,8 +272,8 @@ Unk02047a8c::Unk02047a8c(Unk02093648 *archive)
     panel170.func_24(0xc0000, 0);
     panel170.func_020518a8(count);
     int i;
-    int x = func_020a7c00(func_get(&bottom, 0xa, &bottomNames, 0xe18ac5e6));
-    int y = func_020a7c00(func_get(&bottom, 0xa, &bottomNames, 0xe18ac5e7));
+    const int x = func_020a7c00(func_get(&bottom, 0xa, &bottomNames, 0xe18ac5e6));
+    const int y = func_020a7c00(func_get(&bottom, 0xa, &bottomNames, 0xe18ac5e7));
     int step = func_020a7c00(func_get(&bottom, 0xa, &bottomNames, 0xf9cab171));
     int iconX = func_020a7c00(func_get(&bottom, 0xa, &bottomNames, 0x2cfb0be0));
     int iconY = func_020a7c00(func_get(&bottom, 0xa, &bottomNames, 0x2cfb0be1));

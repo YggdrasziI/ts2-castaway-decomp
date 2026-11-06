@@ -1729,3 +1729,8 @@ needed and writes the body to `<out>/<symbol>.txt`; it never writes into the rep
 - Its result proves the bytes, not the source: declarations it moves can look unnatural, and
   an unused declaration can be what makes the match. Keep them only if the report stays at 100 %.
 - A function whose size differs starts at a score above 5000: the gap is structural, fix that first.
+- Long functions need more than the 60 s pass: the 5148-byte constructor of `Unk02047a8c` (three
+  registers rotated, loop values in r6 / r7 / r8) reached 0 after 150 s with 2 workers. Its
+  answer was a chain of copies of a loop value; reducing it by hand gave `const` on the two values
+  read in the loop (`const int x`, `const int y`): each alone stays at 99.9 %. Try `const` on the
+  loop's invariant locals before longer searches.
