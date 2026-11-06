@@ -52,17 +52,15 @@ void func_020a20f0(Unk020a20f0 *random);
 u32 func_020a1f84(Unk020a20f0 *random);
 }
 
-/* 95.66 %: the original loads the type key before the database address for the
- * searches and keeps the key of the second list in a register (here the address);
- * member calls on the database, key locals and loop forms gave the same code. */
 Unk020724cc::Unk020724cc(Unk020c43a8 *owner) {
+    void *db = data_020c3fc4;
     others = 0;
     otherCount = 0;
     this->owner = owner;
     memset(counts, 0, sizeof(counts));
     memset(items, 0, sizeof(items));
-    for (Unk0205d000 *item = func_0205f714(data_020c3fc4, 0x8f3c48fd, 0); item != 0;
-         item = func_0205f714(data_020c3fc4, 0x8f3c48fd, item)) {
+    for (Unk0205d000 *item = func_0205f714(db, 0x8f3c48fd, 0); item != 0;
+         item = func_0205f714(db, 0x8f3c48fd, item)) {
         for (int part = 0; part < 6; part++) {
             if (!func_0205d340(item, data_020aefe8[part])) {
                 continue;
@@ -75,12 +73,12 @@ Unk020724cc::Unk020724cc(Unk020c43a8 *owner) {
             }
         }
     }
-    otherCount = func_0205f780(data_020c3fc4, 0x3a969fc1);
+    otherCount = func_0205f780(db, 0x3a969fc1);
     if (otherCount > 0) {
         others = new Unk0205d000 *[otherCount];
         otherCount = 0;
-        for (Unk0205d000 *item = func_0205f714(data_020c3fc4, 0x3a969fc1, 0); item != 0;
-             item = func_0205f714(data_020c3fc4, 0x3a969fc1, item)) {
+        for (Unk0205d000 *item = func_0205f714(db, 0x3a969fc1, 0); item != 0;
+             item = func_0205f714(db, 0x3a969fc1, item)) {
             others[otherCount++] = item;
         }
     }

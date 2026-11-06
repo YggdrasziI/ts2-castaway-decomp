@@ -699,6 +699,7 @@ src/game/unit_02071D94.cpp:
     .data       start:0x020bc954 end:0x020bc98c
 
 src/game/unit_020724CC.cpp:
+    complete
     .text       start:0x020724cc end:0x02072bec
 
 src/game/unit_02072BEC.cpp:
