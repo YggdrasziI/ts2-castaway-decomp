@@ -142,10 +142,6 @@ static inline Unk0205367c *func_recipe() {
     return t;
 }
 
-/*
- * 99.81 %: in the button loop the index and the array offset are swapped (r8, r9
- * in the original). Tried: the index declared before the loop.
- */
 Unk0202cdf0::Unk0202cdf0(Unk0203c188Owner *owner, bool flag, int mode)
     : Unk0203c188(owner), mode(mode) {
     if (flag) {
@@ -228,7 +224,7 @@ Unk0202cdf0::Unk0202cdf0(Unk0203c188Owner *owner, bool flag, int mode)
     func_02053bf8(&ui1, recipe, &pos1, true);
     func_02053bf8(&ui2, recipe, &pos2, false);
 
-    for (int i = 0; i < 5; i++) {
+    for (u32 i = 0; (int)i < 5; i++) {
         buttons[i].func_02050838(ui1.icons[i], false);
         buttons[i].func_02050914(1);
         buttons[i].func_02050968(ui1.counts[i]);

@@ -1734,3 +1734,7 @@ needed and writes the body to `<out>/<symbol>.txt`; it never writes into the rep
   answer was a chain of copies of a loop value; reducing it by hand gave `const` on the two values
   read in the loop (`const int x`, `const int y`): each alone stays at 99.9 %. Try `const` on the
   loop's invariant locals before longer searches.
+- Loop index and array offset swapped (index r9 and offset r8 where the original has the reverse):
+  a `u32` counter swaps them back, and `(int)i < 5` keeps the original's signed `blt`
+  (`Unk0202cdf0` constructor, 99.81 % -> 100 %). A slot pointer local (`Unk02050640 *slot =
+  &slots[i]`) moved the slot base to the original's register in `Unk0203fa44` (99.79 % -> 99.85 %).
