@@ -1464,6 +1464,11 @@ explicit `if (n > 0)` around the `for` then adds a third test (`cmpgt`): drop it
   the original and written out in ours (hypothesis). Not explained yet: in the
   original, the constant of `func_02018798` is created before those of
   `func_020186e0`, `func_0201870c` and `func_02018730`, which precede it in `.text`.
+  The whole `unit_02018668.cpp` under `ipa file` does not follow these rules either:
+  its order is mixed even with the game class bodies blanked (fish only: the constant
+  of `func_020186e0` first, then the class body ones, then the rest descending). The
+  order does not move with longer names or shifted `@` numbers, so it is structural;
+  the cause is unknown.
 - A class whose constructor is inlined in its factory, with D1 (no vptr store),
   then a virtual, then D0 after the factory: everything is defined in the class,
   with `virtual ~X() {}` written out. The implicit destructor gives the order
