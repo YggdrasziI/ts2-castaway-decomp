@@ -64,7 +64,8 @@ Unk020081dc::Unk020081dc() {
 Unk020081dc::~Unk020081dc() {}
 
 /* 98.1 %: the loop counter and `id` are in r8 / r9 swapped; nested tests, a
- * bool local, a database local and declaration orders gave the same code. */
+ * bool local, a database local, declaration orders, a reference or pointer to the
+ * part, helper inlines, a ternary and an unsigned counter gave the same code. */
 void func_020647f0(Unk020081dc *o) {
     for (int i = 0; i < 2; i++) {
         int id = func_0205d1b4(func_0205f6f8(data_020c3fc4, o->parts.v[i]), 0x2a9ad5eb);
