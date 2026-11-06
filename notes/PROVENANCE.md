@@ -116,3 +116,5 @@ Written from the ROM, no reference code: the 64-byte send `libs/nitro/src/gx/uni
 `libs/nns/src/fnd/unit_0209ECB8.c`: Heroes of Mana (CC0, [liolu/heroes-of-mana-decomp](https://github.com/liolu/heroes-of-mana-decomp), commit `d29040d08683bff5749126166f0fd2f86e20096b`) `src/auto/NNS_FndAllocFromFrmHeapEx.c`, its own code (not a `donor/` file), callees renamed for this ROM.
 
 `libs/nns/src/fnd/unit_0209EDA0.c`: Heroes of Mana (CC0, commit `d29040d08683bff5749126166f0fd2f86e20096b`) `src/auto/func_020082c4.c`, callee renamed for this ROM.
+
+`libs/nitro/src/os/unit_0207BBD4.c`: Rayman Raving Rabbids (CC0, [liolu/Rayman-RR-usa-decomp](https://github.com/liolu/Rayman-RR-usa-decomp), commit `dfb4f24f4bf88952270a012294c5a37cf3868ed3`) `src/nitro/os/os_tick_3.c`, its own code, retyped for this ROM (tick counter as a volatile 64-bit object).
