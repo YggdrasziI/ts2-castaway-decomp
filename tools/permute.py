@@ -11,8 +11,9 @@ evidence of the original source.
   python tools/permute.py <unit> <symbol> [--seconds N] [--workers N] [--out DIR]
   python tools/permute.py src/game/unit_02093648 _ZN11Unk0209364813func_02093a9cEi
 
-With 0 reached, mutations that are not needed are reverted and the function body is written
-to <out>/<symbol>.txt, its first line being the offset-free signature key.
+With 0 reached, mutations that are not needed are reverted and the function, from its
+signature to its closing brace, is written to <out>/<symbol>.txt after a line naming the
+source file. Inserted locals use `__typeof__`: write the real type when keeping a result.
 """
 import argparse
 import difflib
@@ -88,10 +89,140 @@ def block_end(L, i):
     return not L[i].rstrip().endswith("{") and not L[i].strip().startswith("}")
 
 
+COUNTER = re.compile(r"for \((int|u32) (\w+) = ([^;]+); (\(int\))?\2 (<=?) ")
+
+
+def counter_type(L):
+    """Cycle a loop counter through `int i; i <`, `u32 i; (int)i <` and `u32 i; i <` (also `<=`)."""
+    c = [i for i, l in enumerate(L) if COUNTER.search(l)]
+    if not c:
+        return L
+    i = random.choice(c)
+    m = COUNTER.search(L[i])
+    forms = ["for (int {0} = {1}; {0} {2} ", "for (u32 {0} = {1}; (int){0} {2} ", "for (u32 {0} = {1}; {0} {2} "]
+    cur = 0 if m.group(1) == "int" else (1 if m.group(4) else 2)
+    new = random.choice([f for j, f in enumerate(forms) if j != cur]).format(m.group(2), m.group(3), m.group(5))
+    L[i] = L[i][: m.start()] + new + L[i][m.end() :]
+    return L
+
+
+def split_top(s, ops):
+    """Split s at its top-level occurrences of the operators in ops (longest first).
+
+    Returns ([(offset, part), ...], [operator, ...]). Only () and [] nesting is tracked:
+    templates, casts with <>, character literals and ?: are not parsed."""
+    parts, depth, i, start, found = [], 0, 0, 0, []
+    while i < len(s):
+        ch = s[i]
+        if ch in "([":
+            depth += 1
+        elif ch in ")]":
+            depth -= 1
+        elif depth == 0:
+            for op in ops:
+                if (s.startswith(op, i) and not (op in ("<", ">") and s[i + 1 : i + 2] in ("<", ">", "="))
+                        and not (i > 0 and s[i - 1] in "<>-=!")):
+                    parts.append((start, s[start:i]))
+                    found.append(op)
+                    i += len(op)
+                    start = i
+                    break
+            else:
+                i += 1
+                continue
+            continue
+        i += 1
+    parts.append((start, s[start:]))
+    return parts, found
+
+
+def insert_ok(L, i):
+    """True when a declaration can be inserted right before line i in the same scope."""
+    if L[i].lstrip().startswith("}"):
+        return False
+    j = i - 1
+    while j >= 0 and not L[j].strip():
+        j -= 1
+    if j < 0:
+        return True
+    prev = L[j].strip()
+    if re.match(r"^(case\b.*|default\s*):$", prev):
+        return False
+    return prev.endswith((";", "{", "}"))
+
+
+def hoist_compare(L):
+    """Read one side of an `if (a OP b)` comparison into a local first."""
+    c = []
+    for i, l in enumerate(L):
+        m = re.match(r"^(\s*)if \((.*)\) \{$", l)
+        if not m or not insert_ok(L, i):
+            continue
+        parts, ops = split_top(m.group(2), ("==", "!=", "<=", ">=", "<", ">", "&&", "||"))
+        if ops not in (["=="], ["!="], ["<="], [">="], ["<"], [">"]):
+            continue
+        for off, side in parts:
+            lead = len(side) - len(side.lstrip())
+            side = side.strip()
+            if re.search(r"[(\[]|->", side) and not side.startswith("!"):
+                c.append((i, m.group(1), m.start(2) + off + lead, side))
+    if not c:
+        return L
+    i, ind, at, side = random.choice(c)
+    n = "cmp%d_" % i
+    while l_has(L, n):
+        n += "_"
+    L[i] = L[i][:at] + n + L[i][at + len(side) :]
+    L.insert(i, "%s__typeof__(%s) %s = %s;" % (ind, side, n, side))
+    return L
+
+
+def l_has(L, name):
+    return re.search(r"\b%s\b" % re.escape(name), "\n".join(L)) is not None
+
+
+def assigns(line, name):
+    n = re.escape(name)
+    return re.search(r"\b%s\s*(=(?!=)|\+\+|--|[-+*/|&^]=)|(\+\+|--)\s*%s\b" % (n, n), line) is not None
+
+
+def element_pointer(L):
+    """Replace `a[i].` / `&a[i]` by a local pointer `p = &a[i]` from its first use to the end of
+    that block, or to the first assignment of `a` or `i`. Only plain arrays (not `o->a[i]`)."""
+    c = []
+    for i, l in enumerate(L):
+        if not l.rstrip().endswith(";") or not insert_ok(L, i):
+            continue
+        for m in re.finditer(r"(?<![.>\w])([a-z_]\w*)\[(\w+)\]\.", l):
+            if not assigns(l, m.group(2)):
+                c.append((i, m.group(1), m.group(2)))
+    if not c:
+        return L
+    i, a, x = random.choice(c)
+    p = "%s_%s_p" % (a, x)
+    while l_has(L, p):
+        p += "_"
+    ind = re.match(r"^(\s*)", L[i]).group(1)
+    pat = re.compile(r"(?<![.>\w])(?:&%s\[%s\](?![.\[])|%s\[%s\]\.)" % ((re.escape(a), re.escape(x)) * 2))
+    j = i
+    while j < len(L) and (not L[j].strip() or re.match(r"^(\s*)", L[j]).group(1).startswith(ind)):
+        L[j] = pat.sub(lambda m: p if m.group(0).startswith("&") else p + "->", L[j])
+        if j > i and (assigns(L[j], x) or assigns(L[j], a)):
+            break
+        j += 1
+    L.insert(i, "%s__typeof__(%s[0]) *%s = &%s[%s];" % (ind, a, p, a, x))
+    return L
+
+
 def mutate(L):
     L = list(L)
     k = random.random()
     idx = list(range(len(L)))
+    if k < 0.15:  # loop counter type, compared operand in a local, element pointer
+        R = random.choice((counter_type, hoist_compare, element_pointer))(list(L))
+        if R != L:
+            return R
+    k = random.random()
     if k < 0.28:  # swap adjacent simple statements
         c = [i for i in idx[:-1] if block_end(L, i) and block_end(L, i + 1) and L[i].strip().endswith(";") and L[i + 1].strip().endswith(";")]
         if c:
@@ -130,7 +261,7 @@ def mutate(L):
             m = is_decl(L[i])
             n = m.group(3)
             nn = n + "_"
-            if nn not in "\n".join(L):
+            if not l_has(L, nn):
                 L.insert(i + 1, "%s%s%s = %s;" % (m.group(1), m.group(2), nn, n))
                 for j in range(i + 2, len(L)):
                     if random.random() < 0.7:
@@ -257,7 +388,7 @@ def main():
             bestL = cleanup(s, body, bestL)
             os.makedirs(o.out, exist_ok=True)
             with open(os.path.join(o.out, o.symbol + ".txt"), "w", encoding="utf-8", newline="\n") as f:
-                f.write(src + "\n" + m.group(0).rstrip("\n") + "\n" + "\n".join(bestL) + "\n")
+                f.write(src + "\n" + m.group(0).rstrip("\n") + "\n" + "\n".join(bestL) + "\n}\n")
         s.ex.shutdown()
     return 0 if best == 0 else 1
 

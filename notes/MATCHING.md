@@ -1720,9 +1720,17 @@ Data that the original keeps in `.text` between functions (crt0's `BuildInfo`): 
 
 `python tools/permute.py <unit> <symbol> [--seconds N] [--workers N] [--out DIR]` searches
 random source edits of one function (swapped statements, moved declarations, split
-initializers, `const`, commuted operators, local copies) and scores each compiled variant
-against the original bytes, masking relocated words. On a hit it reverts the edits that are not
-needed and writes the body to `<out>/<symbol>.txt`; it never writes into the repository.
+initializers, `const`, commuted operators, local copies, loop counter type `int` / `u32` /
+`u32` compared as `int`, one side of an `if` comparison read into a local first, a local
+pointer to an array element) and scores each compiled variant against the original bytes,
+masking relocated words. On a hit it reverts the edits that are not needed and writes the
+whole function, signature to closing brace, to `<out>/<symbol>.txt` after a line naming the
+source file; it never writes into the repository. The inserted locals are declared with
+`__typeof__(...)` (accepted by mwccarm 2.0): write the real type when keeping a result, and
+rename them.
+
+- The three last mutations (2026-11-06) found `func_020602b0` (9 s) and `func_020647f0` (1 s)
+  from their sources before the hand fixes of this file.
 
 - Use it for a same-size function whose gap is registers only: it found `func_02093a9c` in 20 s
   after 720 hand-tried orders. A 60 s pass over the 245 unmatched functions matched 7 (2152 bytes).
