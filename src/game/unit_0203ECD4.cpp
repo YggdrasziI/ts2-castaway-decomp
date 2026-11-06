@@ -145,6 +145,8 @@ public:
  * of r1, as in the other screen constructors. The u32 button counter fixed the
  * loop registers and the archives declared before id its stack slot. Tried at
  * the lookup: func_sprite, a sprite local, a u16 index block; permute.py 140 s.
+ * Three extra calls before the lookup flip it (func_sprite on the two lookups
+ * before it counts for two); no code-neutral third form found (notes).
  */
 Unk0203ecd4::Unk0203ecd4(Unk0203c188Owner *owner) : Unk0203c188(owner) {
     for (int i = 0; i < 4; i++) {
