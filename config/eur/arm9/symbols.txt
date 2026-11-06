@@ -5524,9 +5524,10 @@ _ZGVdesc$101 kind:bss addr:0x020be0d0 local
 desc$101 kind:bss addr:0x020be0d4 local
 _ZGVdesc$782 kind:bss addr:0x020be0e4 local
 desc$782 kind:bss addr:0x020be0e8 local
-data_020be0f8 kind:bss addr:0x020be0f8
-data_020be0fc kind:bss addr:0x020be0fc
-data_020be110 kind:bss addr:0x020be110
+_ZGVdata_020be0fc$1035 kind:bss(size=0x4) addr:0x020be0f8 local
+data_020be0fc$1035 kind:bss(size=0x10) addr:0x020be0fc local
+_ZGVdata_020be110$1067 kind:bss(size=0x4) addr:0x020be10c local
+data_020be110$1067 kind:bss(size=0x10) addr:0x020be110 local
 _ZGVdesc$795 kind:bss addr:0x020be120 local
 desc$795 kind:bss addr:0x020be124 local
 _ZGVdesc$786 kind:bss addr:0x020be134 local

@@ -312,8 +312,8 @@ int func_0200527c(Unk02005ad4 *o, Unk02005ad4Actor *actor, Unk02005ad4Sim *sim) 
 }
 
 const Unk02005ad4Desc *Unk02005aa4::func_20() {
-    static Unk02005ad4Desc desc(0, 0, 0, "Move");
-    return &desc;
+    static Unk02005ad4Desc data_020be0fc(0, 0, 0, "Move");
+    return &data_020be0fc;
 }
 
 void Unk02005aa4::func_1c() {
@@ -326,8 +326,8 @@ void Unk02005aa4::func_1c() {
 }
 
 const Unk02005ad4Desc *Unk02005a74::func_20() {
-    static Unk02005ad4Desc desc(6, 0, 1, "Action Exit");
-    return &desc;
+    static Unk02005ad4Desc data_020be110(6, 0, 1, "Action Exit");
+    return &data_020be110;
 }
 
 bool func_02005654(Unk02005a74 *o, Unk020680d4Cell cell, int kind, int v) {
