@@ -2353,6 +2353,10 @@ libs/nns/src/snd/unit_0209D4D0.c:
     complete
     .text       start:0x0209d4d0 end:0x0209d4d4
 
+libs/nitro/src/gx/unit_020794B4.c:
+    complete
+    .text       start:0x020794b4 end:0x020794d0
+
 libs/nitro/src/card/unit_0207509C.c:
     complete
     .text       start:0x0207509c end:0x0207513c
