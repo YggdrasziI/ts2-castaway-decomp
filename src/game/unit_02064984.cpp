@@ -1182,12 +1182,13 @@ void func_02066884(Unk020c43a8 *p) {
     p->timer = 0x400;
 }
 
-/* 99.7 %: the two database addresses are loaded into the other registers. */
 void func_02066d1c(Unk020c43a8 *p) {
+    void *inv = data_020bfc9c;
+    void *db = data_020c3fc4;
     p->save.unk160 = 0;
     for (int i = 0; i < 2; i++) {
         if (p->save.outfit.parts.v[i] != 0) {
-            Unk020bfc9cItem *o = func_02054dc4(data_020bfc9c, func_0205f6f8(data_020c3fc4, p->save.outfit.parts.v[i]), 0);
+            Unk020bfc9cItem *o = func_02054dc4(inv, func_0205f6f8(db, p->save.outfit.parts.v[i]), 0);
             if (o != 0) {
                 int v = o->unk8 - p->unk10;
                 if (v < 0) {
