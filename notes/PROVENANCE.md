@@ -114,3 +114,5 @@ Written from the ROM, no reference code: the 64-byte send `libs/nitro/src/gx/uni
 `libs/nitro/src/crt0/unit_02000800.c`: written from the ROM; Advance Wars (CC0, commit `47864817dc01b491422fe6e9f02c8be6752efa7e`) `src/sdk/crt0/*.c` gave the structure of the asm functions and `include/text_data.h` the `#pragma define_section` that keeps BuildInfo in `.text`.
 
 `libs/nns/src/fnd/unit_0209ECB8.c`: Heroes of Mana (CC0, [liolu/heroes-of-mana-decomp](https://github.com/liolu/heroes-of-mana-decomp), commit `d29040d08683bff5749126166f0fd2f86e20096b`) `src/auto/NNS_FndAllocFromFrmHeapEx.c`, its own code (not a `donor/` file), callees renamed for this ROM.
+
+`libs/nns/src/fnd/unit_0209EDA0.c`: Heroes of Mana (CC0, commit `d29040d08683bff5749126166f0fd2f86e20096b`) `src/auto/func_020082c4.c`, callee renamed for this ROM.
