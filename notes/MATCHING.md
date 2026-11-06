@@ -1738,5 +1738,11 @@ needed and writes the body to `<out>/<symbol>.txt`; it never writes into the rep
   a `u32` counter swaps them back, and `(int)i < 5` keeps the original's signed `blt`
   (`Unk0202cdf0` constructor, 99.81 % -> 100 %; `func_020647f0`, 98.06 % -> 100 %, where a plain
   `u32` counter gave 99.84 %; `func_020602b0`, 99.03 % -> 99.95 %, then 100 % with the compared
-  field read into a local first, `int key = e->unk4; if (key == files[i].key)`). A slot pointer local (`Unk02050640 *slot =
+  field read into a local first, `int key = e->unk4; if (key == files[i].key)`).
+- Sweeps of 2026-11-06 over the near matches, one change at a time: `for (int i` -> `for (u32 i`
+  with or without `(int)i <` gave 3 matches and 2 gains out of 17 hits; a `u32` counter used in
+  arithmetic turns float conversions unsigned (`_ffltu`), which objdiff can still score higher
+  (`Unk02033ee0`): check the diff before keeping a gain. `const` on single and paired locals (986
+  variants on the functions at 99 % or more) changed no bytes. permute.py at 150 s on eight
+  functions at 99.7 % or more matched none. A slot pointer local (`Unk02050640 *slot =
   &slots[i]`) moved the slot base to the original's register in `Unk0203fa44` (99.79 % -> 99.85 %).
