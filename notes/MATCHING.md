@@ -1467,8 +1467,22 @@ explicit `if (n > 0)` around the `for` then adds a third test (`cmpgt`): drop it
   The whole `unit_02018668.cpp` under `ipa file` does not follow these rules either:
   its order is mixed even with the game class bodies blanked (fish only: the constant
   of `func_020186e0` first, then the class body ones, then the rest descending). The
-  order does not move with longer names or shifted `@` numbers, so it is structural;
-  the cause is unknown.
+  order does not move with longer names or shifted `@` numbers, so it is structural.
+- Data object sort (from advance-wars-dual-strike-decomp `tools/mwcc_order.py`, CC0,
+  commit 47864817d, read only): mwccarm 2.0 heapsorts a file's data objects by size,
+  starting from the reverse definition order; the sort is not stable, so objects of
+  equal size (all pointer to member constants are 8 bytes) come out in an order that
+  depends only on their positions. DQIV-DECOMP adds unreferenced, dead-stripped
+  objects to move that order. The model gives exactly the order of a 40-constant
+  scratch file under `ipa file`. It does not explain `unit_02018668.cpp`: under
+  `ipa file` the constants and the table share one section, and in the original
+  the strings and vtables are not sorted by size, so the original file was likely
+  not built with `ipa file`. Every mwccarm 1.2, 2.0 and dsi version gives our order
+  for this unit (scratch sweep): not a compiler version difference.
+- Without `ipa`, the constants of inline member functions defined in class bodies
+  are not emitted in `@` number order (two-class scratch test: `a2 a0 a1`, `b0 b2
+  b1`); their order matches the symbol table order of the target functions. Rule
+  not worked out.
 - A class whose constructor is inlined in its factory, with D1 (no vptr store),
   then a virtual, then D0 after the factory: everything is defined in the class,
   with `virtual ~X() {}` written out. The implicit destructor gives the order
