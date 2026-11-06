@@ -129,13 +129,12 @@ public:
 static void *func_02041870(u32 id, void *user);
 
 /*
- * 98.64 %: the u16 index truncations after func_020a7b50 go through r1 where
- * the original uses r0 (and the reverse), with the same r0 / r1 swaps in the
- * argument set-up around them, as in the other screen constructors; in the
- * slot loop the original gives x r4 and the slot base, name list and counter
- * r5 to r7 (here x is r7; x and y declared before the loop: 98.61 %). One
- * local per sprite gives the original's reuse of x's register by the last
- * sprite.
+ * 99.85 %: registers of the slot loop only. The original gives x r4, the name
+ * list r6 and the counter r7; here x is r7, the name list r4 and the counter r6
+ * (the slot base, r5, matches since the slot pointer local). Tried: const x / y /
+ * slot, unsigned x / y, one sprite local, x and y declared before the loop, the
+ * counter outside the loop, tools/permute.py (180 s, best score 28). One local
+ * per sprite gives the original's reuse of x's register by the last sprite.
  */
 Unk0203fa44::Unk0203fa44(Unk0203c188Owner *owner) : Unk0203c188(owner) {
     Unk020a7af4Entry entries[0x50];
@@ -246,40 +245,41 @@ Unk0203fa44::Unk0203fa44(Unk0203c188Owner *owner) : Unk0203c188(owner) {
     panel2e0.func_020518a8(3);
     panel2e0.func_02051804(2);
     for (int i = 0; i < 3; i++) {
-        slots[i].func_02050838(func_sprite(layout, 0xb, func_020a7b50(&names, 0xcadc45ff + i)), false);
-        slots[i].func_02050c48(0, 3, -1);
-        slots[i].func_02050914(7);
-        int x = slots[i].func_10()->x;
-        int y = slots[i].func_10()->y;
+        Unk02050640 *slot = &slots[i];
+        slot->func_02050838(func_sprite(layout, 0xb, func_020a7b50(&names, 0xcadc45ff + i)), false);
+        slot->func_02050c48(0, 3, -1);
+        slot->func_02050914(7);
+        int x = slot->func_10()->x;
+        int y = slot->func_10()->y;
         Unk020a7c90 *s1 = func_sprite(layout, 4, func_020a7b50(&names, 0x9e34ffc6 + i));
         func_020a7c90(s1, x + 0xa000);
         func_020a7cac(s1, y + 0x3000);
-        slots[i].func_02050968(s1);
+        slot->func_02050968(s1);
         Unk020a7c90 *s2 = func_sprite(layout, 0xb, func_020a7b50(&names, 0xdd3e7fe1 + i));
         func_020a7c90(s2, x + 0xa000);
         func_020a7cac(s2, y + 0x11000);
-        slots[i].func_02050968(s2);
+        slot->func_02050968(s2);
         Unk020a7c90 *s3 = func_sprite(layout, 0xb, func_020a7b50(&names, 0x954f8f5d + i));
         func_020a7c90(s3, x + 0x73000);
         func_020a7cac(s3, y + 0x16000);
-        slots[i].func_02050968(s3);
+        slot->func_02050968(s3);
         Unk020a7c90 *s4 = func_sprite(layout, 4, func_020a7b50(&names, 0x81c58176 + i));
         func_020a7c90(s4, x + 0x1a000);
         func_020a7cac(s4, y + 0x13000);
-        slots[i].func_02050968(s4);
+        slot->func_02050968(s4);
         Unk020a7c90 *s5 = func_sprite(layout, 4, func_020a7b50(&names, 0x95e99c6c + i));
         func_020a7c90(s5, x + 0x77000);
         func_020a7cac(s5, y + 0x13000);
-        slots[i].func_02050968(s5);
+        slot->func_02050968(s5);
         Unk020a7c90 *s6 = func_sprite(layout, 4, func_020a7b50(&names, 0xa8bac962 + i));
         func_020a7c90(s6, x + 0x1a000);
         func_020a7cac(s6, y + 0x1e000);
-        slots[i].func_02050968(s6);
+        slot->func_02050968(s6);
         Unk020a7c90 *s7 = func_sprite(layout, 4, func_020a7b50(&names, 0x4baf5053 + i));
         func_020a7c90(s7, x + 0x77000);
         func_020a7cac(s7, y + 0x1e000);
-        slots[i].func_02050968(s7);
-        panel2e0.func_020518fc(&slots[i]);
+        slot->func_02050968(s7);
+        panel2e0.func_020518fc(slot);
     }
     panel2e0.func_02051858(func_sprite(layout, 4, func_020a7b50(&names, 0x4c28c567)));
     panel2e0.func_02051858(func_sprite(layout, 0xb, func_020a7b50(&names, 0xf15efd54)));
