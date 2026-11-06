@@ -319,8 +319,9 @@ public:
     }
 
     virtual bool func_08() {
+        int i = 1;
         int n = caught[0];
-        for (int i = 1; i < 5; i++) {
+        for (; i < 5; i++) {
             n += caught[i];
         }
         return n != 0;
