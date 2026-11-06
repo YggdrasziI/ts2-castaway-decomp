@@ -1445,7 +1445,25 @@ explicit `if (n > 0)` around the `for` then adds a third test (`cmpgt`): drop it
 - Open: in `unit_02018668.cpp` the original addresses its pointer to member
   constants from the table (`data_020b8624 + offset`), table first, constants in
   descending creation order; ours are ascending in a separate block, as they are
-  in the original `unit_02013258.cpp`. Cause unknown.
+  in the original `unit_02013258.cpp`.
+- Pointer to member constants come out in descending creation order under `ipa file`
+  and in ascending order without it (2.0/sp1p5, game flags, scratch files). A
+  `#pragma ipa file` at the file start has the same effect as the flag: on
+  `unit_02018668.cpp` it keeps the ROM identical and moves the constant order toward
+  the original's (sequence similarity 0.27 -> 0.43), but the report loses 52 bytes
+  (`func_14`, `func_02018d04`), so it is not kept. Creation order under `ipa file`,
+  from scratch tests:
+  - inline members defined in a class body first, last member first, so their
+    constants end the block;
+  - then the functions defined outside the class, in file order, statement by
+    statement;
+  - an `inline` function defined outside the class creates its constants where it is
+    defined, and a function above it in the file still inlines it;
+  - a constant in an inline function is created once for all its callers.
+  The original has 36 constants and ours 39, which fits helpers that are inline in
+  the original and written out in ours (hypothesis). Not explained yet: in the
+  original, the constant of `func_02018798` is created before those of
+  `func_020186e0`, `func_0201870c` and `func_02018730`, which precede it in `.text`.
 - A class whose constructor is inlined in its factory, with D1 (no vptr store),
   then a virtual, then D0 after the factory: everything is defined in the class,
   with `virtual ~X() {}` written out. The implicit destructor gives the order
