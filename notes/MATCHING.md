@@ -1493,6 +1493,8 @@ explicit `if (n > 0)` around the `for` then adds a third test (`cmpgt`): drop it
   defined in its body (`unit_020116E0.cpp`, the same as `unit_02011524.cpp`). The
   `.text` order then does not depend on the member order, but the order of the
   pointer to member constants does. Their bodies are parsed last member first.
+- Class body inline functions are linked in section order, which is member declaration order, whatever the order of their definitions (out of class `inline` definitions included); one called from a function body (`func_18` in `func_38`, `unit_020471B0.cpp`) is emitted right after that function instead. The symbol table order of the object can differ from the link order: check the map (`build/eur/arm9.o.xMAP`), not the symbol table.
+- A unit at 100 % that fails `Check ARM9 main`: compare `build/eur/build/arm9.bin` with `extract/eur/arm9/arm9.bin` byte by byte; the three such units of 2026-11-06 were all object order (`.data` literals, deferred inlines), which objdiff does not score.
 - `#pragma dont_inline` has no effect inside a class body: an inline method that
   needs it goes outside the class as `inline`, under the pragma, and keeps its place
   in the emission order (`func_18` of `unit_020116E0.cpp`).
