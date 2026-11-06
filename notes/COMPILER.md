@@ -212,6 +212,36 @@ and `.init` moves. `tools/lcf_keep.py` adds `.exception` to `KEEP_SECTION` after
 `dsd lcf`; with it the ARM9, ITCM and DTCM modules and the ROM stay identical
 (build of 2026-10-25, before and after `unit_02099800.cpp` became complete).
 
+## Internal dumps of 2.0/sp1p5 (2026-11-06)
+
+Read from `mwccarm.exe` (2.0/sp1p5, SHA-1 `6153c610…0ee6`) with a disassembler:
+
+- Back end: every PCode dump ("AFTER PCODE EXPANSION", "AFTER REGISTER COLORING",
+  "AFTER COALESCE", "FINAL CODE"...) calls one print function at 0x5051B0, which is a
+  bare `ret` in this build. The back-end dumps (register allocator, scheduler) are
+  compiled out and no switch brings them back. The dump calls are also guarded by a
+  byte of the option block (0x63D504).
+- `#pragma debugmode` exists (`level N`, or `scheduling`, `defuse`, `usedef`,
+  `expand_all`, `expand_calls`, `listpropinfo`, `stackinfo`, `showsource`,
+  `showhex`, `dumpswitchranges`, `dumpivs`, `dumpphases`, `all` followed by
+  `on` / `off` / `reset`); it is accepted and writes nothing. `dumpir`, `dumpfsir`,
+  `dumpir_postiro`, `dump_file`... are in the pragma table with ids 0x1000019A+ and
+  have no effect.
+- Front end: the IRO optimizer's log code is live but its flag (0x64641C) is only
+  ever cleared. `tools/mwcc_irdump.py` writes a copy of the compiler under
+  `build/irdump/` with three bytes patched (the flag set, and the dump-option test
+  skipped) and prints the IR flowgraph of a file's functions after each IRO pass.
+  The object code is the same as the original compiler's (checked on
+  `unit_0203ECD4`: the constructor's 1480 bytes are identical).
+
+Use: whether two source forms differ before the back end. In a constructor of 30
+identical `panel.add(get(layout, 0xb, look(&names, h)))` statements, the IR before
+`IRO_Delinearize` is the same 19 nodes for every statement, while the truncation
+register flips (`mov r1, r0, lsl #16` against `mov r0, r0, lsl #16`) in the
+irregular pattern `100001000011000010000100001100`: the flip comes from the back end
+(coloring or scheduling) and depends on the position in the function, not on the
+statement's form.
+
 ## Open questions
 
 - Game-code service pack inside 2.0 (probe larger functions: switches, multiplies,

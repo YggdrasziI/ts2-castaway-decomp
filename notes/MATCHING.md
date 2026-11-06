@@ -59,7 +59,10 @@ default: add one here only once a unit of this ROM proves it with mwccarm.
   local alone and an index local alone also move it by one call. In `Unk0203ecd4`, no
   combination of `func_sprite` over the 8 lookups (all, none, after the site, 40 random) and
   no empty or constant-returning inline call (1-6 of them) moved the third site; an inline
-  pass-through of `layout` changes the code. Open.
+  pass-through of `layout` changes the code. Open. The front-end IR of the scratch run is the
+  same for every statement (`tools/mwcc_irdump.py`, `notes/COMPILER.md`): the flip is made in
+  the back end, whose dumps are compiled out. Use the IR dump to tell whether a candidate form
+  changes anything before the back end.
 - A stack argument stored later in the original (`mov r3, #0x10` then `str r3, [sp, #4]` after
   the register arguments): a call result read into a local just before the call
   (`int index = func_020a69cc(s); oam->func_0209201c(file, index, ...)`) is passed inline in
