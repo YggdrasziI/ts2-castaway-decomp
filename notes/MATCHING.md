@@ -1681,6 +1681,13 @@ Link-time constants without relocation (`SDK_IRQ_STACKSIZE`, `SDK_SYS_STACKSIZE`
   away. Inside a loop the same form stays in the loop and gets hoisted (`func_02092f50`).
 - Clock field writes that go through a hoisted address: `volatile u32 *p = &v;` in the inline,
   not a cast at each access (`func_tick` of unit_0200B23C).
+- Literal pool words in the wrong order (the same words, swapped, and the registers of the
+  loop-invariant addresses swapped with them): hold the global address in a local declared
+  at the function start (`void *db = data_020c3fc4;`), one per address, in the order of
+  the original pool. `func_02066d1c` (99.7 % -> 100 %: `inv` then `db`) and the
+  `Unk020724cc` constructor (95.7 % -> 100 %: `db` alone puts the key before it). Five
+  other functions show swapped pool words only (`func_0200bab4`, `func_18` of
+  unit_020116E0, the `Unk0202aef4` constructor, `func_02039a08`, `func_020573a4`).
 
 ## Source permuter
 
