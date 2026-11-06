@@ -1137,11 +1137,9 @@ void func_02021090(Unk0201e300 *p) {
     p->keyC.func_30(0x20);
 }
 
-/* 97.50 % each: counter and limit registers r12 / lr swapped. */
 #define LOAD(name, dst)                                  \
     void name(void *data, u32 offset, u32 size) {        \
-        u32 n = size >> 1;                               \
-        for (u32 i = 0; i < n; i++) {                    \
+        for (u32 i = 0; i < size >> 1; i++) {            \
             data_020be3b0->dst[i] = ((u16 *)data)[i];    \
         }                                                \
     }
