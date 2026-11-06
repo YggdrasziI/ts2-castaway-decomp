@@ -1,11 +1,17 @@
 #!/usr/bin/env python3
-"""Run `dsd lcf`, then keep `.exception` alive in the dead-stripping link.
+"""Run `dsd lcf`, then keep `.exception` alive in the dead-stripping link and define
+the NitroSDK link-time constants.
 
 The link strips unused code (`-dead`), as the original link did: mwccarm emits the
 base-object and complete-object variants of every constructor and destructor
 (C1/C2, D1/D2), and the ROM holds only the one that is used. dsd's KEEP_SECTION
 lists `.init`, `.ctor` and `.exceptix`, but not `.exception`, whose records nothing
 refers to by relocation, so the linker would drop them.
+
+The NitroSDK's own link script defines constants such as the IRQ stack size as
+absolute symbols. The SDK tests them at run time, so their sources reference them
+as symbols, and the ROM's literal pools hold their values (no relocation): they
+are defined here with the values found in those pools (ABSOLUTE_SYMBOLS).
 
 Usage (from the ninja lcf rule):
   python tools/lcf_keep.py <lcf file> <dsd command and arguments...>
@@ -15,6 +21,21 @@ import subprocess
 import sys
 
 KEEP = ".exception"
+
+# name -> value, read from the literal pools of the functions that use them.
+ABSOLUTE_SYMBOLS = {
+    "SDK_SYS_STACKSIZE": 0x0,  # func_0207b5f4 pool word 0x0207b710
+    "SDK_IRQ_STACKSIZE": 0x400,  # func_02079fc0 pool word 0x02079ff0
+    "SDK_SECTION_ARENA_DTCM_START": 0x027E0080,  # func_0207b5f4 pool word 0x0207b718
+}
+
+
+def add_absolute_symbols(lcf):
+    marker = "SECTIONS {\n"
+    if marker not in lcf:
+        sys.exit("no SECTIONS block")
+    lines = "".join(f"    {name} = {value:#x};\n" for name, value in ABSOLUTE_SYMBOLS.items())
+    return lcf.replace(marker, marker + lines, 1)
 
 
 def main():
@@ -26,8 +47,10 @@ def main():
         return res.returncode
 
     with open(lcf_path, encoding="utf-8") as f:
-        lcf = f.read()
+        lcf = add_absolute_symbols(f.read())
     if f"({KEEP})" not in lcf:
+        with open(lcf_path, "w", encoding="utf-8", newline="\n") as f:
+            f.write(lcf)
         return 0
     head, sep, rest = lcf.partition("KEEP_SECTION {")
     if not sep:
