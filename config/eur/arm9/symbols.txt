@@ -4741,7 +4741,7 @@ _ZTV11Unk0200ed88 kind:data(any) addr:0x020b7b04
 data_020b7b84 kind:data(byte[15]) addr:0x020b7b84
 data_020b7b94 kind:data(byte[15]) addr:0x020b7b94
 _ZTV11Unk02010920 kind:data(any) addr:0x020b7ba4
-data_020b7bb4 kind:data(any) addr:0x020b7bb4
+data_020b7bb4 kind:data(any) addr:0x020b7bb4 local
 _ZTV11Unk02011524 kind:data(any) addr:0x020b7bc0
 _ZZN11Unk02011524C1EP11Unk02093648iiEs kind:data(byte[18]) addr:0x020b7be8
 data_020b7c6c kind:data(any) addr:0x020b7c6c
@@ -5560,7 +5560,7 @@ data_020be22c kind:bss addr:0x020be22c
 data_020be23c kind:bss addr:0x020be23c
 data_020be2f0 kind:bss addr:0x020be2f0
 data_020be2f4 kind:bss addr:0x020be2f4
-data_020be2f8 kind:bss addr:0x020be2f8
+data_020be2f8 kind:bss addr:0x020be2f8 local
 data_020be368$1152 kind:bss addr:0x020be368 local
 _ZGVdata_020be368$1152 kind:bss addr:0x020be36c local
 data_020be370 kind:bss addr:0x020be370

@@ -155,13 +155,11 @@ extern "C" void func_02011074(Unk020a7c90 **a, Unk020a7c90 **b, int *timer) {
     }
 }
 
-/* 99.17 %: the table address and the zero are swapped between r5 and r6. */
 extern "C" void func_02011128(int *counts, void **kinds) {
-    int i;
-    for (i = 0; i < 3; i++) {
-        int j;
-        for (j = 0; j < counts[i]; j++) {
-            func_02054c1c(data_020bfc9c, kinds[i], 0);
+    void *inv = data_020bfc9c;
+    for (int i = 0; i < 3; i++) {
+        for (int j = 0; j < counts[i]; j++) {
+            func_02054c1c(inv, kinds[i], 0);
         }
     }
 }
