@@ -141,12 +141,10 @@ public:
 };
 
 /*
- * 99.39 %: one u16 index truncation goes through r0 instead of r1, as in the
- * other screen constructors; in the button loop the original gives the
- * counter r5, the motive test r6 and the icon r7 (here r9, r5, r6) and keeps
- * id in the first stack slot (here after the archives). Tried: id declared at
- * the top of the loop or before it, a function-scope counter (99.21 %), the
- * second archive declared first (99.40 %).
+ * 99.97 %: one u16 index truncation (lookup 0xf64ae6c7) goes through r0 instead
+ * of r1, as in the other screen constructors. The u32 button counter fixed the
+ * loop registers and the archives declared before id its stack slot. Tried at
+ * the lookup: func_sprite, a sprite local, a u16 index block; permute.py 140 s.
  */
 Unk0203ecd4::Unk0203ecd4(Unk0203c188Owner *owner) : Unk0203c188(owner) {
     for (int i = 0; i < 4; i++) {
@@ -186,7 +184,7 @@ Unk0203ecd4::Unk0203ecd4(Unk0203c188Owner *owner) : Unk0203c188(owner) {
     }
 
     int masks[4] = {0x40, 0x80, 0x100, 0x200};
-    for (int i = 0; i < 4; i++) {
+    for (u32 i = 0; (int)i < 4; i++) {
         bool on = func_0206757c(&data_020c43a8, masks[i]);
         buttons[i].func_02050914(2);
         if (!on) {
@@ -199,6 +197,8 @@ Unk0203ecd4::Unk0203ecd4(Unk0203c188Owner *owner) : Unk0203c188(owner) {
         Unk020a7c90 *icon = func_020aa040(layout, 1, func_020a7b50(&names, 0x145c07e4 + i));
         buttons[i].func_020508a4(icon);
         func_020a7cf0(icon, on);
+        Unk02093648 *archive;
+        Unk02093648 *archive2;
         int id = func_0205d134(items[i], 0x9d5bba8e);
         if (id == -1) {
             id = 0;
@@ -207,8 +207,8 @@ Unk0203ecd4::Unk0203ecd4(Unk0203c188Owner *owner) : Unk0203c188(owner) {
         u32 hash = func_0206446c(id);
         func_020a6980(icon, hash);
         func_020a69ac(icon, palette);
-        Unk02093648 *archive = func_020a18e4()->archive;
-        Unk02093648 *archive2 = func_020a18e4()->archive;
+        archive = func_020a18e4()->archive;
+        archive2 = func_020a18e4()->archive;
         Unk0209487c *file = archive2->func_02093a9c(archive->func_02093e9c(hash));
         Unk020916a4 *oam = Unk020916a4::func_02091830();
         int bank = func_020644b0(id);
