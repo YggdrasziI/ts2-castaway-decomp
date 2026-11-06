@@ -242,6 +242,21 @@ irregular pattern `100001000011000010000100001100`: the flip comes from the back
 (coloring or scheduling) and depends on the position in the function, not on the
 statement's form.
 
+### Back end: basic block splits
+
+mwccarm 2.0/sp1p5's `newstatement` (0x4FFC90) ends the current basic block at the
+start of a statement when it holds more than 100 pcodes (`cmp word ptr [edx+0x28],
+0x64` at 0x4FFCCD, then `branch_label(makepclabel())` at 0x4FFCE0), the same rule as
+the GameCube compiler's `CodeGen.c` (PrimeDecomp/mwcc-tools, read only). The flip
+above follows these splits: with the jump removed in a scratch copy of the compiler
+the 30-statement run has no flip, and thresholds of 50, 80 and 127 change its period.
+`tools/mwcc_blocks.py` runs the unmodified compiler under a small Win32 debugger
+(Windows only) and prints, per function, the block's pcode count at each statement
+start and each split with the number of calls emitted before it; the object it
+writes is identical to the build's. Addresses used: `pclastblock` 0x63A224,
+`pcbasicblocks` 0x63A828, block pcode count at +0x28, call opcode 6 during code
+generation, end of register coloring 0x513A85. Use in `notes/MATCHING.md`.
+
 ## Open questions
 
 - Game-code service pack inside 2.0 (probe larger functions: switches, multiplies,

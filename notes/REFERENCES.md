@@ -19,6 +19,10 @@
 - mwccarm / mwldarm: `http://decomp.aetias.com/files/mwccarm.zip` (downloaded by
   `ninja` into `tools/mwccarm/`).
 - [decompals/wibo](https://github.com/decompals/wibo): runs mwccarm on Linux (CI).
+- [PrimeDecomp/mwcc-tools](https://github.com/PrimeDecomp/mwcc-tools) (CC0): a
+  decompilation of the GameCube CodeWarrior compilers. Read to locate mwccarm's back
+  end (`CodeGen.c`, `Coloring.c`, `Scheduler.c`); no code taken. Not cloned in the
+  project (a scratch clone was used on 2026-11-06).
 - [decomp.me](https://decomp.me): compiler tests (`mwcc_30_131` = 2.0/sp1p5); not used
   for sharing, the project is private.
 - [decomp.dev](https://decomp.dev): not used (private project).
