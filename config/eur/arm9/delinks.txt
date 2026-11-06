@@ -1140,7 +1140,7 @@ libs/nitro/src/card/unit_020745B8.c:
 
 libs/nitro/src/card/unit_02074728.c:
     complete
-    .text       start:0x02074728 end:0x0207481c
+    .text       start:0x02074728 end:0x02074a18
 
 libs/nitro/src/spi/unit_0207FCD4.c:
     complete
