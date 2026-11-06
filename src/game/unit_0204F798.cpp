@@ -126,7 +126,8 @@ void Unk0204f798::func_0204fa10(int a, int b) {
 /*
  * 99.69 %: the index and the upper bound swap r6 / r8 (lo is r7 in both).
  * Tried: declaration order and scope of i / lo / hi / p, nested if instead of
- * continue, if / else for the range, int index, other wrap expressions.
+ * continue, if / else for the range, int index, other wrap expressions, and the
+ * source permuter (17140 variants).
  */
 void Unk0204f798::func_08() {
     func_update();
@@ -148,8 +149,7 @@ void Unk0204f798::func_08() {
         int lo = 0;
         hi = func_020a69d4(sprites[i]) - 1;
         if (first >= 0 && last >= 0) {
-            hi;
-            i = last;
+            hi = last;
             lo = first;
         }
         int p = func_020a69cc(sprites[i]) + step;
