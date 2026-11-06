@@ -108,3 +108,5 @@ One-function NitroSDK / NitroSystem units `libs/{nitro,nns}/src/*/unit_*.c` with
 Written from the ROM, no reference code: the 64-byte send `libs/nitro/src/gx/unit_020794B4.c` (`asm` function), the tail-call thunks `libs/nitro/src/card/unit_020745AC.c`, `card/unit_02075438.c`, `ctrdg/unit_020759FC.c` (1.2 with `-interworking` emits `ldr ip` / `bx ip`) and the empty functions `libs/nitro/src/fx/unit_02077E50.c`, `libs/nns/src/snd/unit_0209D4AC.c`, `snd/unit_0209D4D0.c`.
 
 `libs/nitro/src/os/unit_0207BA54.c`: Advance Wars (CC0, local clone at commit `47864817dc01b491422fe6e9f02c8be6752efa7e`) `src/sdk/os/exception_run_user_hook.c`, the `asm` function only, data and callee symbols renamed for this ROM.
+
+`libs/nitro/src/os/unit_02079FBC.c` and `os/unit_0207B508.c`: khdays (CC0, commit `93535afd7ca082f3d856bbf1cadae65be16d44ba`) `libs/nitro/os/calls/OSi_InitStackChecker.c`, `OS_GetInitArenaLo.c` and `OS_GetInitArenaHi.c`, retyped for this ROM (its arena bounds and IRQ stack size). The link-time constants are absolute symbols defined by `tools/lcf_keep.py`, as khdays does in its `tools/configure.py`.
