@@ -71,12 +71,6 @@ Unk020c409c::Unk020c409c() {
 
 Unk020c409c::~Unk020c409c() {}
 
-/*
- * 99.03 %: registers. The original keeps the definitions archive in r8, the
- * file array in r9, the group loop counter in r6 and the definition in r7;
- * this code is one register off for each (declaration orders, loop forms and
- * the compare order tried).
- */
 void func_020602b0(Unk020c409c *o) {
     o->locked = new Unk02093648("ROM_Euro/source/archives/objectslocked.nitro_archive");
     o->locked->func_02094df4();
@@ -117,7 +111,7 @@ void func_020602b0(Unk020c409c *o) {
 
     int groupCount = 0;
     int entry = 0;
-    for (int i = 0; i < count; i++) {
+    for (u32 i = 0; (int)i < count; i++) {
         if (files[i].key == 0) {
             continue;
         }
@@ -125,7 +119,8 @@ void func_020602b0(Unk020c409c *o) {
         defs->func_02094098();
         while (defs->func_02094104()) {
             int index = defs->func_02094158();
-            if (defs->func_02094050(index)->unk4 == files[i].key) {
+            int key = defs->func_02094050(index)->unk4;
+            if (key == files[i].key) {
                 def = index;
                 break;
             }
