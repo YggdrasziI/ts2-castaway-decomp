@@ -49,7 +49,7 @@ public:
         f.frames = fr;
     }
     int func_get(int i) { return (int)*(volatile u32 *)&v >> (i * 6) & 0x3f; }
-    void func_put(int i, int x) { *(volatile u32 *)&v = *(volatile u32 *)&v & ~(0x3f << (i * 6)) | x << (i * 6); }
+    void func_put(int i, int x) { volatile u32 *p = &v; u32 o = *p & ~(0x3f << (i * 6)); *p = o | x << (i * 6); }
     void func_tick() {
         for (int i = 0; i < 4; i++) {
             int n = func_get(i);
