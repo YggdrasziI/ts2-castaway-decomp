@@ -2329,6 +2329,30 @@ libs/nitro/src/card/unit_02074DF0.c:
     complete
     .text       start:0x02074df0 end:0x02074f64
 
+libs/nitro/src/card/unit_020745AC.c:
+    complete
+    .text       start:0x020745ac end:0x020745b8
+
+libs/nitro/src/card/unit_02075438.c:
+    complete
+    .text       start:0x02075438 end:0x02075444
+
+libs/nitro/src/ctrdg/unit_020759FC.c:
+    complete
+    .text       start:0x020759fc end:0x02075a08
+
+libs/nitro/src/fx/unit_02077E50.c:
+    complete
+    .text       start:0x02077e50 end:0x02077e54
+
+libs/nns/src/snd/unit_0209D4AC.c:
+    complete
+    .text       start:0x0209d4ac end:0x0209d4b0
+
+libs/nns/src/snd/unit_0209D4D0.c:
+    complete
+    .text       start:0x0209d4d0 end:0x0209d4d4
+
 libs/nitro/src/card/unit_0207509C.c:
     complete
     .text       start:0x0207509c end:0x0207513c
