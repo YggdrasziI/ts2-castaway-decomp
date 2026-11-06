@@ -53,6 +53,13 @@ default: add one here only once a unit of this ROM proves it with mwccarm.
   third (counter type and locals of the item loop, the name table size, a `new` temporary,
   locals for the archive, layout and system, the panel set-up calls rewritten, index-first
   forms at the site). The source keeps the plain lookups: the two sprites alone change no byte.
+- Follow-up: the number of dummy calls needed to move the scratch pattern, measured after 0-8
+  copies of one form, is not monotonic for any form (calls, member calls, lookups, sprite and
+  local forms), so the prefix-counter model above is too simple. In the scratch run a sprite
+  local alone and an index local alone also move it by one call. In `Unk0203ecd4`, no
+  combination of `func_sprite` over the 8 lookups (all, none, after the site, 40 random) and
+  no empty or constant-returning inline call (1-6 of them) moved the third site; an inline
+  pass-through of `layout` changes the code. Open.
 - Inline slots of a class come out in the declaration order of their overrides: declare them first in the class to get the original tail (`func_34`, `func_2c`, then `func_1c`, ...; `Unk0204a9f8`). This only works for slots declared in a base: moving a new virtual changes the vtable while objdiff still scores `.text` 100 %.
 
 - A value set to 0 in a branch before its only use (`moveq r4, #0`) may be a ternary in the
