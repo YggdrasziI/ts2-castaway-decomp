@@ -11,7 +11,6 @@
  * Bounds: hypothesis. func_02091654 just before uses the manager from outside;
  * 0x02092640 starts unit_02092640.cpp (the entry iterator). Only this code uses the
  * two manager pointers of .bss 0x020c7f6c. Real file name unknown.
- * Not complete: one function does not match yet (see above it).
  */
 
 #include "game/unk_resource.h"
@@ -389,7 +388,6 @@ static inline void func_load(int main, void *data, u32 offset, u32 size) {
     }
 }
 
-/* 99.03 %: the stack argument dst is loaded into r3 instead of r2 (best of the forms tried). */
 void Unk020916a4::func_0209201c(Unk02095140 *file, int index, u32 src, u32 dst, u32 n) {
     u16 *data;
 
@@ -401,11 +399,10 @@ void Unk020916a4::func_0209201c(Unk02095140 *file, int index, u32 src, u32 dst, 
         return;
     }
     data += src;
-    n *= 2;
     if (main) {
-        GX_LoadOBJPltt(data, dst * 2, n);
+        GX_LoadOBJPltt(data, dst * 2, n * 2);
     } else {
-        GXS_LoadOBJPltt(data, dst * 2, n);
+        GXS_LoadOBJPltt(data, dst * 2, n * 2);
     }
 }
 

@@ -1489,6 +1489,7 @@ src/game/unit_02090CCC.cpp:
     .data       start:0x020bd284 end:0x020bd29c
 
 src/game/unit_020916A4.cpp:
+    complete
     .text       start:0x020916a4 end:0x02092640
     .bss        start:0x020c7f6c end:0x020c7f74
 
