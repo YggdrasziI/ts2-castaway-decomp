@@ -189,3 +189,4 @@
 | 2026-11-01 | 468a0ed | 544392 / 723540 bytes (75.24 %; fuzzy 98.74 %, linked 37.68 %) | 4271 / 4577 | 538 / 656 | func_02037000 matched by declaration placement; unit_02035FEC complete |
 | 2026-11-01 | 9bc6bc5 | 544732 / 723540 bytes (75.29 %; fuzzy 98.78 %, linked 37.68 %) | 4273 / 4577 | 538 / 656 | Low functions: stack vectors, const parameter copies, inline copy wrapper |
 | 2026-11-01 | 5df63fa | 546884 / 723540 bytes (75.58 %; fuzzy 98.79 %, linked 38.30 %) | 4280 / 4577 | 539 / 656 | Source permuter: seven register allocation gaps closed; unit_02093648 complete |
+| 2026-11-06 | a5c6e47 | 550024 / 723540 bytes (76.02 %; fuzzy 99.13 %, linked 39.13 %) | 4305 / 4577 | 554 / 657 | SDK gaps: link-time constants as linker symbols, crt0 and BuildInfo, OS_InitThread, CARD DMA read, thunks |
