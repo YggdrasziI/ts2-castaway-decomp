@@ -7,8 +7,8 @@
 typedef unsigned char u8;
 typedef unsigned int u32;
 
-extern void func_020799b0(u32 dmaNo, const void *src, void *dest, u32 size); /* MI_DmaCopy32 */
-extern void func_020797b8(u32 dmaNo, const void *src, void *dest, u32 size, void *callback, void *arg); /* MI_DmaCopy32Async */
+extern void MI_DmaCopy32(u32 dmaNo, const void *src, void *dest, u32 size);
+extern void MI_DmaCopy32Async(u32 dmaNo, const void *src, void *dest, u32 size, void *callback, void *arg);
 extern void MIi_CpuCopy32(const void *src, void *dest, u32 size);
 
 extern u32 data_020c571c; /* first bank start */
@@ -18,7 +18,7 @@ extern u32 data_020bcb74; /* GX DMA channel, -1 for the CPU */
 
 static inline void Copy32(u32 dmaNo, const void *src, void *dest, u32 size) {
     if (dmaNo != (u32)-1 && size > 0x30) {
-        func_020799b0(dmaNo, src, dest, size);
+        MI_DmaCopy32(dmaNo, src, dest, size);
     } else {
         MIi_CpuCopy32(src, dest, size);
     }
@@ -26,7 +26,7 @@ static inline void Copy32(u32 dmaNo, const void *src, void *dest, u32 size) {
 
 static inline void Copy32Async(u32 dmaNo, const void *src, void *dest, u32 size) {
     if (dmaNo != (u32)-1) {
-        func_020797b8(dmaNo, src, dest, size, 0, 0);
+        MI_DmaCopy32Async(dmaNo, src, dest, size, 0, 0);
     } else {
         MIi_CpuCopy32(src, dest, size);
     }
