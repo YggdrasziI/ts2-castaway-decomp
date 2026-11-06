@@ -106,3 +106,5 @@ One-function NitroSDK / NitroSystem units `libs/{nitro,nns}/src/*/unit_*.c` with
 `libs/nitro/src/card/unit_02074DF0.c`: khdays (CC0, local clone at commit `93535afd7ca082f3d856bbf1cadae65be16d44ba`) `libs/nitro/card/calls/CARDi_TryReadCardDma.c`, adapted to this ROM: no instruction / data cache thresholds (always invalidate by range), structure offsets, callees and data renamed from the ROM relocations.
 
 Written from the ROM, no reference code: the 64-byte send `libs/nitro/src/gx/unit_020794B4.c` (`asm` function), the tail-call thunks `libs/nitro/src/card/unit_020745AC.c`, `card/unit_02075438.c`, `ctrdg/unit_020759FC.c` (1.2 with `-interworking` emits `ldr ip` / `bx ip`) and the empty functions `libs/nitro/src/fx/unit_02077E50.c`, `libs/nns/src/snd/unit_0209D4AC.c`, `snd/unit_0209D4D0.c`.
+
+`libs/nitro/src/os/unit_0207BA54.c`: Advance Wars (CC0, local clone at commit `47864817dc01b491422fe6e9f02c8be6752efa7e`) `src/sdk/os/exception_run_user_hook.c`, the `asm` function only, data and callee symbols renamed for this ROM.
