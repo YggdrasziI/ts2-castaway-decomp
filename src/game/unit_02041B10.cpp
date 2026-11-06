@@ -224,11 +224,11 @@ public:
 };
 
 /*
- * 98.34 %: the icon positions of the two outfit buttons swap which add goes
- * through a move (the original moves r0 into r1 before the 0x8000 add of x and
- * adds 0x4000 to y directly; here the reverse; an inline helper for both calls
- * gave the same code); one u16 index truncation goes through the other
- * register.
+ * The local for the done button's y adds the code-neutral pcode that puts the
+ * block splits where the original has them (before the name lookup's
+ * func_020aa040 and one statement earlier in the two outfit blocks): the index
+ * truncation and the icon position moves follow them (block split rule in
+ * notes/MATCHING.md).
  */
 Unk02041b10::Unk02041b10(Unk02093648 *archive, Unk020c43a8 *player, Unk020724cc *catalog)
     : flags(0), layout(archive, 0), player(player), catalog(catalog), part(4), item(0), color(0), outfit(3),
@@ -242,7 +242,8 @@ Unk02041b10::Unk02041b10(Unk02093648 *archive, Unk020c43a8 *player, Unk020724cc 
     keyboard.maxLength = 15;
     { u32 i_ = func_020a7b50(&names, 0x57cd1f42); Unk020a7c90 *s_ = func_020aa040(&layout, 0xb, i_); done.func_02050838(s_, false); }
     done.func_02050c48(0, 1, -1);
-    done.func_24(0xc1000, done.func_10()->y);
+    int y = done.func_10()->y;
+    done.func_24(0xc1000, y);
     { u32 i_ = func_020a7b50(&names, 0xbb88ca9b); Unk020a7c90 *s_ = func_020aa040(&layout, 0xb, i_); name.func_02050838(s_, false); }
     name.func_02050c48(0, 1, -1);
     name.func_24(0xc1000, name.func_10()->y);
