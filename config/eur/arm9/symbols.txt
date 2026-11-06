@@ -5575,7 +5575,7 @@ data_020be418 kind:bss addr:0x020be418
 data_020be41c kind:bss addr:0x020be41c
 data_020be420 kind:bss addr:0x020be420
 data_020be424 kind:bss addr:0x020be424
-data_020be428 kind:bss addr:0x020be428
+data_020be428 kind:bss(size=0x1) addr:0x020be428
 data_020be42c kind:bss addr:0x020be42c local
 data_020bfc2c kind:bss addr:0x020bfc2c local
 @127 kind:bss addr:0x020bfc30 local

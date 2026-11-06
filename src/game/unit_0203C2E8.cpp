@@ -19,8 +19,7 @@
  *
  * Not complete: five functions are below 100 % (comments above them); the
  * last word of `.rodata` (0x020AE968, 0x46, never loaded) is the size of the
- * name list, a local `static const` folded into the code; the one-byte flag
- * leaves `.bss` at 50 % (the original range is a word).
+ * name list, a local `static const` folded into the code.
  */
 
 #include "game/unk_screen.h"
