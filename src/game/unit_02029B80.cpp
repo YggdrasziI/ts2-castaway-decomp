@@ -12,8 +12,6 @@
  * It holds the kept copies 0x0202A518 of the widget base slot 9 and 0x0202A52C of
  * the panel's func_10, right after the constructor, their first user: written
  * as plain definitions, as slot 7 in unit_0202FDDC.cpp.
- *
- * Not complete: the constructor is below 100 % (comment above it).
  */
 
 #include "game/unk_screen.h"
@@ -126,11 +124,10 @@ public:
 static void *func_0202ae60(u32 id, void *user);
 
 /*
- * 98.96 %: the label `s` is in r7 and `first` / `kind` in r5 / r6 in the original
- * (rotated here), three name lookups truncate through the other of r0 / r1, and
- * the rectangle of next.func_10() moves to r1 before the pager's vtable load, as
- * in unit_0203B3B8.cpp. Tried: `kind` first (the best), bool `first`, early
- * declarations, rectangle locals and references.
+ * The hash, palette and OAM locals of the icon add the code-neutral pcodes that
+ * put the block split before the 0x6b44a2aa lookup's func_020aa040 (its index
+ * truncation takes r1, the next one r0; block split rule in notes/MATCHING.md);
+ * with them, `first` declared before `kind` gives the original's registers.
  */
 Unk02029b80::Unk02029b80(Unk0203c188Owner *owner) : Unk0203c188(owner), def(0) {
     Unk020a7af4Entry entries[0x1e];
@@ -154,14 +151,17 @@ Unk02029b80::Unk02029b80(Unk0203c188Owner *owner) : Unk0203c188(owner), def(0) {
     if (key == -1) {
         key = 0;
     }
-    func_020a6980(icon, func_0206446c(key));
-    func_020a69ac(icon, func_020644bc(key));
+    u32 hash = func_0206446c(key);
+    func_020a6980(icon, hash);
+    short pal = func_020644bc(key);
+    func_020a69ac(icon, pal);
     int palette = func_020644b0(key);
     Unk02093648 *a = func_020a18e4()->archive;
     Unk02093648 *b = func_020a18e4()->archive;
     Unk0209487c *file = b->func_02093a9c(a->func_02093e9c(func_020a69a4(icon)));
-    Unk020916a4::func_02091830()->func_0209201c((Unk02095140 *)file, func_020a69cc(icon), palette << 4,
-                                                func_020a7d44(icon) << 4, 0x10);
+    Unk020916a4 *oam = Unk020916a4::func_02091830();
+    oam->func_0209201c((Unk02095140 *)file, func_020a69cc(icon), palette << 4,
+                       func_020a7d44(icon) << 4, 0x10);
     a = func_020a18e4()->archive;
     b = func_020a18e4()->archive;
     b->func_02093c58(a->func_02093e9c(func_020a69a4(icon)));
@@ -179,8 +179,8 @@ Unk02029b80::Unk02029b80(Unk0203c188Owner *owner) : Unk0203c188(owner), def(0) {
     item.func_02050968(s);
     panel.func_020518fc(&item);
 
-    int kind = 0;
     int first = 1;
+    int kind = 0;
     if (func_0205d340(data_020b9258, 0x0e2508ee)) {
         first = kind;
     } else if (func_0205d340(data_020b9258, 0x4089a7c6)) {
