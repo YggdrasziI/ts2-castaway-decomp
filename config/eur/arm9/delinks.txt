@@ -634,6 +634,7 @@ src/game/unit_02061D08.cpp:
     .data       start:0x020bc4dc end:0x020bc4f8
 
 src/game/unit_02063CD0.cpp:
+    complete
     .text       start:0x02063cd0 end:0x02064224
     .init       start:0x020ae204 end:0x020ae260
     .ctor       start:0x020b6e8c end:0x020b6e90

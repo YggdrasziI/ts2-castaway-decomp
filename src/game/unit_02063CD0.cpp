@@ -14,8 +14,6 @@
  *
  * Functions other than the constructor and destructor keep C linkage: other
  * files call them by their addresses.
- *
- * Not complete: func_02064164 is below 100 % (comment above it).
  */
 
 #include "game/unk_animinst.h"
@@ -254,12 +252,10 @@ Unk020a3a44 *func_02064074(Unk020c417c *m, Unk02093648 *archive, u32 key) {
     return e.bank;
 }
 
-/* 97.3 %: the loop counter and the element pointer are in r5 / r4 instead of
- * r4 / r5, and the new count in r1 instead of r2; a count local, counters
- * declared first, a pointer instead of the reference and temporaries for the
- * deleted bank gave the same code or worse. */
+/* The counter is unsigned with a signed compare: an int counter swaps the
+ * counter and element pointer registers. */
 void func_02064164(Unk020c417c *m, Unk020a3a44 *bank) {
-    for (int i = 0; i < m->bankCount; i++) {
+    for (u32 i = 0; (int)i < m->bankCount; i++) {
         Unk020c417cBank &b = m->banks[i];
         if (b.bank == bank) {
             if (b.bank->count > 0) {
@@ -275,9 +271,8 @@ void func_02064164(Unk020c417c *m, Unk020a3a44 *bank) {
             if (m->bankCount <= 0) {
                 return;
             }
-            Unk020c417cBank *banks = m->banks;
-            b = banks[m->bankCount];
-            Unk020c417cBank &last = banks[m->bankCount];
+            b = m->banks[m->bankCount];
+            Unk020c417cBank &last = m->banks[m->bankCount];
             last.hash = 0;
             last.bank = 0;
             return;
