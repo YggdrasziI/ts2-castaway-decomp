@@ -2334,6 +2334,7 @@ libs/nitro/src/os/unit_0207A748.c:
     .text       start:0x0207a748 end:0x0207a804
 
 libs/nitro/src/card/unit_02074CF0.c:
+    complete
     .text       start:0x02074cf0 end:0x02074df0
 
 libs/nitro/src/card/unit_02074DF0.c:

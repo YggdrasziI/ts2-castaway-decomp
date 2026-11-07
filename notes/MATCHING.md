@@ -67,6 +67,9 @@ default: add one here only once a unit of this ROM proves it with mwccarm.
   register and the other way round. Declaring it at function scope, before the
   `for`, gave the original allocation (`func_0202171c` in `unit_0201E300.cpp`,
   98.52 % to 100 %; `func_02021888` and `func_020214cc` improved).
+- A loop written as `for (;;)` over a global read through its name kept the wrong registers for
+  the global's base; a `Common *const common = &global;` with a `goto` back to the top gave them,
+  and the tail needed `if (!x) return;` then `goto top;` (`card/unit_02074CF0.c`, 94 % -> 100 %).
 - A global's address loaded above the last stores of a branch that ends the function: an explicit
   `return;` after the last statement keeps the load after them (`card/unit_02074290.c`,
   98.69 % -> 100 %; Advance Wars' `CardSave_FillGeometryFromType` notes the same).

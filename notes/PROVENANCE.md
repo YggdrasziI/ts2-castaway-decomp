@@ -122,3 +122,5 @@ Written from the ROM, no reference code: the 64-byte send `libs/nitro/src/gx/uni
 `libs/nitro/src/gx/unit_020792D0.c`: Heroes of Mana (CC0, commit `d29040d08683bff5749126166f0fd2f86e20096b`) `src/nitro/gx/gx_load3d.c`, `GX_LoadTex` only (its own code), retyped for this ROM. The two copy inlines are written here (the CPU / DMA choice of the SDK, as in `gx/unit_020791A4.c`), not taken from that file's reused `UnkGxCopy32`.
 
 `libs/nitro/src/card/unit_02074290.c`: written from the ROM; the closing `return;` that fixes the last load's schedule comes from Advance Wars (CC0, commit `47864817dc01b491422fe6e9f02c8be6752efa7e`) `src/sdk/card/card_save_fill_geometry_from_type.c`.
+
+`libs/nitro/src/card/unit_02074CF0.c`: khdays (CC0, commit `93535afd7ca082f3d856bbf1cadae65be16d44ba`) `libs/nitro/card/calls/CARDi_ReadCard.c`, retyped for this ROM (task and common layouts, callees from the relocations); the end rewritten as early returns and one jump back.

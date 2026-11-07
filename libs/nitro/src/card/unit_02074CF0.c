@@ -1,4 +1,8 @@
-/* NitroSDK CARD: reads pages from the ROM through the card registers; written from the ROM. File bounds are a hypothesis. */
+/*
+ * NitroSDK CARD: reads pages from the ROM through the card registers (CARDi_ReadCard). Structure
+ * from khdays' CARDi_ReadCard.c (CC0), retyped for this ROM; the end returns early and jumps back
+ * instead of jumping back from the tests. File bounds are a hypothesis.
+ */
 #pragma force_active on
 
 typedef unsigned int u32;
@@ -25,45 +29,56 @@ extern int func_0207513c(Task *task);
 #define REG_CTRL (*(volatile u32 *)0x040001a4)
 #define REG_DATA (*(volatile u32 *)0x04100010)
 
-/* 94.00 %: registers of the addresses and the buffer, and the literal pool order (the
- * original loads data_020c4800 first); local orders and a local pointer to
- * data_020c4800 tried. The const view in the last test gives the reload of dst. */
+static inline int func_advance(Task *task) {
+    Common *common = &data_020c4800;
+    common->src += 0x200;
+    common->dst += 0x200;
+    common->len -= 0x200;
+    return common->len > 0;
+}
+
 void func_02074cf0(Task *task) {
-    for (;;) {
-        u32 *dst;
-        u32 src = data_020c4800.src;
-        u32 page = src & -0x200;
-        if (page == src && !((dst = (u32 *)data_020c4800.dst, (u32)dst & 3)) && data_020c4800.len >= 0x200) {
+    Common *const common = &data_020c4800;
+
+read_page:
+    {
+        const u32 length = 0x200;
+        u32 source = common->src & ~(0x200 - 1);
+        u32 destination;
+
+        if ((source != common->src) || ((common->dst & 3) != 0) || (common->len < length)) {
+            destination = (u32)task->buffer;
+            task->cached = source;
         } else {
-            dst = task->buffer;
-            task->cached = page;
+            destination = common->dst;
         }
-        func_0207509c((page >> 8) | 0xb7000000, page << 24);
-        REG_CTRL = task->ctrl;
+
+        func_0207509c(0xb7000000 | (source >> 8), source << 24);
         {
-            u32 i = 0;
-            u32 status;
-            do {
-                status = REG_CTRL;
-                if (status & 0x800000) {
-                    u32 value = REG_DATA;
-                    if (i < 0x200) {
-                        dst[i] = value;
-                        i++;
+            u32 index = 0;
+
+            REG_CTRL = task->ctrl;
+            for (;;) {
+                const u32 control = REG_CTRL;
+                if ((control & 0x800000) != 0) {
+                    u32 data = REG_DATA;
+                    if (index < length) {
+                        ((u32 *)destination)[index++] = data;
                     }
                 }
-            } while (status & 0x80000000);
+                if ((control & 0x80000000) == 0) {
+                    break;
+                }
+            }
         }
-        if ((u32)dst == ((const Common *)&data_020c4800)->dst) {
-            data_020c4800.src += 0x200;
-            data_020c4800.dst += 0x200;
-            data_020c4800.len -= 0x200;
-            if (data_020c4800.len == 0) {
+
+        if (destination == common->dst) {
+            if (!func_advance(task)) {
                 return;
             }
         } else if (!func_0207513c(task)) {
             return;
         }
+        goto read_page;
     }
 }
-/* END */
