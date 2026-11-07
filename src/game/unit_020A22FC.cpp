@@ -1119,7 +1119,6 @@ extern "C" int func_020a3188(Unk020a267c *p, int hash, void *heap) {
     return group;
 }
 
-/* 98.58 %: count and entry registers swapped, one extra `moveq r0, r4` in ours. */
 extern "C" int func_020a32ac(Unk020a267c *p, int hash, void *heap, int volume, bool immediate) {
     int result = -1;
     int group;
@@ -1149,7 +1148,7 @@ extern "C" int func_020a32ac(Unk020a267c *p, int hash, void *heap, int volume, b
         } while (i != count);
     }
     if (result == -1) {
-        return result;
+        return -1;
     }
     void *handle = &p->handles[index];
     if (func_020a3018(p, handle, result, id) != 0) {

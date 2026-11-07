@@ -536,6 +536,10 @@ Each fix was found by compiling scratch variants of one function and comparing t
   (an `int` counter, `(int)n`, other types, reversed tests and invariant locals all
   hoist it); the test then becomes unsigned (`bls`), which the original is not
   (`func_0205f184` 80.8 % -> 86.0 %, open).
+- **Returning the constant, not the variable.** An extra `moveq r0, r4` before an early
+  `ldmeq` after `cmp r4, r0` with `r0 = -1`: the original writes `return -1;` where the
+  variable holds -1 (`if (result == -1) return -1;`); the registers of the loop before it
+  also came right (`func_020a32ac`, 99.1 % -> 100 %).
 - **A return value nobody uses.** `moveq r0, #0` before an early `ldmeq` and `mov r0, #1`
   before the final return, with no other change: the function and its inline helper
   return `bool` (`return false;` / `return true;`) even though the callers ignore it
