@@ -70,6 +70,10 @@ default: add one here only once a unit of this ROM proves it with mwccarm.
 - A loop written as `for (;;)` over a global read through its name kept the wrong registers for
   the global's base; a `Common *const common = &global;` with a `goto` back to the top gave them,
   and the tail needed `if (!x) return;` then `goto top;` (`card/unit_02074CF0.c`, 94 % -> 100 %).
+- A `.rodata` table the original loads through its own symbol (`data_020ae654 + 0x20`) where ours
+  goes through the first object of the section (`data_020ae63c + 0x38`): declare it `extern` and
+  define it at the end of the file, after the functions that index it with a constant. Class
+  body inlines are compiled after it anyway (`unit_0200E144.cpp`, `func_0200e9ec`).
 - A global's address loaded above the last stores of a branch that ends the function: an explicit
   `return;` after the last statement keeps the load after them (`card/unit_02074290.c`,
   98.69 % -> 100 %; Advance Wars' `CardSave_FillGeometryFromType` notes the same).
