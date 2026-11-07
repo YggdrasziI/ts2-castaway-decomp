@@ -1167,7 +1167,8 @@ extern "C" int func_020a32ac(Unk020a267c *p, int hash, void *heap, int volume, b
     return -1;
 }
 
-/* 94.63 %: lr / r12 swapped, r0 kept as the 0 result in the original. */
+/* 98.70 %: lr / r12 swapped (player and the first test). The result is set only
+ * when the test holds (moveq #1 without movne #0). */
 extern "C" bool func_020a3478(Unk020a267c *p, int handle) {
     u8 index = handle >> 16;
     if (handle < 0 || index >= 12) {
@@ -1179,8 +1180,8 @@ extern "C" bool func_020a3478(Unk020a267c *p, int handle) {
     if (player != 0) {
         same = (u8)(handle >> 8) == player->unk38;
     }
-    if (same) {
-        result = (handle & 0xff) == player->unk3a;
+    if (same && (handle & 0xff) == player->unk3a) {
+        result = true;
     }
     return result;
 }
