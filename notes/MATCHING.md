@@ -1583,6 +1583,19 @@ Each fix was found by compiling scratch variants of one function and comparing t
   `func_020187d4` test of `func_02019ea0`, the constructor's first state) suggest inline
   helpers in the original
   (hypothesis).
+- Without `ipa`, the constants of members defined in a class body are numbered last
+  member first and then heapsorted (`mwcc_heapsort`, four-member scratch file: emitted
+  `[2, 1, 0, 3]` of the numbering); the constants of functions defined outside the class
+  follow, in numbering order, unsorted. In `unit_02018668.cpp` the functions read the
+  constants through the first object of the section (the anchor): in the original it is
+  the static table of `func_sound`, then the 36 constants; ours start with a constant.
+  Inverting the heapsort on the original order gives a creation order that is close to
+  the `.text` order of the users (`func_020186e0`, `func_0201870c`, `func_02018730`, the
+  spear states, `func_0201934c` ... `func_18`), with the fish class body constants first
+  and the `func_02019bd0` switch reversed: consistent with all 36 being sorted as one
+  group, as only class body constants are here.  Moving the eleven fish states into the class body sorts their constants as one group
+  but moves them in `.text` (out of the fish block, after their callers), so the original
+  did not define them there as written here. Not reproduced yet (2026-11-08).
 - Without `ipa`, the constants of inline member functions defined in class bodies
   are not emitted in `@` number order (two-class scratch test: `a2 a0 a1`, `b0 b2
   b1`); their order matches the symbol table order of the target functions. Rule
