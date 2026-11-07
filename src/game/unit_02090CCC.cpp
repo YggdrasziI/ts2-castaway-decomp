@@ -202,25 +202,25 @@ void Unk02090ccc::func_020910a4(Unk02092830Font *font, int n) {
 }
 
 /*
- * 95.88 % (the line start compare is signed: `(int)i`): register and stack slot
+ * 96.62 % (the line start compare is signed: `(int)i`, declaration order searched): register and stack slot
  * allocation; inside the loop the original reads
  * lineCount twice (once through a pointer kept in r4) for each new line.
  */
 void Unk02090ccc::func_020927bc() {
-    int breakEnd;
     Unk0208f8b0 *e;
-    int maxWidth;
-    u32 i;
     u32 info;
-    int breakAt;
     int lineStart;
-    bool newLine;
-    bool fetch;
-    int width;
-    bool afterBreak;
-    int breakEndWidth;
+    int breakAt;
     int breakWidth;
     u32 adv;
+    u32 i;
+    int breakEndWidth;
+    int maxWidth;
+    bool newLine;
+    bool fetch;
+    int breakEnd;
+    int width;
+    bool afterBreak;
 
     e = 0;
     i = 0;
