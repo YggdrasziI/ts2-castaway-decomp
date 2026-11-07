@@ -3,8 +3,7 @@
  * point on or off screen, the actor shown by a microgame (its skeleton file and animations) and the
  * ".Distance.Min" / ".Force.Max" values of a layout. Bounds: hypothesis (0x020A6588 starts the screen
  * class of the mode, `.data` ends with the vtable, whose four empty slots are the pure functions).
- * All names are placeholders. Real file name unknown. Not complete: func_020a5f28 is the same code
- * but for its registers (the original keeps the margin in r4, its shifts in r5, the result in r6).
+ * All names are placeholders. Real file name unknown.
  */
 #include "game/unk_action.h"
 #include "game/unk_anim.h"
@@ -48,8 +47,9 @@ struct Unk020a6438Rect {
     int a, b, c, d;
 };
 
-extern "C" {
 void *func_0201ba94();
+
+extern "C" {
 void func_0205d35c(Unk0205cf00 *def);
 void func_0205d37c(Unk0205cf00 *def);
 Unk02060d78 *func_02060c90(void *s);
