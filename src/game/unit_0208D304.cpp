@@ -11,7 +11,7 @@
  * Bounds: hypothesis. No call crosses 0x0208D304 or 0x0208E570 (the font of
  * unit_0208E570.cpp follows); the two manager pointers of .bss 0x020c7f64 are
  * only used here. Real file name unknown.
- * Not complete: four functions do not match yet (see above them).
+ * Not complete: three functions do not match yet (see above them).
  */
 
 #include "game/unk_resource.h"
@@ -434,11 +434,13 @@ int Unk0208db14::func_0208dc24() {
     return func_02078114();
 }
 
-/*
- * 99.82 %: both `func_0208d530(flag ? 0 : 1)` calls give `moveq r1, #1; movne r1,
- * #0` where the original has `movne r1, #0; moveq r1, #1` (`!flag`, `flag == 0`,
- * if / else, a bool parameter and an inline helper tried).
- */
+/* An enum keeps the `movne` / `moveq` order of the original. */
+enum Unk0208dc44Size { UNK_0208DC44_SIZE0, UNK_0208DC44_SIZE1 };
+
+static inline Unk0208dc44Size func_size(int flag) {
+    return flag != 0 ? UNK_0208DC44_SIZE0 : UNK_0208DC44_SIZE1;
+}
+
 Unk0208d304 *Unk0208db14::func_0208dc44(Unk02095140 *file, int flag, int charBase, int index) {
     int slot = func_0208dee4();
     Unk0208d304 *layer = slot == -1 ? 0 : &layers[slot];
@@ -452,7 +454,7 @@ Unk0208d304 *Unk0208db14::func_0208dc44(Unk02095140 *file, int flag, int charBas
         }
         layer->func_0208d4d8(charBase);
         layer->func_0208d500(0);
-        layer->func_0208d530(flag ? 0 : 1);
+        layer->func_0208d530(func_size(flag));
         if (flag) {
             layer->func_0208d820(0x20, 0x19);
         } else {
@@ -487,7 +489,7 @@ Unk0208d304 *Unk0208db14::func_0208dc44(Unk02095140 *file, int flag, int charBas
         screenBlock[slot] = screenBase;
         screenCount[slot] = count;
     }
-    layer->func_0208d530(flag ? 0 : 1);
+    layer->func_0208d530(func_size(flag));
     if (flag) {
         layer->func_0208d820(0x20, 0x19);
     } else {

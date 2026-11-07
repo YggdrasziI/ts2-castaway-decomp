@@ -1601,6 +1601,8 @@ Each fix was found by compiling scratch variants of one function and comparing t
   `moveq r1, #0; movne r1, #1` on a flag test passed as an argument, is also an enum
   helper, written `(x & m) == 0 ? A : B` (`func_02058f14`, 98.50 % -> 100 %); with
   `?:` on the plain test or `!= 0` the order stays ours.
+  An argument `flag ? 0 : 1` with the original's `movne #0; moveq #1`: enum helper
+  `flag != 0 ? A : B` (`func_0208dc44`, 99.82 % -> 100 %).
 - A string literal in a table initializer lands before the table, even at the end of
   the file; the original has such strings after the vtables, in reverse order of use
   (`unit_0200B23C.cpp`, open).
