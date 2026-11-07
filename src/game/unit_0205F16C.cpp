@@ -12,8 +12,7 @@
  * search lists of scene objects. unit_0205F80C.cpp follows. `.data` holds the
  * archive path (unit_02060274.cpp has its own copy). Real file name unknown.
  *
- * Not complete: func_0205f184 and func_0205f328 are not at 100 % (comments
- * above them).
+ * Not complete: func_0205f328 is not at 100 % (comment above it).
  *
  * Functions other than the constructor and destructor keep C linkage: other
  * files call them by their addresses.
