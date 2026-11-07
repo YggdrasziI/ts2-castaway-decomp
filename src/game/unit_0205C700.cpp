@@ -11,16 +11,12 @@
  * registered by the static initializer before 0x020AE130 and end with an
  * empty function (0x0205C6FC); the record constructor opens this range. After
  * 0x0205D4D8 come a hash table and another class (0x0205D608). The static
- * initializer 0x020AE130 builds the default description data_020c3f7c;
- * data_020c3fb0 is the empty block returned when a run is missing. `.data`
- * holds the two file extensions hashed into the description. Real file name
- * unknown.
- *
- * Not complete: the compiler puts data_020c3fb0 (8 bytes) before
- * data_020c3f7c in `.bss` whatever the order of the definitions (also tried
- * static, a constructor, a function-local static); the original has the
- * description first. The static initializer, func_0205c8b4 and func_0205cd6c
- * differ only by that offset.
+ * initializer 0x020AE130 builds the default description data_020c3f7c.
+ * data_020c3fb0, the empty block returned when a run is missing, follows it in
+ * `.bss` although it is smaller: mwccarm sorts a file's `.bss` by increasing
+ * size, so it is defined in the next file (unit_0205D4D8.cpp), and the code
+ * loads both addresses directly as in the original. `.data` holds the two
+ * file extensions hashed into the description. Real file name unknown.
  *
  * Functions other than the constructor keep C linkage: other files call them
  * by their addresses.
@@ -125,7 +121,7 @@ extern Unk020c409c data_020c409c;
 extern u8 data_020be184[];
 
 Unk020615f0Def data_020c3f7c;
-Unk02099c78Block data_020c3fb0;
+extern Unk02099c78Block data_020c3fb0;
 
 extern "C" {
 

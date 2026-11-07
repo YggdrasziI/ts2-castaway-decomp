@@ -10,13 +10,17 @@
  * definition record (unit_0205C700.cpp); the scene object class
  * (unit_0205D8D8.cpp) follows. `.data`: the amount table, the "Food" string,
  * then two strings and a table of pointers to them that no code reads
- * (0x020BC2A0-0x020BC2B8). Real file name unknown.
+ * (0x020BC2A0-0x020BC2B8). `.bss`: the empty script block data_020c3fb0 that
+ * unit_0205C700.cpp returns (it follows a larger object of that file, so it is
+ * not one of its own). Real file name unknown.
  *
  * All functions keep C linkage: other files call them by their addresses.
  */
 
 #include "game/unk_script.h"
 #include "game/unk_sortedset.h"
+
+Unk02099c78Block data_020c3fb0;
 
 struct Unk02099c0cPair;
 
