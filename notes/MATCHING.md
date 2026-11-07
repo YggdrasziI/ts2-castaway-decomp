@@ -510,6 +510,11 @@ Each fix was found by compiling scratch variants of one function and comparing t
   `u32 o = *p & ~(0x3f << s); *p = o | x << s;` instead of one expression. This was
   `Unk0200f174::func_put`, where `func_0200b9c0` and `func_0200ce18` went to 100 %; in
   `unit_020142E0` it took one user from 96.2 to 99.75 %.
+- **Unfolded zero, one register per step.** `mov rN, #0` then `bic` / `orr` pairs, each
+  result in a new register: a member set to 0, then one compound assignment per
+  operation (`v = 0; v &= ~0xfc0000; v |= h << 18; v &= ~0x3f000; ...`). One
+  expression per field (`v = (v & ~m) | x`, or an inline helper) folds the zero away,
+  or keeps it but reuses the registers (`Unk0200f174` constructor, 48.46 % -> 100 %).
 - **Scale written in the calls.** `GX_LoadOBJPltt(data, dst * 2, n * 2)` in both branches,
   not `n *= 2;` before the `if`. The stack argument then loads into the original register
   (`Unk020916a4::func_0209201c`).

@@ -6,8 +6,7 @@
  * Bounds: hypothesis. The start is the first state of its table, the end the
  * deleting destructor of its vtable. Real file name unknown.
  *
- * Open gaps (same code, allocation or order): Unk0200f174 ctor 48.46 % (the original
- * keeps an unfolded zero, one register per step), func_0200eb70 95.15 %, func_0200e1f8
+ * Open gaps (same code, allocation or order): func_0200eb70 95.15 %, func_0200e1f8
  * 95.62 %, func_0200f250 96.49 %, func_14 97.12 %, D1 97.26 %, D0 97.33 %, func_18
  * 99.79 %, func_0200e9ec 99.99 %.
  */
@@ -93,10 +92,6 @@ public:
     u8 unk0[0x15c];
     u8 flipped;
 };
-
-static inline u32 func_field(u32 w, u32 mask, u32 x) {
-    return (w & ~mask) | x;
-}
 
 class Unk0200ed88Touch {
 public:
@@ -995,7 +990,15 @@ Unk0200ed88Player *func_0200f168() {
 }
 
 Unk0200f174::Unk0200f174(int h, int m, int s, int fr) {
-    v = func_field(func_field(func_field(func_field(0, 0xfc0000, h << 18), 0x3f000, m << 12), 0xfc0, s << 6), 0x3f, fr);
+    v = 0;
+    v &= ~0xfc0000;
+    v |= h << 18;
+    v &= ~0x3f000;
+    v |= m << 12;
+    v &= ~0xfc0;
+    v |= s << 6;
+    v &= ~0x3f;
+    v |= fr;
 }
 
 Unk0200f1a8::Unk0200f1a8() {
