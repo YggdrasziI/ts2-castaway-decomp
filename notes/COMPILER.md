@@ -257,6 +257,48 @@ writes is identical to the build's. Addresses used: `pclastblock` 0x63A224,
 `pcbasicblocks` 0x63A828, block pcode count at +0x28, call opcode 6 during code
 generation, end of register coloring 0x513A85. Use in `notes/MATCHING.md`.
 
+### Back end: instruction scheduler (2026-11-07)
+
+Read from the disassembly and traced with `tools/mwcc_sched.py` (same debugger).
+
+- Two passes per function: `scheduleinstructions` (0x4FF8C0) is called at 0x471C4F,
+  **before** register coloring (virtual registers; the byte the selection reads at
+  0x63A364 is 1), and again at 0x471D51 after coloring. Both calls test a byte of
+  the option block (0x63D6DD, above 1) and need a machine model for the processor. A
+  block is scheduled when it holds at least 2 pcodes, is not flagged by mask 0x11B
+  and was not scheduled yet; it is then flagged 8. In `unit_0202AEF4` the first pass
+  schedules 246 blocks and the second 114.
+- `scheduleblock` (0x4FF750) is the GameCube compiler's (`Scheduler.c`,
+  PrimeDecomp/mwcc-tools, read only): dependence graph built from the last pcode
+  up, deadlines from the critical path, then one cycle at a time
+  `selectinstruction` (0x4FF590). Among the ready nodes (no predecessor left,
+  earliest cycle reached, unit free) the first in code generation order is taken
+  unless another one is better, in this order: past its deadline when the first is
+  not, uncovers more successors, greater height, lower rank (first pass only). The
+  rank is computed per node by 0x4FEBF0: 0 with pcode flag 0x10, 3 with flag 0x2
+  (set on loads), 1 when no register is written (stores), 4 when registers are
+  written and none read (constants, `mov rN, #imm`), 2 otherwise. Among
+  equals a store goes before a constant, so a constant tends to be materialized
+  just before its first use.
+- Register pressure mode (not in the GameCube code): in the first pass, when the
+  live general registers reach the limit (0x616680 >= 0x61667C, 14 in the traced
+  functions), the ready node with the lowest score of 0x4FEA30 is taken instead (the
+  score is built from the remaining uses of the registers the node reads and the
+  registers it writes). The table set-up of `Unk0202aef4`'s constructor runs mostly
+  in this mode.
+- Machine model: `[0x5DF88E + 4 * processor]`; the game's compiles use the one at
+  0x5E761C: one instruction per cycle; a multi-cycle instruction (`smull`) holds
+  the unit, so nothing issues for several cycles after it.
+- Coloring that follows (inferred from the result of one function, consistent with
+  the GameCube compiler's `Coloring.c`): virtual registers are pushed in increasing number and
+  colored in reverse, each taking the lowest free volatile register. The pair
+  computed last in code generation (highest numbers) gets r0 / r1 first.
+  `Unk02098e70::func_02098e94` shows the consequence: the original colors `y * y`
+  first (r1:r0) while loading `x` first; with `y` term first in the source the
+  loads come out in that order but `x * x` is colored first, and with the `x` term
+  first the loads are swapped (in the IR of the current form, the temporary for `x`
+  comes before the one for `y`).
+
 ## Open questions
 
 - Game-code service pack inside 2.0 (probe larger functions: switches, multiplies,
