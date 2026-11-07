@@ -17,8 +17,6 @@
  *
  * The pages see this class as Unk0203c188Owner, and call the functions below by
  * their C names.
- *
- * Not complete: func_020299ec is below 100 % (comment above it).
  */
 
 #include "game/unk_screen.h"
@@ -924,11 +922,8 @@ void func_020292e4(Unk02027994 *o) {
 }
 
 /*
- * 96.22 %: the original updates the tab pointer before the position and the
- * index, and keeps the second loop's position and pointer in r9 / r10 (r7 / r8
- * here). The position is not reduced to a shifted induction variable only when
- * it is computed from the index. Tried: a pointer local in the loop, a reference
- * parameter, the position inside FX32.
+ * Each loop declares its index and position together and steps both in the
+ * for header: a position stepped in the body is updated before the tab pointer.
  */
 static inline void func_place(Unk02050640 *tab, int n) {
     int x = n * 2 + 0xdf;
@@ -941,16 +936,11 @@ void Unk02027994::func_020299ec(int page) {
     if ((u32)page >= 8) {
         page = 0;
     }
-    int i = page;
-    int n = 0;
-    for (; i < 8; i++) {
+    for (int i = page, n = 0; i < 8; i++, n++) {
         func_place(&tabs[i], n);
-        n++;
     }
-    n = 7;
-    for (i = page - 1; i >= 0; i--) {
+    for (int i = page - 1, n = 7; i >= 0; i--, n--) {
         func_place(&tabs[i], n);
-        n--;
     }
 }
 
