@@ -948,6 +948,13 @@ Unk0200c308::Unk0200c308() : Unk0200ad70(2), game(0), state(TF[14]), file(0) {
 }
 
 void Unk0200cec8::func_0200d138(Unk020a7af4 *names) {
+    Unk020a7c90 *a;
+    int j;
+    u32 id1;
+    Unk0200dd50 view;
+    u32 id0;
+    Unk020a7c90 *icon;
+    Unk020a7c90 *b;
     sprite = func_020aa04c(&layout, func_020a7b50(names, 0x6f9e2311));
     texts[0] = func_020aa040(&layout, 4, func_020a7b50(names, 0xc4189d9c));
     texts[1] = func_020aa040(&layout, 4, func_020a7b50(names, 0xdc127127));
@@ -959,13 +966,13 @@ void Unk0200cec8::func_0200d138(Unk020a7af4 *names) {
     buttons[2].func_02050c48(0, 3, -1);
     buttons[3].func_02050838(func_020aa040(&layout, 0xb, func_020a7b50(names, 0x4eb9e48d)), 0);
     buttons[3].func_02050c48(0, 3, -1);
-    u32 id0 = func_020a7b50(names, 0x611e8f21);
+    id0 = func_020a7b50(names, 0x611e8f21);
     func_020a7b50(names, 0x4ff10ee4);
-    u32 id1 = func_020a7b50(names, 0xf25fcce1);
+    id1 = func_020a7b50(names, 0xf25fcce1);
     func_020a7b50(names, 0x5dec82fb);
-    Unk020a7c90 *a = func_020aa040(&layout, 1, id0);
-    Unk020a7c90 *b = func_020aa040(&layout, 1, id1);
-    Unk020a7c90 *icon = func_020aa040(&layout, 5, func_020a7b50(names, 0x4e9c9a0b));
+    a = func_020aa040(&layout, 1, id0);
+    b = func_020aa040(&layout, 1, id1);
+    icon = func_020aa040(&layout, 5, func_020a7b50(names, 0x4e9c9a0b));
     rects[0] = func_020a6438(this, &layout, names, 0xfe825036);
     rects[1] = func_020a6438(this, &layout, names, 0xc0c6810e);
     player.owner = this;
@@ -974,7 +981,7 @@ void Unk0200cec8::func_0200d138(Unk020a7af4 *names) {
         catches[i].game = this;
         catches[i].sprites[0] = a;
         catches[i].sprites[1] = b;
-        for (int j = 0; j < 2; j++) {
+        for (j = 0; j < 2; j++) {
             catches[i].rects[j] = catches[i].game->rects[j];
         }
         func_0200df54(&catches[i]);
@@ -985,7 +992,6 @@ void Unk0200cec8::func_0200d138(Unk020a7af4 *names) {
     }
     for (int i = 0; i < 5; i++) {
         if (defs[i] != 0) {
-            Unk0200dd50 view;
             func_0200dd50(&view, defs[i]);
             func_020a8064(icon, func_0200afd4(&view));
             func_0200dd6c(&view);
