@@ -696,9 +696,8 @@ bool Unk0200c308::func_0200c310() {
                     if (g->func_0200cb28() == 10) {
                         g->total += data_020ae5cc[g->map][3];
                     } else {
-                        const int *row = data_020ae5cc[g->map];
-                        if (row[3] + 10 == g->func_0200cb28()) {
-                            g->total += row[4];
+                        if (data_020ae5cc[g->map][3] + 10 == g->func_0200cb28()) {
+                            g->total += data_020ae5cc[g->map][4];
                         }
                     }
                     g->func_0200c550();
