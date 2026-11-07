@@ -262,7 +262,7 @@ static const u32 data_020aea74[11][29] = {
 static const Unk02098bc8 data_020b9bc4(0x18000, 0x88000, 0xd0000, 0x28000);
 
 /* The cursor blink counter. */
-static int data_020bfc2c;
+static u32 data_020bfc2c;
 
 class Unk0204d698 : public Unk020b9b80 {
 public:
@@ -432,7 +432,8 @@ bool Unk0204d698::func_04(bool locked) {
     return locked;
 }
 
-/* 99.02 %: two register swaps (the result and the touch argument). */
+/* 99.06 %: two register swaps (the result and the touch argument). The blink
+ * counter is unsigned (movhi / bls in the original). */
 void Unk0204d698::func_00() {
     if (!(flags & 2)) {
         return;
