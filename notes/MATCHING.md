@@ -514,8 +514,14 @@ Each fix was found by compiling scratch variants of one function and comparing t
   `isLoaded(p) && p->sim != 0` where ours reuses the register of the test: give
   the inline helper a `const` pointer parameter (`const Unk020c43a8 *p`). A local copy
   in the helper, a `bool` local, an early `return` or a reference do not
-  (`func_02065e80` 91.8 % -> 100 %, `func_02065db8` 97.6 % -> 100 %). No effect on
-  the hoisted width of `func_02059710`.
+  (`func_02065e80` 91.8 % -> 100 %, `func_02065db8` 97.6 % -> 100 %). The same
+  for a member flag tested at the top (`if (loaded(this))` with a `const` helper,
+  or a cast to a `const` pointer): `func_02094bc0` 93.85 % -> 100 %, which also
+  needed the flag store before the two pointer stores for their `stmib`; and for
+  a loop bound reread at the bottom of the loop
+  (`i < ((const Unk0209487cHeader *)header)->count`, `func_020949b8`). No effect
+  on the hoisted width of `func_02059710`; a sweep making every file-local inline
+  helper's pointer `const` found nothing more (most do not compile that way).
 - **Unfolded zero, one register per step.** `mov rN, #0` then `bic` / `orr` pairs, each
   result in a new register: a member set to 0, then one compound assignment per
   operation (`v = 0; v &= ~0xfc0000; v |= h << 18; v &= ~0x3f000; ...`). One

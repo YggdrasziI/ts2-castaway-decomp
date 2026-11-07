@@ -9,7 +9,6 @@
  * data_020bd348; 0x02095140 starts unit_02095140.cpp. The tail call at 0x02095134
  * is placed here as the last function before the next class. The .data range holds
  * the error string and the vtable. Real file name unknown.
- * Not complete: func_020949b8 and func_02094bc0 do not match yet (see above them).
  */
 
 #include "game/unk_file.h"
@@ -74,10 +73,8 @@ Unk0209487c::~Unk0209487c() {
     }
 }
 
-/*
- * 98.98 %: the original reads header->count again at the bottom of the entry loop
- * (it keeps only the header pointer in a register); this one keeps the count.
- */
+/* The const view of the header in the loop test makes the count reload at the
+ * bottom of the loop, as in the original. */
 void Unk0209487c::func_020949b8(const char *path) {
     Unk0209487cFile file;
     bool ok;
@@ -110,7 +107,7 @@ void Unk0209487c::func_020949b8(const char *path) {
                         flags |= 1;
                     }
                     dataOffset = (header->count + 1) * 0xc;
-                    for (i = 0; i < header->count; i++) {
+                    for (i = 0; i < ((const Unk0209487cHeader *)header)->count; i++) {
                         if (entries[i].tag < 0) {
                             unk18 = entries[i].offset;
                             break;
@@ -129,19 +126,19 @@ void Unk0209487c::func_020949b8(const char *path) {
     func_02099834()->func_02099830();
 }
 
-/*
- * 93.85 %: the original reloads flags and stores header and entries together with
- * one stmib after the flags; this one stores header first.
- */
+static inline bool func_loaded(const Unk0209487c *f) {
+    return f->flags & 1;
+}
+
 void Unk0209487c::func_02094bc0(void *data) {
-    if (flags & 1) {
+    if (func_loaded(this)) {
         return;
     }
     if (data == 0) {
         return;
     }
-    header = (Unk0209487cHeader *)data;
     flags |= 0xb;
+    header = (Unk0209487cHeader *)data;
     entries = (Unk0209487cEntry *)((u8 *)data + 0xc);
     dataOffset = (header->count + 1) * 0xc;
     block = (u8 *)data + dataOffset;
