@@ -197,3 +197,4 @@
 | 2026-11-07 | 8a10b17 | 574428 / 723540 bytes (79.39 %; fuzzy 99.34 %, linked 44.39 %) | 4346 / 4577 | 565 / 656 | Simple patterns found by diff scans: enum helpers for conditional move orders, a bool return nobody uses, the constant returned instead of its variable, materialised bool forms |
 
 | 2026-11-07 | 6475384 | 576008 / 723540 bytes (79.61 %; fuzzy 99.34 %, linked 44.89 %) | 4349 / 4577 | 566 / 656 | Locals numbered in reverse declaration order (coloring tracer, func_02071fdc 99.50 %); a smaller `.bss` object after a larger one moved to the next file: unit_0205C700 complete |
+| 2026-11-07 | 29a8b23 | 576008 / 723540 bytes (79.61 %; fuzzy 99.34 %, linked 45.20 %) | 4349 / 4577 | 567 / 656 | Fully matched units tried as complete: unit_020A5CCC linked once a callee got its C++ linkage |
