@@ -601,7 +601,9 @@ Unk02058788::Unk02058788(int map, Unk02093648 *archive, bool current)
     this->map = map;
     Unk020589ac *rec = func_020589ac(world, map);
     this->archive = archive;
-    file = static_cast<Unk0205356c *>(this->archive->func_02093a9c(this->archive->func_02093e9c(func_020582e0(rec))));
+    /* The original tests the file for null before the cast. */
+    void *f = this->archive->func_02093a9c(this->archive->func_02093e9c(func_020582e0(rec)));
+    file = f != 0 ? (Unk0205356c *)f : 0;
     Unk02053440 *header = func_02053440(file);
     if (current) {
         cell = Unk020593e4(map, 0, 0);
