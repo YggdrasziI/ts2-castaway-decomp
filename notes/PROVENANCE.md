@@ -124,3 +124,5 @@ Written from the ROM, no reference code: the 64-byte send `libs/nitro/src/gx/uni
 `libs/nitro/src/card/unit_02074290.c`: written from the ROM; the closing `return;` that fixes the last load's schedule comes from Advance Wars (CC0, commit `47864817dc01b491422fe6e9f02c8be6752efa7e`) `src/sdk/card/card_save_fill_geometry_from_type.c`.
 
 `libs/nitro/src/card/unit_02074CF0.c`: khdays (CC0, commit `93535afd7ca082f3d856bbf1cadae65be16d44ba`) `libs/nitro/card/calls/CARDi_ReadCard.c`, retyped for this ROM (task and common layouts, callees from the relocations); the end rewritten as early returns and one jump back.
+
+`libs/nitro/src/os/unit_0207A4E4.c`: khdays (CC0, commit `93535afd7ca082f3d856bbf1cadae65be16d44ba`) `libs/nitro/os/calls/OS_InitLock.c`, callees and data renamed from the ROM relocations, the lock word as its fixed address.

@@ -816,6 +816,10 @@ libs/nitro/src/mi/unit_02079D70.c:
     complete
     .text       start:0x02079d70 end:0x02079f20
 
+libs/nitro/src/os/unit_0207A4E4.c:
+    complete
+    .text       start:0x0207a4e4 end:0x0207a5d4
+
 libs/nitro/src/os/unit_0207A5D4.c:
     complete
     .text       start:0x0207a5d4 end:0x0207a660
