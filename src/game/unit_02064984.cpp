@@ -431,7 +431,7 @@ const u32 data_020af010[0x4a] = {
     0x2f6f9f8a, 0xf4f385ef,
 };
 
-static inline bool func_isLoaded(Unk020c43a8 *p) {
+static inline bool func_isLoaded(const Unk020c43a8 *p) {
     return p->sim != 0 && (p->sim->flags & 2);
 }
 
@@ -777,9 +777,6 @@ void func_02065d48(Unk020c43a8 *p) {
     p->timer = func_020a1f84(&data_020d62a4) % 5 + 5;
 }
 
-/* 97.6 %: after the loaded test the original reloads `sim` (the test keeps it
- * in another register); helper forms (bool local, ternary, `!= 0`) gave the
- * same code. */
 void func_02065db8(Unk020c43a8 *p) {
     if (func_isLoaded(p)) {
         return;
@@ -796,7 +793,6 @@ void func_02065db8(Unk020c43a8 *p) {
     p->bone = func_01ffa9b0(p->sim->xform, "rootbone");
 }
 
-/* 91.8 %: same reload of `sim` as func_02065db8. */
 void func_02065e80(Unk020c43a8 *p) {
     if (func_isLoaded(p) && p->sim != 0) {
         func_020685e0(p->sim);

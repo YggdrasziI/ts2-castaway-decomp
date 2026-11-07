@@ -510,6 +510,12 @@ Each fix was found by compiling scratch variants of one function and comparing t
   `u32 o = *p & ~(0x3f << s); *p = o | x << s;` instead of one expression. This was
   `Unk0200f174::func_put`, where `func_0200b9c0` and `func_0200ce18` went to 100 %; in
   `unit_020142E0` it took one user from 96.2 to 99.75 %.
+- **Field reloaded after an inline test.** The original reads `p->sim` again after
+  `isLoaded(p) && p->sim != 0` where ours reuses the register of the test: give
+  the inline helper a `const` pointer parameter (`const Unk020c43a8 *p`). A local copy
+  in the helper, a `bool` local, an early `return` or a reference do not
+  (`func_02065e80` 91.8 % -> 100 %, `func_02065db8` 97.6 % -> 100 %). No effect on
+  the hoisted width of `func_02059710`.
 - **Unfolded zero, one register per step.** `mov rN, #0` then `bic` / `orr` pairs, each
   result in a new register: a member set to 0, then one compound assignment per
   operation (`v = 0; v &= ~0xfc0000; v |= h << 18; v &= ~0x3f000; ...`). One
