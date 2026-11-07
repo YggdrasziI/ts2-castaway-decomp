@@ -1003,6 +1003,7 @@ void Unk0206bcf0::func_02071fdc(int dt) {
     }
     Unk020c7d38 *pool;
     Unk020d6240 *system;
+    bool hit;
     Unk0201b6d4 *menu;
     Unk020c43a8 *p;
     int touched;
@@ -1161,7 +1162,7 @@ void Unk0206bcf0::func_02071fdc(int dt) {
                 dir.func_02099048(0xa000);
                 unk128.pos = (const Unk0206bcf0RayVec &)camera->pos;
                 unk128.dir = (const Unk0206bcf0RayVec &)dir;
-                bool hit = false;
+                hit = false;
                 if (p->unkc != 0 && func_020693d8(p->unkc, &unk128)) {
                     hit = true;
                 }
