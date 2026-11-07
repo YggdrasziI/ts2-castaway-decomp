@@ -1624,25 +1624,28 @@ void Unk0206bcf0::func_0206dd24() {
     unk20c = 0;
 }
 
-/* 99.02 %: world / map / x registers rotate, and kind + info is added the
- * other way round (index forms tried). */
+/* The locals are declared first; kind is unsigned (the add order of the table index). */
 void Unk0206bcf0::func_0206ddb4() {
     int sel;
-    Unk020c3ba4 *world;
     u32 *tile;
     bool sound;
+    u32 kind;
+    Unk02056ed0 *layer;
+    Unk020c3ba4 *world;
+    s8 v;
+    Unk020c43a8 *p;
     Unk02058788 *map;
     world = &data_020c3ba4;
     sel = data_020d6240.menu->selected;
     map = func_02058788(world, world->map);
-    Unk02056ed0 *layer = func_02056ed0(map, &unk204);
+    layer = func_02056ed0(map, &unk204);
     tile = func_tileAt(layer, unk204.xy);
     sound = false;
     if (unk20c != 1 || sel == 0) {
-        Unk020c43a8 *p = &data_020c43a8;
+        p = &data_020c43a8;
         if (func_02057f90(map, &unk204)) {
-            int kind = ((*tile & 0x3000) >> 12) - 1;
-            s8 v = func_020589ac(world, map->unk24)->unk1[kind];
+            kind = ((*tile & 0x3000) >> 12) - 1;
+            v = func_020589ac(world, map->unk24)->unk1[kind];
             if (v != -1) {
                 Unk02007340 *o = func_02007340(data_020be184, 1);
                 if (o != 0) {
