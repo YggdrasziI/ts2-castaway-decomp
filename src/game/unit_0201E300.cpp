@@ -1262,7 +1262,7 @@ void func_0202171c(Unk0201e300 *p) {
 }
 
 /*
- * 94.74 %: the original branches around `minute += 0x3c` and loads 0x22 after it,
+ * 94.77 %: the original branches around `minute += 0x3c` and loads 0x22 after it,
  * ours is a conditional sequence (unsigned types, locals, an empty else, a stack
  * struct and inline helpers tried). The pragma keeps the two func_0202071c calls
  * of the original.
