@@ -1835,3 +1835,11 @@ rename them.
   variants on the functions at 99 % or more) changed no bytes. permute.py at 150 s on eight
   functions at 99.7 % or more matched none. A slot pointer local (`Unk02050640 *slot =
   &slots[i]`) moved the slot base to the original's register in `Unk0203fa44` (99.79 % -> 99.85 %).
+- The `u32` counter with `(int)i <` also helps loops the 2026-11-06 sweep missed: permute.py found
+  it for `func_02064164` (97.29 % -> 100 %, with the copy written through `m->banks[...]`). With an
+  element pointer local (`Unk02061d08Item *item = &m->pool[i]`) it matched `func_0205f844` (95.58 %
+  -> 100 %), where the byte offset of `&pool[i + 1]` had been scheduled late.
+- One inline cannot serve callers that want different loop forms: in unit_0200B23C the state
+  functions want the sum inline as `int n = a[0]; for (int i = 1; ...)`, while `func_0200cb28`
+  (`return sum();`) matched only with `int i; int n = a[0];`; it is now written out with
+  `int n; int i; n = a[0];`, the one written-out form found at 100 %.
