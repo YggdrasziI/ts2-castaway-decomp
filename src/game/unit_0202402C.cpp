@@ -928,7 +928,7 @@ void Unk0202402c::func_02026584() {
     if (x - 8 < 0) {
         left = 0;
     }
-    int top = y - 8;
+    int top = originY;
     if (y - 8 < 0) {
         top = 0;
     }
