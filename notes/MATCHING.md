@@ -1463,9 +1463,10 @@ Each fix was found by compiling scratch variants of one function and comparing t
 - A field the original never stores before the loop is not initialized in
   the source (`d.unk24` in `func_0205c8b4`): an extra `= 0` adds a store and
   moves the stack slots.
-- mwccarm puts a small uninitialized global before a larger one built by a
-  static initializer in `.bss`, whatever the definition order; no form found
-  for the reverse order (`unit_0205C700.cpp`).
+- A small `.bss` global after a larger one built by a static initializer is in
+  the next file (size sort, see above): defining it there and splitting the
+  `.bss` range gave the direct loads of the original (`data_020c3fb0`, moved
+  from `unit_0205C700.cpp` to `unit_0205D4D8.cpp`; three functions to 100 %).
 - An 8-byte entry loaded with `ldmia` and stored to the stack before a call
   that receives its two words in r1 / r2: a local copy of the struct passed
   as two `int` arguments (`Value v = values[i]; f(p, v.unk0, v.unk4)`), not
