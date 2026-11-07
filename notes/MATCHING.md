@@ -521,9 +521,21 @@ Each fix was found by compiling scratch variants of one function and comparing t
   a loop bound reread at the bottom of the loop
   (`i < ((const Unk0209487cHeader *)header)->count`, `func_020949b8`); and for a
   function-local static reference read again after a store through it
-  (`((const Unk020c43a8 &)ref).sim`, `func_02055220` 95.75 % -> 100 %). No effect
+  (`((const Unk020c43a8 &)ref).sim`, `func_02055220` 95.75 % -> 100 %); a global
+  struct field compared after the stores of a loop
+  (`((const Common *)&data_020c4800)->dst`, `func_02074cf0` 92 % -> 94 %); an inner
+  loop bound the original reloads at each test
+  (`x < ((const Unk02056ed0 *)layer)->info->width`, `func_020573a4` 87.2 % -> 93.4 %).
+  Search: functions where the original has more non-pool `ldr` than ours, then try a
+  `const` view on each field read of the function, one at a time, keeping the best
+  (a scratch greedy script with `cvp(p)->f` / `cvr(s).f` template helpers). No effect
   on the hoisted width of `func_02059710`; a sweep making every file-local inline
   helper's pointer `const` found nothing more (most do not compile that way).
+- **Division kept in the loop test.** The original calls `_s32_div_f` again at each
+  outer loop test, with invariant operands: a `u32` counter keeps the call in the loop
+  (an `int` counter, `(int)n`, other types, reversed tests and invariant locals all
+  hoist it); the test then becomes unsigned (`bls`), which the original is not
+  (`func_0205f184` 80.8 % -> 86.0 %, open).
 - **Unfolded zero, one register per step.** `mov rN, #0` then `bic` / `orr` pairs, each
   result in a new register: a member set to 0, then one compound assignment per
   operation (`v = 0; v &= ~0xfc0000; v |= h << 18; v &= ~0x3f000; ...`). One
