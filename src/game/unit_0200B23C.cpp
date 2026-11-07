@@ -229,13 +229,13 @@ public:
     virtual void *func_00();
     bool func_0200c310();
     void func_0200c99c(State s);
-    void func_0200c9b8(int i, bool force);
+    bool func_0200c9b8(int i, bool force);
     void *func_0200cb58();
     bool func_0200cb60();
     void func_0200cba8();
 
     inline Unk0200c308Idle func_idle();
-    inline void func_play(int i, bool force);
+    inline bool func_play(int i, bool force);
 
     Unk0200cec8 *game;
     State state;
@@ -608,9 +608,9 @@ void Unk0200cec8::func_0200bab4() {
     }
 }
 
-inline void Unk0200c308::func_play(int i, bool force) {
+inline bool Unk0200c308::func_play(int i, bool force) {
     if (!force && index == i) {
-        return;
+        return false;
     }
     index = i;
     Unk020a7c90 **s = (Unk020a7c90 **)func_00();
@@ -622,6 +622,7 @@ inline void Unk0200c308::func_play(int i, bool force) {
     }
     file = func_020a6038(game, func_020a69a4(sprites[0]));
     func_0200b09c(&anim, file);
+    return true;
 }
 
 void Unk0200c308::func_0200becc(int kind) {
@@ -804,8 +805,8 @@ void Unk0200c308::func_0200c99c(State s) {
     state = s;
 }
 
-void Unk0200c308::func_0200c9b8(int i, bool force) {
-    func_play(i, force);
+bool Unk0200c308::func_0200c9b8(int i, bool force) {
+    return func_play(i, force);
 }
 
 extern "C" Unk02098e70 func_0200ca5c(const Unk02098e70 *a, const Unk02098e70 &b) {

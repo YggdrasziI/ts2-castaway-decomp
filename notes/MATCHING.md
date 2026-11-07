@@ -536,6 +536,11 @@ Each fix was found by compiling scratch variants of one function and comparing t
   (an `int` counter, `(int)n`, other types, reversed tests and invariant locals all
   hoist it); the test then becomes unsigned (`bls`), which the original is not
   (`func_0205f184` 80.8 % -> 86.0 %, open).
+- **A return value nobody uses.** `moveq r0, #0` before an early `ldmeq` and `mov r0, #1`
+  before the final return, with no other change: the function and its inline helper
+  return `bool` (`return false;` / `return true;`) even though the callers ignore it
+  (`Unk0200c308::func_0200c9b8`, 95.12 % -> 100 %). The return type is not in the
+  mangled name, so only the code shows it.
 - **Unfolded zero, one register per step.** `mov rN, #0` then `bic` / `orr` pairs, each
   result in a new register: a member set to 0, then one compound assignment per
   operation (`v = 0; v &= ~0xfc0000; v |= h << 18; v &= ~0x3f000; ...`). One
