@@ -608,6 +608,7 @@ src/game/unit_0205F16C.cpp:
     .bss        start:0x020c3fb8 end:0x020c3fd4
 
 src/game/unit_0205F80C.cpp:
+    complete
     .text       start:0x0205f80c end:0x02060274
     .init       start:0x020ae198 end:0x020ae1ac
     .ctor       start:0x020b6e80 end:0x020b6e84

@@ -12,8 +12,6 @@
  * of data_020c3fc4 (another static object) and a call into
  * unit_02060274.cpp, left out. Real file name unknown.
  *
- * Not complete: func_0205f844 is not at 100 % (comment above it).
- *
  * Functions other than the constructor keep C linkage: other files call them
  * by their addresses. The scene object members are named from the code they
  * produce: `new T[n]` with a class operator new[] calls __cxa_vec_newinit,
@@ -154,11 +152,9 @@ Unk020c3fd4::Unk020c3fd4() {
 extern "C" {
 
 /*
- * 95.58 %: the original chains the pool with a signed counter (blt) and the
- * byte offset updated before the next pointer; an int counter gives an mla
- * for the previous element, this u32 counter gives the right shape with the
- * offset update scheduled late. Index forms, pointer locals, counter types
- * and loop conditions tried.
+ * The pool chain needs the u32 counter with a signed compare and an element
+ * pointer local: without the local the byte offset update is scheduled late,
+ * and an int counter gives an mla for the previous element.
  */
 void func_0205f844(Unk020c3fd4 *m) {
     func_0205f7d8(data_020c3fc4);
@@ -170,9 +166,10 @@ void func_0205f844(Unk020c3fd4 *m) {
     m->unkb8 = 1;
     m->pool = new Unk02061d08Item[256];
     m->unkb0 = 0;
-    for (u32 i = 0; i < 256; i++) {
-        m->pool[i].prev = &m->pool[i - 1];
-        m->pool[i].next = &m->pool[i + 1];
+    for (u32 i = 0; (int)i < 256; i++) {
+        Unk02061d08Item *item = &m->pool[i];
+        item->prev = &m->pool[i - 1];
+        item->next = &m->pool[i + 1];
     }
     m->pool[0].prev = 0;
     m->pool[255].next = 0;
