@@ -159,7 +159,12 @@ static void *func_0202cb98(u32 id, void *user);
  * slots are ordered otherwise (the outfit below the name list, the three offsets
  * first). Tried: direct stores, an inline setter, temporaries, pointer and zero
  * locals (all the same code); the offsets as locals at several scopes, the outfit
- * in a block or an inline helper.
+ * in a block or an inline helper. The table set-up shares its basic block with the
+ * seven member constructor calls before it and is scheduled partly in register
+ * pressure mode; the original fills each load delay with the constant of a later
+ * entry, which no selection rule picks with the constants generated in entry
+ * order. A block split forced at the table start, alone or with a second one
+ * inside the table, does not get closer.
  */
 Unk0202aef4::Unk0202aef4(Unk0203c188Owner *owner)
     : Unk0203c188(owner), pageCount(0), page(0) {
