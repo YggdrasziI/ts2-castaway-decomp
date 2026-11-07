@@ -15,8 +15,18 @@ each statement start, and "|N|" where a block is split (N = calls already emitte
 the function). The compiler is not modified and the object is written under
 build/mwcc_blocks/; it is identical to the build's.
 
+With --search SYMBOL, the script becomes an oracle: it compiles the file again with
+each block split moved (forced at another statement, suppressed at its own), one
+at a time and then in pairs of the best single moves, and scores the function
+against the original object (build/<version>/delinks/<source>.o, written by
+ninja). It prints the moves that lower the number of differing words (from
+tools/permute.py). A move only says where a split must go; the source still has to
+be rewritten to put it there (notes/MATCHING.md). Each compilation takes a fraction
+of a second; the object left in build/mwcc_blocks/ is the unchanged one.
+
 Usage:
   python tools/mwcc_blocks.py <src/...cpp> [--func N] [--version eur]
+  python tools/mwcc_blocks.py <src/...cpp> --search SYMBOL [--range 8] [--pairs 12]
 
 Functions are numbered in the order the back end colors them; a function colored
 again after spilling counts once. C1 / C2 constructors and D0 / D1 / D2 destructors
@@ -27,6 +37,7 @@ import argparse
 import ctypes
 import ctypes.wintypes as W
 import hashlib
+import itertools
 import os
 import struct
 import subprocess
@@ -34,6 +45,8 @@ import sys
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from mwcc_irdump import compile_command  # noqa: E402
+import permute  # noqa: E402
+from permute import elf_func  # noqa: E402
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 WORK = os.path.join(ROOT, "build", "mwcc_blocks")
@@ -47,6 +60,7 @@ BLOCK_FIRST = 0x14        # PCodeBlock: first PCode *; PCode +0: next PCode *
 PCODE_OP = 0x28           # PCode: u8 opcode during code generation
 OP_CALL = 6               # opcode of a call (3 per statement of 3 calls)
 BP_STATEMENT = 0x4FFCCD   # newstatement: "cmp word ptr [edx+0x28], 0x64"
+BP_TEST = 0x4FFCD2        # newstatement: "jg" of that test (split when taken)
 BP_SPLIT = 0x4FFCE0       # newstatement: "call branch_label(makepclabel())"
 BP_COLORED = 0x513A85     # end of the register coloring of a function
 
@@ -175,7 +189,7 @@ class Debugger:
                         k32.TerminateProcess(self.process, 1)
                         raise OSError("cannot read the compiler's thread context: %d" % ctypes.get_last_error())
                     original, callback = self.breakpoints[addr]
-                    callback(self)
+                    callback(self, ctx)  # may change ctx, written back below
                     self.write(addr, original)
                     ctx.Eip = addr
                     ctx.EFlags |= 0x100  # trap flag: step the original instruction
@@ -216,7 +230,9 @@ def calls_emitted(dbg, done):
     return n
 
 
-def trace(source, version):
+def build_command(source, version):
+    """The build's compile command for `source`, writing under build/mwcc_blocks/.
+    Returns (source relative to the root, command, object path)."""
     source = os.path.normpath(os.path.relpath(os.path.abspath(source), ROOT))
     args = compile_command(source, version)
     compiler = os.path.join(ROOT, args[0])
@@ -237,16 +253,34 @@ def trace(source, version):
         else:
             cmd.append(args[i])
         i += 1
+    obj = os.path.join(out_dir, os.path.splitext(os.path.basename(source))[0] + ".o")
+    return source, cmd, obj
 
+
+def trace(cmd, force=(), suppress=()):
+    """Compiles under the debugger. Statements are numbered across the whole file;
+    a split is forced at the statements in `force` and suppressed at those in
+    `suppress`. Returns (per function: block pcode counts and |calls| at splits,
+    numbers of the statements where a block was split)."""
     functions, current, done = [], [], {}
+    statement, splits = [-1], []
+    force, suppress = set(force), set(suppress)
 
-    def on_statement(dbg):
+    def on_statement(dbg, ctx):
+        statement[0] += 1
         current.append(str(dbg.s16(dbg.u32(PCLASTBLOCK) + BLOCK_COUNT)))
 
-    def on_split(dbg):
+    def on_test(dbg, ctx):
+        if statement[0] in force:
+            ctx.EFlags &= ~(0x40 | 0x80 | 0x800)  # ZF, SF, OF clear: jg taken
+        elif statement[0] in suppress:
+            ctx.EFlags |= 0x40  # ZF set: jg not taken
+
+    def on_split(dbg, ctx):
+        splits.append(statement[0])
         current.append("|%d|" % calls_emitted(dbg, done))
 
-    def on_colored(dbg):
+    def on_colored(dbg, ctx):
         # a function colored again (after spilling) has no new statement
         if current:
             functions.append(list(current))
@@ -255,16 +289,92 @@ def trace(source, version):
 
     dbg = Debugger(cmd, ROOT)
     dbg.add_breakpoint(BP_STATEMENT, on_statement)
+    if force or suppress:
+        dbg.add_breakpoint(BP_TEST, on_test)
     dbg.add_breakpoint(BP_SPLIT, on_split)
     dbg.add_breakpoint(BP_COLORED, on_colored)
     dbg.run()
     if dbg.exit_code:
-        sys.exit("mwcc_blocks: the compiler failed (exit code %d); run ninja to see why" % dbg.exit_code)
+        raise CompileError("the compiler failed (exit code %d); run ninja to see why" % dbg.exit_code)
     if current:
         functions.append(list(current))
     if not functions:
-        sys.exit("mwcc_blocks: no statement traced (breakpoints not reached)")
-    return functions
+        raise CompileError("no statement traced (breakpoints not reached)")
+    return functions, splits
+
+
+class CompileError(Exception):
+    pass
+
+
+def move(s, to):
+    """(force, suppress) that move the split of statement s to statement to. A
+    later split needs every statement before it kept under the limit; an earlier
+    one restarts the count, so the splits after it fall where they would."""
+    return {to}, set(range(s, to)) if to > s else set()
+
+
+def search(source, version, symbol, distance, pairs):
+    source, cmd, obj = build_command(source, version)
+    original = os.path.join(ROOT, "build", version, "delinks", os.path.splitext(source)[0] + ".o")
+    if not os.path.exists(original):
+        sys.exit("mwcc_blocks: %s not found; run ninja first" % original)
+    target, target_relocs = elf_func(original, symbol)
+    if target is None:
+        sys.exit("mwcc_blocks: %s not in %s" % (symbol, original))
+
+    def compiled(force=(), suppress=()):
+        try:
+            trace(cmd, force, suppress)
+        except CompileError:
+            return None
+        return elf_func(obj, symbol)[0]
+
+    def score(force=(), suppress=()):
+        if compiled(force, suppress) is None:
+            return None
+        return permute.score(obj, symbol, target, target_relocs)  # relocations excepted
+
+    try:
+        _, splits = trace(cmd)
+    except CompileError as e:
+        sys.exit("mwcc_blocks: %s" % e)
+    code = elf_func(obj, symbol)[0]
+    if code is None:
+        sys.exit("mwcc_blocks: %s not in the compiled object" % symbol)
+    base = permute.score(obj, symbol, target, target_relocs)
+    # permute.score: words that differ, or 5000 + byte difference when the size differs
+    print("base: %d %s; splits at statements %s" % (
+        base, "(sizes differ)" if base >= 5000 else "differing words", " ".join(map(str, splits))))
+    # statements are numbered over the whole file: keep the splits of this
+    # function, those whose removal changes its code
+    splits = [s for s in splits if compiled(suppress=range(s, s + distance + 1)) not in (code, None)]
+    print("splits in %s: %s" % (symbol, " ".join(map(str, splits)) or "none"))
+    singles = []
+    for s in splits:
+        for to in range(s - distance, s + distance + 1):
+            if to != s and to not in splits:
+                n = score(*move(s, to))
+                if n is not None and n < base:
+                    singles.append((n, s, to))
+    singles.sort()
+    for n, s, to in singles[:10]:
+        print("  %d: split %d -> %d" % (n, s, to))
+    if not singles:
+        print("no single move lowers the count")
+    best = []
+    for (_, s1, t1), (_, s2, t2) in itertools.combinations(singles[:pairs], 2):
+        f1, p1 = move(s1, t1)
+        f2, p2 = move(s2, t2)
+        force, suppress = f1 | f2, p1 | p2
+        if s1 != s2 and not force & suppress:
+            n = score(force, suppress)
+            if n is not None:
+                best.append((n, s1, t1, s2, t2))
+    best.sort()
+    for n, s1, t1, s2, t2 in best[:10]:
+        print("  %d: splits %d -> %d and %d -> %d" % (n, s1, t1, s2, t2))
+    compiled()  # leave the object of the unchanged source in build/mwcc_blocks/
 
 
 def main():
@@ -272,13 +382,23 @@ def main():
     ap.add_argument("source")
     ap.add_argument("--func", type=int, help="only this function (index in the output)")
     ap.add_argument("--version", default="eur")
+    ap.add_argument("--search", metavar="SYMBOL", help="find block split moves that match SYMBOL")
+    ap.add_argument("--range", type=int, default=8, help="statements a split may move (--search)")
+    ap.add_argument("--pairs", type=int, default=12, help="best single moves combined in pairs (--search)")
     a = ap.parse_args()
     if os.name != "nt":
         sys.exit("mwcc_blocks: Windows only (Win32 debugging API)")
     if struct.calcsize("P") != 8:
         sys.exit("mwcc_blocks: needs a 64-bit Python (DEBUG_EVENT layout)")
     load_kernel32()
-    for i, statements in enumerate(trace(a.source, a.version)):
+    if a.search:
+        search(a.source, a.version, a.search, a.range, a.pairs)
+        return
+    try:
+        functions, _ = trace(build_command(a.source, a.version)[1])
+    except CompileError as e:
+        sys.exit("mwcc_blocks: %s" % e)
+    for i, statements in enumerate(functions):
         if a.func is None or a.func == i:
             splits = sum(1 for s in statements if s.startswith("|"))
             print("%d (%d splits): %s" % (i, splits, " ".join(statements)))
