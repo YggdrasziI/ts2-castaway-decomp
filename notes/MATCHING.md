@@ -1610,6 +1610,11 @@ Each fix was found by compiling scratch variants of one function and comparing t
   `flag != 0 ? A : B` (`func_0208dc44`, 99.82 % -> 100 %).
   A test inside an `&&` chain materialised as `moveq #1; movne #0; cmp #0` (only in the
   original): the same enum helper, `f(x) == 4 ? TRUE : FALSE` (`func_02069720`, 95.9 % -> 97.5 %).
+  `mov r0, #1` before the compare and `movne r0, #0` after `cmp; cmpne` (no `moveq`): a flag
+  set to true, then cleared when no value matches (`bool f = true; if (s != 0 && s != 3) f = false;`),
+  where `s == 0 || s == 3` in a test or a helper gives `movne #0; moveq #1` (`func_02059d10`).
+  A test that sets a result only when it holds (`moveq #1` alone) is `if (t) r = true;`, not
+  `r = t;` (`func_020a3478`, 94.6 % -> 98.7 %).
 - A string literal in a table initializer lands before the table, even at the end of
   the file; the original has such strings after the vtables, in reverse order of use
   (`unit_0200B23C.cpp`, open).
