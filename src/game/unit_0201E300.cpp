@@ -1068,9 +1068,12 @@ void func_020209e4(Unk0201e300 *p) {
     p->panel.func_08();
 }
 
-/* 97.93 %: registers of the counter, frame and entry in the second loop. */
+/* The locals are declared first; FX32 takes the unsigned entry offset. */
 void func_02020dc0(Unk0201e300 *p) {
+    Unk0201e300Item *item;
+    Unk0201eb88 *entry;
     int i;
+    int frame;
     if (!(p->flags & 1)) {
         return;
     }
@@ -1078,18 +1081,16 @@ void func_02020dc0(Unk0201e300 *p) {
     for (int i = 0; i < 6; i++) {
         p->entries[i].key.func_14(0x100000, 0xc0000);
     }
-    Unk0201eb88 *entry;
-    Unk0201e300Item *item = data_020c43a8.items;
+    item = data_020c43a8.items;
     for (i = 0; i < 6 && item != 0; i++) {
-        int frame = item->func_20()[0];
+        frame = item->func_20()[0];
         entry = &p->entries[p->entryCount];
         if (frame != -1 && !(item->flags & 0x10)) {
             if (!(entry->key.flags & 2)) {
                 entry->key.func_0c(0);
             }
             entry->key.func_0204d3c0(frame);
-            int x = p->entryCount * 3;
-            entry->key.func_14(FX32(x) + 0xe6000, 0x8000);
+            entry->key.func_14(FX32(p->entryCount * 3u) + 0xe6000, 0x8000);
             entry->key.func_00();
             p->entryCount++;
         }
