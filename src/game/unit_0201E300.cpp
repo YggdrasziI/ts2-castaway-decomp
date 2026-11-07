@@ -1311,7 +1311,7 @@ void func_02021888(Unk0201e300 *p) {
 
     switch (p->period) {
     case -1:
-        if (((data_020d6298.time & 0x7c0) >> 6) >= 6) {
+        if ((int)((data_020d6298.time & 0x7c0) >> 6) >= 6) {
             p->period = 0;
             func_020a6980(p->sky, 0xb7eae51);
             func_020216e0(p, 0, 1);
