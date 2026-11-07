@@ -25,7 +25,9 @@ extern int func_0207513c(Task *task);
 #define REG_CTRL (*(volatile u32 *)0x040001a4)
 #define REG_DATA (*(volatile u32 *)0x04100010)
 
-/* 92.00 %: registers of the addresses and the buffer; local orders tried. */
+/* 94.00 %: registers of the addresses and the buffer, and the literal pool order (the
+ * original loads data_020c4800 first); local orders and a local pointer to
+ * data_020c4800 tried. The const view in the last test gives the reload of dst. */
 void func_02074cf0(Task *task) {
     for (;;) {
         u32 *dst;
@@ -52,7 +54,7 @@ void func_02074cf0(Task *task) {
                 }
             } while (status & 0x80000000);
         }
-        if ((u32)dst == data_020c4800.dst) {
+        if ((u32)dst == ((const Common *)&data_020c4800)->dst) {
             data_020c4800.src += 0x200;
             data_020c4800.dst += 0x200;
             data_020c4800.len -= 0x200;
@@ -64,3 +66,4 @@ void func_02074cf0(Task *task) {
         }
     }
 }
+/* END */
