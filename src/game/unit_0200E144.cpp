@@ -8,7 +8,9 @@
  *
  * Open gaps (same code, allocation or order): func_0200eb70 95.15 %, func_0200e1f8
  * 95.62 %, func_0200f250 96.49 %, func_14 97.12 %, D1 97.26 %, D0 97.33 %, func_18
- * 99.79 %, func_0200e9ec 99.99 %.
+ * 99.79 %. The key table data_020ae654 is defined at the end of the file: defined
+ * before its users, the compiler reaches it from data_020ae63c plus an offset; the
+ * class body func_14 still does (its body is compiled after the definition).
  */
 
 #include "game/unk_microgame.h"
@@ -209,12 +211,10 @@ int func_020972c0(int key);
 static const u8 data_020ae634[6] = {8, 8, 5, 8, 8, 5};
 static const Unk0200ed88Rate data_020ae63c = {4, 2, 0x18000};
 static const Unk0200ed88Rate data_020ae648 = {6, 4, 0x10000};
-extern const u32 data_020ae654[9] = {
-    0x901a9bfe, 0, 0x8cdc993f, 0x8047e4fb, 0x3352e506, 0x10b38b9d, 0xb7bd00d0, 0xe27417c8, 0x8d900ac5,
-};
+extern const u32 data_020ae654[9];
 
-static int data_020be2f0;
 static int data_020be2f4;
+static int data_020be2f0;
 
 #define FUNC_ABS(x) ((x) > 0 ? (x) : -(x))
 #define FUNC_SHAKE(s, opx, opy)                         {                                                       int v = func_020a7ca4(s);                           func_020a7c90(s, v opx func_020a5ef0(0, 0x5000));         v = func_020a7cc0(s);                               func_020a7cac(s, v opy func_020a5ef0(0, 0x5000));     }
@@ -1042,3 +1042,7 @@ void Unk0200ed88::func_0200f4a4() {
         smoke = 0;
     }
 }
+
+extern const u32 data_020ae654[9] = {
+    0x901a9bfe, 0, 0x8cdc993f, 0x8047e4fb, 0x3352e506, 0x10b38b9d, 0xb7bd00d0, 0xe27417c8, 0x8d900ac5,
+};
