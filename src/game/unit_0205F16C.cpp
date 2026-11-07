@@ -137,10 +137,21 @@ void func_0205f280(Unk0205f314 *a, int n) {
 }
 
 /*
- * 98.52 %: register allocation in the record loop (file, values and the
- * counter one register off); declaration orders tried.
+ * 98.77 %: locals declared first in this order (searched); register
+ * allocation in the record loop still differs.
  */
 void func_0205f328(Unk020c3fc4 *db) {
+    Unk0205cf00 *rec;
+    Unk0205f314 *keys;
+    int k;
+    Unk020956f8 *file;
+    int size;
+    int index;
+    Unk02093648Entry *entry;
+    Unk02099c78Value *values;
+    int j;
+    Unk02099c78Block *block;
+    int i;
     func_02060acc(&data_020c409c);
     db->archive = new Unk02093648("ROM_Euro/source/archives/object_definitions.nitro_archive");
     db->archive->func_020939d8(11, -1);
@@ -150,9 +161,8 @@ void func_0205f328(Unk020c3fc4 *db) {
     db->records = new Unk0205cf00[db->count];
     func_02099b28();
     db->archive->func_020940c0(11);
-    Unk0205cf00 *rec;
-    int i = 0;
-    Unk0205f314 *keys = new Unk0205f314[db->count];
+    i = 0;
+    keys = new Unk0205f314[db->count];
     while (db->archive->func_02094104()) {
         if (i >= db->count) {
             break;
@@ -163,18 +173,17 @@ void func_0205f328(Unk020c3fc4 *db) {
     }
     db->count = i;
     func_0205f280(keys, i);
-    int size = 0;
-    for (int j = 0; j < db->count; j++) {
-        Unk02099c78Value *values;
-        int index = keys[j].index;
+    size = 0;
+    for (j = 0; j < db->count; j++) {
+        index = keys[j].index;
         rec = &db->records[j];
-        Unk020956f8 *file = (Unk020956f8 *)db->archive->func_02093a9c(index);
+        file = (Unk020956f8 *)db->archive->func_02093a9c(index);
         rec->group = func_020606a0(&data_020c409c, index);
-        Unk02093648Entry *entry = db->archive->func_02094050(index);
+        entry = db->archive->func_02094050(index);
         rec->script = file;
         rec->key = entry->unk4;
         size += file->func_02094cc8() - file->func_02095098();
-        for (int k = 0; k < j; k++) {
+        for (k = 0; k < j; k++) {
             if (db->records->key == rec->key) {
                 break;
             }
@@ -186,7 +195,7 @@ void func_0205f328(Unk020c3fc4 *db) {
         if (file->func_02095b08(0x8c4c7c53)) {
             func_0206066c(&data_020c409c, rec->group);
         }
-        Unk02099c78Block *block = (Unk02099c78Block *)file->func_02095a3c(0x148eaa19);
+        block = (Unk02099c78Block *)file->func_02095a3c(0x148eaa19);
         if (block != 0) {
             for (int v = block->start; v < block->start + block->count; v++) {
                 switch (values[v].unk0) {
