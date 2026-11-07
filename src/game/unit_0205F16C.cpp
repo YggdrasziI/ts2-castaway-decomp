@@ -89,21 +89,18 @@ Unk020c3fc4::~Unk020c3fc4() {}
 extern "C" {
 
 /*
- * 86.02 %: the original divides again at each test of the outer loop (span
- * and width * 2 kept in r11 and a stack slot). A u32 counter gives that and the
- * same loop body, but an unsigned test (`bls`, no entry test); the original
- * compares signed. An int counter, `(int)n`, short / long counters, reversed
- * tests, `for (;;)` with a break and invariant locals hoist the division. The
- * inline copy helper gives the reload of the key after the compare.
+ * The outer test divides again each time: it reads the first lo from a copy,
+ * so the division is not hoisted (a span local is). The inline copy helper
+ * gives the reload of the key after the compare.
  */
 void func_0205f184(Unk0205f314 *src, Unk0205f314 *dst, int width, int lo, int hi) {
     int mid = lo + width;
-    u32 n = 0;
     if (mid > hi) {
         mid = hi;
     }
-    int span = hi - lo;
-    while (n <= (span + 1) / (width * 2)) {
+    int n = 0;
+    int lo0 = lo;
+    while (n <= (hi - lo0 + 1) / (width * 2)) {
         int end = mid + width - 1;
         if (end > hi) {
             end = hi;
