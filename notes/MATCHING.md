@@ -1843,3 +1843,13 @@ rename them.
   functions want the sum inline as `int n = a[0]; for (int i = 1; ...)`, while `func_0200cb28`
   (`return sum();`) matched only with `int i; int n = a[0];`; it is now written out with
   `int n; int i; n = a[0];`, the one written-out form found at 100 %.
+- A value computed twice in the original (`adds r0, r1, r1, lsl #1` for the test, then the same
+  `add` again) is a macro argument written as an expression: `FX32(p->entryCount * 3u)` matched
+  where `u32 x = ...; FX32(x)` computed it once (`func_02020dc0`). An unsigned argument also turns
+  the macro's `> 0` test into `beq` and its conversion into `_ffltu`.
+- A loop test that divides again at each pass in the original reads a copy of a parameter the loop
+  changes (`int lo0 = lo; while (n <= (hi - lo0 + 1) / (width * 2))`): with a `span` local the
+  division was hoisted (`func_0205f184`, 86 % -> 100 %).
+- Two induction variables stepped together in the `for` header (`for (int i = page - 1, n = 7;
+  i >= 0; i--, n--)`) keep the original's update order; stepped in the body, the position was
+  updated before the element pointer (`func_020299ec`).
