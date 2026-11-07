@@ -18,7 +18,7 @@
  * Functions other than the constructors and destructors keep C linkage:
  * other files call them by their addresses.
  *
- * Not complete: five functions are close but differ (see the comment above
+ * Not complete: four functions are close but differ (see the comment above
  * each one); all data sections match.
  */
 
@@ -1056,15 +1056,15 @@ bool func_020577a4(Unk02058788 *lot, Unk020680d4Cell *out) {
     return false;
 }
 
-/* Not complete (98 %): register allocation in the inner loop. */
+/* Both counts are unsigned, compared as signed. */
 Unk020680d4Cell func_02057a54(Unk02058788 *lot, const Unk02098ff0 *v) {
     u32 l;
     Unk020680d4Cell c;
     int x = v->x >> 12;
     int z = v->z >> 12;
     for (int r = 0; r < func_02053440(lot->file)->roomCount; r++) {
-        int n = lot->rooms[r].info->layerCount;
-        for (l = 0; l < n; l++) {
+        u32 n = lot->rooms[r].info->layerCount;
+        for (l = 0; (int)l < (int)n; l++) {
             Unk02056ed0 *layer = &lot->rooms[r].layers[l];
             if (x >= layer->info->x0 && x < layer->info->x1 && z >= layer->info->y0 && z < layer->info->y1) {
                 c.pos.unk3 = lot->map;
