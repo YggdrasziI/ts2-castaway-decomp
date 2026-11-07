@@ -280,24 +280,46 @@ Read from the disassembly and traced with `tools/mwcc_sched.py` (same debugger).
   written and none read (constants, `mov rN, #imm`), 2 otherwise. Among
   equals a store goes before a constant, so a constant tends to be materialized
   just before its first use.
-- Register pressure mode (not in the GameCube code): in the first pass, when the
-  live general registers reach the limit (0x616680 >= 0x61667C, 14 in the traced
-  functions), the ready node with the lowest score of 0x4FEA30 is taken instead (the
-  score is built from the remaining uses of the registers the node reads and the
-  registers it writes). The table set-up of `Unk0202aef4`'s constructor runs mostly
-  in this mode.
+- Register pressure mode (not in the GameCube code), first pass only. Per block
+  (0x4FE740...): `uses[r]` counts the reads of each register in the block, plus 1
+  when it is live out; `live` counts the registers live in, minus the reserved
+  ones; the limit (0x4FE3D0) is the number of allocatable general registers, 14
+  (presumably r0-r12 and lr). After each pick (0x4FE910) every register read for the last time
+  leaves `live` and every register written that is read later (and not read by
+  the same pcode) enters it. While `live >= limit` (0x4FEA00), `selectinstruction`
+  takes, among the ready nodes, the one with the lowest score of 0x4FEA30 (the
+  first in code generation order on a tie); deadlines, height and rank are not
+  looked at. With `e = max(live - limit, 1)`, the score is 16, minus `1 + e` for
+  each register the node reads for the last time, plus `e` for each register it
+  writes that is read later. So the scheduler first issues what frees registers
+  (the last use of a value), then what neither frees nor takes one (stores), and
+  leaves until last what creates a value (loads, constants): a constant is
+  materialized only when nothing else is ready. The table set-up of
+  `Unk0202aef4`'s constructor runs mostly in this mode.
 - Machine model: `[0x5DF88E + 4 * processor]`; the game's compiles use the one at
   0x5E761C: one instruction per cycle; a multi-cycle instruction (`smull`) holds
   the unit, so nothing issues for several cycles after it.
-- Coloring that follows (inferred from the result of one function, consistent with
-  the GameCube compiler's `Coloring.c`): virtual registers are pushed in increasing number and
-  colored in reverse, each taking the lowest free volatile register. The pair
-  computed last in code generation (highest numbers) gets r0 / r1 first.
-  `Unk02098e70::func_02098e94` shows the consequence: the original colors `y * y`
-  first (r1:r0) while loading `x` first; with `y` term first in the source the
-  loads come out in that order but `x * x` is colored first, and with the `x` term
-  first the loads are swapped (in the IR of the current form, the temporary for `x`
-  comes before the one for `y`).
+- Coloring that follows (traced with `mwcc_sched.py --colors`, consistent with the
+  GameCube compiler's `Coloring.c`). `simplifygraph` (0x513590) sweeps the virtual
+  registers in increasing number, pushes each one with fewer interferences than the
+  limit (14) and takes it out of the graph, and sweeps again while one was pushed;
+  what is left is pushed last, chosen by spill cost over degree. `colorgraph`
+  (0x513930) pops the stack, so it visits the constrained registers first, then
+  each sweep's registers from the highest number down (in a small function, one
+  sweep: plain decreasing order). It gives each one the lowest free register of
+  a mask that starts as 0x4FE410's (r0-r3 and r12 in the traces); when none is
+  free, 0x4FE4C0 adds one more register (r4, r5... in the traced constructor) and
+  the node is retried; only when that fails is the node spilled, and coloring is
+  run again after the spill code. A node flagged 0x200 (read from the disassembly, not
+  seen in the traces: `smull` results are two plain registers) takes an even
+  register and the next. The pair computed last in code generation (highest numbers) gets
+  r0 / r1 first. `Unk02098e70::func_02098e94` shows the consequence: the original
+  colors `y * y` first (r1:r0) while loading `x` first; with `y` term first in the
+  source the loads come out in that order but `x * x` is colored first (trace:
+  `v36>r0 v35>r1 v34>r1 v33>r2 v32>r3 ...`), and with the `x` term first the loads
+  are swapped (in the IR of the current form, the temporary for `x` comes before
+  the one for `y`). After coloring the two loads become one `ldm`, whose register
+  order is fixed by the offsets.
 
 ## Open questions
 

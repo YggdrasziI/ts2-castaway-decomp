@@ -11,6 +11,9 @@ function:
   - its pcodes in code generation order: index, opcode number, flags, operands
     (r<N> register, "=" written, "+" read and written, #<imm>, symbols by name);
   - the order the scheduler chose, as indices of that list;
+  - with --colors, the order register coloring visits the virtual registers and
+    the register each one gets ("v<N>>r<M>", "r<M>:r<M+1>" for a 64-bit pair,
+    "-" when none: it is spilled), one line per coloring attempt;
   - with --select, each cycle of the first pass: the ready nodes with their
     earliest cycle (e), deadline (l), successors they would uncover (u), height (h)
     and rank (r), "PRESSURE" when the register pressure mode is on, and the pick.
@@ -21,7 +24,7 @@ build's.
 
 Usage:
   python tools/mwcc_sched.py <src/...cpp> --list
-  python tools/mwcc_sched.py <src/...cpp> <symbol> [--select] [--version eur]
+  python tools/mwcc_sched.py <src/...cpp> <symbol> [--select] [--colors] [--version eur]
 
 Every function whose name is <symbol> is traced (a constructor's C1 and C2 have
 different names). Blocks are numbered from 0 in each pass.
@@ -37,6 +40,11 @@ import mwcc_blocks as mb  # noqa: E402
 
 # Addresses in mwccarm 2.0/sp1p5 (mwcc_blocks.COMPILER_SHA1), found by disassembly.
 BP_SCHEDULE1 = 0x471C4F     # back end: call of scheduleinstructions before coloring
+BP_SCHEDULE2 = 0x471D51     # back end: call of scheduleinstructions after coloring
+BP_COLORGRAPH = 0x513930    # colorgraph(node stack) entry
+BP_COLOR = 0x513A67         # colorgraph: ebx = node, its color chosen (-1: spilled)
+GRAPH_VREG = 0x28           # graph node: u16 register number, s16 color at +0x2A
+GRAPH_FLAGS, GRAPH_PAIR = 0x2C, 0x200  # u16 flags at +0x2C; 0x200: a 64-bit pair
 BP_BLOCK = 0x4FF750         # scheduleblock(PCodeBlock *) entry
 BP_BLOCK_END = 0x4FF896     # scheduleblock: after the issue loop
 BP_SELECT = 0x4FF590        # selectinstruction(DGNode *head, u16 counter) entry
@@ -104,11 +112,12 @@ def pcodes(dbg, block):
     return out
 
 
-def trace(cmd, symbol, select):
+def trace(cmd, symbol, select, colors):
     names, state = [], {"name": None}
 
     def on_schedule1(dbg, ctx):
         # esi: the function (Object *) being compiled
+        flush_colors()
         state["name"] = text(dbg, dbg.u32(ctx.Esi + PROC_NAME) + 0xA)
         state.pop("numbers", None)
         names.append(state["name"])
@@ -177,9 +186,46 @@ def trace(cmd, symbol, select):
         pick = state["index"].get(dbg.u32(node + NODE_INSTR), "?") if node else "none"
         print(state.pop("line") + " -> %s" % pick)
 
+    def flush_colors():
+        if "colors" in state:
+            print("== coloring: %s" % " ".join(state.pop("colors")))
+
+    def on_colorgraph(dbg, ctx):
+        # a new coloring attempt (the compiler retries after spilling); the back
+        # end colors one register class only on this target (0x513CA0 loops on
+        # class 0), so every line is general registers
+        if active():
+            flush_colors()
+            state["colors"] = []
+
+    def on_color(dbg, ctx):
+        # ebx: the graph node just colored; when no register was free the mask was
+        # first grown by one register (0x4FE4C0) and the node retried, so -1 here
+        # means that failed too and the node is spilled
+        if not active() or "colors" not in state:
+            return
+        try:
+            vreg, color, flags = struct.unpack("<HhH", dbg.read(ctx.Ebx + GRAPH_VREG, 6))
+        except OSError:
+            state["colors"].append("?")
+            return
+        if color == -1:
+            got = "-"
+        elif color < 0:
+            got = "?%d" % color
+        elif flags & GRAPH_PAIR:
+            got = "r%d:r%d" % (color, color + 1)
+        else:
+            got = "r%d" % color
+        state["colors"].append("v%d>%s" % (vreg, got))
+
     dbg = mb.Debugger(cmd, mb.ROOT)
     dbg.add_breakpoint(BP_SCHEDULE1, on_schedule1)
     if symbol is not None:
+        if colors:
+            dbg.add_breakpoint(BP_COLORGRAPH, on_colorgraph)
+            dbg.add_breakpoint(BP_COLOR, on_color)
+            dbg.add_breakpoint(BP_SCHEDULE2, lambda dbg, ctx: flush_colors())
         dbg.add_breakpoint(BP_BLOCK, on_block)
         dbg.add_breakpoint(BP_BLOCK_END, on_block_end)
         if select:
@@ -188,6 +234,7 @@ def trace(cmd, symbol, select):
             for addr, register in SELECT_RETURNS.items():
                 dbg.add_breakpoint(addr, lambda dbg, ctx, r=register: on_select_return(dbg, ctx, r))
     dbg.run()
+    flush_colors()
     if dbg.exit_code:
         sys.exit("mwcc_sched: the compiler failed (exit code %d); run ninja to see why" % dbg.exit_code)
     return names
@@ -199,16 +246,17 @@ def main():
     ap.add_argument("symbol", nargs="?", help="mangled name of the function to trace")
     ap.add_argument("--list", action="store_true", help="list the functions in schedule order")
     ap.add_argument("--select", action="store_true", help="trace each pick of the first pass")
+    ap.add_argument("--colors", action="store_true", help="print the order registers are colored in")
     ap.add_argument("--version", default="eur")
     a = ap.parse_args()
-    if (a.symbol is None) == (not a.list) or (a.list and a.select):
-        ap.error("give either a symbol (with or without --select) or --list")
+    if (a.symbol is None) == (not a.list) or (a.list and (a.select or a.colors)):
+        ap.error("give either a symbol (with or without --select, --colors) or --list")
     if os.name != "nt":
         sys.exit("mwcc_sched: Windows only (Win32 debugging API)")
     if struct.calcsize("P") != 8:
         sys.exit("mwcc_sched: needs a 64-bit Python (DEBUG_EVENT layout)")
     mb.load_kernel32()
-    names = trace(mb.build_command(a.source, a.version)[1], None if a.list else a.symbol, a.select)
+    names = trace(mb.build_command(a.source, a.version)[1], None if a.list else a.symbol, a.select, a.colors)
     if a.list:
         print("\n".join(names))
     elif a.symbol not in names:
