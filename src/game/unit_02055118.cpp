@@ -19,8 +19,6 @@
  *
  * Functions other than the constructor and destructor keep C linkage: other
  * files call them by their addresses.
- *
- * Not complete: func_02055220 is not at 100 % (comment above it).
  */
 
 #include "game/unk_sim.h"
@@ -266,12 +264,7 @@ void func_02055198(Unk02055118 *p) {
     func_02055220(p, 0, -1);
 }
 
-/* 95.75 %: the original loads 0 for the part argument into r2 before the
- * guard test, keeps the static's value in r1 and reloads it for the sim;
- * ours keeps it in r2. Tried: a pointer static (wrong guard order), a class
- * static holding the pointer, a static in an inline accessor (one shared
- * static), a part local, a loop flag local, the anim and sim locals declared
- * first, a second anim local, the sim read inside the test. */
+/* The const view of the static for the sim read gives the original's reload. */
 void func_02055220(Unk02055118 *p, int state, int count) {
     p->state = state;
     p->count = count;
@@ -282,7 +275,7 @@ void func_02055220(Unk02055118 *p, int state, int count) {
     if (data_020c3b2c.unk38 == 0) {
         data_020c3b2c.unk38 = 1;
     }
-    Unk020680d4 *sim = data_020c3b2c.sim;
+    Unk020680d4 *sim = ((const Unk020c43a8 &)data_020c3b2c).sim;
     Unk02063d84 *anim = func_02055c60(p, state, 0, count == -1);
     if (anim != 0) {
         sim->speed = 0x1000;

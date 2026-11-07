@@ -543,6 +543,7 @@ src/game/unit_02054AB4.cpp:
     .bss        start:0x020bfc90 end:0x020c3b20
 
 src/game/unit_02055118.cpp:
+    complete
     .text       start:0x02055118 end:0x02055ef8
     .data       start:0x020ba2dc end:0x020bb9b4
     .bss        start:0x020c3b20 end:0x020c3b30

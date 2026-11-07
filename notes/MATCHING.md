@@ -519,7 +519,9 @@ Each fix was found by compiling scratch variants of one function and comparing t
   or a cast to a `const` pointer): `func_02094bc0` 93.85 % -> 100 %, which also
   needed the flag store before the two pointer stores for their `stmib`; and for
   a loop bound reread at the bottom of the loop
-  (`i < ((const Unk0209487cHeader *)header)->count`, `func_020949b8`). No effect
+  (`i < ((const Unk0209487cHeader *)header)->count`, `func_020949b8`); and for a
+  function-local static reference read again after a store through it
+  (`((const Unk020c43a8 &)ref).sim`, `func_02055220` 95.75 % -> 100 %). No effect
   on the hoisted width of `func_02059710`; a sweep making every file-local inline
   helper's pointer `const` found nothing more (most do not compile that way).
 - **Unfolded zero, one register per step.** `mov rN, #0` then `bic` / `orr` pairs, each
