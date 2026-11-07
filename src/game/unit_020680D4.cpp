@@ -193,6 +193,11 @@ static inline int func_format(Unk02095fdc *file) {
 static inline bool func_isPal16(Unk02095fdc *file) {
     return func_format(file) == 4;
 }
+enum Unk020680d4Bool { UNK_020680D4_FALSE, UNK_020680D4_TRUE };
+
+static inline Unk020680d4Bool func_isPal16e(Unk02095fdc *file) {
+    return func_format(file) == 4 ? UNK_020680D4_TRUE : UNK_020680D4_FALSE;
+}
 
 static inline bool func_isWall(u32 kind) {
     return kind == 0x8000 || kind == 0x4000 || kind == 0xc000;
@@ -655,8 +660,8 @@ void func_0206961c(Unk020680d4 *p) {
 }
 
 /*
- * 95.93 %: the original turns the two later 16-colour tests into 0 / 1 before
- * testing them, and its spill slots and registers differ.
+ * 97.48 %: spill slots and registers. The two later 16-colour tests are
+ * materialised as 0 / 1 through the enum helper.
  */
 void func_02069720(Unk020680d4 *p, Unk020648ac *outfit) {
     Unk020c7f48 *textures = func_0208c578();
@@ -721,7 +726,7 @@ void func_02069720(Unk020680d4 *p, Unk020648ac *outfit) {
             if (func_isPal16(tex)) {
                 pal16 = true;
             }
-            if (pal16 && skinFile != 0 && func_isPal16(skinFile)) {
+            if (pal16 && skinFile != 0 && func_isPal16e(skinFile)) {
                 u8 *src = (u8 *)skinFile->func_0209608c();
                 u8 *dst = (u8 *)tex->func_0209608c();
                 if (src != 0 && dst != 0) {
@@ -732,7 +737,7 @@ void func_02069720(Unk020680d4 *p, Unk020648ac *outfit) {
                     }
                 }
             }
-            if (i < 3 && pal16 && colors != 0 && func_isPal16(colors)) {
+            if (i < 3 && pal16 && colors != 0 && func_isPal16e(colors)) {
                 u16 *s = (u16 *)((u8 *)colors->func_0209608c() + outfit->colors[i] * 0x20);
                 u16 *d = (u16 *)((u8 *)tex->func_0209608c() + 0xa0);
                 if (s != 0 && d != 0) {
