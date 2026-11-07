@@ -289,9 +289,8 @@ public:
     void func_0200d138(Unk020a7af4 *names);
 
     int func_sum() {
-        int i;
         int n = caught[0];
-        for (i = 1; i < 5; i++) {
+        for (int i = 1; i < 5; i++) {
             n += caught[i];
         }
         return n;
@@ -847,7 +846,13 @@ extern "C" void func_0200cb04(Unk0201a4e0Rect *r, const Unk0201a4e0Rect &o) {
 }
 
 int Unk0200cec8::func_0200cb28() {
-    return func_sum();
+    int n;
+    int i;
+    n = caught[0];
+    for (i = 1; i < 5; i++) {
+        n += caught[i];
+    }
+    return n;
 }
 
 void *Unk0200c308::func_0200cb58() {
