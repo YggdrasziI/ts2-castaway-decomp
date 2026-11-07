@@ -1570,6 +1570,19 @@ Each fix was found by compiling scratch variants of one function and comparing t
   the strings and vtables are not sorted by size, so the original file was likely
   not built with `ipa file`. Every mwccarm 1.2, 2.0 and dsi version gives our order
   for this unit (scratch sweep): not a compiler version difference.
+- `#pragma defer_codegen on` (or `-inline deferred`) emits a file's functions in reverse
+  definition order and heapsorts its 8-byte pointer to member constants like `ipa file`
+  (four-function scratch file: the `mwcc_heapsort` permutation `[2, 1, 0, 3]`); the
+  string literals get one section each, sorted by size. On `unit_02018668.cpp` (2026-11-08)
+  neither the pragma alone nor the pragma with the definitions reversed gives the
+  original constant order, and the original strings are not sorted by size, so the
+  original is not a plain deferred build either. Read forward, the original order looks
+  like the users walked in reverse `.text` order with the constants of each function in
+  statement order (`func_18`, `func_02019fa0`, `func_02019444`, `func_020193dc`, ...); the
+  three extra constants here (the second `func_02018d04` test in `func_02019444`, the
+  `func_020187d4` test of `func_02019ea0`, the constructor's first state) suggest inline
+  helpers in the original
+  (hypothesis).
 - Without `ipa`, the constants of inline member functions defined in class bodies
   are not emitted in `@` number order (two-class scratch test: `a2 a0 a1`, `b0 b2
   b1`); their order matches the symbol table order of the target functions. Rule
