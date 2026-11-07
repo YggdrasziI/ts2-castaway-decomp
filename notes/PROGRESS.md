@@ -198,3 +198,4 @@
 
 | 2026-11-07 | 6475384 | 576008 / 723540 bytes (79.61 %; fuzzy 99.34 %, linked 44.89 %) | 4349 / 4577 | 566 / 656 | Locals numbered in reverse declaration order (coloring tracer, func_02071fdc 99.50 %); a smaller `.bss` object after a larger one moved to the next file: unit_0205C700 complete |
 | 2026-11-07 | 29a8b23 | 576008 / 723540 bytes (79.61 %; fuzzy 99.34 %, linked 45.20 %) | 4349 / 4577 | 567 / 656 | Fully matched units tried as complete: unit_020A5CCC linked once a callee got its C++ linkage |
+| 2026-11-07 | 309abbc | 577300 / 723540 bytes (79.79 %; fuzzy 99.37 %, linked 45.38 %) | 4352 / 4577 | 570 / 656 | Library functions from the CC0 references: CARD backup geometry (explicit return), CARD page read (khdays' structure), OS_InitLock; all of .text is now delinked |
