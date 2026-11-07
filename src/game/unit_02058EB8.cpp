@@ -79,6 +79,7 @@ public:
 };
 
 extern Unk020c43a8 data_020c43a8;
+extern unsigned char data_020c44a8[];
 extern Unk020d60c8 data_020d60c8;
 extern Unk020a20f0 data_020d62a4;
 extern Unk020c3fc4 data_020c3fc4;
@@ -149,7 +150,7 @@ int func_02058f34(Unk02058eb8 *p, int group, int level) {
     int best = 0;
     u32 bestValue = 0;
     if (level < 0) {
-        level = data_020c43a8.level;
+        level = *(u16 *)(data_020c44a8 + 0xde);
     }
     bool first = func_020081dc(&data_020c43a8).unk28 == 0;
     for (def = func_0205f714(&data_020c3fc4, data_020aefa8[group], 0); def != 0;
