@@ -28,7 +28,10 @@ typedef struct {
 extern Arg *data_020c4800;
 extern void MI_CpuFill8(void *dst, int value, u32 size);
 
-/* 98.69 %: the original schedules `mov r1, #3` between the two loads of the last statement. */
+/*
+ * The explicit return after the last store keeps the load of data_020c4800 after the two zero
+ * stores (as in Advance Wars' CardSave_FillGeometryFromType).
+ */
 void func_02074290(int type) {
     Arg *p = data_020c4800;
     MI_CpuFill8(&p->total, 0, 0x48);
@@ -125,5 +128,6 @@ void func_02074290(int type) {
         p->type = 0;
         p->total = 0;
         data_020c4800->result = 3;
+        return;
     }
 }

@@ -120,3 +120,5 @@ Written from the ROM, no reference code: the 64-byte send `libs/nitro/src/gx/uni
 `libs/nitro/src/os/unit_0207BBD4.c`: Rayman Raving Rabbids (CC0, [liolu/Rayman-RR-usa-decomp](https://github.com/liolu/Rayman-RR-usa-decomp), commit `dfb4f24f4bf88952270a012294c5a37cf3868ed3`) `src/nitro/os/os_tick_3.c`, its own code, retyped for this ROM (tick counter as a volatile 64-bit object).
 
 `libs/nitro/src/gx/unit_020792D0.c`: Heroes of Mana (CC0, commit `d29040d08683bff5749126166f0fd2f86e20096b`) `src/nitro/gx/gx_load3d.c`, `GX_LoadTex` only (its own code), retyped for this ROM. The two copy inlines are written here (the CPU / DMA choice of the SDK, as in `gx/unit_020791A4.c`), not taken from that file's reused `UnkGxCopy32`.
+
+`libs/nitro/src/card/unit_02074290.c`: written from the ROM; the closing `return;` that fixes the last load's schedule comes from Advance Wars (CC0, commit `47864817dc01b491422fe6e9f02c8be6752efa7e`) `src/sdk/card/card_save_fill_geometry_from_type.c`.

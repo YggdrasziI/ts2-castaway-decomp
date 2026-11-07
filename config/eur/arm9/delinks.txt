@@ -2322,6 +2322,7 @@ libs/nns/src/snd/unit_0209CF10.c:
     .text       start:0x0209cf10 end:0x0209d050
 
 libs/nitro/src/card/unit_02074290.c:
+    complete
     .text       start:0x02074290 end:0x020745ac
 
 libs/nitro/src/ctrdg/unit_02075DE0.c:
