@@ -14,8 +14,8 @@
  * Functions other than the constructor and destructor keep C linkage: other
  * files call them by their addresses.
  *
- * Not complete: func_02058f14, func_02058f34, func_02059150 and func_02059224
- * are not at 100 % (comments above them).
+ * Not complete: func_02058f34, func_02059150 and func_02059224 are not at
+ * 100 % (comments above them).
  */
 
 typedef unsigned long u32;
@@ -127,11 +127,15 @@ Unk02058eb8::Unk02058eb8() {
 
 Unk02058eb8::~Unk02058eb8() {}
 
-/* 98.50 %: the original sets the group with moveq #0 then movne #1, ours in
- * the reverse order (tried: != 0, ?:, == 0 ? 0 : 1, !!, bool / int locals,
- * if / else, an inline member, a bit field). */
+/* An enum keeps the `moveq` / `movne` order of the original. */
+enum Unk02058f14Group { UNK_02058F14_GROUP0, UNK_02058F14_GROUP1 };
+
+static inline Unk02058f14Group func_group(const Unk02058f14Obj *o) {
+    return (o->flags & 0xc000) == 0 ? UNK_02058F14_GROUP0 : UNK_02058F14_GROUP1;
+}
+
 int func_02058f14(Unk02058eb8 *p, const Unk02058f14Obj *o) {
-    return func_02058f34(p, (o->flags & 0xc000) ? 1 : 0, -1);
+    return func_02058f34(p, func_group(o), -1);
 }
 
 /* 96.15 %: registers rotated (the original keeps the definition in r4, the

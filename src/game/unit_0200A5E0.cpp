@@ -5,8 +5,7 @@
  * and the vtable). Layouts come from the code; all names are placeholders.
  *
  * Open gaps: func_14 95.84 % (stack slots of the temporaries, `add ip, sp, #0x20` kept
- * for the cell of func_add), func_18 98.10 % (order of the loads of the last animation),
- * func_08 99.48 % (order of the two conditional moves).
+ * for the cell of func_add), func_18 98.10 % (order of the loads of the last animation).
  */
 #include "game/unk_catalog.h"
 #include "game/unk_objscript.h"
@@ -101,7 +100,7 @@ class Unk02002408 {
 public:
     virtual ~Unk02002408();
     void operator delete(void *p);
-    virtual bool func_08() = 0;
+    virtual int func_08() = 0;
     virtual int func_0c() = 0;
     virtual int func_10() = 0;
     virtual int func_14() = 0;
@@ -120,7 +119,7 @@ public:
 class Unk0200ad40 : public Unk02002408 {
 public:
     virtual ~Unk0200ad40();
-    virtual bool func_08();
+    virtual int func_08();
     virtual int func_0c();
     virtual int func_10();
     virtual int func_14();
@@ -194,9 +193,16 @@ const Unk0200ad40Desc *Unk0200ad40::func_20() {
     return &desc;
 }
 
-bool Unk0200ad40::func_08() {
+/* An enum keeps the `movne` / `moveq` order of the original. */
+enum Unk0200ad40Same { UNK_0200AD40_DIFFERENT, UNK_0200AD40_SAME };
+
+static inline Unk0200ad40Same func_same(int a, int b) {
+    return a != b ? UNK_0200AD40_DIFFERENT : UNK_0200AD40_SAME;
+}
+
+int Unk0200ad40::func_08() {
     Unk020680d4Cell c = (func_02002760(this) ? func_02002414(this) : func_02002414(owner))->func_14();
-    return cell.pos.unk3 != c.pos.unk3 ? false : true;
+    return func_same(cell.pos.unk3, c.pos.unk3);
 }
 
 int Unk0200ad40::func_0c() {

@@ -1597,6 +1597,10 @@ Each fix was found by compiling scratch variants of one function and comparing t
   `bool` and `int` helpers, ternaries, `if` forms and pointer members give the reverse order.
   The enum needs a function returning `int`: returned as `bool` it adds a `cmp` and two moves, so a
   `bool` slot is declared `int` in that file (`func_08` of `unit_02003AB0.cpp`, 91 % -> 100 %).
+  Same fix for `func_08` of `unit_0200A5E0.cpp` (99.48 % -> 100 %). The reverse order,
+  `moveq r1, #0; movne r1, #1` on a flag test passed as an argument, is also an enum
+  helper, written `(x & m) == 0 ? A : B` (`func_02058f14`, 98.50 % -> 100 %); with
+  `?:` on the plain test or `!= 0` the order stays ours.
 - A string literal in a table initializer lands before the table, even at the end of
   the file; the original has such strings after the vtables, in reverse order of use
   (`unit_0200B23C.cpp`, open).
