@@ -213,25 +213,27 @@ int func_020591e4(Unk02058eb8 *p, int key) {
     return 0;
 }
 
-/* 99.29 %: the original keeps the settings' collection in r7 (ours r5, the
- * counters one register lower) and the id / flag stack slots swapped (tried:
- * declaration orders of the array, the database, the collection, the flag,
- * the counters). */
+/* The locals are declared first, the array after them. */
 bool func_02059224(Unk02058eb8 *p) {
+    Unk020c3fc4 *db;
+    bool first;
+    int i;
+    int n;
+    Unk0206b630 *set;
     int ids[7] = {
         0x7f4aaab5, 0x40131b79, 0x41239553, (int)0xe22f893b,
         (int)0xa15edd64, (int)0xd2310469, 0x5562b4fe,
     };
-    Unk020c3fc4 *db = &data_020c3fc4;
-    Unk0206b630 *set = data_020d60c8.collection;
-    bool first = func_020081dc(&data_020c43a8).unk28 == 0;
-    for (int i = 0; i < 7; i++) {
+    db = &data_020c3fc4;
+    set = data_020d60c8.collection;
+    first = func_020081dc(&data_020c43a8).unk28 == 0;
+    for (i = 0; i < 7; i++) {
         bool all;
         int id = ids[i];
         if (func_02054dc4(data_020bfc9c, func_0205f6f8(db, id), 0) != 0) {
             continue;
         }
-        int n = 0;
+        n = 0;
         all = true;
         for (Unk0205cf00 *def = func_0205f714(db, data_020aefa8[i], 0); def != 0;
              def = func_0205f714(db, data_020aefa8[i], def)) {
