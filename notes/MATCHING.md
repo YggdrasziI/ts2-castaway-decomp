@@ -67,6 +67,12 @@ default: add one here only once a unit of this ROM proves it with mwccarm.
   register and the other way round. Declaring it at function scope, before the
   `for`, gave the original allocation (`func_0202171c` in `unit_0201E300.cpp`,
   98.52 % to 100 %; `func_02021888` and `func_020214cc` improved).
+- Locals get virtual register numbers in reverse declaration order: the first
+  declared has the highest number, locals of inner scopes lower ones. The first
+  colored group goes by decreasing number, so declaring a local earlier colors it
+  first, in a lower register. `--colors` shows the group; a flag declared in an
+  inner block moved to function scope before the pointer that took its register
+  (`func_02071fdc` in `unit_0206BCE0.cpp`, 99.39 % to 99.50 %).
 
 - Callee-saved registers rotated over a whole function with a parsing loop
   in the middle: move the loop into a `static inline` helper taking the
