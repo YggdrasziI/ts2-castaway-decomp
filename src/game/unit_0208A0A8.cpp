@@ -287,7 +287,7 @@ Unk02089f38 *Unk0208a0a8::func_0208a4c8(int key) {
 }
 
 /*
- * 96.68 %: the original computes next * 12 once for the two node accesses of the
+ * 98.41 % (index compares signed): the original computes next * 12 once for the two node accesses of the
  * successor relink and loads the removed node's children with two ldr (ldmib
  * here); the registers of this, the key, the tree and the index differ with it.
  * The same tree code is 96.34 % in unit_0208C050.cpp (func_0208c700). Tried: the
@@ -337,7 +337,7 @@ void Unk0208a0a8::func_0208a5d8(int key) {
     slot->flags = 0;
     m = map;
     i = m->func_0208aa14(key);
-    if (i >= 0) {
+    if ((int)i >= 0) {
         left = m->nodes[i].left;
         next = m->nodes[i].right;
         if (left != -1) {
@@ -367,7 +367,7 @@ void Unk0208a0a8::func_0208a5d8(int key) {
             m->func_0208a984(i, -1);
         }
         last = --m->count;
-        if (i < last) {
+        if ((int)i < last) {
             m->nodes[i] = m->nodes[last];
             m->values[i] = m->values[m->count];
             m->func_0208a984(m->count, i);
