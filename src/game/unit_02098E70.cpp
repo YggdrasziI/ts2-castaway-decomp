@@ -31,7 +31,11 @@ int Unk02098e70::func_02098e84() const {
 
 /* 96.82 %: the two products sit in swapped register pairs (the original squares
  * x first into r2:r3). Term order, locals, casts and an inline helper were
- * tried. */
+ * tried. The order is the same; the coloring is not: the pair generated last is
+ * colored first and takes r0 / r1, and the original needs x loaded first with
+ * y * y generated last. With the y term first the loads are right but x * x is
+ * generated last; with the x term first the loads are swapped (notes/COMPILER.md,
+ * instruction scheduler). */
 s64 Unk02098e70::func_02098e94() const {
     return (((s64)y * y) >> 12) + (((s64)x * x) >> 12);
 }
