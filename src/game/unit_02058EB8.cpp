@@ -139,26 +139,32 @@ int func_02058f14(Unk02058eb8 *p, const Unk02058f14Obj *o) {
     return func_02058f34(p, func_group(o), -1);
 }
 
-/* 96.15 %: registers rotated (the original keeps the definition in r4, the
- * flag in r5, the level in r6, the group in r7, ours in r8, r4, r5, r6);
- * tried: all declaration orders of the locals, the definition declared at
- * each position, while / goto loops, locals for the flag, the owned test,
- * the level, the scales. */
+/* 97.59 %: locals declared first in this order (searched); left: the first
+ * walk call loads the table base before the zero and the database address
+ * (loop init forms tried). */
 int func_02058f34(Unk02058eb8 *p, int group, int level) {
+    u32 bestValue;
+    bool owned;
+    Unk0206b630 *set;
+    u32 value;
+    int r;
+    int weight;
+    bool first;
+    int best;
     Unk0205cf00 *def;
-    Unk0206b630 *set = data_020d60c8.collection;
-    int best = 0;
-    u32 bestValue = 0;
+    set = data_020d60c8.collection;
+    best = 0;
+    bestValue = 0;
     if (level < 0) {
         level = *(u16 *)(data_020c44a8 + 0xde);
     }
-    bool first = func_020081dc(&data_020c43a8).unk28 == 0;
+    first = func_020081dc(&data_020c43a8).unk28 == 0;
     for (def = func_0205f714(&data_020c3fc4, data_020aefa8[group], 0); def != 0;
          def = func_0205f714(&data_020c3fc4, data_020aefa8[group], def)) {
         if (func_0205d234(def, 0x102647da, 0x0c9b830d) > level) {
             continue;
         }
-        bool owned = set->func_0206b6bc(def->unkc);
+        owned = set->func_0206b6bc(def->unkc);
         if (func_0205d234(def, 0x102647da, 0xc6276e01) == 0x64378dc5 && owned) {
             continue;
         }
@@ -170,9 +176,9 @@ int func_02058f34(Unk02058eb8 *p, int group, int level) {
                 continue;
             }
         }
-        int weight = func_0205d234(def, 0x102647da, 0x4c43f955);
-        int r = func_020a20bc(&data_020d62a4, 0, 0x7fffffff);
-        u32 value = func_fxmulr(r, func_fxmulr(weight << 12, p->scales[group]));
+        weight = func_0205d234(def, 0x102647da, 0x4c43f955);
+        r = func_020a20bc(&data_020d62a4, 0, 0x7fffffff);
+        value = func_fxmulr(r, func_fxmulr(weight << 12, p->scales[group]));
         if (func_0205d234(def, 0x102647da, 0xa70a5f1a) == 0x64378dc5 && !owned) {
             return def->unkc;
         }
