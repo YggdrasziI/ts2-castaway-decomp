@@ -385,7 +385,7 @@ extern "C" Unk02098e70 func_0200b23c(const Unk02098e70 &v, int f) {
 
 void Unk0200c308::func_0200b268() {
     func_0200df10(this, 0, 1);
-    state = TF[13];
+    state = TF[7];
 }
 
 void Unk0200c308::func_0200b298() {
