@@ -195,14 +195,24 @@ extern "C" int func_02010c60(void *p) {
     return func_0200e0d0(p, 0x03e0cdc7);
 }
 
-/* 97.28 %: same code, registers differ (declaration orders and types searched). */
+/* 98.29 %: the original loads data_020d62a4 before the test that enters the
+ * random loop (locals declared first, u32 j; while / for forms tried). */
 extern "C" int func_02010c74(int depth, int mode, int lang, void **out, int n) {
+    u32 r;
+    int limit;
+    void *rec;
+    void *pick;
+    bool ok;
+    u32 key;
+    Unk02010b8c view;
+    int count;
+    u32 j;
+    int i;
+    int chance;
     void *recs[50];
     int chances[50];
-    Unk02010b8c view;
-    void *rec;
-    u32 key = data_020ae678[0];
-    int count = 0;
+    key = data_020ae678[0];
+    count = 0;
     rec = func_0205f714(data_020c3fc4, key, 0);
     for (; rec != 0; rec = func_0205f714(data_020c3fc4, key, rec)) {
         func_02010b8c(&view, rec);
@@ -237,18 +247,18 @@ extern "C" int func_02010c74(int depth, int mode, int lang, void **out, int n) {
         }
         func_02010ba8(&view);
     }
-    int limit = n;
+    limit = n;
     if (count <= n) {
         limit = count;
     }
-    int i = 0;
+    i = 0;
     while (i < limit) {
-        u32 r = func_020a1f84(data_020d62a4) % count;
-        void *pick = recs[r];
+        r = func_020a1f84(data_020d62a4) % count;
+        pick = recs[r];
         if (pick != 0) {
-            int chance = chances[r];
-            bool ok = true;
-            for (int j = 0; j < chance; j++) {
+            chance = chances[r];
+            ok = true;
+            for (j = 0; j < chance; j++) {
                 if (!(func_020a1f84(data_020d62a4) & 1)) {
                     ok = false;
                     break;
