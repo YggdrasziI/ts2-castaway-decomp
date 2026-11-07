@@ -966,16 +966,15 @@ void Unk0200cec8::func_0200d138(Unk020a7af4 *names) {
     player.owner = this;
     player.state = TP[9];
     for (int i = 0; i < 15; i++) {
-        Unk0200c308 *c = &catches[i];
-        c->game = this;
-        c->sprites[0] = a;
-        c->sprites[1] = b;
+        catches[i].game = this;
+        catches[i].sprites[0] = a;
+        catches[i].sprites[1] = b;
         for (int j = 0; j < 2; j++) {
-            c->rects[j] = c->game->rects[j];
+            catches[i].rects[j] = catches[i].game->rects[j];
         }
-        func_0200df54(c);
-        c->anim.mode = 1;
-        c->state = TF[13];
+        func_0200df54(&catches[i]);
+        catches[i].anim.mode = 1;
+        catches[i].state = TF[13];
         a = (Unk020a7c90 *)((u8 *)a + 0x44);
         b = (Unk020a7c90 *)((u8 *)b + 0x44);
     }
