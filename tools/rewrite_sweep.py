@@ -10,7 +10,8 @@ such rewrites per function, so this script compiles every one of them (a beam se
 `--depth` rounds keeps the `--beam` best of each round) instead of sampling.
 
 Variants are compiled in a temporary directory with the unit's other code unchanged and
-scored as in permute.py (differing words, relocated words compared by target). Nothing
+scored by objdiff-cli against the delinked target, as in the report (`--scorer words`:
+permute.py's count of differing words, faster but often wrong on gains). Nothing
 in the repository is written. A rewrite is only checked by the compiled bytes: a variant
 that scores better but is not a match may change what the code does, so read it before
 keeping it, and keep nothing that tools/report_diff.py and ninja do not confirm. The
@@ -30,6 +31,7 @@ import json
 import os
 import re
 import sys
+import subprocess
 import tempfile
 import time
 
@@ -542,6 +544,40 @@ def body_end(text, s0):
 
 
 BASE = 4  # indentation of the function's top-level statements
+ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+OBJDIFF = os.path.join(ROOT, "objdiff-cli.exe" if os.name == "nt" else "objdiff-cli")
+
+
+class ObjdiffSearch(Search):
+    """Scores a variant as 100 minus objdiff's match percent of the function (0: a match),
+    the value of the report, instead of permute.py's count of differing words."""
+
+    def __init__(self, target, *a):
+        super().__init__(*a)
+        self.target = target
+
+    def run(self, i, lines):
+        c = os.path.join(self.tmp, "v%d.cpp" % i)
+        ob = os.path.join(self.tmp, "v%d.o" % i)
+        js = os.path.join(self.tmp, "v%d.json" % i)
+        with open(c, "w", encoding="utf-8", errors="surrogateescape", newline="\n") as f:
+            f.write(self.pre + "\n".join(lines) + "\n" + self.post)
+        for p in (ob, js):
+            if os.path.exists(p):
+                os.remove(p)
+        r = subprocess.run([permute.CC] + permute.FLAGS + ["-i", self.srcdir, "-c", c, "-o", ob], capture_output=True)
+        if r.returncode or not os.path.exists(ob):
+            return 10**6
+        r = subprocess.run([OBJDIFF, "diff", "-1", self.target, "-2", ob, self.symbol, "-o", js, "--format", "json"],
+                           capture_output=True)
+        if r.returncode or not os.path.exists(js):
+            return 10**6
+        with open(js, encoding="utf-8") as f:
+            d = json.load(f)
+        for s in d.get("right", {}).get("symbols", []):
+            if s.get("name") == self.symbol and s.get("match_percent") is not None:
+                return 0 if s["match_percent"] >= 100 else 100 - s["match_percent"]
+        return 10**6
 
 
 def sweep(unit, symbol, o):
@@ -567,7 +603,8 @@ def sweep(unit, symbol, o):
     global BASE
     BASE = min((ind(l) for l in body if l.strip()), default=4)
     with tempfile.TemporaryDirectory(prefix="sweep_") as tmp:
-        s = Search(pre, post, os.path.dirname(os.path.abspath(src)), symbol, tgt, trel, tmp, o.workers)
+        args = (pre, post, os.path.dirname(os.path.abspath(src)), symbol, tgt, trel, tmp, o.workers)
+        s = ObjdiffSearch(os.path.abspath(target), *args) if o.scorer == "objdiff" else Search(*args)
         start = s.run(0, body)
         if start >= 10**6:
             s.ex.shutdown()
@@ -608,7 +645,10 @@ def sweep(unit, symbol, o):
                 break
         s.ex.shutdown()
     v, path, L = best
-    msg = "start %d, best %d of %d words, %d variants" % (start, v, len(tgt) // 4, n)
+    if o.scorer == "objdiff":
+        msg = "%.2f %% -> %.2f %%, %d variants" % (100 - start, 100 - v, n)
+    else:
+        msg = "start %d, best %d of %d words, %d variants" % (start, v, len(tgt) // 4, n)
     if v < start:
         msg += (" MATCH" if v == 0 else "") + "\n      " + "\n      ".join(path)
         if o.out:
@@ -618,7 +658,7 @@ def sweep(unit, symbol, o):
             shift = lambda q: "%s%d" % (q.group(1), int(q.group(2)) + first - 1)  # noqa: E731
             diff = [re.sub(r"([-+])(\d+)", shift, d, count=2) if d.startswith("@@") else d for d in diff]
             with open(os.path.join(o.out, symbol + ".diff"), "w", encoding="utf-8", newline="\n") as f:
-                f.write("score %d (start %d): %s\n" % (v, start, "; ".join(path)) + "\n".join(diff) + "\n")
+                f.write("score %s (start %s): %s\n" % (round(v, 3), round(start, 3), "; ".join(path)) + "\n".join(diff) + "\n")
     return msg
 
 
@@ -648,6 +688,8 @@ def main():
     a.add_argument("--beam", type=int, default=2)
     a.add_argument("--max-candidates", type=int, default=120, help="per round and function")
     a.add_argument("--workers", type=int, default=2)
+    a.add_argument("--scorer", choices=("objdiff", "words"), default="objdiff",
+                   help="objdiff: the match percent of the report (default); words: permute.py's score")
     a.add_argument("--kinds", default=",".join(REWRITES), help="comma-separated: " + ", ".join(REWRITES))
     a.add_argument("--out", default=None)
     o = a.parse_args()

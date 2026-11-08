@@ -2168,8 +2168,14 @@ body too. A few hundred variants take about a minute: it is a first pass before 
   (`Unk02058788` C1 92.99 -> 93.79 %, `func_0206fd2c` 95.77 -> 96.23 %, `func_0204d8a4`
   96.96 -> 97.35 %, `Unk0202aef4` C1 90.33 -> 90.75 %, `func_02066884` 99.29 -> 99.44 %).
 - A second pass with `branch` and `steps` (2026-11-08) gave nothing objdiff confirms.
-- Its score is an estimate (word count, relocations by target): two of its gains were
-  objdiff losses. Rebuild the unit and check each one with `tools/why_diff.py`.
+- Scored by objdiff since 2026-11-08: each variant is diffed against the delinked target
+  with `objdiff-cli diff -1 <target.o> -2 <variant.o> <symbol>` (0.1 s), which gives the
+  report's percent. The word count of permute.py (`--scorer words`) disagreed with
+  objdiff on most gains (two of five, then every one of a pass). With objdiff the same
+  pass found six more gains, `func_02067970` 91.21 -> 96.61 % (a pick pointer read in
+  place, the loop bound written over `total`), `func_02026e4c` 93.46 -> 94.62 %, the
+  `Unk020680d4` constructor 95.94 -> 96.61 % (the pool global read in place),
+  `func_02039a08` 94.42 -> 95.06 %. A second pass from there found nothing above 0.15 %.
 - The rewrites keep the behaviour only as far as a line-based liveness check can tell
   (no flow analysis): a first version reused a variable that another `else if` branch
   writes and a later line reads. Read each kept diff.
