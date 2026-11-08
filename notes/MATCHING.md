@@ -1679,6 +1679,28 @@ Each fix was found by compiling scratch variants of one function and comparing t
   caller, in reverse order of first call (`func_14`, then `func_0201af10`,
   `func_0201af9c`, `func_0201b0ec` ... `func_0201b164`). The new mangled names are in
   `symbols.txt` (`_ZN11Unk0201a2c811Unk0201a4e0...`; `P11Unk0201a2c8` becomes `PS_`).
+- **Same method on `unit_0200B23C.cpp` (2026-11-08, 32 constants in order, +4
+  functions)**. One `.data` object written as a struct of a radius, the names and
+  three state arrays turned out to be four objects: a `static const int` with a dynamic
+  initializer (mwccarm puts it in `.data`; `int`, `volatile int`, a one-member struct or
+  array go to `.bss`), the `func_sound` static local table, the compiler's constants
+  (catch and player nested in the game class) and five null pointers (a zero
+  `const char *[5]` stays in `.data`, a zero `void *[5]` goes to `.bss`). Tips found:
+  - read each user's constant from the anchor offsets with the table split in 8-byte
+    slots: several users of one slot mean one inline helper, a slot no code loads means
+    an uncalled body helper (`func_back`, `func_wait`);
+  - a helper shared by two out-of-class callers that must keep the stack slot of the
+    caller's local: pass the local by reference (`State s = 0; func_first(s);`), not by
+    return value (`becc` 93.85 % -> 93.95 %);
+  - a state test both used as a value and in an `if`: a `bool` helper
+    `!(state != &T::f)`, with `== false` in the `if` (`func_0200cb60` 100 %);
+  - the order of class body functions in `.text` is not always their declaration
+    order: the empty state `func_0200b3a0`, declared in its address place (after
+    `func_0200b334`), came out after `func_0200b674`; declared before
+    `func_0200b268`, it came out in its address place (rule unknown);
+  - `func_14` defined outside as `inline` (with a one-line helper for its constant)
+    comes out among the virtual functions in declaration order, as in the original;
+    its string literals then get `_ZZ...func_14EvEs` names, set in `symbols.txt`.
 - **Solved for `unit_020116E0.cpp` (2026-11-08, `.data` 100 %)**. Two mistakes had kept
   the search below. (1) The `@` names that `symbols.txt` gives the original's constants
   pair those with the same target arbitrarily: read which constant each user loads from
