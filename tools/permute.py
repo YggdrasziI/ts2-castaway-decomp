@@ -56,9 +56,60 @@ def elf_func(path, name):
                             for q in range(r[4], r[4] + r[5], r[9]):
                                 off, inf = struct.unpack_from("<II", b, q)
                                 if val <= off < val + size:
-                                    rel[off - val] = sym_name(b, S, r[6], inf >> 8)
+                                    word = struct.unpack_from("<I", b, sec[4] + off)[0]
+                                    rel[off - val] = target_name(b, S, r[6], inf >> 8, inf & 0xFF, word)
                     return data, rel
     return None, None
+
+
+def target_name(b, S, symtab, index, rtype, word):
+    """What a relocation refers to, as (name, content), independent of the rest of the unit.
+
+    The names are numbered by the compiler across the unit, so they are normalised: a
+    function-local static `name$<n>` loses its number and an anonymous literal `@<n>` is
+    just `@`. A data object also carries its first bytes (its size, or up to a NUL when it
+    has none, at most 64; `.bss` objects their size), compared when either side is
+    anonymous (see same_target). A section symbol of an absolute word (R_ARM_ABS32, addend
+    in the word) is replaced by the symbol defined at that offset of the section, the way
+    the delinked target names it."""
+    s = S[symtab]
+    n, val, size, info, oth, shndx = struct.unpack_from("<IIIBBH", b, s[4] + index * 16)
+    nm = sym_name(b, S, symtab, index)
+    if (info & 0xF) == 3 and rtype == 2 and 0 < shndx < len(S):  # STT_SECTION + addend
+        for o in range(s[4], s[4] + s[5], 16):
+            n2, v2, z2, i2, _, x2 = struct.unpack_from("<IIIBBH", b, o)
+            if x2 == shndx and v2 == word and n2 and (i2 & 0xF) != 3 and not sym_name(b, S, symtab, (o - s[4]) // 16).startswith("$"):
+                return target_name(b, S, symtab, (o - s[4]) // 16, 0, 0)
+        return ("%s+0x%x" % (nm, word), None)
+    nm = "@" if re.match(r"^@\d+$", nm) else re.sub(r"\$\d+$", "", nm)
+    if rtype == 2 and word:  # an absolute word: its addend is part of the target
+        nm += "+0x%x" % word
+    content = None
+    if 0 < shndx < len(S) and (info & 0xF) != 2 and S[shndx][1] != 0:  # data, not a function
+        sec = S[shndx]
+        if sec[1] == 8:  # SHT_NOBITS
+            content = "bss%d" % size
+        else:
+            start = sec[4] + val
+            if size:
+                end = start + min(size, 64)
+            else:
+                end = b.find(b"\0", start, start + 64)
+                end = start + 64 if end < 0 else end
+            content = b[start:end].hex()
+    return (nm, content)
+
+
+def same_target(a, b):
+    """Equal names, or the same content when either side is an anonymous literal."""
+    if a is None or b is None:
+        return a is b
+    if a[0] == b[0] and (a[0] != "@" or a[1] == b[1]):
+        return True
+    if "@" in (a[0], b[0]) and a[1] is not None and b[1] is not None:
+        x, y = a[1], b[1]
+        return x == y or (not x.startswith("bss") and not y.startswith("bss") and (x.startswith(y) or y.startswith(x)) and min(len(x), len(y)) > 0)
+    return False
 
 
 def sym_name(b, S, symtab, index):
@@ -99,7 +150,7 @@ def score(path, name, tgt, trel):
         if i in trel or i in rel:
             # A relocated word: compare what it refers to (a swapped pair of
             # calls has the same bytes but other targets).
-            if trel.get(i) != rel.get(i):
+            if not same_target(trel.get(i), rel.get(i)):
                 n += 1
             continue
         if d[i : i + 4] != tgt[i : i + 4]:
@@ -411,7 +462,7 @@ class Search:
     def run(self, i, lines):
         c = os.path.join(self.tmp, "v%d.cpp" % i)
         ob = os.path.join(self.tmp, "v%d.o" % i)
-        with open(c, "w", encoding="utf-8", newline="\n") as f:
+        with open(c, "w", encoding="utf-8", errors="surrogateescape", newline="\n") as f:
             f.write(self.pre + "\n".join(lines) + "\n" + self.post)
         if os.path.exists(ob):
             os.remove(ob)
