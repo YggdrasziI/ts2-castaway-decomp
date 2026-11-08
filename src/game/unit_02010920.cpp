@@ -195,10 +195,9 @@ extern "C" int func_02010c60(void *p) {
     return func_0200e0d0(p, 0x03e0cdc7);
 }
 
-/* 98.29 %: the original loads data_020d62a4 before the test that enters the
- * random loop (locals declared first, u32 j; while / for forms tried). */
 extern "C" int func_02010c74(int depth, int mode, int lang, void **out, int n) {
     u32 r;
+    void *rng;
     int limit;
     void *rec;
     void *pick;
@@ -206,9 +205,8 @@ extern "C" int func_02010c74(int depth, int mode, int lang, void **out, int n) {
     u32 key;
     Unk02010b8c view;
     int count;
-    u32 j;
+    int j;
     int i;
-    int chance;
     void *recs[50];
     int chances[50];
     key = data_020ae678[0];
@@ -252,14 +250,14 @@ extern "C" int func_02010c74(int depth, int mode, int lang, void **out, int n) {
         limit = count;
     }
     i = 0;
+    rng = data_020d62a4;
     while (i < limit) {
-        r = func_020a1f84(data_020d62a4) % count;
+        r = func_020a1f84(rng) % count;
         pick = recs[r];
         if (pick != 0) {
-            chance = chances[r];
             ok = true;
-            for (j = 0; j < chance; j++) {
-                if (!(func_020a1f84(data_020d62a4) & 1)) {
+            for (j = 0; j < chances[r]; j++) {
+                if (!(func_020a1f84(rng) & 1)) {
                     ok = false;
                     break;
                 }
