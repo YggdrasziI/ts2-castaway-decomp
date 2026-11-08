@@ -106,18 +106,20 @@ void Unk02000df0::func_1c() {
 }
 
 /*
- * 98.45 %: the original keeps `this` in r5 and the locals in r4 (ours are swapped), and has
- * one more `mov r0, r4` before the read of the sim, for the call to func_02063d84. All
- * other instructions match. A local or a reference for the player, an inline member and a
- * volatile read do not change it.
+ * 99.46 % (locals declared first, order searched): the original has one more
+ * `mov r0, r4` before the read of the sim, for the call to func_02063d84. A local or a
+ * reference for the player, an inline member and a volatile read do not change it.
  */
 int Unk02000df0::func_18() {
-    Unk0206bcf0 *game = func_0206bce0();
+    Unk0206bcf0 *game;
+    Unk020680d4 *sim;
+    Unk02000df0Player *player;
+    game = func_0206bce0();
     if (state == 0) {
         func_0200264c(this);
         func_0206bce0()->func_0206f560(true);
-        Unk02000df0Player *player = &data_020c43a8;
-        Unk020680d4 *sim = player->sim;
+        player = &data_020c43a8;
+        sim = player->sim;
         sim->func_18(item->func_1c());
         if (enter != 0) {
             anim = (Unk02063d84 *)func_02063d84(player->sim->anim);
