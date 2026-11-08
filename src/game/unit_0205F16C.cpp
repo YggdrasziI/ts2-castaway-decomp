@@ -137,8 +137,10 @@ void func_0205f280(Unk0205f314 *a, int n) {
 }
 
 /*
- * 99.06 %: locals declared first in this order (searched), k unsigned; register
- * allocation in the record loop still differs.
+ * 99.10 %: locals declared first in this order (searched); both counters unsigned,
+ * compared as int, give the original registers and signed branches. Left: in the
+ * first value loop the counter step is scheduled before the start reload in the
+ * original (condition orders, counter types, a second block local tried).
  */
 void func_0205f328(Unk020c3fc4 *db) {
     Unk0205cf00 *rec;
@@ -149,7 +151,7 @@ void func_0205f328(Unk020c3fc4 *db) {
     int index;
     Unk02093648Entry *entry;
     Unk02099c78Value *values;
-    int j;
+    u32 j;
     Unk02099c78Block *block;
     int i;
     func_02060acc(&data_020c409c);
@@ -174,7 +176,7 @@ void func_0205f328(Unk020c3fc4 *db) {
     db->count = i;
     func_0205f280(keys, i);
     size = 0;
-    for (j = 0; j < db->count; j++) {
+    for (j = 0; (int)j < db->count; j++) {
         index = keys[j].index;
         rec = &db->records[j];
         file = (Unk020956f8 *)db->archive->func_02093a9c(index);
@@ -183,7 +185,7 @@ void func_0205f328(Unk020c3fc4 *db) {
         rec->script = file;
         rec->key = entry->unk4;
         size += file->func_02094cc8() - file->func_02095098();
-        for (k = 0; k < j; k++) {
+        for (k = 0; (int)k < (int)j; k++) {
             if (db->records->key == rec->key) {
                 break;
             }
