@@ -1625,6 +1625,22 @@ Each fix was found by compiling scratch variants of one function and comparing t
   group, as only class body constants are here.  Moving the eleven fish states into the class body sorts their constants as one group
   but moves them in `.text` (out of the fish block, after their callers), so the original
   did not define them there as written here. Not reproduced yet (2026-11-08).
+- **Solved for `unit_020116E0.cpp` (2026-11-08, `.data` 100 %)**. Two mistakes had kept
+  the search below. (1) The `@` names that `symbols.txt` gives the original's constants
+  pair those with the same target arbitrarily: read which constant each user loads from
+  the anchor offsets in its code (`ldr rA, [rB, #off]` then `#off+4`) instead. With the
+  real positions the inverse heapsort leaves only one function split. (2) The heapsort
+  array starts with the file's uninitialized objects: one small uninitialized global
+  defined before the table (`int unused_020116e0;`, not in the ROM, dead-stripped)
+  gives the 14 positions together with a member order where func_10 / func_14 come
+  first and `func_020122e0` precedes `func_020121d8` (bodies parsed last member first,
+  so creation is the reverse member order). Method: for each user, anchor offset / 8 =
+  emitted position; search table position, extra objects (size, position) and keep the
+  creation orders where each function's constants stay together in statement order;
+  then set the member order to the reverse of that creation order. The model
+  (`mwcc_heapsort`) predicted our emitted order exactly before the extra object was
+  added. The same file had `Unk02061d08Item` 4 bytes short (`operator new` 0x48
+  against 0x4c).
 - `unit_020116E0.cpp`, the 14 constants numbered #1-#14 in source order (state functions in
   `.text` order, statement order inside each: #1 `func_020116e0`, #2-#3 `func_020118dc`,
   #4 `func_02011b54`, #5 `func_02011d14`, #6-#7 `func_02011de0`, #8-#9 `func_02011f40`, #10
