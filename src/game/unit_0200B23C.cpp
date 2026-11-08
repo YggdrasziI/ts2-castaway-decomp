@@ -804,7 +804,11 @@ bool Unk0200cec8::func_0200c550() {
             kind = func_020a5ec0() & 1;
         }
     } else {
-        kind = spawned < data_020ae5cc[map][3] + 10 ? 3 : 4;
+        if (spawned < data_020ae5cc[map][3] + 10) {
+            kind = 3;
+        } else {
+            kind = 4;
+        }
     }
     catches[spawned++].func_spawn(kind);
     return true;

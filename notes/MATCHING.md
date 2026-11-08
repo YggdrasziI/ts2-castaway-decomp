@@ -719,6 +719,9 @@ Each fix was found by compiling scratch variants of one function and comparing t
   computes the address after it as the original. A conditional expression assigned to a
   member (`result = i == 0x26 ? 1 : 2;`) scheduled `mov r0, this` before the store;
   `if` / `else` with one store each matched (`Unk0204d698::func_00`, 99.06 % -> 100 %).
+  A sweep of all such assignments in unfinished units (2026-11-08) found one more:
+  `kind = n < m ? 3 : 4;` as `else if` / `else` swapped `this` and `kind` back
+  (`func_0200c550`, 98.67 % -> 99.20 %); elsewhere it only lowered the score.
 - `why_diff.py` (objdiff `diff` on one function) can flag `bl` rows to a near-match
   function of the same unit while the full report scores the caller 100 %: check the
   masked words (`permute.score`) and `report_diff.py` before chasing them.
