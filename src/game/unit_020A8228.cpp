@@ -3,7 +3,7 @@
  * objects are created with the visibility, tile the size of the sprite and can share their image
  * with another sprite of the same file. Bounds: hypothesis (one class, from its constructor to the
  * next, and one vtable). All names are placeholders. Real file name unknown.
- * Not complete: func_020a87f4 is at 99.39 % (register allocation only).
+ * Not complete: func_020a87f4 is at 99.61 % (register allocation only; locals declared first, order searched).
  */
 #include "game/unk_layoutsprite.h"
 
@@ -226,11 +226,27 @@ extern "C" Unk0208f8b0 *func_020a87e8(Unk020a8228 *s, int index) {
 }
 
 extern "C" void func_020a87f4(Unk020a8228 *s, Unk020a9d58 *l) {
+    int px;
     u32 hash;
-    Unk02095140 *file;
-    Unk02093648 *archive;
+    int r;
+    int py;
     Unk020916a4 *oam;
+    Unk02093648 *archive;
+    Unk020a8228 *o;
+    int r2;
+    int col;
+    int c2;
+    int c3;
+    int i;
+    Unk02095140 *file;
+    int row;
+    int i2;
+    int value;
+    int r3;
+    int i3;
     int count;
+    int c;
+    int n;
     hash = func_020a69a4(s);
     if (hash == 0) {
         return;
@@ -250,9 +266,6 @@ extern "C" void func_020a87f4(Unk020a8228 *s, Unk020a9d58 *l) {
     }
     s->total = s->rows * s->cols;
     s->objects = new Unk0208f8b0 *[s->total];
-    int c;
-    int r;
-    int i;
     i = 0;
     for (r = 0; r < s->rows && i < s->total; r++) {
         for (c = 0; c < s->cols && i < s->total; c++, i++) {
@@ -260,17 +273,15 @@ extern "C" void func_020a87f4(Unk020a8228 *s, Unk020a9d58 *l) {
         }
     }
     if (func_020a82cc(s) == 1) {
-        Unk020a8228 *o = (Unk020a8228 *)((Unk020aa040Func)func_020aa040)(l, 11, 0);
-        int n = func_020aa034(l, 11);
+        o = (Unk020a8228 *)((Unk020aa040Func)func_020aa040)(l, 11, 0);
+        n = func_020aa034(l, 11);
         for (; n > 0; n--, o++) {
             if (o != s && hash == func_020a69a4(o)) {
-                int value = func_020a69cc(o);
+                value = func_020a69cc(o);
                 if (value == func_020a69cc(s)) {
                     value = func_020a8388(o);
                     if (value == func_020a8388(s) && func_020a87e8(o, 0) != 0) {
-                        int r2;
-                        int c2;
-                        int i2 = 0;
+                        i2 = 0;
                         for (r2 = 0; r2 < s->rows && i2 < s->total; r2++) {
                             for (c2 = 0; c2 < s->cols && i2 < s->total; c2++, i2++) {
                                 oam->func_02091de0(o->objects[i2], s->objects[i2]);
@@ -290,13 +301,11 @@ extern "C" void func_020a87f4(Unk020a8228 *s, Unk020a9d58 *l) {
     }
     s->offsetX = func_020a830c(s) ? s->func_10() - (int)func_fixed(s->cols * (1 << (s->objects[0]->unk10_0 + 3))) : 0;
     s->offsetY = func_020a834c(s) ? s->func_14() - (int)func_fixed(s->rows * (1 << (s->objects[0]->unk10_2 + 3))) : 0;
-    int px = s->offsetX + (s->x + (s->cellX + 1) * -(s->func_10() >> 1));
-    int py = s->offsetY + (s->y + (s->cellY + 1) * -(s->func_14() >> 1));
-    int row = func_020a834c(s) ? s->rows - 1 : 0;
-    int col = func_020a830c(s) ? s->cols - 1 : 0;
-    int r3;
-    int c3;
-    int i3 = 0;
+    px = s->offsetX + (s->x + (s->cellX + 1) * -(s->func_10() >> 1));
+    py = s->offsetY + (s->y + (s->cellY + 1) * -(s->func_14() >> 1));
+    row = func_020a834c(s) ? s->rows - 1 : 0;
+    col = func_020a830c(s) ? s->cols - 1 : 0;
+    i3 = 0;
     for (r3 = 0; r3 < s->rows && i3 < s->total; r3++) {
         for (c3 = 0; c3 < s->cols && i3 < s->total; c3++, i3++) {
             s->objects[i3]->unk0 = px + (int)func_fixed((1 << (s->objects[i3]->unk10_0 + 3)) * col);

@@ -387,7 +387,7 @@ bool Unk0202402c::func_10() {
  * swapped.
  *
  * Other gaps: func_020266d4 90.29 % (`this` spilled instead of the colour),
- * func_02026c40 91.20 %, func_02026d18 91.57 %, func_02026e4c 93.46 % and
+ * func_02026c40 91.76 %, func_02026d18 91.57 %, func_02026e4c 93.46 % and
  * func_02026de4 70.00 % (scheduling of the tile index; locals, term orders,
  * `8 << n`, divisions and a word local tried),
  * func_02026584 97.88 %, func_020267ec 98.55 %, func_38 99.23 %, func_3c 99.36 %.
@@ -1046,10 +1046,15 @@ void Unk0202402c::func_020267ec(short x, short y, int old) {
 }
 
 void Unk0202402c::func_02026c40(int x, int y, u8 c) {
-    int originY = y;
-    int originX = x;
-    int bottom = y + 0x10;
-    int right = x + 0x10;
+    int originY;
+    int bottom;
+    int right;
+    int originX;
+    int px;
+    originY = y;
+    originX = x;
+    bottom = y + 0x10;
+    right = x + 0x10;
     if (x < 0) {
         x = 0;
     }
@@ -1063,7 +1068,7 @@ void Unk0202402c::func_02026c40(int x, int y, u8 c) {
         bottom = 0x80;
     }
     for (; y < bottom; y++) {
-        for (int px = x; px < right; px++) {
+        for (px = x; px < right; px++) {
             if (func_02026de4(brushSprite, px - originX, y - originY)) {
                 func_02026e4c(px, y, c);
             }

@@ -137,13 +137,13 @@ void func_0205f280(Unk0205f314 *a, int n) {
 }
 
 /*
- * 98.77 %: locals declared first in this order (searched); register
+ * 99.06 %: locals declared first in this order (searched), k unsigned; register
  * allocation in the record loop still differs.
  */
 void func_0205f328(Unk020c3fc4 *db) {
     Unk0205cf00 *rec;
     Unk0205f314 *keys;
-    int k;
+    u32 k;
     Unk020956f8 *file;
     int size;
     int index;
