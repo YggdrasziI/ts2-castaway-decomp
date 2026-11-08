@@ -379,10 +379,11 @@ bool Unk0202402c::func_10() {
 }
 
 /*
- * 95.58 %: `this` is spilled like the original, but the main screen flag and the
+ * 96.70 %: `this` is spilled like the original, but the main screen flag and the
  * loop counters take other stack slots and registers (the row height and the
- * small swatch height are not rebuilt per row). The zeroing of the flags uses
- * sp-relative adds, the original a pointer. Tried: a real loop (worse),
+ * small swatch height are not rebuilt per row). The flags are cleared by an
+ * aggregate initializer (element stores give sp-relative adds). Tried: a real
+ * loop (worse),
  * `row * 0x13 + 8` (moves `this` to r11, 78 %), the branches of the flag test
  * swapped.
  *
@@ -443,23 +444,7 @@ void Unk0202402c::func_020244f8() {
     accept.flags |= 4;
     accept.func_0c(1);
 
-    u8 owned[15];
-    u8 *clear = owned;
-    clear[0] = 0;
-    clear[1] = 0;
-    clear[2] = 0;
-    clear[3] = 0;
-    clear[4] = 0;
-    clear[5] = 0;
-    clear[6] = 0;
-    clear[7] = 0;
-    clear[8] = 0;
-    clear[9] = 0;
-    clear[10] = 0;
-    clear[11] = 0;
-    clear[12] = 0;
-    clear[13] = 0;
-    clear[14] = 0;
+    u8 owned[15] = {0};
     Unk020547f8 list;
     func_02054d94(&data_020bfc9c, &list, data_020ae7e0, 1, 1);
     bool any = list.count > 0;
