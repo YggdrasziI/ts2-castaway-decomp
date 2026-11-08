@@ -22,9 +22,13 @@ Opcode numbers are the compiler's own; no names are given for them. The compiler
 not modified and the object written under build/mwcc_blocks/ is identical to the
 build's.
 
+With --like <src/...cpp>, the source can be any file (a scratch test): it is copied
+to build/micro/ and compiled with the build command of the given unit.
+
 Usage:
   python tools/mwcc_sched.py <src/...cpp> --list
   python tools/mwcc_sched.py <src/...cpp> <symbol> [--select] [--colors] [--version eur]
+  python tools/mwcc_sched.py <test.cpp> <symbol> --like <src/...cpp> [--colors]
 
 Every function whose name is <symbol> is traced (a constructor's C1 and C2 have
 different names). Blocks are numbered from 0 in each pass.
@@ -32,6 +36,7 @@ different names). Blocks are numbered from 0 in each pass.
 
 import argparse
 import os
+import shutil
 import struct
 import sys
 
@@ -248,6 +253,7 @@ def main():
     ap.add_argument("--select", action="store_true", help="trace each pick of the first pass")
     ap.add_argument("--colors", action="store_true", help="print the order registers are colored in")
     ap.add_argument("--version", default="eur")
+    ap.add_argument("--like", help="compile SOURCE with the build command of this unit")
     a = ap.parse_args()
     if (a.symbol is None) == (not a.list) or (a.list and (a.select or a.colors)):
         ap.error("give either a symbol (with or without --select, --colors) or --list")
@@ -256,7 +262,18 @@ def main():
     if struct.calcsize("P") != 8:
         sys.exit("mwcc_sched: needs a 64-bit Python (DEBUG_EVENT layout)")
     mb.load_kernel32()
-    names = trace(mb.build_command(a.source, a.version)[1], None if a.list else a.symbol, a.select, a.colors)
+    source = a.source
+    if a.like:
+        root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+        dst = os.path.join(root, "build", "micro", os.path.basename(a.source))
+        os.makedirs(os.path.dirname(dst), exist_ok=True)
+        shutil.copy(a.source, dst)
+        source = os.path.relpath(dst, root)
+        unit = os.path.normpath(os.path.relpath(os.path.abspath(a.like), root))
+        base = mb.compile_command(unit, a.version)
+        args = [source if os.path.normpath(x) == unit else x for x in base]
+        mb.compile_command = lambda _source, _version: args
+    names = trace(mb.build_command(source, a.version)[1], None if a.list else a.symbol, a.select, a.colors)
     if a.list:
         print("\n".join(names))
     elif a.symbol not in names:
