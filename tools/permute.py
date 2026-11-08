@@ -504,8 +504,9 @@ class Search:
         return list(self.ex.map(self.run, range(len(C)), C))
 
 
-def cleanup(s, body, L):
-    """Revert every difference from the original body that the match does not need."""
+def cleanup(s, body, L, goal=0):
+    """Revert every difference from the original body that a score of `goal` does not need
+    (0: the match; the best score for a closest form)."""
     changed = True
     while changed:
         changed = False
@@ -514,7 +515,7 @@ def cleanup(s, body, L):
         for k in range(0, len(C), s.workers):
             part = C[k : k + s.workers]
             R = s.batch(part)
-            ok = [x for r, x in zip(R, part) if r == 0]
+            ok = [x for r, x in zip(R, part) if r <= goal]
             if ok:
                 L = min(ok, key=lambda x: sum(a != b for a, b in zip(x, body)))
                 changed = True
@@ -583,9 +584,10 @@ def main():
                 cur, curL = best, bestL
         print("done", n, "variants, best", best, flush=True)
         if 0 < best < start and o.out:  # not a match: keep the closest form for the next run
+            bestL = cleanup(s, body, bestL, best)
             os.makedirs(o.out, exist_ok=True)
             with open(os.path.join(o.out, o.symbol + ".best.txt"), "w", encoding="utf-8", newline="\n") as f:
-                f.write("%s score %d (start %d)\n%s\n%s\n}\n" % (src, best, start, m.group(0).rstrip("\n"), "\n".join(bestL)))
+                f.write("%s score %s (start %s)\n%s\n%s\n}\n" % (src, round(best, 3), round(start, 3), m.group(0).rstrip("\n"), "\n".join(bestL)))
         if best == 0 and o.out:
             bestL = cleanup(s, body, bestL)
             os.makedirs(o.out, exist_ok=True)

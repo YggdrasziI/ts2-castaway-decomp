@@ -2180,8 +2180,10 @@ body too. A few hundred variants take about a minute: it is a first pass before 
   count). Its scale stays in words (objdiff's missing percent times the function's words
   / 100), so the thresholds of the search keep their meaning. A 90 s run took
   `func_02067970` from 96.61 to 97.12 %: a `u32` loop counter, which gives the original
-  registers with an unsigned test; its `.best.txt` is not reduced (only a 0 is), so
-  try its changes one at a time.
+  registers with an unsigned test. The closest form (`.best.txt`) is now reduced as a
+  match is: each change is reverted when the best score holds without it.
+  `func_020573a4` (93.38 -> 94.01 %) came out as two changes, the tile test operands read
+  into locals and the two stores of the cell swapped.
 - The rewrites keep the behaviour only as far as a line-based liveness check can tell
   (no flow analysis): a first version reused a variable that another `else if` branch
   writes and a later line reads. Read each kept diff.
