@@ -1622,7 +1622,11 @@ Each fix was found by compiling scratch variants of one function and comparing t
   original #7, #10, #11-#13, #8-#9, #2-#3, #5, #4, #6, #14, #1. Ours is mostly the last member
   first with #3, #6 and #1 created late; in the original `func_020121d8` precedes
   `func_020122e0`, `func_14` and `func_020116e0` come last and #7 first: not a plain member
-  order (open).
+  order (open). Ours is reproduced exactly by `mwcc_heapsort` over 15 objects: the 112-byte
+  table `data_020b7c6c` defined first, then the constants last member first, statements in
+  order (#14, #11-#13, #10, #8-#9, #6-#7, #5, #4, #2-#3, #1). For the original no position of
+  the table gives a member order with each function's constants together, and one or two
+  extra objects of any size (dead-stripped later) do not give it either (scratch search).
 - Without `ipa`, the constants of inline member functions defined in class bodies
   are not emitted in `@` number order (two-class scratch test: `a2 a0 a1`, `b0 b2
   b1`); their order matches the symbol table order of the target functions. Rule
