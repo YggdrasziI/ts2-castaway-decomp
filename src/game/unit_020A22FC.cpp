@@ -955,7 +955,6 @@ extern "C" int func_020a2c9c(Unk020a267c *p) {
     return i;
 }
 
-/* 99.2 %: p and hash registers swapped. */
 extern "C" int func_020a2ce8(Unk020a267c *p, int hash, int volume, bool immediate) {
     int group;
     int id;
@@ -969,9 +968,9 @@ extern "C" int func_020a2ce8(Unk020a267c *p, int hash, int volume, bool immediat
         func_020897b4("Could not find sound to match hash %i", hash);
         return -1;
     }
-    hash = func_020a2e34(p, group);
+    int seq = func_020a2e34(p, group);
     void *handle = &p->handles[index];
-    if (NNS_SndArcPlayerStartSeqArc(handle, hash, id) != 0) {
+    if (NNS_SndArcPlayerStartSeqArc(handle, seq, id) != 0) {
         func_0209b0c4(handle, 0xffff, volume);
         if (immediate) {
             func_0209b094(handle, 0xffff, 0);
@@ -980,7 +979,7 @@ extern "C" int func_020a2ce8(Unk020a267c *p, int hash, int volume, bool immediat
             func_0209b094(handle, 0xffff, func_020a2a00(p, 0, p->unkd8));
             func_0209b064(handle, p->unke4);
         }
-        return (index << 16) + (hash << 8) + id;
+        return (index << 16) + (seq << 8) + id;
     }
     func_020897b4("  - Could not start playing sound effect, Nitro error. Check if sound effect exists and archive built properly.");
     return -1;

@@ -285,6 +285,10 @@ default: add one here only once a unit of this ROM proves it with mwccarm.
   highest slot (`func_02052a74`, 99.85 % -> 99.99 %). The data tree reads of the
   same function take their slots in expansion order once written as inline
   helpers (`func_named`, `func_value`), after the caller's named nodes (100 %).
+- The reverse also happens: two callee-saved registers swapped between a
+  parameter and the value written over it (`hash = func_020a2e34(p, group);`)
+  match once the value gets its own local (`int seq = ...`, `func_020a2ce8`,
+  99.2 % -> 100 %). Try both forms.
 - A bool argument built from a flag: `(flags & 1) != 0` and `(flags & 1) ? 1 : 0`
   give the same `movne` / `moveq` but different loop registers around the call
   (`func_0201be00`, 99.7 % -> 100 %).
