@@ -962,7 +962,7 @@ bool func_02056f6c(Unk02056f6c *q) {
     return false;
 }
 
-/* Not complete (93.4 %): the original keeps lot and out on the stack, reuses the
+/* Not complete (94.01 %): the original keeps lot and out on the stack, reuses the
  * cell coordinates of the valid test and keeps (link + 1) unshifted. The const view
  * of the layer in the inner loop test gives the reload of the width. */
 bool func_020573a4(Unk02058788 *lot, Unk020680d4Cell *out, int map) {
@@ -1022,10 +1022,12 @@ bool func_020573a4(Unk02058788 *lot, Unk020680d4Cell *out, int map) {
             Unk02056ed0 *layer = &lot->rooms[r].layers[l];
             for (u32 y = 0; y < layer->info->height; y++) {
                 for (u32 x = 0; x < ((const Unk02056ed0 *)layer)->info->width; x++) {
-                    if ((layer->func_tile(x, y)->flags & 0x3000) == ((link + 1) << 12)) {
+                    int want = (link + 1) << 12;
+                    int flags = layer->func_tile(x, y)->flags & 0x3000;
+                    if (flags == want) {
                         out->pos = layer->cell;
-                        out->xy.x = x;
                         out->xy.y = y;
+                        out->xy.x = x;
                         return true;
                     }
                 }
