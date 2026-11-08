@@ -590,9 +590,12 @@ int func_02056354(Unk02055ef8Node *n, int x, int y) {
     return func_02097a6c((u32)((dx * dx + dy * dy) << 12));
 }
 
-/* Not complete (91 %): the original tests the cast lot file for null
- * (cmp r0,#0; moveq r0,#0), has a 0x30-byte frame instead of 0x34, and its
- * registers are shifted by one. */
+/* Not complete (92.99 %): the original has a 0x30-byte frame instead of 0x34 and
+ * its registers are shifted by one. Its effects loop loads &data_020c7d38 from the
+ * pool at each call (ours keeps it in a register and spills the layer offset), and
+ * it stores data_020c3b48.id through the symbol where ours goes through the `.bss`
+ * anchor; moving the definitions below the first users changes the `.bss` order.
+ * The bounds loop walks the rooms through `room` like the original. */
 Unk02058788::Unk02058788(int map, Unk02093648 *archive, bool current)
     : unk4(0), unk6(0), unk8(0), unka(0), textures(0) {
     Unk020c3ba4 *world = &data_020c3ba4;
@@ -678,8 +681,9 @@ Unk02058788::Unk02058788(int map, Unk02093648 *archive, bool current)
     int maxX = 0x80000000;
     int maxY = 0x80000000;
     for (int r = 0; r < header->roomCount; r++) {
-        for (int l = 0; l < rooms[r].info->layerCount; l++) {
-            Unk0205350c *i = rooms[r].layers[l].info;
+        room = &rooms[r];
+        for (int l = 0; l < room->info->layerCount; l++) {
+            Unk0205350c *i = room->layers[l].info;
             if (i->x0 < minX) {
                 minX = i->x0;
             }
