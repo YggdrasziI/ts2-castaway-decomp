@@ -154,11 +154,13 @@ int Unk02051da0::func_020521a8() {
     return (func_lerp(this) + 0x800) >> 12;
 }
 
+/* An 8-byte block copy: loads both words before the stores. */
+struct Unk02098e70Wrap {
+    Unk02098e70 v;
+};
+
 static inline void func_set(Unk02098e70 &v, const Unk02098e70 &p) {
-    int y = p.y;
-    int x = p.x;
-    v.x = x;
-    v.y = y;
+    *(Unk02098e70Wrap *)&v = *(Unk02098e70Wrap *)&p;
 }
 
 static inline int func_dead(int d, int zone) {
@@ -171,10 +173,6 @@ static inline int func_dead(int d, int zone) {
     return 0;
 }
 
-/*
- * 99.83 %: the original copies the touch point to `last` with x in r1 and y in
- * r0 (loaded x first); this code loads y first. Same instructions otherwise.
- */
 bool Unk02051da0::func_0c(bool done) {
     Unk02098e70 p = func_020a07bc(data_020d6240.input, 1);
     if (done) {
