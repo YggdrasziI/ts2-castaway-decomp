@@ -238,8 +238,8 @@ public:
                 func_die();
             }
             func_020acbc8(&move);
-            move.speed += move.dir.x;
-            move.unk14 += move.dir.y;
+            pos.x += move.dir.x;
+            pos.y += move.dir.y;
         }
         void func_02018900() {
             if (angle * 6 > func_02010efc() << 13) {
@@ -763,7 +763,7 @@ inline void Unk0201a4e0::func_0201af10(Unk0201a2c8 *o, Unk020a7c90 *a, Unk020a7c
         rects[i] = owner->rects[i];
     }
     func_0200df54(this);
-    misses = 1;
+    anim.mode = 1;
     func_reset();
 }
 
