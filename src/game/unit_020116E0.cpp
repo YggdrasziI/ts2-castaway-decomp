@@ -216,10 +216,8 @@ public:
         } else {
             pressed = 0;
         }
-        u32 i = 0;
-        Unk020116e0Note *n = &data_020b7c6c[key];
-        for (; i < 5; i++) {
-            if (n->mask & (1 << i)) {
+        for (u32 i = 0; i < 5; i++) {
+            if (data_020b7c6c[key].mask & (1 << i)) {
                 func_020a7cf0(keys[i], true);
             } else {
                 func_020a7cf0(keys[i], false);
