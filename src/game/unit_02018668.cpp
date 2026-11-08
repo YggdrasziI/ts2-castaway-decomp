@@ -24,7 +24,7 @@
  * (`func_02018f1c`: the original reloads `sound` for the first sound compare;
  * `func_0201a12c`, `func_14`, `func_18`,
  * `func_02018900` (stack slots of the vector temporaries), `func_02019b18`,
- * `func_02019444`, `func_02019bd0`). `.rodata`: the last word 0xC5A28EFA is never
+ * `func_02019bd0`). `.rodata`: the last word 0xC5A28EFA is never
  * loaded and not reproduced.
  */
 
