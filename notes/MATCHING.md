@@ -1701,6 +1701,23 @@ Each fix was found by compiling scratch variants of one function and comparing t
   - `func_14` defined outside as `inline` (with a one-line helper for its constant)
     comes out among the virtual functions in declaration order, as in the original;
     its string literals then get `_ZZ...func_14EvEs` names, set in `symbols.txt`.
+  - two vector results computed twice with reused locals (`p = ...; s = ...;` a
+    second time) copy the new values into the old slots; an inline helper returning
+    the combined point (`func_at(a)`), called twice, gives the original's fresh
+    temporaries (`func_0200b488` 94.7 % -> 100 %);
+  - a virtual call on a global object is devirtualized; the original's call through
+    the vtable comes from a pointer local (`Unk020c43a8Screen *scr = &data_020c43a8`);
+  - a pool word to a symbol with a large store offset (`[r1, #0xa0]`) means a field
+    of a bigger object: write the offset in the source, not at the symbol;
+  - a field-by-field copy that loads the four words before the stores: copy through
+    four locals (`int x0 = o.a, ...`), not a struct assignment (`ldmia`/`stmia`) nor
+    four direct assignments (interleaved);
+  - a spawn written with out-of-line wrappers in one function and inline in another:
+    the wrapper version as an inline member of the spawned object, called as
+    `catches[spawned++].func_spawn(kind)`, fixes its stack slots (`func_0200c550`);
+  - a search-and-replace of a pattern that also occurs in another function silently
+    removed that function's declarations, and the file still compiled: check the
+    count of matches before replacing.
 - **Solved for `unit_020116E0.cpp` (2026-11-08, `.data` 100 %)**. Two mistakes had kept
   the search below. (1) The `@` names that `symbols.txt` gives the original's constants
   pair those with the same target arbitrarily: read which constant each user loads from
