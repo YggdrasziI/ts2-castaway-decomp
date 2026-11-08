@@ -17,8 +17,10 @@
  * (99.47 %: stack slots of the temporaries),
  * `func_02015368` (the original writes the countdown through a second address),
  * `__sinit` (the second and third rectangles have their own pool entries in the
- * original), `func_02016484` (stack slots of the temporaries; the point loops index
- * the array like the original only with element stores) and smaller ones
+ * original), `func_02016484` (99.73 %: stack slots of the temporaries and one
+ * register of the first fish loop; the point loops index the array like the
+ * original only with element stores; both fish loops want their counter declared
+ * before the pointer, the first one stepping the pointer first) and smaller ones
  * (registers). Several `func_go*` helpers
  * exist only to place their pointer to member constant where the original has it: the
  * real form is unknown.
@@ -1122,8 +1124,9 @@ void Unk02015408::func_02016484() {
                 }
                 func_020a69ac(line.sprites[28], 0);
                 func_set(line.vel, Unk02098e70(0, -0x1000));
+                u32 i;
                 Unk02015790 *f = fish;
-                for (u32 i = 0; i < 3; i++, f++) {
+                for (i = 0; i < 3; f++, i++) {
                     if ((f->func_is394() || f->func_is56c()) && f->func_0200df08()->func_02098fcc(p).func_02098e94() < 0x400000) {
                         f->state = &Unk02015790::func_02014c40;
                     }
@@ -1175,8 +1178,9 @@ void Unk02015408::func_02016484() {
     panel0.func_14(scroll.x, scroll.y);
     line.func_02015844();
     func_02016208();
+    int i;
     Unk02015790 *f = fish;
-    for (int i = 0; i < 3; i++, f++) {
+    for (i = 0; i < 3; i++, f++) {
         func_0200de30(f);
         f->func_020173f4();
         (f->*(f->state))();

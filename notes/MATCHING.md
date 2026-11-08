@@ -714,6 +714,12 @@ Each fix was found by compiling scratch variants of one function and comparing t
   with a script took `func_02099678` from 89.9 % to 99.3 % and `func_020993d8` to
   99.8 %. Removing a temporary (`end = a + b; ... rest = end - c` -> `rest = a + b -
   c`) fixed the last swap (100 %).
+- A loop stepping both a counter and an element pointer (`for (i = 0; i < 3; i++,
+  f++)`): the counter declared before the pointer (`int i; T *f = fish; for (i = 0;
+  ...)`) and the increments in the original's order (`f++, i++` when the original
+  adds the stride before the counter) fixed both registers and the order of the two
+  `add` (`func_02016484`, 99.39 % -> 99.73 %; the permuter, whose debug lines all fell
+  on the closing brace, found nothing in 180 s).
 - Assigning a member from a conditional: `m = c ? a : b;` (or `if` / `else` on the
   parameter before the store) keeps the result in the parameter register and stores
   each member alone; computing it first and storing both members after gave a second
