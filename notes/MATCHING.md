@@ -726,6 +726,10 @@ Each fix was found by compiling scratch variants of one function and comparing t
   func(indices[i])`): the original reloaded it after the stores where ours kept the first
   load; reading it through a pointer (`int *idx = indices;`) makes mwccarm assume the
   stores may alias and reload (`Unk0201e300` constructor, 98.57 % -> 98.81 %).
+- A call taking a value just stored to a member, with the store first and no reload
+  (`str r0, [r4, #m]; mov r1, #0; bl`): `f(member = x, 0)` reloads the member (a C++
+  assignment is an lvalue), `member = x; f(member, 0)` schedules the `mov` before the
+  store; `member = s = x; f(s, 0)` matched (`Unk020116e0::func_14`, 99.31 % -> 100 %).
 - `why_diff.py` (objdiff `diff` on one function) can flag `bl` rows to a near-match
   function of the same unit while the full report scores the caller 100 %: check the
   masked words (`permute.score`) and `report_diff.py` before chasing them.

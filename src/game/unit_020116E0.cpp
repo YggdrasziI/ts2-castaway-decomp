@@ -276,7 +276,9 @@ public:
         notes[0] = func_020aa04c(&layout1, func_020a7b50(&names1, 0x4e4667c8));
         notes[1] = func_020aa04c(&layout1, func_020a7b50(&names1, 0x4e4667c9));
         notes[2] = func_020aa04c(&layout1, func_020a7b50(&names1, 0x4e4667ca));
-        func_020a7c90(sprite = func_020aa04c(&layout1, func_020a7b50(&names1, 0x4ace1535)), 0);
+        Unk020a7c90 *s;
+        sprite = s = func_020aa04c(&layout1, func_020a7b50(&names1, 0x4ace1535));
+        func_020a7c90(s, 0);
         func_020a7cac(sprite, 0);
         func_020a7cf0(sprite, 0);
         int i;
