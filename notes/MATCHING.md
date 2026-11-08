@@ -722,6 +722,10 @@ Each fix was found by compiling scratch variants of one function and comparing t
   A sweep of all such assignments in unfinished units (2026-11-08) found one more:
   `kind = n < m ? 3 : 4;` as `else if` / `else` swapped `this` and `kind` back
   (`func_0200c550`, 98.67 % -> 99.20 %); elsewhere it only lowered the score.
+- A local array read twice around stores to members (`needs[i].need = indices[i]; ...
+  func(indices[i])`): the original reloaded it after the stores where ours kept the first
+  load; reading it through a pointer (`int *idx = indices;`) makes mwccarm assume the
+  stores may alias and reload (`Unk0201e300` constructor, 98.57 % -> 98.81 %).
 - `why_diff.py` (objdiff `diff` on one function) can flag `bl` rows to a near-match
   function of the same unit while the full report scores the caller 100 %: check the
   masked words (`permute.score`) and `report_diff.py` before chasing them.

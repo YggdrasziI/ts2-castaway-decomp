@@ -392,9 +392,10 @@ int func_0201e2b0(Unk020548b0Node *n) {
 }
 
 /*
- * 98.47 %: registers of the cloud and need loops; the original reloads the need
- * index from the stack table after each store and keeps the third table address
- * loaded earlier.
+ * 98.81 %: registers of the cloud and need loops. Reading the need indices
+ * through a pointer reloads each one after the stores, as the original; it
+ * also keeps the player address loaded before the loop and computes the need
+ * address again after the call.
  */
 Unk0201e300::Unk0201e300()
     : flags(0), unk10(1), icon(0), nextIcon(0), shown(-1), layout1(0), clock(0), from1(0), from2(0), to1(0), to2(0),
@@ -473,10 +474,11 @@ Unk0201e300::Unk0201e300()
     int frames[4] = {3, 0, 2, 1};
     int indices[4] = {0, 1, 2, 3};
     int masks[4] = {0x40, 0x80, 0x100, 0x200};
+    int *idx = indices;
     for (int i = 0; i < 4; i++) {
-        needs[i].need = indices[i];
+        needs[i].need = idx[i];
         needs[i].mask = masks[i];
-        needs[i].value = func_02066488(&data_020c43a8, indices[i])->value;
+        needs[i].value = func_02066488(&data_020c43a8, idx[i])->value;
         needs[i].frame = frames[i];
         needs[i].changed = 0;
     }
