@@ -1891,8 +1891,9 @@ Rules found with small test files compiled with the game flags (2026-11-08):
   `Unk0206bcf0::func_02071fdc`. `func_set` is still not always right: in a loop it is
   strength-reduced (above, "Indexed stores in a copy loop").
 - **Stack slots: the first local created gets the highest offset**, for named locals,
-  temporaries, locals of nested blocks and of inlined functions alike. Reordering the
-  declarations reorders the slots (`func_02071fdc`: the hit list declared before the
+  locals of nested blocks and of inlined functions alike, and the unnamed temporaries
+  (a returned struct passed on, `f(V(0, 0, 1))`) all come below the named locals, again
+  first created highest. Reordering the declarations reorders the slots (`func_02071fdc`: the hit list declared before the
   touched point). An original whose slots come in the reverse of the order of use
   (`Unk0200cec8::func_0200c550`: `view` at sp+0) is not explained by this rule.
 
