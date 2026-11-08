@@ -563,7 +563,7 @@ void Unk0200cec8::func_0200bab4() {
         player.flags.func_set();
         for (int i = 0; i < 15; i++) {
             if (catches[i].func_idle() == UNK_0200C308_BUSY) {
-                func_set(catches[i].touch, p);
+                catches[i].touch = p;
                 catches[i].flags.func_set();
             }
         }
