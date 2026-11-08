@@ -587,6 +587,18 @@ Each fix was found by compiling scratch variants of one function and comparing t
   not `n *= 2;` before the `if`. The stack argument then loads into the original register
   (`Unk020916a4::func_0209201c`).
 
+### Local arrays and point copies (2026-11-08)
+
+- **`= {0}` for a cleared local array.** `add r1, sp, #N`, then `add r3, r1, #k` before each
+  byte store: the array is cleared by an aggregate initializer (`u8 owned[15] = {0};`).
+  Element stores, even through a pointer local, give one `add rN, sp, #N+k` each
+  (`Unk0202402c::func_020244f8`, 95.58 % -> 96.70 %).
+- **Indexed stores in a copy loop.** `add r2, rBase, i, lsl #3` and `str [r2, #off]` inside
+  the loop: the element is assigned (`a[i] = q;`, or its fields one by one). The 8-byte
+  block copy `func_set` (unk_fishing.h) is strength-reduced to a pointer that steps by 8
+  (`Unk02015408::func_02016484`, 98.60 % -> 99.39 %; `Unk0200cec8::func_0200bab4`,
+  91.10 % -> 93.06 %).
+
 ## Inlining and emission order
 
 - Inline virtual functions called through an object's vtable are emitted right after
