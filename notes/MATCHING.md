@@ -289,6 +289,12 @@ default: add one here only once a unit of this ROM proves it with mwccarm.
   parameter and the value written over it (`hash = func_020a2e34(p, group);`)
   match once the value gets its own local (`int seq = ...`, `func_020a2ce8`,
   99.2 % -> 100 %). Try both forms.
+- Screen input handlers (`func_3c(bool done)`) chain the flag through each
+  button: write every result back to `done` (or to one local for the whole
+  chain), never a new local for one link of it (`bool used = ...`,
+  `bool last = ...`) or a nested call `b.func_0c(a.func_0c(done))`. Four
+  handlers went from 99.4-99.85 % to 100 % (screens 02021CBC, 0202AEF4,
+  0202CDF0, 0202FDDC).
 - A bool argument built from a flag: `(flags & 1) != 0` and `(flags & 1) ? 1 : 0`
   give the same `movne` / `moveq` but different loop registers around the call
   (`func_0201be00`, 99.7 % -> 100 %).

@@ -365,10 +365,6 @@ bool Unk02021cbc::func_10() {
     return false;
 }
 
-/*
- * 99.41 %: the result of the second scroll bar and the loop offset swap r7 and r6.
- * Tried: other declaration orders of the index and of the result, an int result.
- */
 bool Unk02021cbc::func_3c(bool done) {
     if (!func_30()) {
         done = true;
@@ -378,13 +374,13 @@ bool Unk02021cbc::func_3c(bool done) {
     if (scrollX.touch.flags & 1) {
         x = scrollX.func_02052184();
     }
-    bool used = scrollY.func_0c(done);
+    done = scrollY.func_0c(done);
     if (scrollY.touch.flags & 1) {
         y = scrollY.func_02052184();
     }
     bool held = false;
     bool drag = dragged > 10;
-    bool locked = drag || used;
+    bool locked = drag || done;
     if (func_020a078c(data_020d6240.input, 1)) {
         int px = func_02097a4c()->x;
         int py = func_02097a4c()->y;
@@ -410,19 +406,19 @@ bool Unk02021cbc::func_3c(bool done) {
         }
     }
     if (locked && !drag) {
-        used = true;
+        done = true;
     }
     if (func_020a075c(data_020d6240.input, 1)) {
         lastX = func_02097a4c()->x;
         lastY = func_02097a4c()->y;
     }
-    if (func_020a078c(data_020d6240.input, 1) && !used) {
+    if (func_020a078c(data_020d6240.input, 1) && !done) {
         int px = func_02097a4c()->x;
         int py = func_02097a4c()->y;
         if (px >= 10 && px <= 0xd2 && py >= 9 && py <= 0xb5 && (px > 0x1a || py > 0x17)) {
             int dx = px - lastX;
             int dy = py - lastY;
-            used = true;
+            done = true;
             if (dx > 1) {
                 dx -= 1;
             } else if (dx < -1) {
@@ -452,7 +448,7 @@ bool Unk02021cbc::func_3c(bool done) {
     } else {
         dragged = 0;
     }
-    return used;
+    return done;
 }
 
 void Unk02021cbc::func_02022718() {

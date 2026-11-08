@@ -457,21 +457,17 @@ void Unk0202aef4::func_0202c430() {
     }
 }
 
-/*
- * 99.49 %: `result` is in r6 here, r9 in the original, and the two loop pointers
- * follow. Tried: the index declared first (the best), `done` kept, a separate
- * local for the first button.
- */
 bool Unk0202aef4::func_3c(bool done) {
     if (!func_30() || !(flags & 2)) {
         done = true;
     }
     int i;
     int n;
-    bool result = next.func_0c(prev.func_0c(done));
+    done = prev.func_0c(done);
+    done = next.func_0c(done);
     n = 0;
     for (i = page * 4; i < 20 && n < 4; i++, n++) {
-        result = buttons[n].func_0c(result);
+        done = buttons[n].func_0c(done);
         if (buttons[n].touch.flags & 8) {
             func_02028eec(owner, 0x1a, func_0205f714(&data_020c3fc4, entries[i].key, 0), 0);
             func_020292c0(owner, 0x1a);
@@ -494,7 +490,7 @@ bool Unk0202aef4::func_3c(bool done) {
         func_0202cc80(&panel);
         func_020a7ce0(pager.func_02051ad0(0));
     }
-    done = back.func_0c(result);
+    done = back.func_0c(done);
     if (back.touch.flags & 8) {
         func_0202923c(owner);
         func_0202cd6c(&panel3);

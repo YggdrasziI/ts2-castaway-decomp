@@ -489,10 +489,6 @@ void Unk020b9e88::func_1c(Unk020b9e88Track *x, Unk020b9e88Track *y) {
     trackY = y;
 }
 
-/*
- * 99.72 %: `down` takes r7 and the loop's two pointers r8, r9; the original has
- * the pointers in r7, r8 and `down` in r9.
- */
 bool Unk0202fddc::func_3c(bool done) {
     if (!func_30()) {
         done = true;
@@ -511,12 +507,7 @@ bool Unk0202fddc::func_3c(bool done) {
         func_02028eec(owner, mode, data_020b93bc.cur, 0);
     }
     int i;
-    bool down;
-    if (last || !confirm.func_3c()) {
-        down = true;
-    } else {
-        down = false;
-    }
+    bool down = last || !confirm.func_3c();
     for (i = 0; i < buttonCount; i++) {
         down = buttons[i].func_0c(down);
         if (buttons[i].touch.flags & 8) {
