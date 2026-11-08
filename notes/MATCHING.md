@@ -1896,6 +1896,15 @@ Rules found with small test files compiled with the game flags (2026-11-08):
   first created highest. Reordering the declarations reorders the slots (`func_02071fdc`: the hit list declared before the
   touched point). An original whose slots come in the reverse of the order of use
   (`Unk0200cec8::func_0200c550`: `view` at sp+0) is not explained by this rule.
+- **A rotated set of callee-saved registers in a loop can come from the counter's
+  type.** In the button loop of `Unk02033ee0::Unk02033ee0` (99.63 % -> 100 %, found by
+  the focused permuter) the original's coloring came from `for (u32 i = 0; (int)i < 4;
+  i++)` plus a second sprite local declared at the top of the function and copied from
+  the first (`f2 = f;`). An unsigned counter turns `FX32(0x1b + i * 0x25)` into the
+  unsigned conversion (`_ffltu`, `beq`); `FX32((int)(0x1b + i * 0x25))` restores the
+  signed one (`_fflt`, `ble`) without changing the registers, while `(int)i` inside the
+  sum changes everything. When a permuter result differs only in such a conversion,
+  cast the whole argument.
 
 ## Source permuter
 
