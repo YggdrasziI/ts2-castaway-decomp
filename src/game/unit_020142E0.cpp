@@ -799,6 +799,12 @@ Unk02015830::Unk02015830(const Unk02098e70 &v) {
     *(Unk02098e70Wrap *)this = *(Unk02098e70Wrap *)&v;
 }
 
+static inline void func_put(Unk02098e70 &d, const Unk02098e70 &s) {
+    int x = s.x, y = s.y;
+    d.x = x;
+    d.y = y;
+}
+
 void Unk0201567c::func_02015844() {
     if (state == 0) {
         return;
@@ -851,26 +857,25 @@ void Unk0201567c::func_02015844() {
     func_020a7cc8(sprites[0], points[0].x, points[0].y);
     func_020a7cc8(sprites[28], tip.x, tip.y);
     int step = func_02077b3c(len, 7);
+    u32 i;
     int d = step;
-    for (u32 i = 1; i < 7; i++, d += step) {
+    for (i = 1; i < 7; d += step, i++) {
         Unk02098e70 a = points[i];
         Unk02098e70 b = dir;
         b.func_02098ec0(d);
         Unk02098e70 c = points[0].func_02098fa8(b);
         int dist = c.func_02098fcc(a).func_02098e94();
         if (dist > 0x53978) {
-            Unk02098e70 t = c.func_02098fa8(a.func_02098fcc(c).func_02098eec().func_02098ec0(0x9249));
-            *(Unk02098e70Wrap *)&points[i] = *(Unk02098e70Wrap *)&t;
+            func_put(points[i], c.func_02098fa8(a.func_02098fcc(c).func_02098eec().func_02098ec0(0x9249)));
         } else if (dist > 0x4000) {
-            Unk02098e70 t = a.func_02098fa8(c.func_02098fcc(a).func_02098eec().func_02098ec0(0x1000));
-            *(Unk02098e70Wrap *)&points[i] = *(Unk02098e70Wrap *)&t;
+            func_put(points[i], a.func_02098fa8(c.func_02098fcc(a).func_02098eec().func_02098ec0(0x1000)));
         }
     }
     Unk02098e70 *p = points;
     u32 n = 0;
-    Unk02098e70 *all = points;
     for (u32 i = 0; i < 7; i++, p++, n += 4) {
-        Unk02098e70 e = all[i + 1].func_02098fcc(*p).func_02098ec0(0x400);
+        Unk02098e70 e;
+        func_set(e, points[i + 1].func_02098fcc(*p).func_02098ec0(0x400));
         int dx = 0, dy = 0;
         for (u32 j = 0; j < 4; j++) {
             func_020a7cc8(sprites[n + j], p->x + dx, p->y + dy);
