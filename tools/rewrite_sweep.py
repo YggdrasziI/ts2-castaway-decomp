@@ -364,7 +364,95 @@ def cond_forms(L, V):
     return out
 
 
+def block_close(L, i):
+    """Index of the `}` line closing the block opened on line i (same indentation)."""
+    for j in range(i + 1, len(L)):
+        if L[j].strip() and ind(L[j]) <= ind(L[i]):
+            return j if L[j].strip().startswith("}") else None
+    return None
+
+
+def wrapped(c):
+    """c is `(...)` with the first parenthesis closing at its end."""
+    if not (c.startswith("(") and c.endswith(")")):
+        return False
+    depth = 0
+    for k, ch in enumerate(c):
+        depth += ch == "("
+        depth -= ch == ")"
+        if depth == 0:
+            return k == len(c) - 1
+    return False
+
+
+def negate(c):
+    """The negation of a condition, written the simple way when there is one."""
+    c = c.strip()
+    if c.startswith("!") and not c.startswith("!=") and wrapped(c[1:]):
+        return c[2:-1]
+    if re.match(r"^![A-Za-z_][\w.\->\[\]]*$", c):
+        return c[1:]
+    parts, ops = split_top(c, ("==", "!=", "<=", ">=", "&&", "||", "<", ">"))
+    if ops in (["=="], ["!="]):
+        return "%s %s %s" % (parts[0][1].strip(), "!=" if ops[0] == "==" else "==", parts[1][1].strip())
+    return "!(%s)" % c
+
+
+def branches(L, V):
+    """`if (c) {A} else {B}` -> `if (!c) {B} else {A}`; `if (a && b) {A}` <-> nested ifs."""
+    out = []
+    for i, l in enumerate(L):
+        m = re.match(r"^(\s*)if \((.*)\) \{$", l)
+        if not m:
+            continue
+        s, c = m.group(1), m.group(2)
+        j = block_close(L, i)
+        if j is None:
+            continue
+        if L[j] == s + "} else {":
+            k = block_close(L, j)
+            if k is not None and L[k] == s + "}":
+                R = L[:i] + [s + "if (%s) {" % negate(c)] + L[j + 1 : k] + [s + "} else {"] + L[i + 1 : j] + L[k:]
+                out.append(("if / else inverted (line %d)" % i, R))
+            continue
+        if L[j] != s + "}":
+            continue
+        parts, ops = split_top(c, ("&&", "||"))
+        if ops and all(o == "&&" for o in ops):
+            a, b = parts[0][1].strip(), c[parts[1][0]:].strip()
+            inner = ["    " + x if x.strip() else x for x in L[i + 1 : j]]
+            R = L[:i] + [s + "if (%s) {" % a, s + "    if (%s) {" % b] + inner + [s + "    }", s + "}"] + L[j + 1 :]
+            out.append(("`&&` as nested ifs (line %d)" % i, R))
+        n = re.match(r"^%s    if \((.*)\) \{$" % re.escape(s), L[i + 1]) if i + 1 < j else None
+        if n and block_close(L, i + 1) == j - 1 and L[j - 1] == s + "    }":
+            b = n.group(1)
+            if split_top(b, ("||",))[1]:
+                b = "(%s)" % b
+            a = c if not split_top(c, ("||",))[1] else "(%s)" % c
+            inner = [x[4:] if x.startswith(s + "    " + "    ") else x for x in L[i + 2 : j - 1]]
+            R = L[:i] + [s + "if (%s && %s) {" % (a, b)] + inner + [s + "}"] + L[j + 1 :]
+            out.append(("nested ifs as `&&` (line %d)" % i, R))
+    return out
+
+
+def loop_steps(L, V):
+    """`for (...; ...; a, b)` -> `for (...; ...; b, a)`."""
+    out = []
+    for i, l in enumerate(L):
+        m = re.match(r"^(\s*for \(.*;.*; )(.*)(\) \{)$", l)
+        if not m:
+            continue
+        parts, ops = split_top(m.group(2), (",",))
+        if len(parts) == 2:
+            R = list(L)
+            R[i] = m.group(1) + "%s, %s" % (parts[1][1].strip(), parts[0][1].strip()) + m.group(3)
+            out.append(("for steps swapped (line %d)" % i, R))
+    return out
+
+
 REWRITES = {
+    "branch": branches,
+    "steps": loop_steps,
     "reuse": reuse_var,
     "split": split_var,
     "nested": split_nested,

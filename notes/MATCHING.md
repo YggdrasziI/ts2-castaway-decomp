@@ -2157,7 +2157,9 @@ every instance of five larger rewrites that permute.py does not make, in a beam 
 (`--depth`, `--beam`): `reuse` (a new local written over a dead variable of the same type),
 `split` (a reassigned variable given its own local), `nested` (`v = f(g(x))` <-> `v = g(x); v =
 f(v);`, or g in a local), `pointer` (a pointer local replaced by the path it holds) and `cond`
-(`if` / `else` <-> `?:`, `x = c;` for true / false). It finds methods defined in their class
+(`if` / `else` <-> `?:`, `x = c;` for true / false); since the second pass also `branch`
+(an `if` / `else` inverted, `if (a && b)` <-> nested ifs) and `steps` (the two steps of a
+`for` header swapped). It finds methods defined in their class
 body too. A few hundred variants take about a minute: it is a first pass before the permuter.
 
 - Checked on the hand fixes of 2026-11-08: from the old sources it rebuilt five of six (the
@@ -2165,6 +2167,7 @@ body too. A few hundred variants take about a minute: it is a first pass before 
   split the nested call); `func_0201456c` only partly. Its first pass over the 85-100 % functions improved five
   (`Unk02058788` C1 92.99 -> 93.79 %, `func_0206fd2c` 95.77 -> 96.23 %, `func_0204d8a4`
   96.96 -> 97.35 %, `Unk0202aef4` C1 90.33 -> 90.75 %, `func_02066884` 99.29 -> 99.44 %).
+- A second pass with `branch` and `steps` (2026-11-08) gave nothing objdiff confirms.
 - Its score is an estimate (word count, relocations by target): two of its gains were
   objdiff losses. Rebuild the unit and check each one with `tools/why_diff.py`.
 - The rewrites keep the behaviour only as far as a line-based liveness check can tell
