@@ -18,9 +18,9 @@
  * radius is a `static const int` with a dynamic initializer, which mwccarm puts in
  * `.data`; a plain `int` goes to `.bss`.
  *
- * Not complete. Code gaps: registers and stack slots (`func_0200b488`,
- * `func_0200b940`, `func_0200bab4`, `func_0200becc`, `func_0200c550`, `func_0200d138`,
- * `func_14`, `func_18`). `.text` order: the constructor of the catch is emitted right
+ * Not complete. Code gaps: registers and stack slots (`func_0200bab4`: the countdown
+ * `and`, as in unit_02018668.cpp; `func_0200becc`, `func_0200c550`, `func_0200d138`,
+ * `func_18`). `.text` order: the constructor of the catch is emitted right
  * after the factory (the original has it after the catch's destructor), and
  * `func_0200dd50`, `func_0200dd6c` come before the virtual functions (after them in
  * the original).
@@ -186,7 +186,8 @@ extern u8 data_020bfc9c[];
 extern u8 data_020c3fc4[];
 extern u8 data_020c3fd4[];
 extern u8 data_020d6298[];
-extern int data_020be23c[3];
+/* The three words written here are at +0xa0 of the object. */
+extern int data_020be23c[];
 }
 int *func_02097a4c();
 int func_020978dc(int a);
@@ -267,6 +268,54 @@ public:
                 break;
             }
         }
+        void func_spawn(int kind) {
+            Unk0200dd50 view;
+            func_0200dd50(&view, game->defs[kind]);
+            func_0200ada4(this, &view);
+            for (int i = 0; i < 2; i++) {
+                Unk0201a4e0Rect q;
+                func_0200cb04(&q, game->rects[i]);
+                rects[i].func_0200cae0(q);
+            }
+            move.unk14 = func_0200cad0(0x1000 - func_0200e0fc(&view), 0x1000);
+            move.speed = func_0200e120(&view);
+            func_020acbc8(&move.dir);
+            u16 a = func_020a5ec0();
+            u16 b = a + 0x8000 + (func_020a5ef0(0, 0x4000) - 0x2000);
+            int r = data_020b7900;
+            Unk02098e70 o(0x80000, 0x60000);
+            int d = kind >= 3 ? r : func_020a5ec0() & 0x3f;
+            int sa = func_0200cab0(a);
+            Unk02098e70 v1(d * sa, d * func_0200ca88(a));
+            Unk02098e70 p1 = func_0200ca7c(&o, v1);
+            func_0200ca68(&unkb0, p1);
+            int sb = func_0200cab0(b);
+            Unk02098e70 v2(r * sb, r * func_0200ca88(b));
+            Unk02098e70 p2 = func_0200ca7c(&o, v2);
+            func_0200ca68(&unka0, p2);
+            Unk02098e70 e = func_0200ca5c(&unka0, unkb0);
+            func_0200ca68(&unka8, e.func_02098eec());
+            func_0200ca68(&pos, unkb0);
+            func_0200ca68(&target, unka0);
+            u32 k = func_0200afc0(&view);
+            anims[0] = func_0209a3c4(k, "walk.nitro_map");
+            anims[1] = func_0209a3c4(k, "splat.nitro_map");
+            func_020a7d30(sprites[0], kind);
+            func_0200c9b8(0, true);
+            Unk02098e70 sc(0x4000, 0x4000);
+            func_0200ca68(&func_0200dfc8(this, 1)->pos, sc);
+            func_0200df10(this, 1, 0);
+            State s = 0;
+            func_first(s);
+            angle = func_02097a58(unka8.x, -unka8.y);
+            for (int i = 0; i < 2; i++) {
+                func_020a9168(sprites[i], angle);
+            }
+            func_0200c99c(s);
+            life = 0;
+            func_0200de30(this);
+            func_0200dd6c(&view);
+        }
         bool func_idle() { return !(state != &Unk0200c308::func_0200b3a0); }
 
         void func_0200b3a0() {
@@ -307,6 +356,11 @@ public:
             pos.x += move.dir.x;
             pos.y += move.dir.y;
         }
+        Unk02098e70 func_at(int a) {
+            Unk02098e70 p = unkb0.func_02098fa8(func_0200b23c(unka8, a * 6));
+            Unk02098e70 s = func_0200b23c(unka8, func_sin(a) * func_0200af10(this));
+            return Unk02098e70(p.x - s.y, p.y + s.x);
+        }
         void func_0200b488() {
             if (t * 6 > data_020b7900 << 13) {
                 func_stop();
@@ -315,16 +369,9 @@ public:
             func_set(move.dir, Unk02098e70(0x1000, 0));
             func_020acbc8(&move.dir);
             int step = move.dir.func_02098e84() * 0x2aa;
-            int a = t;
-            Unk02098e70 p = unkb0.func_02098fa8(func_0200b23c(unka8, a * 6));
-            Unk02098e70 s = func_0200b23c(unka8, func_sin(a) * func_0200af10(this));
-            func_set(pos, Unk02098e70(p.x - s.y, p.y + s.x));
-            a = t + (step >> 12);
-            p = unkb0.func_02098fa8(func_0200b23c(unka8, a * 6));
-            s = func_0200b23c(unka8, func_sin(a) * func_0200af10(this));
-            func_set(target, Unk02098e70(p.x - s.y, p.y + s.x));
-            Unk02098e70 d = target.func_02098fcc(pos);
-            func_set(move.dir, d.func_02098eec());
+            func_set(pos, func_at(t));
+            func_set(target, func_at(t + (step >> 12)));
+            func_set(move.dir, target.func_02098fcc(pos).func_02098eec());
             t += step >> 12;
         }
         void func_0200b674() {
@@ -435,8 +482,7 @@ public:
 
     void func_begin() { state = &Unk0200cec8::func_0200b940; }
     void func_0200b940() {
-        clock.func_set(0, 0);
-        clock.f.frames = 1;
+        clock.func_set(0, 1);
         state = &Unk0200cec8::func_0200b9c0;
         func_sound(0, 1, 1);
     }
@@ -464,10 +510,11 @@ public:
         if (func_0209774c(0) == 1) {
             func_set(player.pos, p);
             player.flags.func_set();
-            for (int i = 0; i < 15; i++) {
-                if (catches[i].func_idle() == false) {
-                    catches[i].touch = p;
-                    catches[i].flags.func_set();
+            Unk0200c308 *c = catches;
+            for (int i = 0; i < 15; i++, c++) {
+                if (c->func_idle() == false) {
+                    func_set(c->touch, p);
+                    c->flags.func_set();
                 }
             }
         }
@@ -479,7 +526,7 @@ public:
             (c->*c->state)();
             if (!c->func_0200cb60()) {
                 if (c->func_0200c310() != 1) {
-                    c->life++;
+                    catches[i].life++;
                 }
             }
         }
@@ -505,7 +552,8 @@ public:
             all = all & catches[i].func_idle();
         }
         bool last = player.func_done();
-        if ((all & last) == 1) {
+        bool done = all & last;
+        if (done == 1) {
             state = &Unk0200cec8::func_0200cc60;
         }
     }
@@ -548,8 +596,8 @@ public:
         func_020aa158(&layout);
         if (state == 0) {
             for (int i = 0; i < 5; i++) {
-                void *def = defs[i];
-                if (def != 0) {
+                if (defs[i] != 0) {
+                    void *def = defs[i];
                     for (int j = 0; j < caught[i]; j++) {
                         func_02054c1c(data_020bfc9c, def, 0);
                     }
@@ -654,18 +702,26 @@ inline bool Unk0200c308::func_play(int i, bool force) {
 }
 
 void Unk0200c308::func_0200becc(int kind) {
+    u16 a;
+    u16 b;
+    int r;
     Unk0200dd50 view;
     func_0200dd50(&view, game->defs[kind]);
     func_0200ada4(this, &view);
     for (int i = 0; i < 2; i++) {
-        *(Unk0201a4e0RectWrap *)&rects[i] = *(Unk0201a4e0RectWrap *)&game->rects[i];
+        const Unk0201a4e0Rect &o = game->rects[i];
+        int x0 = o.a, x1 = o.b, x2 = o.c, x3 = o.d;
+        rects[i].a = x0;
+        rects[i].b = x1;
+        rects[i].c = x2;
+        rects[i].d = x3;
     }
     move.unk14 = (int)(((s64)(0x1000 - func_0200e0fc(&view)) << 12) >> 12);
     move.speed = func_0200e120(&view);
     func_020acbc8(&move.dir);
-    u16 a = func_020a5ec0();
-    u16 b = a + 0x8000 + (func_020a5ef0(0, 0x4000) - 0x2000);
-    int r = data_020b7900;
+    a = func_020a5ec0();
+    b = a + 0x8000 + (func_020a5ef0(0, 0x4000) - 0x2000);
+    r = data_020b7900;
     Unk02098e70 c(0x80000, 0x60000);
     int d = kind >= 3 ? r : func_020a5ec0() & 0x3f;
     func_set(unkb0, c.func_02098fa8(Unk02098e70(d * func_sin(a), d * func_cos(a))));
@@ -678,7 +734,7 @@ void Unk0200c308::func_0200becc(int kind) {
     anims[1] = func_0209a3c4(k, "splat.nitro_map");
     func_020a7d30(sprites[0], kind);
     func_play(0, true);
-    func_0200dfc8(this, 1)->pos = Unk02098e70(0x4000, 0x4000);
+    func_set(func_0200dfc8(this, 1)->pos, Unk02098e70(0x4000, 0x4000));
     func_0200df10(this, 1, 0);
     State s = 0;
     func_first(s);
@@ -750,53 +806,7 @@ bool Unk0200cec8::func_0200c550() {
     } else {
         kind = spawned < data_020ae5cc[map][3] + 10 ? 3 : 4;
     }
-    Unk0200c308 *c = &catches[spawned++];
-    Unk0200dd50 view;
-    func_0200dd50(&view, c->game->defs[kind]);
-    func_0200ada4(c, &view);
-    for (int i = 0; i < 2; i++) {
-        Unk0201a4e0Rect q;
-        func_0200cb04(&q, c->game->rects[i]);
-        c->rects[i].func_0200cae0(q);
-    }
-    c->move.unk14 = func_0200cad0(0x1000 - func_0200e0fc(&view), 0x1000);
-    c->move.speed = func_0200e120(&view);
-    func_020acbc8(&c->move.dir);
-    u16 a = func_020a5ec0();
-    u16 b = a + 0x8000 + (func_020a5ef0(0, 0x4000) - 0x2000);
-    int r = data_020b7900;
-    Unk02098e70 o(0x80000, 0x60000);
-    int d = kind >= 3 ? r : func_020a5ec0() & 0x3f;
-    int sa = func_0200cab0(a);
-    Unk02098e70 v1(d * sa, d * func_0200ca88(a));
-    Unk02098e70 p1 = func_0200ca7c(&o, v1);
-    func_0200ca68(&c->unkb0, p1);
-    int sb = func_0200cab0(b);
-    Unk02098e70 v2(r * sb, r * func_0200ca88(b));
-    Unk02098e70 p2 = func_0200ca7c(&o, v2);
-    func_0200ca68(&c->unka0, p2);
-    Unk02098e70 e = func_0200ca5c(&c->unka0, c->unkb0);
-    func_0200ca68(&c->unka8, e.func_02098eec());
-    func_0200ca68(&c->pos, c->unkb0);
-    func_0200ca68(&c->target, c->unka0);
-    u32 k = func_0200afc0(&view);
-    c->anims[0] = func_0209a3c4(k, "walk.nitro_map");
-    c->anims[1] = func_0209a3c4(k, "splat.nitro_map");
-    func_020a7d30(c->sprites[0], kind);
-    c->func_0200c9b8(0, true);
-    Unk02098e70 sc(0x4000, 0x4000);
-    func_0200ca68(&func_0200dfc8(c, 1)->pos, sc);
-    func_0200df10(c, 1, 0);
-    Unk0200c308::State s = 0;
-    c->func_first(s);
-    c->angle = func_02097a58(c->unka8.x, -c->unka8.y);
-    for (int i = 0; i < 2; i++) {
-        func_020a9168(c->sprites[i], c->angle);
-    }
-    c->func_0200c99c(s);
-    c->life = 0;
-    func_0200de30(c);
-    func_0200dd6c(&view);
+    catches[spawned++].func_spawn(kind);
     return true;
 }
 
@@ -995,6 +1005,7 @@ void Unk0200cec8::func_0200d138(Unk020a7af4 *names) {
 
 
 inline void Unk0200cec8::func_14() {
+    int i;
     Unk020a7af4Entry entries[0x3c];
     Unk020a7af4 names(entries, 0x3c);
     func_020aa42c(&layout);
@@ -1029,7 +1040,7 @@ inline void Unk0200cec8::func_14() {
         break;
     }
     const int *row = data_020ae568[m];
-    for (int i = 0; i < 5; i++) {
+    for (i = 0; i < 5; i++) {
         int n = row[i];
         spawnedKind[i] = 0;
         if (n == -1) {
@@ -1044,11 +1055,12 @@ inline void Unk0200cec8::func_14() {
     }
     func_0200d138(&names);
     Unk020a7c90 *s = func_020aa040(&layout, 0xc, func_020a7b50(&names, func_0209a3c4(0xca93af1a, shown.v & 2 ? "Night" : "Day")));
-    data_020be23c[0] = func_020a7a44(s) << 4;
-    data_020be23c[1] = func_020a7a60(s) << 4;
-    data_020be23c[2] = func_020a7a7c(s) << 4;
+    data_020be23c[0x28] = func_020a7a44(s) << 4;
+    data_020be23c[0x29] = func_020a7a60(s) << 4;
+    data_020be23c[0x2a] = func_020a7a7c(s) << 4;
     void *g = func_0206bce0();
-    Unk02098ff0 pos = data_020c43a8.func_04();
+    Unk020c43a8Screen *scr = &data_020c43a8;
+    scr->func_04();
     Unk020987d8 plane = *func_0206af40((u8 *)g + 0x10, 0);
     func_0206af60((u8 *)g + 0x10, 0, &plane);
     for (int i = 0; i < 10; i++) {
