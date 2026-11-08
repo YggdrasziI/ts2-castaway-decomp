@@ -110,6 +110,10 @@ struct Unk0206bcf0Point {
     int y;
 };
 
+struct Unk0206bcf0PointWrap {
+    Unk0206bcf0Point v;
+};
+
 /* A ray from the camera through the touched point (position, direction). */
 /* Only the implicit assignment of a struct holding the vector gives the
  * original block copies (ldm / stm); the casts to it are a workaround. */
@@ -994,8 +998,10 @@ void *func_0206c2a4(Unk020d6240 *system) {
 }
 
 /*
- * 99.39 %: the touched point's stack slot comes below the two clock reads (it is
- * above them in the original), and the pie menu and the touch flag swap r5 / r6.
+ * 99.52 %: the touched point is copied to unk120 as an 8-byte block (both loads
+ * first, as the original) and the hit list is declared before it (stack slots).
+ * Left: in the by-value copy of unk128 for func_0206d9c4 two moves are scheduled
+ * one slot earlier than in the original.
  */
 void Unk0206bcf0::func_02071fdc(int dt) {
     if ((unk144 != 0 || unk21c != 0 || unk16c != 0 || unk140 != 0 || func_020a5cb0()) && dt == 0) {
@@ -1153,9 +1159,9 @@ void Unk0206bcf0::func_02071fdc(int dt) {
                 func_0206b30c(&unk10, 0, 0);
             }
             if (!(touched & 1) && func_020a075c(input, 1)) {
-                Unk0206bcf0Point pt;
-                pt = func_020a07bc(input, 1);
-                unk120 = pt;
+                Unk0205f098 list;
+                Unk0206bcf0Point pt = func_020a07bc(input, 1);
+                *(Unk0206bcf0PointWrap *)&unk120 = *(Unk0206bcf0PointWrap *)&pt;
                 int *screen = func_02097a4c();
                 Unk020899a4 *camera = (Unk020899a4 *)&data_020c7d38.unk54;
                 Unk02098ff0 dir = camera->func_02089cac(screen[0] << 12, screen[1] << 12);
@@ -1166,7 +1172,6 @@ void Unk0206bcf0::func_02071fdc(int dt) {
                 if (p->unkc != 0 && func_020693d8(p->unkc, &unk128)) {
                     hit = true;
                 }
-                Unk0205f098 list;
                 func_0205f098(&list);
                 func_0205fa30(data_020c3fd4, unk128, &list);
                 func_0206dd24();
