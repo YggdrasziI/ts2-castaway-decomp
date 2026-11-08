@@ -629,6 +629,14 @@ Each fix was found by compiling scratch variants of one function and comparing t
   and `unit_02018668.cpp`): copy the forms of the file where its users match
   (`func_tick`, `func_put` through a `volatile` pointer: `func_0201a12c` 97.9 % ->
   99.7 %).
+- **Pointer steps before an inline call's `bl`** (`add r7, r7, #0x44` between the
+  stores and the call of the inlined body; ours at the loop end): copy each pointer to
+  a local and step it before the call (`T *a = (T *)f0; f0 += 0x44; ...;
+  fish[i].func_init(this, a, b, c, d);`). Splitting the inline function in two or
+  stepping inside the arguments did not move them (`func_02017588` 94.67 % -> 97.86 %).
+- **A point copied through a temporary with the stores in the wrong place**: copy it
+  with an inline helper that loads both words into ints, then stores them
+  (`func_put(points[i], c.f(...))`; `func_02015844` 94.32 % -> 99.47 %).
 
 ## Inlining and emission order
 

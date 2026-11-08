@@ -12,8 +12,9 @@
  * rectangles built by the static initializer, the sound name table, the vtables and
  * the strings. Real file name unknown.
  *
- * Not complete. Gaps: `func_02017588` (registers, one more stack word),
- * `func_02015844` (frame 0xC bytes too small, r10 / r11 and induction variables),
+ * Not complete. Gaps: `func_02017588` (97.88 %: registers, stack slots, the bait
+ * icon loop multiplies the index where ours steps a pointer), `func_02015844`
+ * (99.47 %: stack slots of the temporaries),
  * `func_02015368` (the original writes the countdown through a second address),
  * `__sinit` (the second and third rectangles have their own pool entries in the
  * original), `func_02016484` (stack slots of the temporaries; the point loops index
