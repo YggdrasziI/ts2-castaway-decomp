@@ -10,8 +10,6 @@
  * Unk0203c188 in unit_02021CBC.cpp; the end is the paint screen
  * (unit_0202402C.cpp). `.data` holds the vtable with its header. Real file name
  * unknown.
- *
- * Not complete: the constructor is below 100 % (comment above it).
  */
 
 #include "game/unk_screen.h"
@@ -113,12 +111,11 @@ public:
     int unkb8;
 };
 
-/*
- * 94.69 %: the two copies from the layout are scheduled differently (the original
- * loads the next hash after both stores, and narrows it through r1). Tried: a
- * local pointer, field by field copies, a local sprite, Unk02098e70 fields and
- * inline helpers (the last ones worse).
- */
+/* An 8-byte block copy: both words are loaded before the stores. */
+struct Unk020238ecWrap {
+    Unk02098e70Base v;
+};
+
 Unk020238ec::Unk020238ec() : flags(0), unk10(0), layout(0), sprite(0), sprite2(0), position(0), unkb8(0) {
     Unk020a7af4Entry entries[0x14];
     Unk020a7af4 names(entries, 0x14);
@@ -135,8 +132,8 @@ Unk020238ec::Unk020238ec() : flags(0), unk10(0), layout(0), sprite(0), sprite2(0
     sprite2 = func_sprite(layout, 2, func_020a7b50(&names, 0x5fc4ca01));
     button.func_02050838(func_sprite(layout, 0xb, func_020a7b50(&names, 0xc2f94842)), false);
     button.func_02050c48(0, 1, -1);
-    limit = *func_020a9044(func_sprite(layout, 8, func_020a7b50(&names, 0x6f0e712e)));
-    speed = *func_020a9044(func_sprite(layout, 8, func_020a7b50(&names, 0xa1f1d1e7)));
+    *(Unk020238ecWrap *)&limit = *(Unk020238ecWrap *)func_020a9044(func_sprite(layout, 8, func_020a7b50(&names, 0x6f0e712e)));
+    *(Unk020238ecWrap *)&speed = *(Unk020238ecWrap *)func_020a9044(func_sprite(layout, 8, func_020a7b50(&names, 0xa1f1d1e7)));
 }
 
 Unk020238ec::~Unk020238ec() {
