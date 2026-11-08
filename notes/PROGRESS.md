@@ -206,3 +206,5 @@
 | 2026-11-08 | 3799919 | 602632 / 723540 bytes (83.29 %; fuzzy 99.51 %, linked 50.25 %) | 4414 / 4577 | 577 / 656 | Statement forms read from the diffs (conditional vs if / else, masks first, no local for a value used twice, a pointer to force reloads, a double assignment): func_00 of the keyboard screen, the jam microgame init and the button widget palette matched; unit_0208D304 complete |
 
 | 2026-11-08 | d929ddc | 605824 / 723540 bytes (83.73 %; fuzzy 99.51 %, linked 50.92 %) | 4419 / 4577 | 578 / 656 | A parameter reused or a new local for a reassigned value, and the done flag chained through each button: the sound effect start and four screen input handlers matched; unit_0202CDF0 complete |
+
+| 2026-11-08 | f41bfae | 606572 / 723540 bytes (83.83 %; fuzzy 99.53 %, linked 51.27 %) | 4420 / 4577 | 579 / 656 | A rewrite sweep and a permuter both scored with objdiff: declaration and store orders found by search matched the object text line breaking; unit_02090CCC complete |
