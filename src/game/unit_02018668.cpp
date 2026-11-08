@@ -146,7 +146,7 @@ public:
     void func_0201af10(Unk0201a2c8 *o, Unk020a7c90 *a, Unk020a7c90 *b);
     bool func_02019b18();
     void func_flee() {
-        if (state != &Unk0201a4e0::func_020187d4) {
+        if (!func_dead()) {
             if (state != &Unk0201a4e0::func_02018c38) {
                 state = &Unk0201a4e0::func_02018bd4;
             }
@@ -194,6 +194,7 @@ public:
     void func_020191b4();
     void func_020192bc();
     void func_0201931c();
+    bool func_ready() { return state == &Unk0201af9c::func_02018d04; }
 
     void (Unk0201af9c::*state)();
     Unk0201a2c8 *owner;
@@ -636,7 +637,7 @@ void Unk0201a2c8::func_02019444() {
         done = done & fish[i].func_dead();
     }
     if (done) {
-    } else if (spear.state != &Unk0201af9c::func_02018d04) {
+    } else if (!spear.func_ready()) {
     } else if (func_0209774c(0) != 0) {
         func_set(spear.unkac, p);
         spear.thrown.func_set();
@@ -659,7 +660,7 @@ void Unk0201a2c8::func_02019444() {
     for (int i = 0; i < 3; i++) {
         done = done & fish[i].func_dead();
     }
-    done = done & (spear.state == &Unk0201af9c::func_02018d04);
+    done = done & spear.func_ready();
     for (int i = 0; i < 2; i++) {
         done = done & !anims[i].playing.func_get();
     }
@@ -704,7 +705,7 @@ bool Unk0201a4e0::func_02019b18() {
 #pragma dont_inline reset
 
 bool Unk0201a4e0::func_02019ea0() {
-    return state == &Unk0201a4e0::func_020187d4;
+    return func_dead();
 }
 
 void Unk0201a4e0::func_02019ee8() {
