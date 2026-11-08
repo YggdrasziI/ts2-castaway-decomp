@@ -13,9 +13,9 @@
  * the strings before it are used by the code before 0x0205D6E0. Real file
  * name unknown.
  *
- * Not complete: func_0205e87c and func_0205eed4 are not at 100 % (comments
- * above them). The compiler also emits a deleting destructor that the
- * original does not have.
+ * Not complete: func_0205eed4 is not at 100 % (comment above it). The
+ * compiler also emits a deleting destructor that the original does not
+ * have.
  *
  * Functions other than the constructors, destructor, operators and virtual
  * functions keep C linkage: other files call them by their addresses.
@@ -775,30 +775,41 @@ int Unk02061d08Item::func_28() {
 extern "C" {
 
 /*
- * 99.70 %: in the rotation cases 3 and 1 two temporaries are swapped in r1-r3.
- * The two vectors stay on the stack as arrays (struct locals with named
- * fields go to registers). `range` is `volatile` as a hypothesis: the original
- * reloads the block fields at the bottom of the loop only. The negation apart
- * from the subtraction keeps `rsb` and `sub` (the single expression folds to
- * `add` and `rsb`).
+ * Found by tools/permute.py, then reduced: in case 1 the const locals and
+ * the copies `bx_` and `bz_` keep the original register use. The two vectors
+ * stay on the stack as arrays (struct locals with named fields go to
+ * registers). `range` is `volatile` as a hypothesis: the original reloads the
+ * block fields at the bottom of the loop only.
  */
 Unk0205d8d8Box func_0205e87c(Unk02061d08Item *item) {
-    Unk020956f8 *script = item->def->script;
+    Unk020956f8 *script;
     Unk0205d8d8Arr a;
+    Unk02099c78Block *block;
+    Unk02099c78Value *values;
+    int i;
+    Unk020680d4Dir dir;
+    int x;
+    int z;
+    int bx;
+    int bz;
+    int bx_;
+    int bz_;
+    Unk0205d8d8Vec pos;
     a.v[0] = 0;
     a.v[1] = 0;
-    a.v[2] = 0;
     Unk0205d8d8Arr b;
+    script = item->def->script;
+    a.v[2] = 0;
     b.v[0] = 0;
     b.v[1] = 0;
     b.v[2] = 0;
-    Unk02099c78Block *block = (Unk02099c78Block *)script->func_02095a3c(0x75d11eb1);
+    block = (Unk02099c78Block *)script->func_02095a3c(0x75d11eb1);
     if (block == 0) {
         return Unk0205d8d8Box(a, b);
     }
-    Unk02099c78Value *values = script->func_02095ab0();
+    values = script->func_02095ab0();
     volatile short *range = (volatile short *)&block->start;
-    int i = range[0];
+    i = range[0];
     if (i < i + block->count) {
         do {
             switch (values[i].unk0) {
@@ -824,30 +835,32 @@ Unk0205d8d8Box func_0205e87c(Unk02061d08Item *item) {
             i++;
         } while (i < range[0] + range[1]);
     }
-    Unk020680d4Dir dir = item->func_1c();
+    dir = item->func_1c();
     switch (dir.v) {
     case 0:
         break;
     case 3: {
-        int x = a.v[0];
-        int z = a.v[2];
-        int bz = b.v[2];
-        int bx = b.v[0];
+        z = a.v[2];
+        x = a.v[0];
         a.v[2] = x;
+        bz = b.v[2];
+        bx = b.v[0];
         b.v[2] = bx;
         b.v[0] = bz;
         { int n = -z; n -= bz; a.v[0] = n; }
         break;
     }
     case 1: {
-        int x = a.v[0];
-        int z = a.v[2];
-        int bx = b.v[0];
-        int bz = b.v[2];
+        x = a.v[0];
+        const int bz = b.v[2];
+        const int bx = b.v[0];
+        bx_ = bx;
+        const int z = a.v[2];
         a.v[0] = z;
+        bz_ = bz;
         b.v[2] = bx;
-        b.v[0] = bz;
-        { int n = -x; n -= bx; a.v[2] = n; }
+        b.v[0] = bz_;
+        { int n = -x; n -= bx_; a.v[2] = n; }
         break;
     }
     case 2: {
@@ -860,7 +873,7 @@ Unk0205d8d8Box func_0205e87c(Unk02061d08Item *item) {
         break;
     }
     }
-    Unk0205d8d8Vec pos = item->func_04();
+    pos = item->func_04();
     a.v[0] += pos.x;
     a.v[1] += pos.y;
     a.v[2] += pos.z;
