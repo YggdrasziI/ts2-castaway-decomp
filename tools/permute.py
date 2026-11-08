@@ -442,7 +442,7 @@ def main():
             print("focus:", len(near), "of", len(body), "lines", flush=True)
     with tempfile.TemporaryDirectory(prefix="perm_") as tmp:
         s = Search(pre, post, os.path.dirname(os.path.abspath(src)), o.symbol, tgt, trel, tmp, o.workers)
-        best = cur = s.run(0, body)
+        best = cur = start = s.run(0, body)
         print("start", cur, "of", len(tgt) // 4, flush=True)
         bestL = curL = body
         t0 = time.time()
@@ -465,6 +465,10 @@ def main():
             if cur > best + 6:
                 cur, curL = best, bestL
         print("done", n, "variants, best", best, flush=True)
+        if 0 < best < start and o.out:  # not a match: keep the closest form for the next run
+            os.makedirs(o.out, exist_ok=True)
+            with open(os.path.join(o.out, o.symbol + ".best.txt"), "w", encoding="utf-8", newline="\n") as f:
+                f.write("%s score %d (start %d)\n%s\n%s\n}\n" % (src, best, start, m.group(0).rstrip("\n"), "\n".join(bestL)))
         if best == 0 and o.out:
             bestL = cleanup(s, body, bestL)
             os.makedirs(o.out, exist_ok=True)
