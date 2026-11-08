@@ -659,15 +659,24 @@ void Unk0204d698::func_0c(int priority) {
     func_0204dbb4();
 }
 
-/* 99.41 %: the layer and file registers are swapped. */
 void Unk0204d698::func_08() {
-    if (!(flags & 2)) {
+    Unk02095140 *old_;
+    Unk02095140 *old;
+    Unk02093648 *archive;
+    Unk0208d304 *layer;
+    Unk02093648 *archive_;
+    Unk0208f8b0 *object;
+    if (!(2 & flags)) {
+        /* Found by tools/permute.py: the locals declared first, an unused local here and the
+         * test written 2 & flags give the original registers. */
+        Unk02095140 *unused;
         return;
     }
-    Unk02093648 *archive = func_archive();
-    Unk0208d304 *layer = this->layer;
+    archive = func_archive();
+    archive_ = archive;
+    layer = this->layer;
     if (layer != 0) {
-        Unk02095140 *old = layer->file;
+        old = layer->file;
         Unk0208db14::func_0208dc08(screen)->func_0208df4c(layer);
         archive->func_02093c58(archive->func_02093f5c(old));
     }
@@ -679,11 +688,11 @@ void Unk0204d698::func_08() {
         archive->func_02093c58(archive->func_02093f5c(old));
     }
     layerTop = 0;
-    Unk0208f8b0 *object = object48;
+    object = object48;
     if (object != 0) {
-        Unk02095140 *old = object->unk1c;
+        old_ = object->unk1c;
         Unk020916a4::func_02091830()->func_02091c68(object);
-        archive->func_02093c58(archive->func_02093f5c(old));
+        archive_->func_02093c58(archive_->func_02093f5c(old_));
     }
     object48 = 0;
     object = cursor0;
