@@ -157,18 +157,20 @@ bool func_0205359c(Unk0205cf00 *def) {
     return n > 0;
 }
 
-/*
- * 99.46 %: in the last loop the original keeps the id in r8 and the counter in
- * r9 (ours swapped). Tried: a new or reused id local, the counter declared
- * outside the loop, the operands of the special id test swapped, the ids
- * array read at each use.
- */
+/* Locals declared first and the item id in its own local declared before the last loop
+ * (from tools/permute.py) give the original registers. */
 Unk0205367c *func_0205367c(Unk0205367c *t, Unk0205cf00 *def) {
+    Unk020c3fc4 *db;
+    int id;
+    bool found;
+    int special;
+    Unk0206b630 *collection;
     t->def = def;
     int countKeys[5] = {0xfca7ea3a, 0xfca7ea3b, 0xfca7ea3c, 0xfca7ea3d, 0xfca7ea3e};
+    u32 n;
     int flagKeys[6] = {0xa92942d5, 0xa92942d6, 0xa92942d7, 0xa92942d8, 0xa92942d9, 0x9e0d169e};
     int ids[6];
-    u32 n = 0;
+    n = 0;
     for (int i = 0; i < 6; i++) {
         t->flags[i] = func_0205d1b4(def, flagKeys[i]) != 0;
     }
@@ -193,20 +195,21 @@ Unk0205367c *func_0205367c(Unk0205367c *t, Unk0205cf00 *def) {
     for (; n < 5; n++) {
         ids[n] = 0;
     }
-    Unk020c3fc4 *db = &data_020c3fc4;
+    db = &data_020c3fc4;
     ids[5] = func_0205d1b4(def, 0x3c8ac2d9);
     t->result = 0;
-    int id = func_0205d1b4(def, 0xe66202a7);
-    if (id != 0 && func_known(db, id)) {
+    id = func_0205d1b4(def, 0xe66202a7);
+    int v;
+    if (0 != id && func_known(db, id)) {
         t->result = func_0205f6f8(db, id);
     }
-    int special = func_0205d1b4(def, 0xe3c88ec6);
-    Unk0206b630 *collection = data_020d60c8.collection;
+    special = func_0205d1b4(def, 0xe3c88ec6);
+    collection = data_020d60c8.collection;
     for (u32 i = 0; i < 6; i++) {
-        id = ids[i];
-        if (id != 0 && func_known(db, id)) {
-            t->items[i] = func_0205f6f8(db, id);
-            if (id == special) {
+        v = ids[i];
+        if (0 != v && func_known(db, v)) {
+            t->items[i] = func_0205f6f8(db, v);
+            if (v == special) {
                 t->flags[i] = true;
             }
             if (t->flags[i]) {
