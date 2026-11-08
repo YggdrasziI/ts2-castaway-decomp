@@ -1380,7 +1380,7 @@ void Unk02015408::func_02017588(Unk020a7af4 *names) {
     int n = 0;
     for (u32 i = 0; i < 16; i += 4) {
         func_020a69ac((Unk020a7c90 *)(icons + n * 0x44),
-                      baits[i] + (baits[i + 1] ? 2 : 0) + (baits[i + 2] ? 4 : 0) + (baits[i + 3] ? 8 : 0));
+                      (baits[i + 3] ? 8 : 0) + ((baits[i + 2] ? 4 : 0) + (baits[i] + (baits[i + 1] ? 2 : 0))));
         n++;
     }
     int lang = func_020a655c();
@@ -1399,11 +1399,15 @@ void Unk02015408::func_02017588(Unk020a7af4 *names) {
     line.func_02015844();
     line.unk10 = 0;
     for (int i = 0; i < 3; i++) {
-        fish[i].func_init(this, (Unk020a7c90 *)f0, (Unk020a7c90 *)f1, (Unk020a7c90 *)f2, (Unk020a7c90 *)f3);
+        Unk020a7c90 *a = (Unk020a7c90 *)f0;
         f0 += 0x44;
+        Unk020a7c90 *b = (Unk020a7c90 *)f1;
         f1 += 0x44;
+        Unk020a7c90 *c = (Unk020a7c90 *)f2;
         f2 += 0x44;
+        Unk020a7c90 *d = (Unk020a7c90 *)f3;
         f3 += 0x44;
+        fish[i].func_init(this, a, b, c, d);
         fish[i].anim.mode = 1;
     }
     for (int i = 0; i < 3; i++) {
