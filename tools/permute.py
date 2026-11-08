@@ -35,7 +35,7 @@ FLAGS = ("-O4,p -enum int -char signed -proc arm946e -gccext,on -fp soft -inline
 
 
 def elf_func(path, name):
-    """Return (bytes, set of reloc offsets) of a function symbol."""
+    """Return (bytes, {reloc offset: target symbol name}) of a function symbol."""
     b = open(path, "rb").read()
     shoff = struct.unpack_from("<I", b, 32)[0]
     shes, shnum = struct.unpack_from("<HH", b, 46)
@@ -50,15 +50,42 @@ def elf_func(path, name):
                 if b[strs[4] + n:e].decode("latin1") == name and shndx and shndx < shnum:
                     sec = S[shndx]
                     data = b[sec[4] + val : sec[4] + val + size]
-                    rel = set()
+                    rel = {}
                     for r in S:
                         if r[1] in (4, 9) and r[7] == shndx:
                             for q in range(r[4], r[4] + r[5], r[9]):
-                                off = struct.unpack_from("<I", b, q)[0]
+                                off, inf = struct.unpack_from("<II", b, q)
                                 if val <= off < val + size:
-                                    rel.add(off - val)
+                                    rel[off - val] = sym_name(b, S, r[6], inf >> 8)
                     return data, rel
     return None, None
+
+
+def sym_name(b, S, symtab, index):
+    """Name of a relocation's symbol; a section symbol is named by its section."""
+    s = S[symtab]
+    n, val, size, info, oth, shndx = struct.unpack_from("<IIIBBH", b, s[4] + index * 16)
+    strs = S[s[6]]
+    e = b.index(b"\0", strs[4] + n)
+    nm = b[strs[4] + n:e].decode("latin1")
+    if not nm and 0 < shndx < len(S):
+        sh = S[shndx]
+        shstr = S[struct.unpack_from("<H", b, 50)[0]]
+        e = b.index(b"\0", shstr[4] + sh[0])
+        nm = b[shstr[4] + sh[0]:e].decode("latin1")
+    return nm
+
+
+WRITE = re.compile(r"^\s*(?:[\w:<>]+[\s*&]+)*(\w+)\s*(?:[-+*/|&^]|<<|>>)?=(?!=)")
+
+
+def depends(a, b):
+    """True if two statements cannot be swapped: one writes a local the other uses."""
+    for x, y in ((a, b), (b, a)):
+        m = WRITE.match(x)
+        if m and re.search(r"\b%s\b" % re.escape(m.group(1)), y):
+            return True
+    return False
 
 
 def score(path, name, tgt, trel):
@@ -70,6 +97,10 @@ def score(path, name, tgt, trel):
     n = 0
     for i in range(0, len(tgt), 4):
         if i in trel or i in rel:
+            # A relocated word: compare what it refers to (a swapped pair of
+            # calls has the same bytes but other targets).
+            if trel.get(i) != rel.get(i):
+                n += 1
             continue
         if d[i : i + 4] != tgt[i : i + 4]:
             n += 1
@@ -283,7 +314,8 @@ def mutate(L):
             return R
     k = random.random()
     if k < 0.28:  # swap adjacent simple statements
-        c = [i for i in idx if i + 1 < len(L) and block_end(L, i) and block_end(L, i + 1) and L[i].strip().endswith(";") and L[i + 1].strip().endswith(";")]
+        c = [i for i in idx if i + 1 < len(L) and block_end(L, i) and block_end(L, i + 1) and L[i].strip().endswith(";") and L[i + 1].strip().endswith(";")
+             and not depends(L[i], L[i + 1])]
         if c:
             i = random.choice(c)
             L[i], L[i + 1] = L[i + 1], L[i]
