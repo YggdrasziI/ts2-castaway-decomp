@@ -23,6 +23,12 @@ default: add one here only once a unit of this ROM proves it with mwccarm.
   (`volatile Dma *dma = (volatile Dma *)0x040000B0; dma->ctrl = ...`); a cast of
   each address gives a second pool word 0x040000B8 (`func_01ff8c64`,
   97.9 % -> 100 %).
+- A global address loaded before a loop's entry test in the original and inside the
+  guarded block here (`ldr r4, =data_020d62a4` before `cmp; ble`): copy it to a local
+  just before the loop and use the local in the loop (`rng = data_020d62a4;`,
+  `func_020a1f84(rng)`); assigned before the counter's `i = 0` it does not move
+  (`func_02010c74`, 98.29 % -> 100 %, with `int j` bounded by `chances[r]` read
+  directly instead of a `chance` local, which rotated two registers).
 - objdiff marks a `bl` as "argument differs" when its target is the function
   right after the caller's literal pool: target - 8 falls inside the caller, so
   objdiff reads the original's relocation as a branch inside the function. The
@@ -494,6 +500,9 @@ receiver, and moves the `mla` of the receiver before the stack arguments. A `sho
 
 `bge` with the index in the unsigned register order: keep `u32 k` and compare `(int)k < count`. With `int k`
 the branches match but the registers rotate.
+When the cast alone still rotates the registers, the other counter of the nest may need the same
+form: in `func_0205f328` `(int)k < j` with `int j` rotates, `u32 j` with `(int)j < db->count` and
+`(int)k < (int)j` gives the original registers and signed branches (99.06 % -> 99.10 %).
 
 ### Multiplying two shorts
 
@@ -1604,6 +1613,16 @@ Each fix was found by compiling scratch variants of one function and comparing t
   group, as only class body constants are here.  Moving the eleven fish states into the class body sorts their constants as one group
   but moves them in `.text` (out of the fish block, after their callers), so the original
   did not define them there as written here. Not reproduced yet (2026-11-08).
+- `unit_020116E0.cpp`, the 14 constants numbered #1-#14 in source order (state functions in
+  `.text` order, statement order inside each: #1 `func_020116e0`, #2-#3 `func_020118dc`,
+  #4 `func_02011b54`, #5 `func_02011d14`, #6-#7 `func_02011de0`, #8-#9 `func_02011f40`, #10
+  `func_020121d8`, #11-#13 `func_020122e0`, #14 `func_14`; the duplicates paired through the
+  anchor offsets each user loads). Inverting `mwcc_heapsort` on the emitted orders gives the
+  creation orders (2026-11-08): ours #14, #11-#13, #10, #8-#9, #2, #7, #5, #4, #1, #3, #6;
+  original #7, #10, #11-#13, #8-#9, #2-#3, #5, #4, #6, #14, #1. Ours is mostly the last member
+  first with #3, #6 and #1 created late; in the original `func_020121d8` precedes
+  `func_020122e0`, `func_14` and `func_020116e0` come last and #7 first: not a plain member
+  order (open).
 - Without `ipa`, the constants of inline member functions defined in class bodies
   are not emitted in `@` number order (two-class scratch test: `a2 a0 a1`, `b0 b2
   b1`); their order matches the symbol table order of the target functions. Rule
