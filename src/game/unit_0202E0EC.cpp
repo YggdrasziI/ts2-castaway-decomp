@@ -11,9 +11,8 @@
  * initializers of func_0202f2ac; `.data` the current object, this class's
  * vtable with its header and the two page formats. Real file name unknown.
  *
- * Not complete: two functions are below 100 % (comments above them); the words
- * 0x020AE89C 5 and 0x020AE8A0 0x32 of `.rodata`, never loaded, are local
- * `static const` values folded into the code.
+ * The words 0x020AE89C 5 and 0x020AE8A0 0x32 of `.rodata`, never loaded, are
+ * local `static const` values folded into the code.
  */
 
 #include "game/unk_screen.h"
@@ -428,19 +427,26 @@ bool Unk0202e0ec::func_10() {
     return false;
 }
 
-/*
- * 99.20 %: registers only. The original has value r5, id r6, keys r7, font r8;
- * value and `dated` share one register there. Tried: declaration orders of these
- * locals, one variable for both.
- */
+/* The locals are declared first, in this order. */
 void Unk0202e0ec::func_0202f2ac() {
+    void *texts;
+    int value;
+    Unk020a7c90 *line;
+    int vAlign;
+    int id;
+    int fmt;
+    Unk0202071c now;
+    int i;
+    int left;
+    Unk020a7c90 *font;
+    int hAlign;
+    int height;
+    int hour;
+    Unk02099c78Var *v;
+    bool dated;
     if (flags & 2) {
         return;
     }
-    void *texts;
-    int value;
-    int id;
-    Unk020a7c90 *font;
     if (mode == 3) {
         id = 0x107a;
     } else if (mode == 4) {
@@ -453,7 +459,7 @@ void Unk0202e0ec::func_0202f2ac() {
             func_020a727c(title, -1);
         }
     }
-    bool dated = false;
+    dated = false;
     if (mode == 2) {
         if (func_0205d340(data_020b9364, 0x1e474fc5) || func_0205d340(data_020b9364, 0x16bc2f6e)
             || func_0205d340(data_020b9364, 0x3b4942ae) || func_0205d340(data_020b9364, 0x071d9208)) {
@@ -476,7 +482,6 @@ void Unk0202e0ec::func_0202f2ac() {
         static const int count = 5;
         u32 keys[count] = {0x97006df8, 0xfaa14499, 0x67c64c17, 0x887c10c0, 0x146126e3};
         u32 ids[count] = {0xe60, 0xe61, 0xe62, 0xe63, 0xe63};
-        int i;
         for (i = 0; i < count; i++) {
             if (func_0205d340(data_020b9364, keys[i])) {
                 break;
@@ -486,7 +491,7 @@ void Unk0202e0ec::func_0202f2ac() {
             i = 0;
         }
         func_020a78cc(sub2.func_02051ad0(0), font, func_020a00a0(texts, ids[i]));
-        Unk020a7c90 *line = sub2.func_02051ad0(1);
+        line = sub2.func_02051ad0(1);
         if (i < 3) {
             Unk02099c78Var *var = data_020b9364->script->func_02095888(0xe03edad9);
             if (var != 0 && func_0205ecc0(data_020be420, 0xe03edad9) >= var->max) {
@@ -498,9 +503,9 @@ void Unk0202e0ec::func_0202f2ac() {
             }
             func_020a69ac(sub2.func_02051ad0(3), 1);
         } else {
-            Unk0202071c now = func_0202071c(&data_020d6298);
-            int left = 0;
-            int hour = (now.value & 0x7c0) >> 6;
+            now = func_0202071c(&data_020d6298);
+            left = 0;
+            hour = (now.value & 0x7c0) >> 6;
             Unk02099c78Var *var = data_020b9364->script->func_02095888(0x109966ff);
             if (var != 0) {
                 left = var->max - func_0205ecc0(data_020be420, 0x109966ff) - 1;
@@ -510,14 +515,14 @@ void Unk0202e0ec::func_0202f2ac() {
             } else {
                 left = left * 24 + 0x1e - hour;
             }
-            int fmt = left > 1 ? 0xe74 : 0xe75;
+            fmt = left > 1 ? 0xe74 : 0xe75;
             if (i == 3) {
                 func_020a78cc(line, font, func_020a00a0(texts, fmt), left);
                 id = 0xe70;
             } else if (func_0205d340(data_020b9364, 0x3b4942ae)) {
                 id = 0xfa2;
             } else {
-                Unk02099c78Var *v = data_020b9364->script->func_02095888(0xfe40865d);
+                v = data_020b9364->script->func_02095888(0xfe40865d);
                 value = func_0205ecc0(data_020be420, 0xfe40865d);
                 if (v != 0 && value >= v->max) {
                     func_020a78cc(line, font, func_020a00a0(texts, 0xe76));
@@ -531,10 +536,10 @@ void Unk0202e0ec::func_0202f2ac() {
         }
     }
     sprintf(text, func_020a00a0(texts, id), value);
-    int height = title->func_14() >> 12;
+    height = title->func_14() >> 12;
     Unk02092830 lines(text, ((Unk020aa040Font *)font)->font);
-    int hAlign = func_020a705c(func_020a72c8(title));
-    int vAlign = func_020a709c(func_020a731c(title));
+    hAlign = func_020a705c(func_020a72c8(title));
+    vAlign = func_020a709c(func_020a731c(title));
     pages = lines.func_0209303c(hAlign, vAlign, title->func_10() >> 12, height, 0, 0);
     page = 0;
     func_020a793c(title, 0, font, text);

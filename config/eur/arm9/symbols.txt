@@ -1038,7 +1038,7 @@ _ZN11Unk0202e0ec7func_38Eb kind:function(arm,size=0x17c) addr:0x0202fb8c
 _ZN11Unk0202e0ec7func_18Ev kind:function(arm,size=0x10) addr:0x0202fd08
 func_0202fd18 kind:function(arm,size=0x10) addr:0x0202fd18
 func_0202fd28 kind:function(arm,size=0x10) addr:0x0202fd28
-_Z13func_0202fd38mPv kind:function(arm,size=0x78) addr:0x0202fd38
+_Z13func_0202fd38mPv kind:function(arm,size=0x78) addr:0x0202fd38 local
 func_0202fdb0 kind:function(arm,size=0xc) addr:0x0202fdb0
 _ZN11Unk0202e0ec7func_34Ev kind:function(arm,size=0x8) addr:0x0202fdbc
 _ZN11Unk0202e0ec7func_2cEv kind:function(arm,size=0x18) addr:0x0202fdc4
@@ -4548,7 +4548,7 @@ data_020ae7cc kind:data(any) addr:0x020ae7cc
 data_020ae7e0 kind:data(any) addr:0x020ae7e0
 data_020ae81c kind:data(any) addr:0x020ae81c
 @1982 kind:data(any) addr:0x020ae874 local
-data_020ae888 kind:data(any) addr:0x020ae888
+@1994 kind:data(any) addr:0x020ae888 local
 data_020ae8a4 kind:data(any) addr:0x020ae8a4
 @1261 kind:data(any) addr:0x020ae8c4 local
 @1294 kind:data(any) addr:0x020ae8dc local
