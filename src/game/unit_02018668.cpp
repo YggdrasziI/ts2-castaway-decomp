@@ -166,8 +166,18 @@ struct Unk0201a2c8Time {
         f.seconds = s;
         f.frames = fr;
     }
-    int func_get(int i) { return (int)*(volatile u32 *)&v >> (i * 6) & 0x3f; }
-    void func_put(int i, int x) { *(volatile u32 *)&v = *(volatile u32 *)&v & ~(0x3f << (i * 6)) | x << (i * 6); }
+    int func_get(int i) { return (int)v >> (i * 6) & 0x3f; }
+    void func_put(int i, int x) { volatile u32 *p = &v; u32 o = *p & ~(0x3f << (i * 6)); *p = o | x << (i * 6); }
+    void func_tick() {
+        for (int i = 0; i < 4; i++) {
+            int n = func_get(i);
+            if (n > 0) {
+                func_put(i, n - 1);
+                break;
+            }
+            func_put(i, 59);
+        }
+    }
 };
 
 class Unk0201a2c8 : public Unk020a5ccc {
@@ -922,18 +932,10 @@ void Unk0201a2c8::func_02019444() {
 }
 
 void Unk0201a2c8::func_0201a12c() {
-    for (int i = 0; i < 4; i++) {
-        int v = time.func_get(i);
-        if (v > 0) {
-            time.func_put(i, v - 1);
-            break;
-        }
-        Unk0201a2c8Time *t = &time;
-        t->func_put(i, 59);
-    }
+    time.func_tick();
     func_updateFish();
     func_updateAnims();
-    if (*(volatile u32 *)&time.v == 0) {
+    if (time.v == 0) {
         state = 0;
     }
 }
