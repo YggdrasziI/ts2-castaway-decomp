@@ -375,9 +375,10 @@ public:
         void func_02018f1c() {
             int n = func_02011188(owner->counts);
             Unk0201a2c8 *g = owner;
-            int base = g->sound - 1;
+            int base = owner->sound - 1;
             if (n - caught != 0) {
-                g->func_sound(base + 3);
+                int k = base + 3;
+                g->func_sound(k);
                 g = owner;
                 Unk0201a2c8Stream *s = g->stream;
                 if (s != 0) {
@@ -393,11 +394,13 @@ public:
                 if (s != 0) {
                     func_020a32ac(func_020a2994(), 0x43f9fd12, s->unk4, 0x7f, 0);
                 }
-                owner->func_sound(base + 7);
+                int k = base + 7;
+                owner->func_sound(k);
             }
             g = owner;
+            Unk02098e70 *p;
             Unk0201a4e0 *f = g->fish;
-            Unk02098e70 *p = g->spear.func_0200df08();
+            p = g->spear.func_0200df08();
             for (int i = 0; i < 3; i++) {
                 func_set(f->unk124, *p);
                 f->hitting.func_set();
