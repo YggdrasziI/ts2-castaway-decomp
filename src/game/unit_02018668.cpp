@@ -496,7 +496,7 @@ public:
     }
     void func_updateFish() {
         Unk0201a4e0 *f = fish;
-        for (int i = 0; i < 3; i++, f++) {
+        for (int i = 0; i < 3; f++, i++) {
             func_0200de30(f);
             f->func_02019ee8();
             (f->*(f->state))();
