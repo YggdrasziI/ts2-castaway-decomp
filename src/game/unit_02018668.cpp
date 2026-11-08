@@ -667,10 +667,10 @@ void Unk0201a2c8::func_14() {
     unk8b4 = func_02010e60();
     int n = func_02010c74(depth, unk8b4, func_020a655c(), unk920, 3);
     if (n < 3) {
+        void *db = data_020c3fc4;
         int prev = 0;
         for (; n < 3; n++) {
-            prev = func_0205f714(data_020c3fc4, data_020ae678[0], prev);
-            unk920[n] = prev;
+            prev = unk920[n] = func_0205f714(db, data_020ae678[0], prev);
         }
     }
     for (i = 0; i < 3; i++) {
