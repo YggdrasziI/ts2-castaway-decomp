@@ -704,40 +704,52 @@ Unk02056938::Unk02056938() {
     flags = 0;
 }
 
-/* Not complete (99 %): register allocation in the model loop. */
+/* 99.72 %: register allocation in the model loop (declaration order searched). */
 Unk02058788::~Unk02058788() {
+    Unk020705e4 *texanim;
+    Unk02053440 *header;
+    int m;
+    Unk020c3ba4 *world;
+    Unk02058788Room *room;
+    Unk02056ed0 *layer;
+    u32 *models;
+    Unk0208a0a8 *library;
+    int k;
+    int r;
+    int index;
+    int n;
     if (map == data_020c3ba4.map) {
-        Unk02053440 *header = func_02053440(file);
+        header = func_02053440(file);
         if (effects != 0 && header->roomCount > 0 && header->unk4 > 0) {
-            Unk020c3ba4 *world = &data_020c3ba4;
+            world = &data_020c3ba4;
             func_0205346c(file, 0);
-            Unk02056ed0 *layer = rooms[0].layers;
-            for (int k = 0; k < layer->info->count; k++) {
-                Unk020705e4 *texanim = world->texanim;
+            layer = rooms[0].layers;
+            for (k = 0; k < layer->info->count; k++) {
+                texanim = world->texanim;
                 texanim->func_0207072c(archive, effects, data_020c7d38.func_0208bcfc(func_020588f4(world, k)));
             }
         }
-        int n = header->textureCount;
+        n = header->textureCount;
         file->func_02094d4c(0x10104);
         for (int i = 0; i < n; i++) {
             func_0208c578()->func_0208c700(textures[i]);
         }
         delete[] textures;
         textures = 0;
-        int m = header->modelCount;
-        u32 *models = (u32 *)file->func_02094d4c(0x10105);
+        m = header->modelCount;
+        models = (u32 *)file->func_02094d4c(0x10105);
         for (int i = 0; i < m; i++) {
-            int index = archive->func_02093e9c(models[i]);
+            index = archive->func_02093e9c(models[i]);
             if (index != -1) {
-                Unk0208a0a8 *library = data_020c7d24;
+                library = data_020c7d24;
                 library->func_0208aa90((Unk0209543c *)archive->func_02093a58(index));
                 archive->func_02093c58(index);
             }
         }
     }
     if (rooms != 0) {
-        for (int r = 0; r < func_02053440(file)->roomCount; r++) {
-            Unk02058788Room *room = &rooms[r];
+        for (r = 0; r < func_02053440(file)->roomCount; r++) {
+            room = &rooms[r];
             if (room->layers != 0) {
                 delete[] room->layers;
                 room->layers = 0;
