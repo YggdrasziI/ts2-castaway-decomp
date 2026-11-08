@@ -214,17 +214,76 @@ def element_pointer(L):
     return L
 
 
+FOCUS = None  # (texts of the body lines near a difference, texts of all body lines); None: all
+
+
+def in_focus(line):
+    """A line may be mutated: near a difference (--focus), or inserted by a mutation."""
+    return FOCUS is None or line in FOCUS[0] or line not in FOCUS[1]
+
+
+HOIST = re.compile(r"(?<![\w.>])([A-Za-z_]\w*(?:(?:->|\.)\w+)+(?:\([^()]*\))?|[A-Za-z_]\w*\([^()]*\))")
+
+
+def hoist_expr(L):
+    """Read a call or member expression of a statement into a local just before it."""
+    c = []
+    for i, l in enumerate(L):
+        if not l.rstrip().endswith(";") or not insert_ok(L, i) or not in_focus(l):
+            continue
+        if re.match(r"^\s*(return|case|default|break|continue)\b", l):
+            continue
+        for m in HOIST.finditer(l):
+            after = l[m.end() :].lstrip()
+            if l[: m.start()].rstrip().endswith(("&", "++", "--")):
+                continue
+            if after.startswith(("++", "--", "(", "[")) or (after.startswith("=") and not after.startswith("==")):
+                continue
+            if re.match(r"[-+*/|&^]=", after):
+                continue
+            c.append((i, m.start(), m.group(1)))
+    if not c:
+        return L
+    i, at, e = random.choice(c)
+    n = "t%d_" % i
+    while l_has(L, n):
+        n += "_"
+    ind = re.match(r"^(\s*)", L[i]).group(1)
+    L[i] = L[i][:at] + n + L[i][at + len(e) :]
+    L.insert(i, "%s__typeof__(%s) %s = %s;" % (ind, e, n, e))
+    return L
+
+
+def scope_block(L):
+    """Put one or two consecutive simple statements in their own { } block."""
+    c = [i for i, l in enumerate(L) if l.strip().endswith(";") and block_end(L, i) and in_focus(l)
+         and not re.match(r"^\s*(case|default|return|break)\b", l)]
+    if not c:
+        return L
+    i = random.choice(c)
+    j = i
+    if i + 1 < len(L) and L[i + 1].strip().endswith(";") and block_end(L, i + 1) and random.random() < 0.5:
+        j = i + 1
+    ind = re.match(r"^(\s*)", L[i]).group(1)
+    return L[:i] + [ind + "{"] + ["    " + x for x in L[i : j + 1]] + [ind + "}"] + L[j + 1 :]
+
+
 def mutate(L):
     L = list(L)
     k = random.random()
-    idx = list(range(len(L)))
+    idx = [i for i in range(len(L)) if in_focus(L[i])]
+    if k < 0.12:  # a subexpression in a local, or statements in their own scope
+        R = random.choice((hoist_expr, hoist_expr, scope_block))(list(L))
+        if R != L:
+            return R
+    k = random.random()
     if k < 0.15:  # loop counter type, compared operand in a local, element pointer
         R = random.choice((counter_type, hoist_compare, element_pointer))(list(L))
         if R != L:
             return R
     k = random.random()
     if k < 0.28:  # swap adjacent simple statements
-        c = [i for i in idx[:-1] if block_end(L, i) and block_end(L, i + 1) and L[i].strip().endswith(";") and L[i + 1].strip().endswith(";")]
+        c = [i for i in idx if i + 1 < len(L) and block_end(L, i) and block_end(L, i + 1) and L[i].strip().endswith(";") and L[i + 1].strip().endswith(";")]
         if c:
             i = random.choice(c)
             L[i], L[i + 1] = L[i + 1], L[i]
@@ -279,6 +338,10 @@ def mutate(L):
 
 def locate(symbol):
     """Regex for the definition of a mangled or plain symbol."""
+    f = re.match(r"_Z(\d+)", symbol)
+    if f:  # free function: _Z<length><name><parameters>
+        name = symbol[f.end() : f.end() + int(f.group(1))]
+        return r"^[^\n;#]*\b%s\([^;{]*\{\n" % re.escape(name)
     m = re.match(r"_ZNK?(\d+)", symbol)
     if not m:
         return r"^[^\n;#]*\b%s\([^;{]*\{\n" % re.escape(symbol)
@@ -295,6 +358,15 @@ def locate(symbol):
             return None
         name = rest[q.end() : q.end() + int(q.group(1))]
     return r"^[^\n;#]*\b%s::%s\([^;{]*\{\n" % (cls, re.escape(name))
+
+
+def diff_lines(unit, symbol):
+    """Our source lines of the differing instructions (tools/why_diff.py's row kinds)."""
+    sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+    import why_diff
+    rows, _ = why_diff.load_rows(unit, symbol)
+    kinds, _ = why_diff.analyse(rows)
+    return {r["line"] for r, k in zip(rows, kinds) if r["line"] and k not in (None, "pool", "branch")}
 
 
 class Search:
@@ -345,6 +417,8 @@ def main():
     a.add_argument("--seconds", type=int, default=60)
     a.add_argument("--workers", type=int, default=16)
     a.add_argument("--out", default=None)
+    a.add_argument("--focus", type=int, default=None, metavar="N",
+                   help="mutate only lines within N lines of a difference (objdiff line numbers)")
     o = a.parse_args()
     src = o.unit + ".cpp"
     target = os.path.join("build", "eur", "delinks", o.unit.replace("/", os.sep) + ".o")
@@ -359,6 +433,13 @@ def main():
     s0 = m.end()
     e = text.index("\n}\n", s0) + 1
     pre, body, post = text[:s0], text[s0:e].split("\n")[:-1], text[e:]
+    if o.focus is not None:
+        global FOCUS
+        first = pre.count("\n") + 1  # file line of body[0]
+        near = {i for ln in diff_lines(o.unit, o.symbol) for i in range(len(body)) if abs(first + i - ln) <= o.focus}
+        if near:
+            FOCUS = ({body[i] for i in near}, set(body))
+            print("focus:", len(near), "of", len(body), "lines", flush=True)
     with tempfile.TemporaryDirectory(prefix="perm_") as tmp:
         s = Search(pre, post, os.path.dirname(os.path.abspath(src)), o.symbol, tgt, trel, tmp, o.workers)
         best = cur = s.run(0, body)

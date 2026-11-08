@@ -1866,6 +1866,36 @@ Data that the original keeps in `.text` between functions (crt0's `BuildInfo`): 
   other functions show swapped pool words only (`func_0200bab4`, `func_18` of
   unit_020116E0, the `Unk0202aef4` constructor, `func_02039a08`, `func_020573a4`).
 
+## Diagnosing a gap (2026-11-08)
+
+`python tools/why_diff.py <unit> <symbol> [--trace] [--rows]` sorts the differing rows of
+objdiff's alignment into register, stack, moved (scheduling), extra / missing and other,
+and sums the register rows up as a permutation (ours -> original) with our source lines;
+a cycle among r4-r11 is a coloring order problem. `--trace` adds, for each permuted
+register, the virtual registers coloring gave it and their visit order
+(`tools/mwcc_sched.py --colors`): the first visited gets the lowest free register.
+Rules found with small test files compiled with the game flags (2026-11-08):
+
+- **Copy propagation decides load order.** `int x = p.x; int y = p.y; d.x = x; d.y = y;`
+  with `p` a returned struct (its address is taken): x is propagated into its store, y
+  is not (the store through `this` may alias `p`), so the code is load y, load x, store x,
+  store y. Every field-by-field form of the copy gives this or load, store, load, store.
+- **Arguments of an inlined call are evaluated right to left**: `set(d, p.x, p.y)` loads y
+  first.
+- **Both loads first, x in r1, y in r0, stores in order** (`ldr r1, [sp]; ldr r0, [sp, #4];
+  str r1; str r0`) is the 8-byte block copy of a type with a constructor through a wrapper
+  struct: `*(Wrap *)&d = *(Wrap *)&p` with `struct Wrap { Point v; };`, directly or in an
+  inline helper (`func_set` of unk_fishing.h). A plain assignment of the same type is
+  scalarized into field copies. Found this way: `Unk02051da0::func_0c` (99.83 % -> 100 %,
+  its local `func_set` copied field by field) and the touched point of
+  `Unk0206bcf0::func_02071fdc`. `func_set` is still not always right: in a loop it is
+  strength-reduced (above, "Indexed stores in a copy loop").
+- **Stack slots: the first local created gets the highest offset**, for named locals,
+  temporaries, locals of nested blocks and of inlined functions alike. Reordering the
+  declarations reorders the slots (`func_02071fdc`: the hit list declared before the
+  touched point). An original whose slots come in the reverse of the order of use
+  (`Unk0200cec8::func_0200c550`: `view` at sp+0) is not explained by this rule.
+
 ## Source permuter
 
 `python tools/permute.py <unit> <symbol> [--seconds N] [--workers N] [--out DIR]` searches
@@ -1878,6 +1908,13 @@ whole function, signature to closing brace, to `<out>/<symbol>.txt` after a line
 source file; it never writes into the repository. The inserted locals are declared with
 `__typeof__(...)` (accepted by mwccarm 2.0): write the real type when keeping a result, and
 rename them.
+
+- `--focus N` (2026-11-08) mutates only the lines within N lines of a difference (our
+  line numbers from objdiff, through `tools/why_diff.py`), plus the lines the mutations
+  insert: in a long function the random search otherwise spends most of its tries far
+  from the gap. Two more mutations: a call or member expression read into a local
+  before its statement, and one or two statements put in their own `{ }` block. Free
+  functions are found from their mangled names (`_Z13func_020709e8...`).
 
 - The three last mutations (2026-11-06) found `func_020602b0` (9 s) and `func_020647f0` (1 s)
   from their sources before the hand fixes of this file.
