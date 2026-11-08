@@ -346,11 +346,6 @@ bool Unk0202cdf0::func_10() {
     return false;
 }
 
-/*
- * 99.85 %: the argument `done` stays in r9 here; the original has it in r4,
- * moved to r9 by the first button. Tried: a separate local, the index declared
- * first.
- */
 bool Unk0202cdf0::func_3c(bool done) {
     if (!func_30()) {
         done = true;
@@ -361,7 +356,8 @@ bool Unk0202cdf0::func_3c(bool done) {
         func_02028eec(owner, 0x15, data_020b9310, 0);
     }
     for (int i = 0; i < 5; i++) {
-        done = buttons2[i].func_0c(buttons[i].func_0c(done));
+        done = buttons[i].func_0c(done);
+        done = buttons2[i].func_0c(done);
         if ((buttons[i].touch.flags & 8) || (buttons2[i].touch.flags & 8)) {
             func_020292c0(owner, 0x15);
             func_02028eec(owner, 0x15, func_02053bd8(recipe, i), 0);
