@@ -399,6 +399,7 @@ int func_0201e2b0(Unk020548b0Node *n) {
 Unk0201e300::Unk0201e300()
     : flags(0), unk10(1), icon(0), nextIcon(0), shown(-1), layout1(0), clock(0), from1(0), from2(0), to1(0), to2(0),
       period(-1), unk1278(0), sound(-1) {
+    Unk0201e300Cloud *cloud;
     u32 keys1[6] = {0x3a23a541, 0x6b69d7a8, 0x3b4fe5be, 0xd65832df, 0xcb4c0704, 0x40ee9c8e};
     u32 keys2[6] = {0x28694930, 0xf7864cb9, 0x299589ad, 0x89a1412f, 0x1927bce7, 0x59da5497};
     u32 keys3[10] = {0xc7425c2, 0xc7425c3, 0xc7425c4, 0xc7425c5, 0xc7425c6,
@@ -444,7 +445,7 @@ Unk0201e300::Unk0201e300()
     func_020a80bc(sprites2[5], func_0202148c);
 
     for (u32 i = 0; i < 10; i++) {
-        Unk0201e300Cloud *cloud = &clouds[i];
+        cloud = &clouds[i];
         cloud->sprite = func_020aa040(layout1, 0xb, func_020a7b50(&names1, keys3[i]));
         cloud->x = func_020a7ca4(cloud->sprite);
         cloud->speed = 0;

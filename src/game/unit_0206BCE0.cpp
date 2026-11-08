@@ -1826,7 +1826,7 @@ void Unk0206bcf0::func_0206e424() {
     Unk020c43a8 *p;
     int sel;
     Unk02056ed0 *layer;
-    int i;
+    u32 i;
     u32 *tiles;
     sel = data_020d6240.menu->selected;
     p = &data_020c43a8;

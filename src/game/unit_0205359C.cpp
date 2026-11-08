@@ -387,16 +387,28 @@ void func_02053bf8(Unk02053bf8 *ui, Unk0205367c *t, Unk02053ef8 *pos, bool plus)
  * original converts them at run time (_fflt), which a literal would fold.
  */
 void func_02053ef8(Unk02053bf8 *ui, Unk0205367c *t, Unk02053ef8 *pos, bool plus) {
-    int n = func_02053914(t);
-    int x0;
-    int dx;
+    u32 index;
+    int colX;
     int dy;
-    int offset;
-    int rows;
-    int cols;
-    int arrowX;
-    int r;
+    int resultY;
+    int x0;
+    int countY;
+    int countX;
+    int dx;
     int y0;
+    int c;
+    int offset;
+    int n;
+    int rows;
+    int x;
+    u32 cols;
+    int arrowY;
+    int arrowX;
+    u32 y;
+    int rowX;
+    int r;
+    int plusY;
+    n = func_02053914(t);
     dy = 0x16;
     rows = 2;
     offset = dy - 0x20;
@@ -437,22 +449,21 @@ void func_02053ef8(Unk02053bf8 *ui, Unk0205367c *t, Unk02053ef8 *pos, bool plus)
         arrowX = 0xa2;
         break;
     }
-    int countX = 1;
-    int countY = 0x1a;
-    int plusY = 0xc;
-    int arrowY = 0x32;
-    int resultY = 0x24;
-    int index = 0;
-    int rowX;
+    countX = 1;
+    countY = 0x1a;
+    plusY = 0xc;
+    arrowY = 0x32;
+    resultY = 0x24;
+    index = 0;
     for (r = 0, rowX = 0; r < rows; r++) {
-        int y = pos->y + FX32(y0);
-        int colX = 0;
-        for (int c = 0; c < cols && index < 5;) {
+        y = pos->y + FX32(y0);
+        colX = 0;
+        for (c = 0; c < cols && index < 5;) {
             if (func_02053bd8(t, index) == 0) {
                 index++;
                 continue;
             }
-            int x = pos->x + FX32(x0 + colX + rowX);
+            x = pos->x + FX32(x0 + colX + rowX);
             func_020a7c90(ui->icons[index], x);
             func_020a7cac(ui->icons[index], y);
             func_020a7c90(ui->counts[index], x + FX32(countX));

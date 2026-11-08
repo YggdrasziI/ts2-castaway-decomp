@@ -311,7 +311,7 @@ void Unk02090308::func_0209066c(int w, int h) {
  */
 void Unk02090308::func_020906e4(Unk02095140 *file, int x, int y, int index) {
     Unk02095140Header *h;
-    int cx;
+    u32 cx;
     int cy;
     int cx1;
     int cy1;
