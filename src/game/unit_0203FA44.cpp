@@ -129,14 +129,17 @@ public:
 static void *func_02041870(u32 id, void *user);
 
 /*
- * 99.85 %: registers of the slot loop only. The original gives x r4, the name
- * list r6 and the counter r7; here x is r7, the name list r4 and the counter r6
- * (the slot base, r5, matches since the slot pointer local). Tried: const x / y /
- * slot, unsigned x / y, one sprite local, x and y declared before the loop, the
- * counter outside the loop, tools/permute.py (180 s, best score 28). One local
- * per sprite gives the original's reuse of x's register by the last sprite.
+ * 99.91 %: registers of the slot loop only. The original gives x r4, the name
+ * list r6 and the counter r7. x declared at the top of the function gives the
+ * counter r7; x and the name list (hoisted out of the loop) stay swapped.
+ * Tried: const x / y / slot, unsigned or signed-compared counters, x and y
+ * declared before the loop, the counter at the top, a named pointer to the
+ * name list (before, at the top or in the loop), tools/permute.py --focus
+ * (300 s, no gain). One local per sprite gives the original's reuse of x's
+ * register by the last sprite.
  */
 Unk0203fa44::Unk0203fa44(Unk0203c188Owner *owner) : Unk0203c188(owner) {
+    int x;
     Unk020a7af4Entry entries[0x50];
     Unk020a7af4 names(entries, 0x50);
 
@@ -249,7 +252,7 @@ Unk0203fa44::Unk0203fa44(Unk0203c188Owner *owner) : Unk0203c188(owner) {
         slot->func_02050838(func_sprite(layout, 0xb, func_020a7b50(&names, 0xcadc45ff + i)), false);
         slot->func_02050c48(0, 3, -1);
         slot->func_02050914(7);
-        int x = slot->func_10()->x;
+        x = slot->func_10()->x;
         int y = slot->func_10()->y;
         Unk020a7c90 *s1 = func_sprite(layout, 4, func_020a7b50(&names, 0x9e34ffc6 + i));
         func_020a7c90(s1, x + 0xa000);
