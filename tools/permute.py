@@ -17,6 +17,7 @@ source file. Inserted locals use `__typeof__`: write the real type when keeping 
 """
 import argparse
 import difflib
+import json
 import os
 import random
 import re
@@ -452,10 +453,35 @@ def diff_lines(unit, symbol):
     return {r["line"] for r, k in zip(rows, kinds) if r["line"] and k not in (None, "pool", "branch")}
 
 
+ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+OBJDIFF = os.path.join(ROOT, "objdiff-cli.exe" if os.name == "nt" else "objdiff-cli")
+
+
+def objdiff_score(target, ob, symbol, js):
+    """100 minus objdiff's match percent of the function (0: a match), as in the report."""
+    if os.path.exists(js):
+        os.remove(js)
+    r = subprocess.run([OBJDIFF, "diff", "-1", target, "-2", ob, symbol, "-o", js, "--format", "json"],
+                       capture_output=True)
+    if r.returncode or not os.path.exists(js):
+        return None
+    with open(js, encoding="utf-8") as f:
+        d = json.load(f)
+    for s in d.get("right", {}).get("symbols", []):
+        if s.get("name") == symbol and s.get("match_percent") is not None:
+            return 0 if s["match_percent"] >= 100 else 100 - s["match_percent"]
+    return None
+
+
 class Search:
-    def __init__(self, pre, post, srcdir, symbol, tgt, trel, tmp, workers):
+    """Compiles variants of one function and scores them. With `target` (the delinked
+    object), the score is objdiff's (100 minus the match percent, times `scale`);
+    without it, the count of differing words (score())."""
+
+    def __init__(self, pre, post, srcdir, symbol, tgt, trel, tmp, workers, target=None, scale=1.0):
         self.pre, self.post, self.srcdir, self.symbol = pre, post, srcdir, symbol
         self.tgt, self.trel, self.tmp = tgt, trel, tmp
+        self.target, self.scale = target, scale
         self.ex = ThreadPoolExecutor(workers)
         self.workers = workers
 
@@ -469,6 +495,9 @@ class Search:
         r = subprocess.run([CC] + FLAGS + ["-i", self.srcdir, "-c", c, "-o", ob], capture_output=True)
         if r.returncode or not os.path.exists(ob):
             return 10**6
+        if self.target:
+            v = objdiff_score(self.target, ob, self.symbol, os.path.join(self.tmp, "v%d.json" % i))
+            return 10**6 if v is None else v * self.scale
         return score(ob, self.symbol, self.tgt, self.trel)
 
     def batch(self, C):
@@ -500,6 +529,8 @@ def main():
     a.add_argument("--seconds", type=int, default=60)
     a.add_argument("--workers", type=int, default=16)
     a.add_argument("--out", default=None)
+    a.add_argument("--scorer", choices=("objdiff", "words"), default="objdiff",
+                   help="objdiff: the report's match percent (default); words: differing words, faster")
     a.add_argument("--focus", type=int, default=None, metavar="N",
                    help="mutate only lines within N lines of a difference (objdiff line numbers)")
     o = a.parse_args()
@@ -524,7 +555,10 @@ def main():
             FOCUS = ({body[i] for i in near}, set(body))
             print("focus:", len(near), "of", len(body), "lines", flush=True)
     with tempfile.TemporaryDirectory(prefix="perm_") as tmp:
-        s = Search(pre, post, os.path.dirname(os.path.abspath(src)), o.symbol, tgt, trel, tmp, o.workers)
+        # objdiff's percent scaled to words, so the search thresholds keep their meaning
+        target_o = os.path.abspath(target) if o.scorer == "objdiff" else None
+        s = Search(pre, post, os.path.dirname(os.path.abspath(src)), o.symbol, tgt, trel, tmp, o.workers,
+                   target_o, len(tgt) / 400.0)
         best = cur = start = s.run(0, body)
         print("start", cur, "of", len(tgt) // 4, flush=True)
         bestL = curL = body

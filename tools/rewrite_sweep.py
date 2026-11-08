@@ -31,7 +31,6 @@ import json
 import os
 import re
 import sys
-import subprocess
 import tempfile
 import time
 
@@ -544,40 +543,6 @@ def body_end(text, s0):
 
 
 BASE = 4  # indentation of the function's top-level statements
-ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-OBJDIFF = os.path.join(ROOT, "objdiff-cli.exe" if os.name == "nt" else "objdiff-cli")
-
-
-class ObjdiffSearch(Search):
-    """Scores a variant as 100 minus objdiff's match percent of the function (0: a match),
-    the value of the report, instead of permute.py's count of differing words."""
-
-    def __init__(self, target, *a):
-        super().__init__(*a)
-        self.target = target
-
-    def run(self, i, lines):
-        c = os.path.join(self.tmp, "v%d.cpp" % i)
-        ob = os.path.join(self.tmp, "v%d.o" % i)
-        js = os.path.join(self.tmp, "v%d.json" % i)
-        with open(c, "w", encoding="utf-8", errors="surrogateescape", newline="\n") as f:
-            f.write(self.pre + "\n".join(lines) + "\n" + self.post)
-        for p in (ob, js):
-            if os.path.exists(p):
-                os.remove(p)
-        r = subprocess.run([permute.CC] + permute.FLAGS + ["-i", self.srcdir, "-c", c, "-o", ob], capture_output=True)
-        if r.returncode or not os.path.exists(ob):
-            return 10**6
-        r = subprocess.run([OBJDIFF, "diff", "-1", self.target, "-2", ob, self.symbol, "-o", js, "--format", "json"],
-                           capture_output=True)
-        if r.returncode or not os.path.exists(js):
-            return 10**6
-        with open(js, encoding="utf-8") as f:
-            d = json.load(f)
-        for s in d.get("right", {}).get("symbols", []):
-            if s.get("name") == self.symbol and s.get("match_percent") is not None:
-                return 0 if s["match_percent"] >= 100 else 100 - s["match_percent"]
-        return 10**6
 
 
 def sweep(unit, symbol, o):
@@ -604,7 +569,7 @@ def sweep(unit, symbol, o):
     BASE = min((ind(l) for l in body if l.strip()), default=4)
     with tempfile.TemporaryDirectory(prefix="sweep_") as tmp:
         args = (pre, post, os.path.dirname(os.path.abspath(src)), symbol, tgt, trel, tmp, o.workers)
-        s = ObjdiffSearch(os.path.abspath(target), *args) if o.scorer == "objdiff" else Search(*args)
+        s = Search(*args, target=os.path.abspath(target)) if o.scorer == "objdiff" else Search(*args)
         start = s.run(0, body)
         if start >= 10**6:
             s.ex.shutdown()

@@ -2176,6 +2176,12 @@ body too. A few hundred variants take about a minute: it is a first pass before 
   place, the loop bound written over `total`), `func_02026e4c` 93.46 -> 94.62 %, the
   `Unk020680d4` constructor 95.94 -> 96.61 % (the pool global read in place),
   `func_02039a08` 94.42 -> 95.06 %. A second pass from there found nothing above 0.15 %.
+- permute.py scores with objdiff too (2026-11-08, default; `--scorer words` for the old
+  count). Its scale stays in words (objdiff's missing percent times the function's words
+  / 100), so the thresholds of the search keep their meaning. A 90 s run took
+  `func_02067970` from 96.61 to 97.12 %: a `u32` loop counter, which gives the original
+  registers with an unsigned test; its `.best.txt` is not reduced (only a 0 is), so
+  try its changes one at a time.
 - The rewrites keep the behaviour only as far as a line-based liveness check can tell
   (no flow analysis): a first version reused a variable that another `else if` branch
   writes and a later line reads. Read each kept diff.
