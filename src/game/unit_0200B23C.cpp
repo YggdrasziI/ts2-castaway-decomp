@@ -3,14 +3,27 @@
  * catches `Unk0200c308` cross the screen, the stylus takes them under a countdown.
  * Strings: `collect_success`, `splat.nitro_map`, `walk.nitro_map`.
  *
- * Bounds: hypothesis. `.data` starts at the table (the pointer to member constants of
- * the file are written as one array, which is a hypothesis) and ends before the base
- * vtable of the next unit. Real file name unknown; all names are placeholders.
+ * Bounds: hypothesis. `.data` holds the path radius, the animation names, the pointer
+ * to member constants, five null pointers, the vtables and the strings, and ends
+ * before the base vtable of the next unit. Real file name unknown; all names are
+ * placeholders.
  *
- * Open gaps. `.data`: the strings land before the table, the original has them after
- * the vtables. Code: the table is reached through two anchors in the original, the
- * countdown hoists the address of its word, and the rest is register allocation. The
- * scores of each function are in the objdiff report.
+ * Class layout (hypothesis, from the `.data` order, as in unit_02018668.cpp): the
+ * catch and the player are classes nested in the game class. The 32 constants are
+ * created while the class bodies are parsed at the end of the game class, last member
+ * first: the game members, then the player's, then the catch's. The constants of
+ * functions defined outside (`func_14`, `func_0200cc60`, `func_0200d138`,
+ * `func_0200becc`, `func_0200c310`, `func_0200c550`) come from one-line body helpers.
+ * Two constants are never loaded in the original (`func_back`, `func_wait`). The
+ * radius is a `static const int` with a dynamic initializer, which mwccarm puts in
+ * `.data`; a plain `int` goes to `.bss`.
+ *
+ * Not complete. Code gaps: registers and stack slots (`func_0200b488`,
+ * `func_0200b940`, `func_0200bab4`, `func_0200becc`, `func_0200c550`, `func_0200d138`,
+ * `func_14`, `func_18`). `.text` order: the constructor of the catch is emitted right
+ * after the factory (the original has it after the catch's destructor), and
+ * `func_0200dd50`, `func_0200dd6c` come before the virtual functions (after them in
+ * the original).
  */
 #include "game/unk_microgame.h"
 #include "game/unk_catalog.h"
@@ -205,92 +218,303 @@ static const int data_020ae5cc[5][5] = {
 };
 static const u32 data_020ae630 = 0x5beb1dfe;
 
-enum Unk0200c308Idle {
-    UNK_0200C308_BUSY,
-    UNK_0200C308_IDLE
-};
 
-/* One catch. */
-class Unk0200c308 : public Unk0200ad70 {
-public:
-    typedef void (Unk0200c308::*State)();
+extern "C" int func_02097acc(int x);
 
-    Unk0200c308();
-    ~Unk0200c308();
+/* The radius of the catches' paths. */
+static const int data_020b7900 = func_02097acc(0x6400) + 0x26;
 
-    void func_0200b268();
-    void func_0200b298();
-    void func_0200b2e4();
-    void func_0200b310();
-    void func_0200b334();
-    void func_0200b3a0();
-    void func_0200b3a4();
-    void func_0200b420();
-    void func_0200b488();
-    void func_0200b674();
-    void func_0200b700();
-    void func_0200becc(int kind);
-    virtual void *func_00();
-    bool func_0200c310();
-    void func_0200c99c(State s);
-    bool func_0200c9b8(int i, bool force);
-    void *func_0200cb58();
-    bool func_0200cb60();
-    void func_0200cba8();
+static inline int func_sin(int angle) {
+    return data_020af1e8[((u16)angle >> 4) * 2];
+}
 
-    inline Unk0200c308Idle func_idle();
-    inline bool func_play(int i, bool force);
+static inline int func_cos(int angle) {
+    return data_020af1e8[((u16)angle >> 4) * 2 + 1];
+}
 
-    Unk0200cec8 *game;
-    State state;
-    int life;
-    int t;
-    Unk0201a4e0Rect rects[2];
-    Unk0200b04cBit flags;
-    Unk02098e70 touch;
-    int angle;
-    Unk020a7c90 *sprites[2];
-    int file;
-    Unk0200b04c anim;
-    int index;
-    u32 anims[2];
-};
-
-/* The player's sprite: its states run on this block of the game. */
-class Unk0200b75c {
-public:
-    typedef void (Unk0200b75c::*State)();
-
-    void func_0200b75c();
-    void func_0200b7c4();
-    void func_0200b7f8();
-    void func_0200b8a4();
-    void func_0200b8d8();
-    void func_0200b8f4();
-    void func_0200b910();
-
-    State state;
-    Unk0200cec8 *owner;
-    Unk02098e70 pos;
-    Unk0200b04cBit flags;
-    int total;
-};
+extern "C" Unk02098e70 func_0200b23c(const Unk02098e70 &v, int f) {
+    return Unk02098e70((int)(((s64)v.x * f) >> 12), (int)(((s64)v.y * f) >> 12));
+}
 
 class Unk0200cec8 : public Unk020a5ccc {
 public:
     typedef void (Unk0200cec8::*State)();
 
+    /* One catch. */
+    class Unk0200c308 : public Unk0200ad70 {
+    public:
+        typedef void (Unk0200c308::*State)();
+
+        Unk0200c308() : Unk0200ad70(2), game(0), state(&Unk0200c308::func_0200b3a0), file(0) {
+            index = 2;
+        }
+        ~Unk0200c308();
+
+        void func_start() { state = &Unk0200c308::func_0200b268; }
+        void func_first(State &s) {
+            switch (unkc0) {
+            case (int)0x97de12bf:
+                s = &Unk0200c308::func_0200b334;
+                break;
+            case (int)0xcbd6cda5:
+                s = &Unk0200c308::func_0200b310;
+                break;
+            case 0x4c444ea5:
+                s = &Unk0200c308::func_0200b2e4;
+                break;
+            case 0x2743d311:
+                s = &Unk0200c308::func_0200b298;
+                break;
+            }
+        }
+        bool func_idle() { return !(state != &Unk0200c308::func_0200b3a0); }
+
+        void func_0200b3a0() {
+        }
+        void func_0200b268() {
+            func_0200df10(this, 0, 1);
+            state = &Unk0200c308::func_0200b3a0;
+        }
+        void func_0200b298() {
+            func_set(target, func_020a5f28(1, 0x20000));
+            state = &Unk0200c308::func_0200b3a4;
+        }
+        void func_0200b2e4() {
+            func_set(move.dir, unka8);
+            state = &Unk0200c308::func_0200b420;
+        }
+        void func_0200b310() {
+            t = 0;
+            state = &Unk0200c308::func_0200b488;
+        }
+        void func_0200b334() {
+            int r = data_020b7900;
+            t = 0;
+            func_set(target, unkb0.func_02098fa8(func_0200b23c(unka8, r << 12)));
+            state = &Unk0200c308::func_0200b674;
+        }
+        void func_0200b3a4() {
+            if (func_0200dfd8(this, &target, 0xa000) == 1) {
+                func_0200b298();
+            } else {
+                func_0200e010(this, &target, &rects[0], 1);
+            }
+        }
+        void func_0200b420() {
+            if (func_0200dfd8(this, &target, 0xa000) == 1) {
+                func_stop();
+            }
+            pos.x += move.dir.x;
+            pos.y += move.dir.y;
+        }
+        void func_0200b488() {
+            if (t * 6 > data_020b7900 << 13) {
+                func_stop();
+                return;
+            }
+            func_set(move.dir, Unk02098e70(0x1000, 0));
+            func_020acbc8(&move.dir);
+            int step = move.dir.func_02098e84() * 0x2aa;
+            int a = t;
+            Unk02098e70 p = unkb0.func_02098fa8(func_0200b23c(unka8, a * 6));
+            Unk02098e70 s = func_0200b23c(unka8, func_sin(a) * func_0200af10(this));
+            func_set(pos, Unk02098e70(p.x - s.y, p.y + s.x));
+            a = t + (step >> 12);
+            p = unkb0.func_02098fa8(func_0200b23c(unka8, a * 6));
+            s = func_0200b23c(unka8, func_sin(a) * func_0200af10(this));
+            func_set(target, Unk02098e70(p.x - s.y, p.y + s.x));
+            Unk02098e70 d = target.func_02098fcc(pos);
+            func_set(move.dir, d.func_02098eec());
+            t += step >> 12;
+        }
+        void func_0200b674() {
+            if (func_0200dfd8(this, &target, 0xc8000) == 1) {
+                if (t == 0) {
+                    func_set(target, unka0);
+                    t++;
+                } else {
+                    func_stop();
+                }
+            } else {
+                func_0200e010(this, &target, &rects[0], 1);
+            }
+        }
+        void func_0200b700() {
+            if (func_0200dfd8(this, &target, 0xa000) == 1) {
+                func_stop();
+            } else {
+                func_0200e010(this, &target, &rects[1], 1);
+            }
+        }
+        /* Never called: the original has the constant of this state, but no code loads it. */
+        void func_back() { state = &Unk0200c308::func_0200b700; }
+        void func_splat() { state = &Unk0200c308::func_0200b3a0; }
+        void func_stop() {
+            func_0200df10(this, 0, 1);
+            state = &Unk0200c308::func_0200b3a0;
+        }
+
+        void func_0200becc(int kind);
+        virtual void *func_00();
+        bool func_0200c310();
+        void func_0200c99c(State s);
+        bool func_0200c9b8(int i, bool force);
+        void *func_0200cb58();
+        bool func_0200cb60();
+        void func_0200cba8();
+
+        inline bool func_play(int i, bool force);
+
+        Unk0200cec8 *game;
+        State state;
+        int life;
+        int t;
+        Unk0201a4e0Rect rects[2];
+        Unk0200b04cBit flags;
+        Unk02098e70 touch;
+        int angle;
+        Unk020a7c90 *sprites[2];
+        int file;
+        Unk0200b04c anim;
+        int index;
+        u32 anims[2];
+    };
+
+    /* The player's sprite: its states run on this block of the game. */
+    class Unk0200b75c {
+    public:
+        typedef void (Unk0200b75c::*State)();
+
+        void func_reset() { state = &Unk0200b75c::func_0200b75c; }
+        bool func_done() { return !(state != &Unk0200b75c::func_0200b7c4); }
+        void func_0200b75c() {
+            Unk0200cec8 *g = owner;
+            g->func_sound(0);
+            state = &Unk0200b75c::func_0200b7c4;
+        }
+        void func_0200b7c4() {
+            if (flags.func_get()) {
+                flags.func_clear();
+                state = &Unk0200b75c::func_0200b7f8;
+            }
+        }
+        void func_0200b7f8() {
+            Unk0200cec8 *g = owner;
+            g->func_sound(func_020a5ef0(1, 3));
+            total = owner->func_sum();
+            state = &Unk0200b75c::func_0200b8a4;
+        }
+        void func_0200b8a4() {
+            func_020a60e8();
+            if (func_020a60bc() == 1) {
+                state = &Unk0200b75c::func_0200b8d8;
+            }
+        }
+        void func_0200b8d8() {
+            state = &Unk0200b75c::func_0200b8f4;
+        }
+        void func_0200b8f4() {
+            state = &Unk0200b75c::func_0200b75c;
+        }
+        /* Never called, as func_back. */
+        void func_wait() { state = &Unk0200b75c::func_0200b910; }
+        void func_0200b910() {
+            if (func_020a60bc()) {
+                state = &Unk0200b75c::func_0200b75c;
+            }
+        }
+
+        State state;
+        Unk0200cec8 *owner;
+        Unk02098e70 pos;
+        Unk0200b04cBit flags;
+        int total;
+    };
+
     Unk0200cec8(Unk02093648 *file, Unk0200cec8Arg *args, int n);
 
-    void func_0200b940();
-    void func_0200b9c0();
-    void func_0200ba70();
-    void func_0200bab4();
+    void func_begin() { state = &Unk0200cec8::func_0200b940; }
+    void func_0200b940() {
+        clock.func_set(0, 0);
+        clock.f.frames = 1;
+        state = &Unk0200cec8::func_0200b9c0;
+        func_sound(0, 1, 1);
+    }
+    void func_0200b9c0() {
+        if (clock.v == 0) {
+            state = &Unk0200cec8::func_0200ba70;
+        } else {
+            clock.func_tick();
+        }
+    }
+    void func_0200ba70() {
+        state = &Unk0200cec8::func_0200bab4;
+        clock.f.hours = 0;
+        clock.f.minutes = 1;
+        clock.f.seconds = 0;
+        clock.f.frames = 0;
+        unk1768 = 0;
+    }
+    void func_0200bab4() {
+        int *t = func_02097a4c();
+        int down = func_020978dc(0);
+        Unk02098e70 p(t[0] << 12, t[1] << 12);
+        func_020aa1c0(&layout, &p, down);
+        clock.func_tick();
+        if (func_0209774c(0) == 1) {
+            func_set(player.pos, p);
+            player.flags.func_set();
+            for (int i = 0; i < 15; i++) {
+                if (catches[i].func_idle() == false) {
+                    catches[i].touch = p;
+                    catches[i].flags.func_set();
+                }
+            }
+        }
+        (player.*player.state)();
+        for (int i = 0; i < 15; i++) {
+            Unk0200c308 *c = &catches[i];
+            func_0200de30(c);
+            c->func_0200cba8();
+            (c->*c->state)();
+            if (!c->func_0200cb60()) {
+                if (c->func_0200c310() != 1) {
+                    c->life++;
+                }
+            }
+        }
+        if (spawned != total) {
+            int kind;
+            if (spawned < 10) {
+                const int *row = data_020ae5cc[map];
+                kind = 0;
+                while (spawnedKind[kind] >= row[kind]) {
+                    kind++;
+                }
+                spawnedKind[kind]++;
+                if (defs[kind] == 0) {
+                    kind = func_020a5ec0() & 1;
+                }
+            } else {
+                kind = spawned < data_020ae5cc[map][3] + 10 ? 3 : 4;
+            }
+            catches[spawned++].func_0200becc(kind);
+        }
+        bool all = spawned == total;
+        for (int i = 0; i < 15; i++) {
+            all = all & catches[i].func_idle();
+        }
+        bool last = player.func_done();
+        if ((all & last) == 1) {
+            state = &Unk0200cec8::func_0200cc60;
+        }
+    }
     bool func_0200c550();
     int func_0200cb28();
     void func_0200cc60();
     void func_0200ce18();
     void func_0200d138(Unk020a7af4 *names);
+    void func_end() { state = &Unk0200cec8::func_0200ce18; }
 
     int func_sum() {
         int n = caught[0];
@@ -316,7 +540,52 @@ public:
     }
 
     virtual void func_14();
-    virtual bool func_18();
+
+    virtual bool func_18() {
+        if (!shown.func_get()) {
+            return true;
+        }
+        func_020aa158(&layout);
+        if (state == 0) {
+            for (int i = 0; i < 5; i++) {
+                void *def = defs[i];
+                if (def != 0) {
+                    for (int j = 0; j < caught[i]; j++) {
+                        func_02054c1c(data_020bfc9c, def, 0);
+                    }
+                }
+            }
+            return false;
+        }
+        if (paused) {
+            buttons[3].func_0c(buttons[2].func_0c(0));
+            buttons[2].func_08();
+            buttons[3].func_08();
+            if (func_020972c0(3) || (buttons[2].touch.flags & 8) || (buttons[3].touch.flags & 8)) {
+                buttons[1].func_18(0);
+                buttons[2].func_18(0);
+                buttons[3].func_18(0);
+                func_020a7cf0(texts[1], 0);
+                func_020a7cf0(texts[2], 0);
+                func_020a7cf0(texts[3], 0);
+                paused = 0;
+                if (buttons[3].touch.flags & 8) {
+                    state = &Unk0200cec8::func_0200cc60;
+                }
+            }
+        } else if (func_020972c0(3) && !func_020a7d1c(texts[0]) && func_020a1280(func_020a18e4(), 2, 0)) {
+            buttons[1].func_18(1);
+            buttons[2].func_18(1);
+            buttons[3].func_18(1);
+            func_020a7cf0(texts[1], 1);
+            func_020a7cf0(texts[2], 1);
+            func_020a7cf0(texts[3], 1);
+            paused = 1;
+        } else {
+            (this->*state)();
+        }
+        return true;
+    }
 
     virtual void func_1c() {
     }
@@ -328,6 +597,14 @@ public:
             n += caught[i];
         }
         return n != 0;
+    }
+
+    void func_sound(int index, int a = 0, int force = 0, int b = 0) {
+        static const char *data_020b7904[5] = {"idle", "grab", "grab2", "collect_success", "collect_success2"};
+        if (force || anim != index) {
+            func_020a6340(this, data_020ae630, data_020b7904[index], a, b);
+            anim = index;
+        }
     }
 
     Unk020a9d58 layout;
@@ -356,260 +633,8 @@ public:
     int rub;
 };
 
-/* The table of the file. */
-struct Unk020b7900 {
-    int radius;
-    const char *names[5];
-    Unk0200cec8::State game[7];
-    Unk0200b75c::State player[10];
-    Unk0200c308::State catches[15];
-    int tail[5];
-};
-
-extern Unk020b7900 data_020b7900;
-
-
-#define T data_020b7900
-#define TF T.catches
-#define TP T.player
-#define TG T.game
-
-static inline int func_sin(int angle) {
-    return data_020af1e8[((u16)angle >> 4) * 2];
-}
-
-static inline int func_cos(int angle) {
-    return data_020af1e8[((u16)angle >> 4) * 2 + 1];
-}
-
-extern "C" Unk02098e70 func_0200b23c(const Unk02098e70 &v, int f) {
-    return Unk02098e70((int)(((s64)v.x * f) >> 12), (int)(((s64)v.y * f) >> 12));
-}
-
-void Unk0200c308::func_0200b268() {
-    func_0200df10(this, 0, 1);
-    state = TF[7];
-}
-
-void Unk0200c308::func_0200b298() {
-    func_set(target, func_020a5f28(1, 0x20000));
-    state = TF[6];
-}
-
-void Unk0200c308::func_0200b2e4() {
-    func_set(move.dir, unka8);
-    state = TF[5];
-}
-
-void Unk0200c308::func_0200b310() {
-    t = 0;
-    state = TF[4];
-}
-
-void Unk0200c308::func_0200b334() {
-    int r = T.radius;
-    t = 0;
-    func_set(target, unkb0.func_02098fa8(func_0200b23c(unka8, r << 12)));
-    state = TF[3];
-}
-
-void Unk0200c308::func_0200b3a0() {
-}
-
-void Unk0200c308::func_0200b3a4() {
-    if (func_0200dfd8(this, &target, 0xa000) == 1) {
-        func_set(target, func_020a5f28(1, 0x20000));
-        state = TF[6];
-    } else {
-        func_0200e010(this, &target, &rects[0], 1);
-    }
-}
-
-void Unk0200c308::func_0200b420() {
-    if (func_0200dfd8(this, &target, 0xa000) == 1) {
-        func_0200df10(this, 0, 1);
-        state = TF[0];
-    }
-    pos.x += move.dir.x;
-    pos.y += move.dir.y;
-}
-
-void Unk0200c308::func_0200b488() {
-    if (t * 6 > T.radius << 13) {
-        func_0200df10(this, 0, 1);
-        state = TF[0];
-        return;
-    }
-    func_set(move.dir, Unk02098e70(0x1000, 0));
-    func_020acbc8(&move.dir);
-    int step = move.dir.func_02098e84() * 0x2aa;
-    int a = t;
-    Unk02098e70 p = unkb0.func_02098fa8(func_0200b23c(unka8, a * 6));
-    Unk02098e70 s = func_0200b23c(unka8, func_sin(a) * func_0200af10(this));
-    func_set(pos, Unk02098e70(p.x - s.y, p.y + s.x));
-    a = t + (step >> 12);
-    p = unkb0.func_02098fa8(func_0200b23c(unka8, a * 6));
-    s = func_0200b23c(unka8, func_sin(a) * func_0200af10(this));
-    func_set(target, Unk02098e70(p.x - s.y, p.y + s.x));
-    Unk02098e70 d = target.func_02098fcc(pos);
-    func_set(move.dir, d.func_02098eec());
-    t += step >> 12;
-}
-
-void Unk0200c308::func_0200b674() {
-    if (func_0200dfd8(this, &target, 0xc8000) == 1) {
-        if (t == 0) {
-            func_set(target, unka0);
-            t++;
-        } else {
-            func_0200df10(this, 0, 1);
-            state = TF[0];
-        }
-    } else {
-        func_0200e010(this, &target, &rects[0], 1);
-    }
-}
-
-void Unk0200c308::func_0200b700() {
-    if (func_0200dfd8(this, &target, 0xa000) == 1) {
-        func_0200df10(this, 0, 1);
-        state = TF[0];
-    } else {
-        func_0200e010(this, &target, &rects[1], 1);
-    }
-}
-
-void Unk0200b75c::func_0200b75c() {
-    Unk0200cec8 *g = owner;
-    if (g->anim != 0) {
-        func_020a6340(g, data_020ae630, T.names[0], 0, 0);
-        g->anim = 0;
-    }
-    state = TP[7];
-}
-
-void Unk0200b75c::func_0200b7c4() {
-    if (flags.func_get()) {
-        flags.func_clear();
-        state = TP[6];
-    }
-}
-
-void Unk0200b75c::func_0200b7f8() {
-    Unk0200cec8 *g = owner;
-    int r = func_020a5ef0(1, 3);
-    if (g->anim != r) {
-        func_020a6340(g, data_020ae630, T.names[r], 0, 0);
-        g->anim = r;
-    }
-    total = owner->func_sum();
-    state = TP[5];
-}
-
-void Unk0200b75c::func_0200b8a4() {
-    func_020a60e8();
-    if (func_020a60bc() == 1) {
-        state = TP[4];
-    }
-}
-
-void Unk0200b75c::func_0200b8d8() {
-    state = TP[3];
-}
-
-void Unk0200b75c::func_0200b8f4() {
-    state = TP[2];
-}
-
-void Unk0200b75c::func_0200b910() {
-    if (func_020a60bc()) {
-        state = TP[0];
-    }
-}
-
-void Unk0200cec8::func_0200b940() {
-    clock.func_set(0, 0);
-    clock.f.frames = 1;
-    state = TG[5];
-    func_020a6340(this, data_020ae630, T.names[0], 1, 0);
-    anim = 0;
-}
-
-void Unk0200cec8::func_0200b9c0() {
-    if (clock.v == 0) {
-        state = TG[4];
-    } else {
-        clock.func_tick();
-    }
-}
-
-void Unk0200cec8::func_0200ba70() {
-    state = TG[3];
-    clock.f.hours = 0;
-    clock.f.minutes = 1;
-    clock.f.seconds = 0;
-    clock.f.frames = 0;
-    unk1768 = 0;
-}
-
-inline Unk0200c308Idle Unk0200c308::func_idle() {
-    return state != TF[8] ? UNK_0200C308_BUSY : UNK_0200C308_IDLE;
-}
-
-void Unk0200cec8::func_0200bab4() {
-    int *t = func_02097a4c();
-    int down = func_020978dc(0);
-    Unk02098e70 p(t[0] << 12, t[1] << 12);
-    func_020aa1c0(&layout, &p, down);
-    clock.func_tick();
-    if (func_0209774c(0) == 1) {
-        func_set(player.pos, p);
-        player.flags.func_set();
-        for (int i = 0; i < 15; i++) {
-            if (catches[i].func_idle() == UNK_0200C308_BUSY) {
-                catches[i].touch = p;
-                catches[i].flags.func_set();
-            }
-        }
-    }
-    (player.*player.state)();
-    for (int i = 0; i < 15; i++) {
-        Unk0200c308 *c = &catches[i];
-        func_0200de30(c);
-        c->func_0200cba8();
-        (c->*c->state)();
-        if (!c->func_0200cb60()) {
-            if (c->func_0200c310() != 1) {
-                c->life++;
-            }
-        }
-    }
-    if (spawned != total) {
-        int kind;
-        if (spawned < 10) {
-            const int *row = data_020ae5cc[map];
-            kind = 0;
-            while (spawnedKind[kind] >= row[kind]) {
-                kind++;
-            }
-            spawnedKind[kind]++;
-            if (defs[kind] == 0) {
-                kind = func_020a5ec0() & 1;
-            }
-        } else {
-            kind = spawned < data_020ae5cc[map][3] + 10 ? 3 : 4;
-        }
-        catches[spawned++].func_0200becc(kind);
-    }
-    bool all = spawned == total;
-    for (int i = 0; i < 15; i++) {
-        all = all & catches[i].func_idle();
-    }
-    bool last = !(player.state != TP[8]);
-    if ((all & last) == 1) {
-        state = TG[2];
-    }
-}
+typedef Unk0200cec8::Unk0200c308 Unk0200c308;
+typedef Unk0200cec8::Unk0200b75c Unk0200b75c;
 
 inline bool Unk0200c308::func_play(int i, bool force) {
     if (!force && index == i) {
@@ -640,7 +665,7 @@ void Unk0200c308::func_0200becc(int kind) {
     func_020acbc8(&move.dir);
     u16 a = func_020a5ec0();
     u16 b = a + 0x8000 + (func_020a5ef0(0, 0x4000) - 0x2000);
-    int r = T.radius;
+    int r = data_020b7900;
     Unk02098e70 c(0x80000, 0x60000);
     int d = kind >= 3 ? r : func_020a5ec0() & 0x3f;
     func_set(unkb0, c.func_02098fa8(Unk02098e70(d * func_sin(a), d * func_cos(a))));
@@ -656,20 +681,7 @@ void Unk0200c308::func_0200becc(int kind) {
     func_0200dfc8(this, 1)->pos = Unk02098e70(0x4000, 0x4000);
     func_0200df10(this, 1, 0);
     State s = 0;
-    switch (unkc0) {
-    case (int)0x97de12bf:
-        s = TF[9];
-        break;
-    case (int)0xcbd6cda5:
-        s = TF[10];
-        break;
-    case 0x4c444ea5:
-        s = TF[11];
-        break;
-    case 0x2743d311:
-        s = TF[12];
-        break;
-    }
+    func_first(s);
     angle = func_02097a58(unka8.x, -unka8.y);
     for (int i = 0; i < 2; i++) {
         func_020a9168(sprites[i], angle);
@@ -712,7 +724,7 @@ bool Unk0200c308::func_0200c310() {
             func_020a922c(s[0], 0xc);
             func_020a922c(s[1], 0xc);
             func_0200dfc8(this, 1)->flag = 0;
-            state = TF[1];
+            func_splat();
             return true;
         }
         flags.func_clear();
@@ -720,7 +732,6 @@ bool Unk0200c308::func_0200c310() {
     return false;
 }
 
-#pragma dont_inline on
 bool Unk0200cec8::func_0200c550() {
     if (spawned == total) {
         return false;
@@ -753,7 +764,7 @@ bool Unk0200cec8::func_0200c550() {
     func_020acbc8(&c->move.dir);
     u16 a = func_020a5ec0();
     u16 b = a + 0x8000 + (func_020a5ef0(0, 0x4000) - 0x2000);
-    int r = T.radius;
+    int r = data_020b7900;
     Unk02098e70 o(0x80000, 0x60000);
     int d = kind >= 3 ? r : func_020a5ec0() & 0x3f;
     int sa = func_0200cab0(a);
@@ -777,20 +788,7 @@ bool Unk0200cec8::func_0200c550() {
     func_0200ca68(&func_0200dfc8(c, 1)->pos, sc);
     func_0200df10(c, 1, 0);
     Unk0200c308::State s = 0;
-    switch (c->unkc0) {
-    case (int)0x97de12bf:
-        s = TF[9];
-        break;
-    case (int)0xcbd6cda5:
-        s = TF[10];
-        break;
-    case 0x4c444ea5:
-        s = TF[11];
-        break;
-    case 0x2743d311:
-        s = TF[12];
-        break;
-    }
+    c->func_first(s);
     c->angle = func_02097a58(c->unka8.x, -c->unka8.y);
     for (int i = 0; i < 2; i++) {
         func_020a9168(c->sprites[i], c->angle);
@@ -801,7 +799,6 @@ bool Unk0200cec8::func_0200c550() {
     func_0200dd6c(&view);
     return true;
 }
-#pragma dont_inline reset
 
 void Unk0200c308::func_0200c99c(State s) {
     state = s;
@@ -864,7 +861,7 @@ void *Unk0200c308::func_0200cb58() {
 }
 
 bool Unk0200c308::func_0200cb60() {
-    return !(state != TF[8]);
+    return func_idle();
 }
 
 void Unk0200c308::func_0200cba8() {
@@ -897,15 +894,11 @@ void Unk0200cec8::func_0200cc60() {
     } else {
         func_020a716c(texts[0], 0x9e0);
     }
-    int r = func_020a5ef0(3, 5);
-    if (anim != r) {
-        func_020a6340(this, data_020ae630, T.names[r], 0, 0);
-        anim = r;
-    }
+    func_sound(func_020a5ef0(3, 5));
     func_020a7cf0(texts[0], 1);
     buttons[0].func_18(1);
     clock.func_set(3, 0);
-    state = TG[1];
+    func_end();
 }
 
 void Unk0200cec8::func_0200ce18() {
@@ -947,10 +940,6 @@ Unk0200c308::~Unk0200c308() {
     }
 }
 
-Unk0200c308::Unk0200c308() : Unk0200ad70(2), game(0), state(TF[14]), file(0) {
-    index = 2;
-}
-
 void Unk0200cec8::func_0200d138(Unk020a7af4 *names) {
     Unk020a7c90 *a;
     int j;
@@ -980,7 +969,7 @@ void Unk0200cec8::func_0200d138(Unk020a7af4 *names) {
     rects[0] = func_020a6438(this, &layout, names, 0xfe825036);
     rects[1] = func_020a6438(this, &layout, names, 0xc0c6810e);
     player.owner = this;
-    player.state = TP[9];
+    player.func_reset();
     for (int i = 0; i < 15; i++) {
         catches[i].game = this;
         catches[i].sprites[0] = a;
@@ -990,7 +979,7 @@ void Unk0200cec8::func_0200d138(Unk020a7af4 *names) {
         }
         func_0200df54(&catches[i]);
         catches[i].anim.mode = 1;
-        catches[i].state = TF[13];
+        catches[i].func_start();
         a = (Unk020a7c90 *)((u8 *)a + 0x44);
         b = (Unk020a7c90 *)((u8 *)b + 0x44);
     }
@@ -1004,7 +993,8 @@ void Unk0200cec8::func_0200d138(Unk020a7af4 *names) {
     }
 }
 
-void Unk0200cec8::func_14() {
+
+inline void Unk0200cec8::func_14() {
     Unk020a7af4Entry entries[0x3c];
     Unk020a7af4 names(entries, 0x3c);
     func_020aa42c(&layout);
@@ -1080,56 +1070,10 @@ void Unk0200cec8::func_14() {
             catches[spawned++].func_0200becc(kind);
         }
     }
-    state = TG[6];
+    func_begin();
     if (shown.func_get()) {
         func_020aa06c(&layout, 1);
     }
-}
-
-bool Unk0200cec8::func_18() {
-    if (!shown.func_get()) {
-        return true;
-    }
-    func_020aa158(&layout);
-    if (state == 0) {
-        for (int i = 0; i < 5; i++) {
-            void *def = defs[i];
-            if (def != 0) {
-                for (int j = 0; j < caught[i]; j++) {
-                    func_02054c1c(data_020bfc9c, def, 0);
-                }
-            }
-        }
-        return false;
-    }
-    if (paused) {
-        buttons[3].func_0c(buttons[2].func_0c(0));
-        buttons[2].func_08();
-        buttons[3].func_08();
-        if (func_020972c0(3) || (buttons[2].touch.flags & 8) || (buttons[3].touch.flags & 8)) {
-            buttons[1].func_18(0);
-            buttons[2].func_18(0);
-            buttons[3].func_18(0);
-            func_020a7cf0(texts[1], 0);
-            func_020a7cf0(texts[2], 0);
-            func_020a7cf0(texts[3], 0);
-            paused = 0;
-            if (buttons[3].touch.flags & 8) {
-                state = TG[0];
-            }
-        }
-    } else if (func_020972c0(3) && !func_020a7d1c(texts[0]) && func_020a1280(func_020a18e4(), 2, 0)) {
-        buttons[1].func_18(1);
-        buttons[2].func_18(1);
-        buttons[3].func_18(1);
-        func_020a7cf0(texts[1], 1);
-        func_020a7cf0(texts[2], 1);
-        func_020a7cf0(texts[3], 1);
-        paused = 1;
-    } else {
-        (this->*state)();
-    }
-    return true;
 }
 
 extern "C" Unk0200dd50 *func_0200dd50(Unk0200dd50 *v, void *def) {
@@ -1142,28 +1086,5 @@ extern "C" Unk0200dd50 *func_0200dd6c(Unk0200dd50 *v) {
     return v;
 }
 
-extern "C" int func_02097acc(int x);
-
-Unk020b7900 data_020b7900 = {
-    func_02097acc(0x6400) + 0x26,
-    {"idle", "grab", "grab2", "collect_success", "collect_success2"},
-    {
-        &Unk0200cec8::func_0200cc60, &Unk0200cec8::func_0200ce18, &Unk0200cec8::func_0200cc60,
-        &Unk0200cec8::func_0200bab4, &Unk0200cec8::func_0200ba70, &Unk0200cec8::func_0200b9c0,
-        &Unk0200cec8::func_0200b940,
-    },
-    {
-        &Unk0200b75c::func_0200b75c, &Unk0200b75c::func_0200b910, &Unk0200b75c::func_0200b75c,
-        &Unk0200b75c::func_0200b8f4, &Unk0200b75c::func_0200b8d8, &Unk0200b75c::func_0200b8a4,
-        &Unk0200b75c::func_0200b7f8, &Unk0200b75c::func_0200b7c4, &Unk0200b75c::func_0200b7c4,
-        &Unk0200b75c::func_0200b75c,
-    },
-    {
-        &Unk0200c308::func_0200b3a0, &Unk0200c308::func_0200b3a0, &Unk0200c308::func_0200b700,
-        &Unk0200c308::func_0200b674, &Unk0200c308::func_0200b488, &Unk0200c308::func_0200b420,
-        &Unk0200c308::func_0200b3a4, &Unk0200c308::func_0200b3a0, &Unk0200c308::func_0200b3a0,
-        &Unk0200c308::func_0200b334, &Unk0200c308::func_0200b310, &Unk0200c308::func_0200b2e4,
-        &Unk0200c308::func_0200b298, &Unk0200c308::func_0200b268, &Unk0200c308::func_0200b3a0,
-    },
-    {0, 0, 0, 0, 0},
-};
+/* Unreferenced: five null pointers between the constants and the vtables. */
+const char *data_020b7a18[5] = {0, 0, 0, 0, 0};

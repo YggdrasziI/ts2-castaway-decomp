@@ -42,11 +42,16 @@ struct Unk0201a4e0RectWrap {
 
 class Unk0201a2c8;
 
-/* The catch of unit_0200B23C.cpp: only its key getter, called on a fish here. */
-class Unk0200c308 {
+/* The catch of unit_0200B23C.cpp, nested in its game class: only its key getter,
+   called on a fish here. */
+class Unk0200cec8 {
 public:
-    void *func_0200cb58();
+    class Unk0200c308 {
+    public:
+        void *func_0200cb58();
+    };
 };
+typedef Unk0200cec8::Unk0200c308 Unk0200c308;
 
 struct Unk0201a2c8Stream {
     int unk0;
