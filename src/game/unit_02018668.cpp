@@ -927,7 +927,8 @@ void Unk0201a2c8::func_0201a12c() {
             time.func_put(i, v - 1);
             break;
         }
-        time.func_put(i, 59);
+        Unk0201a2c8Time *t = &time;
+        t->func_put(i, 59);
     }
     func_updateFish();
     func_updateAnims();
