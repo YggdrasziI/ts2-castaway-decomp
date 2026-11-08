@@ -598,6 +598,26 @@ Each fix was found by compiling scratch variants of one function and comparing t
   block copy `func_set` (unk_fishing.h) is strength-reduced to a pointer that steps by 8
   (`Unk02015408::func_02016484`, 98.60 % -> 99.39 %; `Unk0200cec8::func_0200bab4`,
   91.10 % -> 93.06 %).
+- **Two callee-saved pointers swapped around a call** (`f = g->fish` before
+  `p = g->spear.func_0200df08()`, f in r5 where the original has r6): declare the
+  second one first without a value, then assign it after the first
+  (`T *p; U *f = g->fish; p = ...;`). Same code, the colors swap
+  (`func_02018de4` 99.2 % -> 100 %, the same block in `func_02018f1c`).
+- **Temporaries of a nested vector expression in the wrong stack slots**: write the
+  whole chain as one expression instead of naming the middle value
+  (`func_set(pos, a.f(g(b.h(a), x)))`; `func_02018de4`).
+- **A value spilled in the original and recomputed in ours** (`base` stored to the
+  stack, `base + 3` kept in a register across the call): pass the argument through a
+  local (`int k = base + 3; g->func_sound(k);`), so the compiler keeps `k` and spills
+  `base` (`func_02018f1c` 92.1 % -> 98.5 %).
+- **A field address split as `add r0, this, #0xd8` then `[r0, #0x800]` in one store
+  of a loop**: that store goes through a pointer to the member
+  (`Unk0201a2c8Time *t = &time; t->func_put(i, 59);`) (`func_0201a12c` 97.9 % ->
+  99.1 %).
+- **A global address loaded before a loop's first instruction** (and the pool words in
+  the other order): put it in a local before the loop (`void *db = data_020c3fc4;`).
+  A store of a call result also used as the next argument is chained
+  (`prev = unk920[n] = f(db, key, prev);`) (`func_14` 98.8 % -> 99.75 %).
 
 ## Inlining and emission order
 

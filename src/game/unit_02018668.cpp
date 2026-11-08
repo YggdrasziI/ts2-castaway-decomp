@@ -21,8 +21,9 @@
  * (`func_begin`, `func_finish`, `func_caught`, `func_reset`).
  *
  * Not complete. `.data` matches; the code gaps are registers and stack slots
- * (`func_02018f1c`, spilled sound index; `func_14`, `func_0201a12c`,
- * `func_02018de4`, `func_18`, `func_02018900`, `func_02019b18`, `func_02019fa0`,
+ * (`func_02018f1c`: the original reloads `sound` for the first sound compare;
+ * `func_0201a12c`, `func_14`, `func_18`, `func_02019fa0` (bit field temporaries),
+ * `func_02018900` (stack slots of the vector temporaries), `func_02019b18`,
  * `func_02019444`, `func_02019bd0`). `.rodata`: the last word 0xC5A28EFA is never
  * loaded and not reproduced.
  */
