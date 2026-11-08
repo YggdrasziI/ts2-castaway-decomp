@@ -1925,6 +1925,15 @@ rename them.
   from the gap. Two more mutations: a call or member expression read into a local
   before its statement, and one or two statements put in their own `{ }` block. Free
   functions are found from their mangled names (`_Z13func_020709e8...`).
+- When no variant matches, `--out` keeps the closest form (`<symbol>.best.txt`). The
+  `Unk02033ee0` constructor (46 -> 6 words) was finished by hand from it. Check such a
+  form with `tools/why_diff.py` before building on it. Two traps found this way and now
+  closed (2026-11-08): relocated words used to be skipped, so two swapped calls scored
+  as equal (the target symbol of each relocation is now compared); and the swap
+  mutation could move a copy below its use (swaps now keep a local's write before its
+  reads).
+- Little help on register cycles fed by a value hoisted out of a loop
+  (`Unk0203fa44` C1, `func_02010954`: no gain in 240-300 s).
 
 - The three last mutations (2026-11-06) found `func_020602b0` (9 s) and `func_020647f0` (1 s)
   from their sources before the hand fixes of this file.
