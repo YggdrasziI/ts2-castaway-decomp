@@ -41,6 +41,12 @@ struct Unk0201a4e0RectWrap {
 
 class Unk0201a2c8;
 
+/* The catch of unit_0200B23C.cpp: only its key getter, called on a fish here. */
+class Unk0200c308 {
+public:
+    void *func_0200cb58();
+};
+
 struct Unk0201a2c8Stream {
     int unk0;
     int unk4;
@@ -54,7 +60,6 @@ void func_0200b120(Unk0200b04c *a);
 int func_0200b150(Unk0200b04c *a, int f);
 void func_0200de30(Unk0200dd90 *e);
 int func_0200af10(Unk02010920 *e);
-int func_0200cb58(Unk02010920 *e);
 void func_0200df10(Unk0200dd90 *e, int a, int b);
 void func_0200df54(Unk0200dd90 *e);
 Unk0200dd90Part *func_0200dfc8(Unk0200dd90 *e, int i);
@@ -626,7 +631,7 @@ bool Unk0201a4e0::func_02019b18() {
     if (hitting.v & 1) {
         if (hit(&unk124, &scale, &pos, unk12c) == 1) {
             Unk0201a2c8 *g = owner;
-            int k = func_0200cb58(this);
+            int k = (int)((Unk0200c308 *)this)->func_0200cb58();
             for (int i = 0; i < 3; i++) {
                 if (g->unk920[i] == k) {
                     g->counts[i]++;
