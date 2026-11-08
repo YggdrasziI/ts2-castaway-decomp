@@ -618,6 +618,17 @@ Each fix was found by compiling scratch variants of one function and comparing t
   the other order): put it in a local before the loop (`void *db = data_020c3fc4;`).
   A store of a call result also used as the next argument is chained
   (`prev = unk920[n] = f(db, key, prev);`) (`func_14` 98.8 % -> 99.75 %).
+- **Identical bit field code, other registers** (`bic r3; bic r1; bic r2; orr r1`
+  in the original against `bic r3; bic r2; bic r1; orr r1`): the field is written
+  in two statements, clear then OR (`f.seconds = 0; v |= s << 6;`), so the cleared
+  value gets its own register (dead stores before coloring, notes/COMPILER.md).
+  Find the form with a micro test: `python tools/mwcc_sched.py test.cpp <symbol>
+  --like src/game/<unit>.cpp --colors` compiles any file with a unit's flags
+  (`func_02019fa0` 99.8 % -> 100 %, `func_0200cc60` 97.44 -> 97.62 %).
+- A helper class that is also in another file (the countdown of `unit_0200B23C.cpp`
+  and `unit_02018668.cpp`): copy the forms of the file where its users match
+  (`func_tick`, `func_put` through a `volatile` pointer: `func_0201a12c` 97.9 % ->
+  99.7 %).
 
 ## Inlining and emission order
 

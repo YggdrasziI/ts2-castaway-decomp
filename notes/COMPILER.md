@@ -320,6 +320,16 @@ Read from the disassembly and traced with `tools/mwcc_sched.py` (same debugger).
   are swapped (in the IR of the current form, the temporary for `x` comes before
   the one for `y`). After coloring the two loads become one `ldm`, whose register
   order is fixed by the offsets.
+- Dead stores shape the interference graph (2026-11-08, `mwcc_sched.py --like`
+  micro tests). Each write of a run of read-modify-writes to one word (bit fields,
+  `v &= ...; v |= ...`) is generated with its own store and a copy of the value;
+  the first scheduling pass delays those stores, so each value stays live past the
+  next operations. Coloring sees these interferences; the redundant stores are
+  removed only after it. Two sources with the same final code can then color
+  differently: `f.seconds = s` (bic and orr in one write, the cleared value dies at
+  the orr: both share a register) against `f.seconds = 0; v |= s << 6;` (the
+  cleared value is stored, so it is live across the orr: two registers). The
+  original countdown setter is the second (`unit_02018668.cpp`, `unit_0200B23C.cpp`).
 
 ## Open questions
 
