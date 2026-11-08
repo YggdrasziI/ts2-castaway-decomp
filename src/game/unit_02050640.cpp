@@ -505,19 +505,13 @@ void Unk02050640::func_02051294() {
     }
 }
 
-/*
- * 99.06 %: the original keeps the palette in r5 and the hash, the file and the
- * row indexes in r4; this code swaps them. Declaration order, types, a local
- * for the file and inline helpers tried.
- */
+/* The palette is chosen by a conditional expression (or if / else): assigned
+ * first and replaced, it took r4 where the original has r5. */
 void Unk02050640::func_020514f0() {
     if (unk64 == -1 || sprite == 0) {
         return;
     }
-    int palette = unk6f;
-    if (palette < 0) {
-        palette = func_020a69cc(sprite);
-    }
+    int palette = unk6f >= 0 ? unk6f : func_020a69cc(sprite);
     if (file == 0) {
         u32 hash = func_020a69a4(sprite);
         if (hash != 0) {

@@ -730,6 +730,10 @@ Each fix was found by compiling scratch variants of one function and comparing t
   (`str r0, [r4, #m]; mov r1, #0; bl`): `f(member = x, 0)` reloads the member (a C++
   assignment is an lvalue), `member = x; f(member, 0)` schedules the `mov` before the
   store; `member = s = x; f(s, 0)` matched (`Unk020116e0::func_14`, 99.31 % -> 100 %).
+- The reverse also happens: a local set to a member and replaced when negative (`int
+  palette = unk6f; if (palette < 0) palette = f();`) took r4 where the original has r5;
+  `int palette = unk6f >= 0 ? unk6f : f();` (or `if` / `else`) matched
+  (`Unk02050640::func_020514f0`, 99.06 % -> 100 %). Try both forms on a two-way value.
 - `why_diff.py` (objdiff `diff` on one function) can flag `bl` rows to a near-match
   function of the same unit while the full report scores the caller 100 %: check the
   masked words (`permute.score`) and `report_diff.py` before chasing them.
