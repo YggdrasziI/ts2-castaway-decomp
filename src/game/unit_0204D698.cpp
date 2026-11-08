@@ -329,7 +329,7 @@ Unk0204d698::~Unk0204d698() {
     func_08();
 }
 
-/* 96.96 %: the registers of the loop counters, x and the key pointer differ. */
+/* 97.35 % (one x local per row): the registers of the loop counters and the key pointer differ. */
 void Unk0204d698::func_0204d8a4() {
     int y;
     int x;
@@ -354,22 +354,22 @@ void Unk0204d698::func_0204d8a4() {
     } else {
         y += 0x18000;
     }
-    x = 0x16000;
+    int x1 = 0x16000;
     for (i = 0; i < 9; i++, k++) {
         keys[k].func_0204c1c4(0x13000, 0x13000);
-        keys[k].func_14(x, y);
-        x += 0x18000;
+        keys[k].func_14(x1, y);
+        x1 += 0x18000;
     }
     if (wide) {
         y -= 0x18000;
     } else {
         y += 0x18000;
     }
-    x = 0xa000;
+    int x2 = 0xa000;
     for (i = 0; i < 10; i++, k++) {
         keys[k].func_0204c1c4(0x13000, 0x13000);
-        keys[k].func_14(x, y);
-        x += 0x18000;
+        keys[k].func_14(x2, y);
+        x2 += 0x18000;
     }
     if (wide) {
         y += 0x18000;
@@ -383,11 +383,11 @@ void Unk0204d698::func_0204d8a4() {
     keys[31].func_14(0x6a000, y + 0x18000);
     keys[32].func_0204c1c4(0x23000, 0x13000);
     keys[32].func_14(0xca000, y + 0x18000);
-    x = 0x5d000;
+    int x3 = 0x5d000;
     for (i = 33; i <= 36; i++) {
         keys[i].func_0204c1c4(0x23000, 0x13000);
-        keys[i].func_14(x, y + 0x30000);
-        x += 0x28000;
+        keys[i].func_14(x3, y + 0x30000);
+        x3 += 0x28000;
     }
     keys[36].flags |= 0x10;
     keys[37].func_0204c1c4(0x3b000, 0x13000);

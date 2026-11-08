@@ -154,7 +154,7 @@ static inline u32 func_outfit_key() {
 static void *func_0202cb98(u32 id, void *user);
 
 /*
- * 89.76 %: the frame size matches. The original materializes the table's
+ * 90.75 %: the frame size matches. The original materializes the table's
  * constants early in r3-r6 and loads each text and key on its own, and its stack
  * slots are ordered otherwise (the outfit below the name list, the three offsets
  * first). Tried: direct stores, an inline setter, temporaries, pointer and zero
@@ -294,7 +294,8 @@ Unk0202aef4::Unk0202aef4(Unk0203c188Owner *owner)
     prev.func_02050838(func_020aa040(layout, 0xb, func_020a7b50(&names, 0x260323f0)), false);
     prev.func_02050c48(0, 1, -1);
     prev.func_02050c64(0, 1, 2);
-    prev.func_020508a4(func_020aa040(layout, 1, func_020a7b50(&names, 0xcc3efd4a)));
+    Unk020a7c90 *sprite = func_020aa040(layout, 1, func_020a7b50(&names, 0xcc3efd4a));
+    prev.func_020508a4(sprite);
     next.func_02050838(func_020aa040(layout, 0xb, func_020a7b50(&names, 0xcba0dc91)), false);
     next.func_02050c48(2, 3, -1);
     next.func_02050c64(3, 4, 5);

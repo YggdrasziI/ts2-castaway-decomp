@@ -590,7 +590,7 @@ int func_02056354(Unk02055ef8Node *n, int x, int y) {
     return func_02097a6c((u32)((dx * dx + dy * dy) << 12));
 }
 
-/* Not complete (92.99 %): the original has a 0x30-byte frame instead of 0x34 and
+/* Not complete (93.79 %): the original has a 0x30-byte frame instead of 0x34 and
  * its registers are shifted by one. Its effects loop loads &data_020c7d38 from the
  * pool at each call (ours keeps it in a register and spills the layer offset), and
  * it stores data_020c3b48.id through the symbol where ours goes through the `.bss`
@@ -626,9 +626,9 @@ Unk02058788::Unk02058788(int map, Unk02093648 *archive, bool current)
                 this->archive->func_02093c58(index);
             }
         }
-        int m = header->modelCount;
+        n = header->modelCount;
         u32 *models = (u32 *)file->func_02094d4c(0x10105);
-        for (int i = 0; i < m; i++) {
+        for (int i = 0; i < n; i++) {
             int index = this->archive->func_02093e9c(models[i]);
             if (index != -1) {
                 data_020c7d24->func_0208a0d4((Unk0209543c *)this->archive->func_02093a9c(index));
@@ -667,10 +667,8 @@ Unk02058788::Unk02058788(int map, Unk02093648 *archive, bool current)
         if (header->roomCount > 0 && index != -1 && func_0205346c(file, 0)->layerCount > 0) {
             effects = hash;
             for (int l = 0; l < info->layerCount; l++) {
-                Unk02056ed0 *layer = &room->layers[l];
-                for (int k = 0; k < layer->info->count; k++) {
-                    Unk020705e4 *texanim = world->texanim;
-                    texanim->func_02070688(this->archive, effects, data_020c7d38.func_0208bcfc(func_020588f4(world, k)));
+                for (int k = 0; k < room->layers[l].info->count; k++) {
+                    world->texanim->func_02070688(this->archive, effects, data_020c7d38.func_0208bcfc(func_020588f4(world, k)));
                 }
             }
         }

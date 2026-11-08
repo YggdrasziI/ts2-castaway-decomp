@@ -69,7 +69,7 @@ static inline void func_copy(void *src, void *dst, u32 size) {
     MIi_CpuCopy16(src, dst, size);
 }
 
-/* 95.77 %: the registers of recordCount and records are swapped (r3 / r7). The inline
+/* 96.23 %: the registers of recordCount and records are swapped (r3 / r7). The inline
  * copy wrapper computes the destination and size before func_0209608c, as the original. */
 void Unk0206fac8::func_0206fd2c(Unk02095fdc *file) {
     Unk020c7f48 *m = func_0208c578();
@@ -81,11 +81,10 @@ void Unk0206fac8::func_0206fd2c(Unk02095fdc *file) {
     func_02070114(tex, file->func_020960d4());
     for (u32 i = 0; i < recordCount; i++) {
         if (records[i].tex == tex) {
-            Unk0206fac8Record *r = &records[i];
-            if (!(r->flags & 2)) {
+            if (!(records[i].flags & 2)) {
                 return;
             }
-            func_copy(file->func_0209608c(), colors + r->start, r->count * 2);
+            func_copy(file->func_0209608c(), colors + records[i].start, records[i].count * 2);
             func_02070318(records[i].start, records[i].count);
             records[i].flags &= ~2;
             return;

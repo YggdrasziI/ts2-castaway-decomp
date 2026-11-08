@@ -1061,7 +1061,7 @@ void func_020667f8(Unk020c43a8 *p, int time) {
     func_02066748(p, anim, true, time, false, 0);
 }
 
-/* 99.3 %: register allocation (`p` in r5, the idle pointer in r4). */
+/* 99.44 %: register allocation (`p` in r5, the idle pointer in r4). */
 void func_02066884(Unk020c43a8 *p) {
     if (p->sim == 0) {
         return;
@@ -1093,22 +1093,22 @@ void func_02066884(Unk020c43a8 *p) {
         int picked[14];
         bool done = false;
         if (p->obj == 0 && func_0206757c(p, 0x20) && func_020a1f84(&data_020d62a4) % 100 < 80) {
-            int count = 0;
+            kind = 0;
             for (int i = 0; i < 14; i++) {
                 if (p->idles[i].motive != 6) {
                     int v = p->motives[p->idles[i].motive].value;
                     if (v >= (int)(10000000.0f * (p->idles[i].min / 100.0f)) && v <= (int)(10000000.0f * (p->idles[i].max / 100.0f))) {
-                        picked[count++] = i;
+                        picked[kind++] = i;
                     }
                 } else if (p->idles[i].rel != 4) {
                     int v = p->rels[p->idles[i].rel].value;
                     if (v >= (int)(10000000.0f * (p->idles[i].min / 100.0f)) && v <= (int)(10000000.0f * (p->idles[i].max / 100.0f))) {
-                        picked[count++] = i;
+                        picked[kind++] = i;
                     }
                 }
             }
-            if (count > 0) {
-                u32 k = func_020a1f84(&data_020d62a4) % count;
+            if (kind > 0) {
+                u32 k = func_020a1f84(&data_020d62a4) % kind;
                 Unk0201c460 *o = new Unk0201c460(p->idles[picked[k]].key);
                 p->obj = o;
                 p->obj->func_08();
