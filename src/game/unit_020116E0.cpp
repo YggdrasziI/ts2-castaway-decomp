@@ -10,8 +10,9 @@
  * Not complete. The whole class is defined in its body, which gives the original
  * function order (states, factory, D1, virtuals, D0) whatever the member order;
  * func_18 is outside only for `#pragma dont_inline`, which has no effect in the
- * class body. Open: the order of the pointer to member constants in `.data` depends
- * on the member order, but a search reached only 9 of the 14 positions.
+ * class body. The pointer to member constants come out in the original order with
+ * func_10 / func_14 first and func_020122e0 before func_020121d8 in the class (their
+ * bodies are parsed last member first) and the unused object before the table.
  */
 
 #include "game/unk_microgame.h"
@@ -52,6 +53,7 @@ public:
     Unk0205cf00 *def;
     u8 unk2c[0x18];
     Unk02060d78 *anim;
+    u8 unk48[4];
 };
 
 struct Unk020116e0Sound {
@@ -117,6 +119,15 @@ extern u8 data_020d60c8[];
 extern u8 data_020d6cdc[];
 }
 bool func_02097248(int key);
+
+/*
+ * Not in the ROM. The compiler sorts a file's data objects by size starting
+ * from the uninitialized ones, so one object defined here, dead-stripped by the
+ * linker, gives the original order of the pointer to member constants
+ * (hypothesis: the original's object, its name and type are unknown; any small
+ * uninitialized object gives the same order).
+ */
+int unused_020116e0;
 
 Unk020116e0Note data_020b7c6c[7] = {
     {0, -1, 0, 0},       {1, 0, 0, 1},        {2, 0x80, 1, 2},     {3, 0x100, 3, 4},
@@ -241,6 +252,50 @@ public:
             func_020a35a4(func_020a2994(), handle, data_020b7c6c[seq[step]].speed);
         }
         showing = 1;
+    }
+
+    virtual void func_10(bool a) {
+        func_020aa06c(&layout0, a);
+        func_020aa06c(&layout1, a);
+        shown = a;
+    }
+
+    virtual void func_14() {
+        func_020aa42c(&layout0);
+        func_020a7b88(&names0);
+        func_020aba38(file, 0x4199cdf0, &layout0, &names0);
+        unk3cc = func_020aa04c(&layout0, func_020a7b50(&names0, 0x96474d87));
+        func_020aa42c(&layout1);
+        func_020a7b88(&names1);
+        func_020aba38(file, 0x74b712a6, &layout1, &names1);
+        button.func_02050838(func_020aa040(&layout0, 0xb, func_020a7b50(&names0, 0xc2f94842)), false);
+        button.func_02050c48(0, 1, -1);
+        keys[0] = func_020aa04c(&layout0, func_020a7b50(&names0, 0x67365de5));
+        keys[1] = func_020aa04c(&layout0, func_020a7b50(&names0, 0x67365de6));
+        keys[2] = func_020aa04c(&layout0, func_020a7b50(&names0, 0x67365de7));
+        keys[3] = func_020aa04c(&layout0, func_020a7b50(&names0, 0x67365de8));
+        keys[4] = func_020aa04c(&layout0, func_020a7b50(&names0, 0x67365de9));
+        notes[0] = func_020aa04c(&layout1, func_020a7b50(&names1, 0x4e4667c8));
+        notes[1] = func_020aa04c(&layout1, func_020a7b50(&names1, 0x4e4667c9));
+        notes[2] = func_020aa04c(&layout1, func_020a7b50(&names1, 0x4e4667ca));
+        sprite = func_020aa04c(&layout1, func_020a7b50(&names1, 0x4ace1535));
+        func_020a7c90(sprite, 0);
+        func_020a7cac(sprite, 0);
+        func_020a7cf0(sprite, 0);
+        int i;
+        for (i = 0; i < 3; i++) {
+            func_020a7cf0(notes[i], false);
+        }
+        for (i = 0; i < 5; i++) {
+            if (keys[i] != 0) {
+                func_020a7cf0(keys[i], false);
+            }
+        }
+        if (shown == 1) {
+            func_020aa06c(&layout0, true);
+            func_020aa06c(&layout1, true);
+        }
+        state = &Unk020116e0::func_020116e0;
     }
 
     void func_020116e0() {
@@ -374,20 +429,6 @@ public:
         }
     }
 
-    void func_020121d8() {
-        volume = 0;
-        func_020a3550(func_020a2994(), handle, volume);
-        step = 0;
-        if (!func_020691c4(*(void **)(data_020c43a8 + 0xc))) {
-            return;
-        }
-        state = &Unk020116e0::func_02011b54;
-        func_play(0xc1fbcf52);
-        timer = 0x64;
-        mode = 2;
-        func_hideNotes();
-    }
-
     void func_020122e0() {
         int key = func_key();
         if (key == note) {
@@ -413,54 +454,24 @@ public:
         func_hideKeys();
     }
 
+    void func_020121d8() {
+        volume = 0;
+        func_020a3550(func_020a2994(), handle, volume);
+        step = 0;
+        if (!func_020691c4(*(void **)(data_020c43a8 + 0xc))) {
+            return;
+        }
+        state = &Unk020116e0::func_02011b54;
+        func_play(0xc1fbcf52);
+        timer = 0x64;
+        mode = 2;
+        func_hideNotes();
+    }
+
     void func_02012558() {
         if (++timer == 200) {
             done = 1;
         }
-    }
-
-    virtual void func_10(bool a) {
-        func_020aa06c(&layout0, a);
-        func_020aa06c(&layout1, a);
-        shown = a;
-    }
-
-    virtual void func_14() {
-        func_020aa42c(&layout0);
-        func_020a7b88(&names0);
-        func_020aba38(file, 0x4199cdf0, &layout0, &names0);
-        unk3cc = func_020aa04c(&layout0, func_020a7b50(&names0, 0x96474d87));
-        func_020aa42c(&layout1);
-        func_020a7b88(&names1);
-        func_020aba38(file, 0x74b712a6, &layout1, &names1);
-        button.func_02050838(func_020aa040(&layout0, 0xb, func_020a7b50(&names0, 0xc2f94842)), false);
-        button.func_02050c48(0, 1, -1);
-        keys[0] = func_020aa04c(&layout0, func_020a7b50(&names0, 0x67365de5));
-        keys[1] = func_020aa04c(&layout0, func_020a7b50(&names0, 0x67365de6));
-        keys[2] = func_020aa04c(&layout0, func_020a7b50(&names0, 0x67365de7));
-        keys[3] = func_020aa04c(&layout0, func_020a7b50(&names0, 0x67365de8));
-        keys[4] = func_020aa04c(&layout0, func_020a7b50(&names0, 0x67365de9));
-        notes[0] = func_020aa04c(&layout1, func_020a7b50(&names1, 0x4e4667c8));
-        notes[1] = func_020aa04c(&layout1, func_020a7b50(&names1, 0x4e4667c9));
-        notes[2] = func_020aa04c(&layout1, func_020a7b50(&names1, 0x4e4667ca));
-        sprite = func_020aa04c(&layout1, func_020a7b50(&names1, 0x4ace1535));
-        func_020a7c90(sprite, 0);
-        func_020a7cac(sprite, 0);
-        func_020a7cf0(sprite, 0);
-        int i;
-        for (i = 0; i < 3; i++) {
-            func_020a7cf0(notes[i], false);
-        }
-        for (i = 0; i < 5; i++) {
-            if (keys[i] != 0) {
-                func_020a7cf0(keys[i], false);
-            }
-        }
-        if (shown == 1) {
-            func_020aa06c(&layout0, true);
-            func_020aa06c(&layout1, true);
-        }
-        state = &Unk020116e0::func_020116e0;
     }
 
     /* Projects a world position to the screen (same code as func_0201d0c0). */
