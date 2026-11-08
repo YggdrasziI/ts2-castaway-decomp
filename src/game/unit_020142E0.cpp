@@ -16,7 +16,9 @@
  * `func_02015844` (frame 0xC bytes too small, r10 / r11 and induction variables),
  * `func_02015368` (the original writes the countdown through a second address),
  * `__sinit` (the second and third rectangles have their own pool entries in the
- * original), `func_02016484` and smaller ones (registers). Several `func_go*` helpers
+ * original), `func_02016484` (stack slots of the temporaries; the point loops index
+ * the array like the original only with element stores) and smaller ones
+ * (registers). Several `func_go*` helpers
  * exist only to place their pointer to member constant where the original has it: the
  * real form is unknown.
  */
@@ -1057,7 +1059,10 @@ void Unk02015408::func_02016484() {
             line.fish = 0;
             func_set(line.base, Unk02098e70(0, -0x20000));
             for (u32 i = 0; i < 8; i++) {
-                func_set(line.points[i], line.base);
+                int x = line.base.x;
+                int y = line.base.y;
+                line.points[i].x = x;
+                line.points[i].y = y;
             }
             line.panel.func_18(true);
             func_splash1(p);
@@ -1107,7 +1112,7 @@ void Unk02015408::func_02016484() {
                     func_020a7cc8(line.sprites[i], q.x, q.y);
                 }
                 for (u32 i = 0; i < 8; i++) {
-                    func_set(line.points[i], q);
+                    line.points[i] = q;
                 }
                 func_020a69ac(line.sprites[28], 0);
                 func_set(line.vel, Unk02098e70(0, -0x1000));
