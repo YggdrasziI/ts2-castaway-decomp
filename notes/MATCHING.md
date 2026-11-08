@@ -1625,6 +1625,29 @@ Each fix was found by compiling scratch variants of one function and comparing t
   group, as only class body constants are here.  Moving the eleven fish states into the class body sorts their constants as one group
   but moves them in `.text` (out of the fish block, after their callers), so the original
   did not define them there as written here. Not reproduced yet (2026-11-08).
+- **Solved for `unit_02018668.cpp` (2026-11-08, `.data` 100 %, +21 functions)**: the
+  fish and spear classes are nested in the game class. Class body bodies are parsed at
+  the end of the outermost class, last member first, nested classes' members included,
+  and here emitted order = creation order. Separate classes give each class's
+  constants at its own end (fish, spear, then game: the reverse of the original's
+  game, spear, fish); only nesting puts them in one group. Find the member order from
+  the targets: walk the original's constants from the last, each one a member of the
+  class being parsed. How to keep the right calls out of line inside that layout:
+  - a function the original calls where others are inlined (`func_14` inlines
+    nothing, `func_02019b18` calls `func_02019bd0`, which `func_02019444` inlines)
+    goes outside the class, in an order where the callee is defined after the callers
+    that call it and before the ones that inline it. `#pragma dont_inline` does
+    nothing inside a body or around the class end (it switches every body at once);
+  - the state constant of such a function stays in the class group through a
+    one-line body helper (`void func_begin() { state = &T::f; }`), inlined into it;
+  - a class body caller cannot inline an out-of-class `inline` defined after the
+    class: its body is compiled at the class end (`func_02019444` had to go out too);
+  - an out-of-class function's own constants are appended after the group (a test
+    with `func_0201af10` put its constant after the constructor's).
+  The outside definitions also give the original's emission order: callees after the
+  caller, in reverse order of first call (`func_14`, then `func_0201af10`,
+  `func_0201af9c`, `func_0201b0ec` ... `func_0201b164`). The new mangled names are in
+  `symbols.txt` (`_ZN11Unk0201a2c811Unk0201a4e0...`; `P11Unk0201a2c8` becomes `PS_`).
 - **Solved for `unit_020116E0.cpp` (2026-11-08, `.data` 100 %)**. Two mistakes had kept
   the search below. (1) The `@` names that `symbols.txt` gives the original's constants
   pair those with the same target arbitrarily: read which constant each user loads from
