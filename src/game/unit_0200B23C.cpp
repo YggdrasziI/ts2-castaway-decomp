@@ -60,11 +60,15 @@ public:
         v = 0;
         func_set(0, 0);
     }
+    /* Clear, then OR in: the same code as assigning the fields, but the original's
+       registers (notes/MATCHING.md). */
     void func_set(int s, int fr) {
         f.hours = 0;
         f.minutes = 0;
-        f.seconds = s;
-        f.frames = fr;
+        f.seconds = 0;
+        v |= s << 6;
+        f.frames = 0;
+        v |= fr;
     }
     int func_get(int i) { return (int)v >> (i * 6) & 0x3f; }
     void func_put(int i, int x) { volatile u32 *p = &v; u32 o = *p & ~(0x3f << (i * 6)); *p = o | x << (i * 6); }
