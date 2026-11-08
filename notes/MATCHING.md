@@ -637,6 +637,15 @@ Each fix was found by compiling scratch variants of one function and comparing t
 - **A point copied through a temporary with the stores in the wrong place**: copy it
   with an inline helper that loads both words into ints, then stores them
   (`func_put(points[i], c.f(...))`; `func_02015844` 94.32 % -> 99.47 %).
+- **A struct assigned from a returned pointer, the hash of the next call loaded
+  between the two words** (`ldr; ldr =hash; str; ldr; str` where the original has
+  `ldr; ldr; str; str`): copy it as one 8-byte block through a one-member struct
+  (`*(Wrap *)&limit = *(Wrap *)func_020a9044(...)`). Field copies, ints and inline
+  helpers did not do it (`Unk020238ec` constructor 94.77 % -> 100 %).
+- **A nested loop over `rooms[r]` that reloads the inner count and indexes the
+  array**: walk it through a pointer to the element (`room = &rooms[r];
+  room->info->layerCount`, `room->layers[l]`); the original then steps the pointer by
+  the element size (`Unk02058788` constructor 91.70 % -> 92.99 %).
 
 ## Inlining and emission order
 
