@@ -353,14 +353,14 @@ public:
                 return;
             }
             Unk02098e70 start(unkac.x, -0x20000);
-            Unk02098e70 d = unkac.func_02098fcc(start);
-            func_set(pos, start.func_02098fa8(func_02018668(d, (t - 0x10000) / 5)));
+            func_set(pos, start.func_02098fa8(func_02018668(unkac.func_02098fcc(start), (t - 0x10000) / 5)));
             if (func_020a60bc() != 1) {
                 return;
             }
             Unk0201a2c8 *g = owner;
+            Unk02098e70 *p;
             Unk0201a4e0 *f = g->fish;
-            Unk02098e70 *p = g->spear.func_0200df08();
+            p = g->spear.func_0200df08();
             for (int i = 0; i < 3; i++) {
                 func_set(f->unk124, *p);
                 f->hitting.func_set();
