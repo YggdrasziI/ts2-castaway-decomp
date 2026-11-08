@@ -1037,7 +1037,7 @@ bool func_020573a4(Unk02058788 *lot, Unk020680d4Cell *out, int map) {
     return false;
 }
 
-/* Not complete (95 %): stack slots of the inline origin temporaries. */
+/* Not complete (97.38 %): stack slots of the inline origin temporaries. */
 bool func_020577a4(Unk02058788 *lot, Unk020680d4Cell *out) {
     Unk0205f098 list;
     Unk02061d08Item *item = func_0205fb4c(&data_020c3fd4, 0x12d2c5be, &list, lot->map);
@@ -1059,7 +1059,8 @@ bool func_020577a4(Unk02058788 *lot, Unk020680d4Cell *out) {
             Unk02056ed0 *layer = &lot->rooms[r].layers[l];
             for (u32 y = 0; y < layer->info->height; y++) {
                 for (u32 x = 0; x < layer->info->width; x++) {
-                    if ((layer->func_tile(x, y)->flags & 3) == 0) {
+                    Unk02056938 *tile = layer->func_tile(x, y);
+                    if ((tile->flags & 3) == 0) {
                         out->pos = layer->cell;
                         out->xy.x = x;
                         out->xy.y = y;

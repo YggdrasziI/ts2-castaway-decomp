@@ -1171,7 +1171,8 @@ static inline int func_channel(int v) {
     return v;
 }
 
-/* 92.28 %: registers of the first loop. */
+/* 94.80 %: registers of the first loop (b1 is read before g1 there; the same order in
+ * the second loop loses). */
 void func_020214cc(Unk0201e300 *p, int t) {
     if (p->from1 == 0 || p->to1 == 0 || p->from2 == 0 || p->to2 == 0) {
         return;
@@ -1195,8 +1196,8 @@ void func_020214cc(Unk0201e300 *p, int t) {
         g0 = c0 >> 5 & 0x1f;
         b0 = c0 & 0x1f;
         r0 = c0 >> 10 & 0x1f;
-        g1 = c1 >> 5 & 0x1f;
         b1 = c1 & 0x1f;
+        g1 = c1 >> 5 & 0x1f;
         r1 = c1 >> 10 & 0x1f;
         int red = func_channel((r1 * b + r0 * a) >> 5);
         int green = func_channel((g1 * b + g0 * a) >> 5);
