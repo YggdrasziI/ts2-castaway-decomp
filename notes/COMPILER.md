@@ -324,7 +324,12 @@ Read from the disassembly and traced with `tools/mwcc_sched.py` (same debugger).
 ## Open questions
 
 - Game-code service pack inside 2.0 (probe larger functions: switches, multiplies,
-  division by constants, inlining, struct copies).
+  division by constants, inlining, struct copies). 2026-11-08: nine near matches
+  blocked by registers or scheduling (`Unk0203fa44` and `Unk02033ee0` constructors,
+  `func_02059d10`, `func_020a87f4`, ...) score the same with base ... sp2 and worse
+  with sp2p2 ... sp2p4 on two of them: the game is built with base ... sp2, and the
+  service pack is not the cause of these gaps. `-O4,s`, `-O3,p`, `-O2`, `-proc
+  arm9tdmi` and `-ipa file` are all worse; `-sym off` changes nothing.
 - NitroSDK / NitroSystem service pack inside 1.2 base ... sp2p3, and their flags.
 - MSL / runtime version (look for `__call_static_initializers`, `_s32_div_f`-style
   helpers; the `%a %b %e %T %Y` / `%I:%M:%S %p` strings look like a C library's
