@@ -8,12 +8,23 @@
  * the sound names, their table, the pointer to member constants, the vtables and
  * the strings. Real file name unknown.
  *
- * Not complete. The code is nearly matched; the gaps are registers and stack slots,
- * in the functions below and in `func_02018f1c` (spilled sound index). `.data`: the
- * original lays the pointer to member constants out in the reverse of the source
- * order, after the name table; mwccarm gives source order here, the table among
- * them, so most code functions differ only by their pool offsets. `.rodata`: the
- * last word 0xC5A28EFA is never loaded and not reproduced.
+ * Class layout (hypothesis, from the `.data` order): the fish and the spear are
+ * classes nested in the game class. mwccarm creates the pointer to member
+ * constants of class body code while it parses the bodies at the end of the
+ * outermost class, last member first, and the original's 36 constants follow that
+ * order for the game members, then the spear's, then the fish's. Separate classes
+ * give the reverse (each class's bodies are parsed at its own end, and the game
+ * class, which holds the fish and the spear, comes last). Functions the original calls out of line where it inlines
+ * others (`func_14`, `func_02019444`, `func_02019b18`, `func_0201af10`,
+ * `func_0201af9c`) are defined outside, after the bodies they must or must not
+ * inline; their state constants come from one-line class body helpers
+ * (`func_begin`, `func_finish`, `func_caught`, `func_reset`).
+ *
+ * Not complete. `.data` matches; the code gaps are registers and stack slots
+ * (`func_02018f1c`, spilled sound index; `func_14`, `func_0201a12c`,
+ * `func_02018de4`, `func_18`, `func_02018900`, `func_02019b18`, `func_02019fa0`,
+ * `func_02019444`, `func_02019bd0`). `.rodata`: the last word 0xC5A28EFA is never
+ * loaded and not reproduced.
  */
 
 #include "game/unk_microgame.h"
@@ -112,100 +123,20 @@ void func_020978dc(int a);
 int func_0209774c(int a);
 int func_020972c0(int key);
 
-inline u16 func_0201b164(u32 x) { return x; }
-inline Unk020a7c90 *func_0201b150(Unk020a9d58 *l, u16 i) { return func_020aa040(l, 1, i); }
-inline Unk020a7c90 *func_0201b13c(Unk020a9d58 *l, u16 i) { return func_020aa040(l, 4, i); }
-inline Unk020a7c90 *func_0201b128(Unk020a9d58 *l, u16 i) { return func_020aa040(l, 0xb, i); }
-inline Unk020a7c90 *func_0201b114(Unk020a9d58 *l, u16 i) { return func_020aa040(l, 5, i); }
-inline Unk020a7c90 *func_0201b100(Unk020a9d58 *l, u16 i) { return func_020aa040(l, 2, i); }
-inline Unk020a7c90 *func_0201b0ec(Unk020a9d58 *l, u16 i) { return func_020aa040(l, 6, i); }
+inline u16 func_0201b164(u32 x);
+inline Unk020a7c90 *func_0201b150(Unk020a9d58 *l, u16 i);
+inline Unk020a7c90 *func_0201b13c(Unk020a9d58 *l, u16 i);
+inline Unk020a7c90 *func_0201b128(Unk020a9d58 *l, u16 i);
+inline Unk020a7c90 *func_0201b114(Unk020a9d58 *l, u16 i);
+inline Unk020a7c90 *func_0201b100(Unk020a9d58 *l, u16 i);
+inline Unk020a7c90 *func_0201b0ec(Unk020a9d58 *l, u16 i);
 
 
 Unk02098e70 func_02018668(const Unk02098e70 &v, int f);
 
-class Unk0201a4e0 : public Unk02010920 {
-public:
-    Unk0201a4e0();
-    ~Unk0201a4e0();
-    void *func_00() { return &sprite; }
-    bool func_04(int index, bool force);
-
-    void func_02018694();
-    void func_020186e0();
-    void func_0201870c();
-    void func_02018730();
-    void func_02018798();
-    void func_020187d4() {}
-    void func_020187d8();
-    void func_02018884();
-    void func_02018900();
-    void func_02018b10();
-    void func_02018bd4();
-    void func_02018c38();
-
-    void func_0201af10(Unk0201a2c8 *o, Unk020a7c90 *a, Unk020a7c90 *b);
-    bool func_02019b18();
-    void func_flee() {
-        if (!func_dead()) {
-            if (state != &Unk0201a4e0::func_02018c38) {
-                state = &Unk0201a4e0::func_02018bd4;
-            }
-        }
-    }
-    bool func_dead() { return state == &Unk0201a4e0::func_020187d4; }
-    bool func_02019ea0();
-    void func_02019ee8();
-    void func_die() {
-        func_0200df10(this, 0, 1);
-        state = &Unk0201a4e0::func_02018798;
-        func_020897b4("Escaped!");
-    }
-    void func_wait() {
-        func_set(target, func_020a5f28(1, 0x20000));
-        state = &Unk0201a4e0::func_020187d8;
-    }
-
-    Unk0201a2c8 *owner;
-    void (Unk0201a4e0::*state)();
-    int misses;
-    int angle;
-    Unk0201a4e0Rect rects[2];
-    Unk0200b04cBit hitting;
-    Unk02098e70 unk124;
-    int unk12c;
-    Unk020a7c90 *sprite;
-    Unk020a7c90 *sprite2;
-    int unk138;
-    Unk0200b04c anim;
-    int timer;
-};
-
-class Unk0201af9c : public Unk0200dd90 {
-public:
-    Unk0201af9c() : Unk0200dd90(5) {}
-    void *func_00() { return &sprites; }
-
-    void func_0201af9c(Unk0201a2c8 *o, Unk020a7c90 *s, Unk020a7c90 *top);
-    void func_02018ca0();
-    void func_02018d04();
-    void func_02018d38();
-    void func_02018de4();
-    void func_02018f1c();
-    void func_020191b4();
-    void func_020192bc();
-    void func_0201931c();
-    bool func_ready() { return state == &Unk0201af9c::func_02018d04; }
-
-    void (Unk0201af9c::*state)();
-    Unk0201a2c8 *owner;
-    Unk02098e70 unkac;
-    Unk0200b04cBit thrown;
-    int caught;
-    Unk020a7c90 *sprites[4];
-    Unk020a7c90 *top;
-    Unk0200b04c anim1;
-    Unk0200b04c anim2;
-};
+Unk02098e70 func_02018668(const Unk02098e70 &v, int f) {
+    return Unk02098e70(((s64)v.x * f) >> 12, ((s64)v.y * f) >> 12);
+}
 
 /* A countdown: frames, seconds, minutes, hours, 6 bits each. */
 struct Unk0201a2c8Time {
@@ -235,20 +166,407 @@ struct Unk0201a2c8Time {
 
 class Unk0201a2c8 : public Unk020a5ccc {
 public:
+    class Unk0201a4e0 : public Unk02010920 {
+    public:
+        Unk0201a4e0() : Unk02010920(2), owner(0), state(&Unk0201a4e0::func_020187d4), unk138(0) {}
+        ~Unk0201a4e0();
+        void *func_00() { return &sprite; }
+        bool func_04(int index, bool force);
+        void func_reset() { state = &Unk0201a4e0::func_02018798; }
+        void func_0201af10(Unk0201a2c8 *o, Unk020a7c90 *a, Unk020a7c90 *b);
+        void func_start() {
+            void (Unk0201a4e0::*s)();
+            s = 0;
+            switch (unkc0) {
+            case (int)0x97de12bf:
+                s = &Unk0201a4e0::func_02018730;
+                break;
+            case (int)0xcbd6cda5:
+                s = &Unk0201a4e0::func_0201870c;
+                break;
+            case 0x4c444ea5:
+                s = &Unk0201a4e0::func_020186e0;
+                break;
+            case 0x2743d311:
+                s = &Unk0201a4e0::func_02018694;
+                break;
+            }
+            state = s;
+        }
+
+        bool func_dead() { return state == &Unk0201a4e0::func_020187d4; }
+        bool func_fleeing() { return state == &Unk0201a4e0::func_02018c38; }
+        void func_02018798() {
+            func_0200df10(this, 0, 1);
+            timer = 750;
+            state = &Unk0201a4e0::func_020187d4;
+        }
+        void func_020187d4() {}
+        void func_wait() {
+            func_set(target, func_020a5f28(1, 0x20000));
+            state = &Unk0201a4e0::func_020187d8;
+        }
+        void func_020187d8() {
+            if (func_0200dfd8(this, &target, 0xa000) == 1) {
+                func_wait();
+            } else if (timer == 0) {
+                state = &Unk0201a4e0::func_02018bd4;
+            } else {
+                timer--;
+                func_0200e010(this, &target, rects, 1);
+            }
+        }
+        void func_02018694() {
+            func_wait();
+        }
+        void func_020186e0() {
+            func_set(move.step, unka8);
+            state = &Unk0201a4e0::func_02018884;
+        }
+        void func_0201870c() {
+            angle = 0;
+            state = &Unk0201a4e0::func_02018900;
+        }
+        void func_02018730() {
+            angle = 0;
+            int d = func_02010efc() << 12;
+            func_set(target, unkb0.func_02098fa8(func_02018668(unka8, d)));
+            state = &Unk0201a4e0::func_02018b10;
+        }
+        void func_02018884() {
+            if (func_0200dfd8(this, &target, 0xa000) == 1) {
+                func_die();
+            }
+            func_020acbc8(&move);
+            move.speed += move.dir.x;
+            move.unk14 += move.dir.y;
+        }
+        void func_02018900() {
+            if (angle * 6 > func_02010efc() << 13) {
+                func_die();
+                return;
+            }
+            func_set(move.dir, Unk02098e70(0));
+            func_set(move.step, Unk02098e70(0x1000, 0));
+            func_020acbc8(&move);
+            int d = move.dir.func_02098e84() * 0x2aa;
+            int a = angle;
+            Unk02098e70 p = unkb0.func_02098fa8(func_02018668(unka8, a * 6));
+            Unk02098e70 q;
+            q = func_02018668(unka8, data_020af1e8[(u16)a >> 4 << 1] * func_0200af10(this));
+            func_set(pos, Unk02098e70(p.x - q.y, p.y + q.x));
+            a = angle + (d >> 12);
+            Unk02098e70 r = unkb0.func_02098fa8(func_02018668(unka8, a * 6));
+            Unk02098e70 t = func_02018668(unka8, data_020af1e8[(u16)a >> 4 << 1] * func_0200af10(this));
+            func_set(target, Unk02098e70(r.x - t.y, r.y + t.x));
+            func_set(move.dir, target.func_02098fcc(pos).func_02098eec());
+            angle += d >> 12;
+        }
+        void func_02018b10() {
+            if (func_0200dfd8(this, &target, 0xc8000) == 1) {
+                if (angle == 0) {
+                    func_set(target, unka0);
+                    angle++;
+                } else {
+                    func_die();
+                }
+            } else if (timer == 0) {
+                state = &Unk0201a4e0::func_02018bd4;
+            } else {
+                timer--;
+                func_0200e010(this, &target, rects, 1);
+            }
+        }
+        void func_02018bd4() {
+            move.speed = move.speed * 3 / 4;
+            func_set(target, func_020a5f28(0, 0x20000));
+            state = &Unk0201a4e0::func_02018c38;
+        }
+        void func_02018c38() {
+            if (func_0200dfd8(this, &target, 0xa000) == 1) {
+                func_die();
+            } else {
+                func_0200e010(this, &target, &rects[1], 1);
+            }
+        }
+        void func_die() {
+            func_0200df10(this, 0, 1);
+            state = &Unk0201a4e0::func_02018798;
+            func_020897b4("Escaped!");
+        }
+        bool func_02019b18();
+        void func_caught() { state = &Unk0201a4e0::func_02018798; }
+
+        bool func_02019ea0();
+        void func_02019ee8();
+
+        Unk0201a2c8 *owner;
+        void (Unk0201a4e0::*state)();
+        int misses;
+        int angle;
+        Unk0201a4e0Rect rects[2];
+        Unk0200b04cBit hitting;
+        Unk02098e70 unk124;
+        int unk12c;
+        Unk020a7c90 *sprite;
+        Unk020a7c90 *sprite2;
+        int unk138;
+        Unk0200b04c anim;
+        int timer;
+    };
+
+    class Unk0201af9c : public Unk0200dd90 {
+    public:
+        Unk0201af9c() : Unk0200dd90(5) {}
+        void *func_00() { return &sprites; }
+
+        void func_reset() { state = &Unk0201af9c::func_02018ca0; }
+        void func_0201af9c(Unk0201a2c8 *o, Unk020a7c90 *s, Unk020a7c90 *t);
+        bool func_ready() { return state == &Unk0201af9c::func_02018d04; }
+        void func_02018ca0() {
+            Unk0201a2c8 *g = owner;
+            g->func_sound(0, 1);
+            state = &Unk0201af9c::func_02018d04;
+        }
+        void func_02018d04() {
+            if (thrown.func_get()) {
+                thrown.func_clear();
+                state = &Unk0201af9c::func_02018d38;
+            }
+        }
+        void func_02018d38() {
+            Unk0201a2c8 *g = owner;
+            int i = func_020a5ef0(1, 3);
+            g->func_sound(i);
+            func_set(pos, Unk02098e70(unkac.x, -0x20000));
+            caught = func_02011188(owner->counts);
+            state = &Unk0201af9c::func_02018de4;
+        }
+        void func_02018de4() {
+            int t = func_020a60e8();
+            if (t < 0x10000) {
+                return;
+            }
+            Unk02098e70 start(unkac.x, -0x20000);
+            Unk02098e70 d = unkac.func_02098fcc(start);
+            func_set(pos, start.func_02098fa8(func_02018668(d, (t - 0x10000) / 5)));
+            if (func_020a60bc() != 1) {
+                return;
+            }
+            Unk0201a2c8 *g = owner;
+            Unk0201a4e0 *f = g->fish;
+            Unk02098e70 *p = g->spear.func_0200df08();
+            for (int i = 0; i < 3; i++) {
+                func_set(f->unk124, *p);
+                f->hitting.func_set();
+                f++;
+            }
+            func_020a7c90(g->cursor2, p->x);
+            func_020a7cac(g->cursor2, p->y);
+            func_020a6980(g->cursor2, 0x4d7b721c);
+            func_0200b09c(&g->anims[1], g->ids[1]);
+            state = &Unk0201af9c::func_02018f1c;
+        }
+        void func_02018f1c() {
+            int n = func_02011188(owner->counts);
+            Unk0201a2c8 *g = owner;
+            int base = g->sound - 1;
+            if (n - caught != 0) {
+                g->func_sound(base + 3);
+                g = owner;
+                Unk0201a2c8Stream *s = g->stream;
+                if (s != 0) {
+                    func_020a32ac(func_020a2994(), 0xf557e3ff, s->unk4, 0x7f, 0);
+                }
+            } else {
+                Unk0201a4e0 *f = g->fish;
+                for (int i = 0; i < 3; i++, f++) {
+                    owner->func_flee(f);
+                }
+                g = owner;
+                Unk0201a2c8Stream *s = g->stream;
+                if (s != 0) {
+                    func_020a32ac(func_020a2994(), 0x43f9fd12, s->unk4, 0x7f, 0);
+                }
+                owner->func_sound(base + 7);
+            }
+            g = owner;
+            Unk0201a4e0 *f = g->fish;
+            Unk02098e70 *p = g->spear.func_0200df08();
+            for (int i = 0; i < 3; i++) {
+                func_set(f->unk124, *p);
+                f->hitting.func_set();
+                f++;
+            }
+            func_020a7c90(g->cursor2, p->x);
+            func_020a7cac(g->cursor2, p->y);
+            if (g->func_hit()) {
+                func_020a6980(g->cursor2, 0x6ec697c0);
+                func_0200b09c(&g->anims[1], g->ids[2]);
+            } else {
+                func_020a6980(g->cursor2, 0xf8f35efd);
+                func_0200b09c(&g->anims[1], g->ids[3]);
+            }
+            state = &Unk0201af9c::func_020191b4;
+        }
+        void func_020191b4() {
+            int t = func_020a60e8();
+            int n;
+            if (owner->func_hit()) {
+                n = 10;
+                if (t >= (int)((float)(n << 12) + 0.5f)) {
+                    state = &Unk0201af9c::func_020192bc;
+                }
+            } else {
+                n = 13;
+                if (t >= (int)((float)(n << 12) + 0.5f)) {
+                    state = &Unk0201af9c::func_02018ca0;
+                }
+            }
+            Unk02098e70 v(unkac.x, -0x20000);
+            s64 d = ((s64)(unkac.y - v.y) * (0x1000 - t / n)) >> 12;
+            pos.x = unkac.x;
+            pos.y = v.y + d;
+        }
+        void func_020192bc() {
+            Unk0201a2c8 *g = owner;
+            g->func_sound(9, 0);
+            state = &Unk0201af9c::func_0201931c;
+        }
+        void func_0201931c() {
+            if (func_020a60bc() != 0) {
+                state = &Unk0201af9c::func_02018ca0;
+            }
+        }
+
+        void (Unk0201af9c::*state)();
+        Unk0201a2c8 *owner;
+        Unk02098e70 unkac;
+        Unk0200b04cBit thrown;
+        int caught;
+        Unk020a7c90 *sprites[4];
+        Unk020a7c90 *top;
+        Unk0200b04c anim1;
+        Unk0200b04c anim2;
+    };
+
     Unk0201a2c8(Unk02093648 *file, int a, int b);
     virtual ~Unk0201a2c8();
     virtual bool func_08();
     virtual void func_10(bool a);
+    void func_flee(Unk0201a4e0 *f) {
+        if (!f->func_dead()) {
+            if (!f->func_fleeing()) {
+                f->state = &Unk0201a4e0::func_02018bd4;
+            }
+        }
+    }
+    void func_updateAnims() {
+        func_020a7cf0(cursor, anims[0].playing.func_get());
+        func_020a7cf0(cursor2, anims[1].playing.func_get());
+        if (anims[0].playing.func_get()) {
+            func_020a69ac(cursor, func_0200b150(&anims[0], 0x1000));
+        }
+        if (anims[1].playing.func_get()) {
+            func_020a69ac(cursor2, func_0200b150(&anims[1], 0x1000));
+        }
+    }
+    void func_updateFish() {
+        Unk0201a4e0 *f = fish;
+        for (int i = 0; i < 3; i++, f++) {
+            func_0200de30(f);
+            f->func_02019ee8();
+            (f->*(f->state))();
+            if (!f->func_02019ea0() && f->func_02019b18() != 1) {
+                fish[i].misses++;
+            }
+        }
+    }
+    void func_begin() { state = &Unk0201a2c8::func_0201934c; }
     virtual void func_14();
-    virtual bool func_18();
+    void func_0201934c() {
+        if (func_020a13d4(func_020a18e4(), 2, 0) != 0) {
+            func_020a6114(this, 0xab8dd75e, 0xf8ef1cc5);
+            func_sound(0, 1, 1);
+            state = &Unk0201a2c8::func_020193dc;
+        }
+    }
+    void func_020193dc() {
+        if (func_020a1280(func_020a18e4(), 2, 0) != 0) {
+            G2x_SetBlendAlpha_(0x4001050, 0, 1, 0xf, 3);
+            state = &Unk0201a2c8::func_02019444;
+        }
+    }
+    void func_finish() { state = &Unk0201a2c8::func_02019fa0; }
+    void func_02019444();
+    void func_02019fa0() {
+        if (func_all()) {
+            func_020a716c(result, 0x9e1);
+            func_020a3858(func_020a2994(), 0xbe776b91, 0, 0, 0);
+            func_sound(13);
+        } else if (func_02011188(counts) > 0) {
+            func_020a716c(result, 0x9e2);
+            int i = func_02011188(counts) > 1 ? 12 : 11;
+            func_sound(i);
+        } else {
+            func_020a716c(result, 0x9e0);
+            func_sound(14);
+        }
+        func_020a7cf0(result, true);
+        buttons[0].func_18(true);
+        time.func_set(3, 0);
+        state = &Unk0201a2c8::func_0201a12c;
+    }
+    void func_0201a12c();
+    virtual bool func_18() {
+        int i;
+        if (!shown.func_get()) {
+            return true;
+        }
+        for (int i = 0; i < 2; i++) {
+            func_020aa158(layouts[i]);
+        }
+        if (state == 0) {
+            func_02011128(counts, unk920);
+            return false;
+        }
+        if (hidden != 0) {
+            buttons[3].func_0c(buttons[2].func_0c(false));
+            buttons[2].func_08();
+            buttons[3].func_08();
+            if (func_020972c0(3) != 0 || (buttons[2].touch.flags & 8) || (buttons[3].touch.flags & 8)) {
+                buttons[1].func_18(false);
+                buttons[2].func_18(false);
+                buttons[3].func_18(false);
+                func_020a7cf0(unk16c, false);
+                func_020a7cf0(unk170, false);
+                func_020a7cf0(unk174, false);
+                hidden = 0;
+                if (buttons[3].touch.flags & 8) {
+                    Unk0201a4e0 *f = fish;
+                    for (i = 0; i < 3; i++, f++) {
+                        func_flee(f);
+                    }
+                    state = &Unk0201a2c8::func_02019fa0;
+                }
+            }
+        } else if (func_020972c0(3) != 0 && !func_020a7d1c(result) && func_020a1280(func_020a18e4(), 2, 0) != 0) {
+            buttons[1].func_18(true);
+            buttons[2].func_18(true);
+            buttons[3].func_18(true);
+            func_020a7cf0(unk16c, true);
+            func_020a7cf0(unk170, true);
+            func_020a7cf0(unk174, true);
+            hidden = 1;
+        } else {
+            (this->*state)();
+            func_02011074(&unk148, &unk158, &unk918);
+        }
+        return true;
+    }
     virtual void func_1c();
 
-    void func_0201934c();
-    void func_020193dc();
-    void func_02019444();
     bool func_02019bd0(int flag);
-    void func_02019fa0();
-    void func_0201a12c();
     bool func_all() { return func_02011188(counts) == 6; }
     bool func_hit() { return sound >= 3 && sound <= 6; }
     void func_sound(int index, int a = 0, int force = 0, int b = 0) {
@@ -264,8 +582,6 @@ public:
             sound = index;
         }
     }
-    void func_updateAnims();
-    void func_updateFish();
 
     Unk020a9d58 *layouts[2];
     Unk020a9d58 layout0;
@@ -303,386 +619,9 @@ public:
     Unk0201a2c8Stream *stream;
 };
 
-Unk02098e70 func_02018668(const Unk02098e70 &v, int f) {
-    return Unk02098e70(((s64)v.x * f) >> 12, ((s64)v.y * f) >> 12);
-}
+typedef Unk0201a2c8::Unk0201a4e0 Unk0201a4e0;
+typedef Unk0201a2c8::Unk0201af9c Unk0201af9c;
 
-void Unk0201a4e0::func_02018694() {
-    func_wait();
-}
-
-void Unk0201a4e0::func_020186e0() {
-    func_set(move.step, unka8);
-    state = &Unk0201a4e0::func_02018884;
-}
-
-void Unk0201a4e0::func_0201870c() {
-    angle = 0;
-    state = &Unk0201a4e0::func_02018900;
-}
-
-void Unk0201a4e0::func_02018730() {
-    angle = 0;
-    int d = func_02010efc() << 12;
-    func_set(target, unkb0.func_02098fa8(func_02018668(unka8, d)));
-    state = &Unk0201a4e0::func_02018b10;
-}
-
-void Unk0201a4e0::func_02018798() {
-    func_0200df10(this, 0, 1);
-    timer = 750;
-    state = &Unk0201a4e0::func_020187d4;
-}
-
-void Unk0201a4e0::func_020187d8() {
-    if (func_0200dfd8(this, &target, 0xa000) == 1) {
-        func_wait();
-    } else if (timer == 0) {
-        state = &Unk0201a4e0::func_02018bd4;
-    } else {
-        timer--;
-        func_0200e010(this, &target, rects, 1);
-    }
-}
-
-void Unk0201a4e0::func_02018884() {
-    if (func_0200dfd8(this, &target, 0xa000) == 1) {
-        func_die();
-    }
-    func_020acbc8(&move);
-    move.speed += move.dir.x;
-    move.unk14 += move.dir.y;
-}
-
-void Unk0201a4e0::func_02018900() {
-    if (angle * 6 > func_02010efc() << 13) {
-        func_die();
-        return;
-    }
-    func_set(move.dir, Unk02098e70(0));
-    func_set(move.step, Unk02098e70(0x1000, 0));
-    func_020acbc8(&move);
-    int d = move.dir.func_02098e84() * 0x2aa;
-    int a = angle;
-    Unk02098e70 p = unkb0.func_02098fa8(func_02018668(unka8, a * 6));
-    Unk02098e70 q;
-    q = func_02018668(unka8, data_020af1e8[(u16)a >> 4 << 1] * func_0200af10(this));
-    func_set(pos, Unk02098e70(p.x - q.y, p.y + q.x));
-    a = angle + (d >> 12);
-    Unk02098e70 r = unkb0.func_02098fa8(func_02018668(unka8, a * 6));
-    Unk02098e70 t = func_02018668(unka8, data_020af1e8[(u16)a >> 4 << 1] * func_0200af10(this));
-    func_set(target, Unk02098e70(r.x - t.y, r.y + t.x));
-    func_set(move.dir, target.func_02098fcc(pos).func_02098eec());
-    angle += d >> 12;
-}
-
-void Unk0201a4e0::func_02018b10() {
-    if (func_0200dfd8(this, &target, 0xc8000) == 1) {
-        if (angle == 0) {
-            func_set(target, unka0);
-            angle++;
-        } else {
-            func_die();
-        }
-    } else if (timer == 0) {
-        state = &Unk0201a4e0::func_02018bd4;
-    } else {
-        timer--;
-        func_0200e010(this, &target, rects, 1);
-    }
-}
-
-void Unk0201a4e0::func_02018bd4() {
-    move.speed = move.speed * 3 / 4;
-    func_set(target, func_020a5f28(0, 0x20000));
-    state = &Unk0201a4e0::func_02018c38;
-}
-
-void Unk0201a4e0::func_02018c38() {
-    if (func_0200dfd8(this, &target, 0xa000) == 1) {
-        func_die();
-    } else {
-        func_0200e010(this, &target, &rects[1], 1);
-    }
-}
-
-void Unk0201af9c::func_02018ca0() {
-    Unk0201a2c8 *g = owner;
-    g->func_sound(0, 1);
-    state = &Unk0201af9c::func_02018d04;
-}
-
-void Unk0201af9c::func_02018d04() {
-    if (thrown.func_get()) {
-        thrown.func_clear();
-        state = &Unk0201af9c::func_02018d38;
-    }
-}
-
-void Unk0201af9c::func_02018d38() {
-    Unk0201a2c8 *g = owner;
-    int i = func_020a5ef0(1, 3);
-    g->func_sound(i);
-    func_set(pos, Unk02098e70(unkac.x, -0x20000));
-    caught = func_02011188(owner->counts);
-    state = &Unk0201af9c::func_02018de4;
-}
-
-void Unk0201af9c::func_02018de4() {
-    int t = func_020a60e8();
-    if (t < 0x10000) {
-        return;
-    }
-    Unk02098e70 start(unkac.x, -0x20000);
-    Unk02098e70 d = unkac.func_02098fcc(start);
-    func_set(pos, start.func_02098fa8(func_02018668(d, (t - 0x10000) / 5)));
-    if (func_020a60bc() != 1) {
-        return;
-    }
-    Unk0201a2c8 *g = owner;
-    Unk0201a4e0 *f = g->fish;
-    Unk02098e70 *p = g->spear.func_0200df08();
-    for (int i = 0; i < 3; i++) {
-        func_set(f->unk124, *p);
-        f->hitting.func_set();
-        f++;
-    }
-    func_020a7c90(g->cursor2, p->x);
-    func_020a7cac(g->cursor2, p->y);
-    func_020a6980(g->cursor2, 0x4d7b721c);
-    func_0200b09c(&g->anims[1], g->ids[1]);
-    state = &Unk0201af9c::func_02018f1c;
-}
-
-void Unk0201af9c::func_02018f1c() {
-    int n = func_02011188(owner->counts);
-    Unk0201a2c8 *g = owner;
-    int base = g->sound - 1;
-    if (n - caught != 0) {
-        g->func_sound(base + 3);
-        g = owner;
-        Unk0201a2c8Stream *s = g->stream;
-        if (s != 0) {
-            func_020a32ac(func_020a2994(), 0xf557e3ff, s->unk4, 0x7f, 0);
-        }
-    } else {
-        Unk0201a4e0 *f = g->fish;
-        for (int i = 0; i < 3; i++, f++) {
-            f->func_flee();
-        }
-        g = owner;
-        Unk0201a2c8Stream *s = g->stream;
-        if (s != 0) {
-            func_020a32ac(func_020a2994(), 0x43f9fd12, s->unk4, 0x7f, 0);
-        }
-        owner->func_sound(base + 7);
-    }
-    g = owner;
-    Unk0201a4e0 *f = g->fish;
-    Unk02098e70 *p = g->spear.func_0200df08();
-    for (int i = 0; i < 3; i++) {
-        func_set(f->unk124, *p);
-        f->hitting.func_set();
-        f++;
-    }
-    func_020a7c90(g->cursor2, p->x);
-    func_020a7cac(g->cursor2, p->y);
-    if (g->func_hit()) {
-        func_020a6980(g->cursor2, 0x6ec697c0);
-        func_0200b09c(&g->anims[1], g->ids[2]);
-    } else {
-        func_020a6980(g->cursor2, 0xf8f35efd);
-        func_0200b09c(&g->anims[1], g->ids[3]);
-    }
-    state = &Unk0201af9c::func_020191b4;
-}
-
-void Unk0201af9c::func_020191b4() {
-    int t = func_020a60e8();
-    int n;
-    if (owner->func_hit()) {
-        n = 10;
-        if (t >= (int)((float)(n << 12) + 0.5f)) {
-            state = &Unk0201af9c::func_020192bc;
-        }
-    } else {
-        n = 13;
-        if (t >= (int)((float)(n << 12) + 0.5f)) {
-            state = &Unk0201af9c::func_02018ca0;
-        }
-    }
-    Unk02098e70 v(unkac.x, -0x20000);
-    s64 d = ((s64)(unkac.y - v.y) * (0x1000 - t / n)) >> 12;
-    pos.x = unkac.x;
-    pos.y = v.y + d;
-}
-
-void Unk0201af9c::func_020192bc() {
-    Unk0201a2c8 *g = owner;
-    g->func_sound(9, 0);
-    state = &Unk0201af9c::func_0201931c;
-}
-
-void Unk0201af9c::func_0201931c() {
-    if (func_020a60bc() != 0) {
-        state = &Unk0201af9c::func_02018ca0;
-    }
-}
-
-void Unk0201a2c8::func_0201934c() {
-    if (func_020a13d4(func_020a18e4(), 2, 0) != 0) {
-        func_020a6114(this, 0xab8dd75e, 0xf8ef1cc5);
-        func_sound(0, 1, 1);
-        state = &Unk0201a2c8::func_020193dc;
-    }
-}
-
-void Unk0201a2c8::func_020193dc() {
-    if (func_020a1280(func_020a18e4(), 2, 0) != 0) {
-        G2x_SetBlendAlpha_(0x4001050, 0, 1, 0xf, 3);
-        state = &Unk0201a2c8::func_02019444;
-    }
-}
-
-inline void Unk0201a2c8::func_updateFish() {
-    Unk0201a4e0 *f = fish;
-    for (int i = 0; i < 3; i++, f++) {
-        func_0200de30(f);
-        f->func_02019ee8();
-        (f->*(f->state))();
-        if (!f->func_02019ea0() && f->func_02019b18() != 1) {
-            fish[i].misses++;
-        }
-    }
-}
-
-inline void Unk0201a2c8::func_updateAnims() {
-    func_020a7cf0(cursor, anims[0].playing.func_get());
-    func_020a7cf0(cursor2, anims[1].playing.func_get());
-    if (anims[0].playing.func_get()) {
-        func_020a69ac(cursor, func_0200b150(&anims[0], 0x1000));
-    }
-    if (anims[1].playing.func_get()) {
-        func_020a69ac(cursor2, func_0200b150(&anims[1], 0x1000));
-    }
-}
-
-inline bool Unk0201a2c8::func_02019bd0(int flag) {
-    void (Unk0201a4e0::*s)();
-    u8 def[8];
-
-    if (score == 6) {
-        return false;
-    }
-    int n = -1;
-    for (int i = 0; i < 3; i++) {
-        if (fish[i].func_dead() == 1) {
-            n = i;
-            break;
-        }
-    }
-    if (n == -1) {
-        return false;
-    }
-    int k = func_020a5ef0(0, 3);
-    func_02010b8c(def, fish[n].owner->unk920[k]);
-    func_02010954(&fish[n], def);
-    func_02010ba8(def);
-    for (int i = 0; i < 2; i++) {
-        const Unk0201a4e0Rect &r = fish[n].owner->rects[i];
-        int a = r.a;
-        int b = r.b;
-        int c = r.c;
-        int d = r.d;
-        fish[n].rects[i].a = a;
-        fish[n].rects[i].b = b;
-        fish[n].rects[i].c = c;
-        fish[n].rects[i].d = d;
-    }
-    fish[n].unk12c = 0;
-    func_020a7d30(fish[n].sprite, k);
-    fish[n].func_04(0, true);
-    func_set(*(Unk02098e70 *)func_0200dfc8(&fish[n], 1), Unk02098e70(0x10000, 0x10000));
-    func_0200df10(&fish[n], 1, 0);
-    s = 0;
-    switch (fish[n].unkc0) {
-    case (int)0x97de12bf:
-        s = &Unk0201a4e0::func_02018730;
-        break;
-    case (int)0xcbd6cda5:
-        s = &Unk0201a4e0::func_0201870c;
-        break;
-    case 0x4c444ea5:
-        s = &Unk0201a4e0::func_020186e0;
-        break;
-    case 0x2743d311:
-        s = &Unk0201a4e0::func_02018694;
-        break;
-    }
-    fish[n].state = s;
-    fish[n].misses = 0;
-    score++;
-    if (flag == 1) {
-        delay = 240;
-    }
-    return true;
-}
-
-void Unk0201a2c8::func_02019444() {
-    int *touch = func_02097a4c();
-    func_020978dc(0);
-    Unk02098e70 p(touch[0] << 12, touch[1] << 12);
-    bool done = score == 6;
-    for (int i = 0; i < 3; i++) {
-        done = done & fish[i].func_dead();
-    }
-    if (done) {
-    } else if (!spear.func_ready()) {
-    } else if (func_0209774c(0) != 0) {
-        func_set(spear.unkac, p);
-        spear.thrown.func_set();
-        func_020a7c90(cursor, p.x);
-        func_020a7cac(cursor, p.y);
-        func_0200b09c(&anims[0], ids[0]);
-    }
-    func_0200de30(&spear);
-    (spear.*(spear.state))();
-    func_updateFish();
-    func_updateAnims();
-    if (score < 6) {
-        if (delay == 0) {
-            func_02019bd0(1);
-        } else {
-            delay--;
-        }
-    }
-    done = score == 6;
-    for (int i = 0; i < 3; i++) {
-        done = done & fish[i].func_dead();
-    }
-    done = done & spear.func_ready();
-    for (int i = 0; i < 2; i++) {
-        done = done & !anims[i].playing.func_get();
-    }
-    if (done == 1) {
-        state = &Unk0201a2c8::func_02019fa0;
-    }
-}
-
-bool Unk0201a4e0::func_04(int index, bool force) {
-    if (!Unk02010920::func_04(index, force)) {
-        return false;
-    }
-    func_0200b120(&anim);
-    if (unk138 != 0) {
-        func_020a6058(owner, unk138);
-    }
-    unk138 = func_020a6038(owner, func_020a69a4(sprite));
-    func_0200b09c(&anim, unk138);
-    return true;
-}
-
-#pragma dont_inline on
 bool Unk0201a4e0::func_02019b18() {
     if (hitting.v & 1) {
         if (hit(&unk124, &scale, &pos, unk12c) == 1) {
@@ -695,128 +634,14 @@ bool Unk0201a4e0::func_02019b18() {
                     break;
                 }
             }
-            state = &Unk0201a4e0::func_02018798;
+            func_caught();
             return true;
         }
         hitting.v &= ~1;
     }
     return false;
 }
-#pragma dont_inline reset
 
-bool Unk0201a4e0::func_02019ea0() {
-    return func_dead();
-}
-
-void Unk0201a4e0::func_02019ee8() {
-    u32 f = func_0200b150(&anim, 0x1000);
-    for (int i = 0; i < 2; i++) {
-        func_020a69ac((&sprite)[i], f);
-    }
-    if ((int)move.dir.func_02098e94() <= 0x19a) {
-        return;
-    }
-    Unk02098e70 d = move.dir.func_02098f38();
-    int a = func_02097a58(d.x, -d.y);
-    unk12c = func_020a1e68(func_020a917c(sprite), a, 500);
-    for (int i = 0; i < 2; i++) {
-        func_020a9168((&sprite)[i], unk12c);
-    }
-}
-
-void Unk0201a2c8::func_02019fa0() {
-    if (func_all()) {
-        func_020a716c(result, 0x9e1);
-        func_020a3858(func_020a2994(), 0xbe776b91, 0, 0, 0);
-        func_sound(13);
-    } else if (func_02011188(counts) > 0) {
-        func_020a716c(result, 0x9e2);
-        int i = func_02011188(counts) > 1 ? 12 : 11;
-        func_sound(i);
-    } else {
-        func_020a716c(result, 0x9e0);
-        func_sound(14);
-    }
-    func_020a7cf0(result, true);
-    buttons[0].func_18(true);
-    time.func_set(3, 0);
-    state = &Unk0201a2c8::func_0201a12c;
-}
-
-void Unk0201a2c8::func_0201a12c() {
-    for (int i = 0; i < 4; i++) {
-        int v = time.func_get(i);
-        if (v > 0) {
-            time.func_put(i, v - 1);
-            break;
-        }
-        time.func_put(i, 59);
-    }
-    func_updateFish();
-    func_updateAnims();
-    if (*(volatile u32 *)&time.v == 0) {
-        state = 0;
-    }
-}
-
-inline Unk0201a4e0::~Unk0201a4e0() {
-    func_0200b120(&anim);
-    if (unk138 != 0) {
-        func_020a6058(owner, unk138);
-    }
-}
-
-inline Unk0201a4e0::Unk0201a4e0()
-    : Unk02010920(2), owner(0), state(&Unk0201a4e0::func_020187d4), unk138(0) {}
-
-inline Unk0201a2c8::Unk0201a2c8(Unk02093648 *file, int a, int b)
-    : Unk020a5ccc(file, a, b), layout0(file, 0), layout1(file, 0), state(0) {
-    hidden = 0;
-    stream = 0;
-    func_020a5ea4(&layout0);
-    layouts[0] = &layout0;
-    layouts[1] = &layout1;
-    for (int i = 0; i < 4; i++) {
-        ids[i] = 0;
-    }
-    stream = (Unk0201a2c8Stream *)func_020a290c(func_020a2994(), 2);
-    if (stream != 0) {
-        func_020a3188(func_020a2994(), 0xf557e3ff, stream->unk4);
-        func_020a3188(func_020a2994(), 0x43f9fd12, stream->unk4);
-    }
-}
-
-extern "C" Unk0201a2c8 *func_0201a2c8(Unk02093648 *file, int a, int b) {
-    return new Unk0201a2c8(file, a, b);
-}
-
-Unk0201a2c8::~Unk0201a2c8() {
-    func_02069124(*(void **)(data_020c43a8 + 0xc), 0, 0, 0);
-    func_020667f8(data_020c43a8, 0);
-    for (int i = 0; i < 4; i++) {
-        if (ids[i] != 0) {
-            func_020a6058(this, ids[i]);
-        }
-    }
-    if (stream != 0) {
-        func_020a2964(func_020a2994(), stream, 1);
-        stream = 0;
-    }
-}
-
-void Unk0201a2c8::func_10(bool a) {
-    for (int i = 0; i < 2; i++) {
-        func_020aa06c(layouts[i], a);
-    }
-    if (a != shown.func_get()) {
-        shown.v ^= 1;
-        if (!shown.func_get()) {
-            func_020a62f0(this);
-        }
-    }
-}
-
-#pragma dont_inline on
 void Unk0201a2c8::func_14() {
     Unk020a7af4Entry entries[0x3c];
     Unk020a7af4 names(entries, 0x3c);
@@ -927,11 +752,10 @@ void Unk0201a2c8::func_14() {
             func_020aa06c(layouts[i], 1);
         }
     }
-    state = &Unk0201a2c8::func_0201934c;
+    func_begin();
 }
-#pragma dont_inline reset
 
-void Unk0201a4e0::func_0201af10(Unk0201a2c8 *o, Unk020a7c90 *a, Unk020a7c90 *b) {
+inline void Unk0201a4e0::func_0201af10(Unk0201a2c8 *o, Unk020a7c90 *a, Unk020a7c90 *b) {
     owner = o;
     sprite = a;
     sprite2 = b;
@@ -940,10 +764,10 @@ void Unk0201a4e0::func_0201af10(Unk0201a2c8 *o, Unk020a7c90 *a, Unk020a7c90 *b) 
     }
     func_0200df54(this);
     misses = 1;
-    state = &Unk0201a4e0::func_02018798;
+    func_reset();
 }
 
-void Unk0201af9c::func_0201af9c(Unk0201a2c8 *o, Unk020a7c90 *s, Unk020a7c90 *t) {
+inline void Unk0201af9c::func_0201af9c(Unk0201a2c8 *o, Unk020a7c90 *s, Unk020a7c90 *t) {
     owner = o;
     for (int i = 0; i < 4; i++) {
         sprites[i] = s;
@@ -958,54 +782,204 @@ void Unk0201af9c::func_0201af9c(Unk0201a2c8 *o, Unk020a7c90 *s, Unk020a7c90 *t) 
     func_set(*(Unk02098e70 *)func_0200dfc8(this, 3), Unk02098e70(0, -0xca000));
     func_0200dfc8(this, 4)->flags |= 2;
     func_0200df10(this, 1, 0);
-    state = &Unk0201af9c::func_02018ca0;
+    func_reset();
 }
 
-bool Unk0201a2c8::func_18() {
-    int i;
-    if (!shown.func_get()) {
-        return true;
-    }
-    for (int i = 0; i < 2; i++) {
-        func_020aa158(layouts[i]);
-    }
-    if (state == 0) {
-        func_02011128(counts, unk920);
+inline Unk020a7c90 *func_0201b0ec(Unk020a9d58 *l, u16 i) { return func_020aa040(l, 6, i); }
+inline Unk020a7c90 *func_0201b100(Unk020a9d58 *l, u16 i) { return func_020aa040(l, 2, i); }
+inline Unk020a7c90 *func_0201b114(Unk020a9d58 *l, u16 i) { return func_020aa040(l, 5, i); }
+inline Unk020a7c90 *func_0201b128(Unk020a9d58 *l, u16 i) { return func_020aa040(l, 0xb, i); }
+inline Unk020a7c90 *func_0201b13c(Unk020a9d58 *l, u16 i) { return func_020aa040(l, 4, i); }
+inline Unk020a7c90 *func_0201b150(Unk020a9d58 *l, u16 i) { return func_020aa040(l, 1, i); }
+inline u16 func_0201b164(u32 x) { return x; }
+
+bool Unk0201a4e0::func_04(int index, bool force) {
+    if (!Unk02010920::func_04(index, force)) {
         return false;
     }
-    if (hidden != 0) {
-        buttons[3].func_0c(buttons[2].func_0c(false));
-        buttons[2].func_08();
-        buttons[3].func_08();
-        if (func_020972c0(3) != 0 || (buttons[2].touch.flags & 8) || (buttons[3].touch.flags & 8)) {
-            buttons[1].func_18(false);
-            buttons[2].func_18(false);
-            buttons[3].func_18(false);
-            func_020a7cf0(unk16c, false);
-            func_020a7cf0(unk170, false);
-            func_020a7cf0(unk174, false);
-            hidden = 0;
-            if (buttons[3].touch.flags & 8) {
-                Unk0201a4e0 *f = fish;
-                for (i = 0; i < 3; i++, f++) {
-                    f->func_flee();
-                }
-                state = &Unk0201a2c8::func_02019fa0;
-            }
+    func_0200b120(&anim);
+    if (unk138 != 0) {
+        func_020a6058(owner, unk138);
+    }
+    unk138 = func_020a6038(owner, func_020a69a4(sprite));
+    func_0200b09c(&anim, unk138);
+    return true;
+}
+
+bool Unk0201a4e0::func_02019ea0() {
+    return func_dead();
+}
+
+void Unk0201a4e0::func_02019ee8() {
+    u32 f = func_0200b150(&anim, 0x1000);
+    for (int i = 0; i < 2; i++) {
+        func_020a69ac((&sprite)[i], f);
+    }
+    if ((int)move.dir.func_02098e94() <= 0x19a) {
+        return;
+    }
+    Unk02098e70 d = move.dir.func_02098f38();
+    int a = func_02097a58(d.x, -d.y);
+    unk12c = func_020a1e68(func_020a917c(sprite), a, 500);
+    for (int i = 0; i < 2; i++) {
+        func_020a9168((&sprite)[i], unk12c);
+    }
+}
+
+inline bool Unk0201a2c8::func_02019bd0(int flag) {
+    u8 def[8];
+
+    if (score == 6) {
+        return false;
+    }
+    int n = -1;
+    for (int i = 0; i < 3; i++) {
+        if (fish[i].func_dead() == 1) {
+            n = i;
+            break;
         }
-    } else if (func_020972c0(3) != 0 && !func_020a7d1c(result) && func_020a1280(func_020a18e4(), 2, 0) != 0) {
-        buttons[1].func_18(true);
-        buttons[2].func_18(true);
-        buttons[3].func_18(true);
-        func_020a7cf0(unk16c, true);
-        func_020a7cf0(unk170, true);
-        func_020a7cf0(unk174, true);
-        hidden = 1;
-    } else {
-        (this->*state)();
-        func_02011074(&unk148, &unk158, &unk918);
+    }
+    if (n == -1) {
+        return false;
+    }
+    int k = func_020a5ef0(0, 3);
+    func_02010b8c(def, fish[n].owner->unk920[k]);
+    func_02010954(&fish[n], def);
+    func_02010ba8(def);
+    for (int i = 0; i < 2; i++) {
+        const Unk0201a4e0Rect &r = fish[n].owner->rects[i];
+        int a = r.a;
+        int b = r.b;
+        int c = r.c;
+        int d = r.d;
+        fish[n].rects[i].a = a;
+        fish[n].rects[i].b = b;
+        fish[n].rects[i].c = c;
+        fish[n].rects[i].d = d;
+    }
+    fish[n].unk12c = 0;
+    func_020a7d30(fish[n].sprite, k);
+    fish[n].func_04(0, true);
+    func_set(*(Unk02098e70 *)func_0200dfc8(&fish[n], 1), Unk02098e70(0x10000, 0x10000));
+    func_0200df10(&fish[n], 1, 0);
+    fish[n].func_start();
+    fish[n].misses = 0;
+    score++;
+    if (flag == 1) {
+        delay = 240;
     }
     return true;
+}
+
+void Unk0201a2c8::func_02019444() {
+    int *touch = func_02097a4c();
+    func_020978dc(0);
+    Unk02098e70 p(touch[0] << 12, touch[1] << 12);
+    bool done = score == 6;
+    for (int i = 0; i < 3; i++) {
+        done = done & fish[i].func_dead();
+    }
+    if (done) {
+    } else if (!spear.func_ready()) {
+    } else if (func_0209774c(0) != 0) {
+        func_set(spear.unkac, p);
+        spear.thrown.func_set();
+        func_020a7c90(cursor, p.x);
+        func_020a7cac(cursor, p.y);
+        func_0200b09c(&anims[0], ids[0]);
+    }
+    func_0200de30(&spear);
+    (spear.*(spear.state))();
+    func_updateFish();
+    func_updateAnims();
+    if (score < 6) {
+        if (delay == 0) {
+            func_02019bd0(1);
+        } else {
+            delay--;
+        }
+    }
+    done = score == 6;
+    for (int i = 0; i < 3; i++) {
+        done = done & fish[i].func_dead();
+    }
+    done = done & spear.func_ready();
+    for (int i = 0; i < 2; i++) {
+        done = done & !anims[i].playing.func_get();
+    }
+    if (done == 1) {
+        func_finish();
+    }
+}
+
+void Unk0201a2c8::func_0201a12c() {
+    for (int i = 0; i < 4; i++) {
+        int v = time.func_get(i);
+        if (v > 0) {
+            time.func_put(i, v - 1);
+            break;
+        }
+        time.func_put(i, 59);
+    }
+    func_updateFish();
+    func_updateAnims();
+    if (*(volatile u32 *)&time.v == 0) {
+        state = 0;
+    }
+}
+
+inline Unk0201a4e0::~Unk0201a4e0() {
+    func_0200b120(&anim);
+    if (unk138 != 0) {
+        func_020a6058(owner, unk138);
+    }
+}
+
+inline Unk0201a2c8::Unk0201a2c8(Unk02093648 *file, int a, int b)
+    : Unk020a5ccc(file, a, b), layout0(file, 0), layout1(file, 0), state(0) {
+    hidden = 0;
+    stream = 0;
+    func_020a5ea4(&layout0);
+    layouts[0] = &layout0;
+    layouts[1] = &layout1;
+    for (int i = 0; i < 4; i++) {
+        ids[i] = 0;
+    }
+    stream = (Unk0201a2c8Stream *)func_020a290c(func_020a2994(), 2);
+    if (stream != 0) {
+        func_020a3188(func_020a2994(), 0xf557e3ff, stream->unk4);
+        func_020a3188(func_020a2994(), 0x43f9fd12, stream->unk4);
+    }
+}
+
+extern "C" Unk0201a2c8 *func_0201a2c8(Unk02093648 *file, int a, int b) {
+    return new Unk0201a2c8(file, a, b);
+}
+
+Unk0201a2c8::~Unk0201a2c8() {
+    func_02069124(*(void **)(data_020c43a8 + 0xc), 0, 0, 0);
+    func_020667f8(data_020c43a8, 0);
+    for (int i = 0; i < 4; i++) {
+        if (ids[i] != 0) {
+            func_020a6058(this, ids[i]);
+        }
+    }
+    if (stream != 0) {
+        func_020a2964(func_020a2994(), stream, 1);
+        stream = 0;
+    }
+}
+
+void Unk0201a2c8::func_10(bool a) {
+    for (int i = 0; i < 2; i++) {
+        func_020aa06c(layouts[i], a);
+    }
+    if (a != shown.func_get()) {
+        shown.v ^= 1;
+        if (!shown.func_get()) {
+            func_020a62f0(this);
+        }
+    }
 }
 
 void Unk0201a2c8::func_1c() {}
