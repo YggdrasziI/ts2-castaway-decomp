@@ -471,6 +471,8 @@ inline void Unk02015790::func_goStart() {
     state = &Unk02015790::func_0201431c;
 }
 
+/* 99.95 %: in the tick of the countdown, the cleared word of the last field is in r1
+ * in the original, r3 here (`func_put` forms tried; the other caller matches). */
 void Unk02015790::func_0201456c() {
     Unk0201567c *l = &owner->line;
     bool near = func_near();
@@ -478,16 +480,14 @@ void Unk02015790::func_0201456c() {
         func_goStart();
     } else if (l->vel.func_02098e94() > 0x6000) {
         for (int i = 0; i < 3; i++) {
-            Unk02015408 *g = owner;
-            if (g->fish[i].func_dead() == 0) {
-                g->fish[i].func_goFlee2();
+            if (owner->fish[i].func_dead() == 0) {
+                owner->fish[i].func_goFlee2();
             }
         }
     } else if (func_wants() && func_020174a4(l) == 1) {
         func_goHook();
     } else {
-        Unk02098e70 p = func_position(l->sprites[28]);
-        Unk02098e70 d = p.func_02098fcc(pos);
+        Unk02098e70 d = func_position(l->sprites[28]).func_02098fcc(pos);
         if (func_wants() && d.func_02098e94() < 0x400000) {
             func_0200dfc8(this, 2)->unk10 = 1;
             func_0200dfc8(this, 3)->flag = 0;
