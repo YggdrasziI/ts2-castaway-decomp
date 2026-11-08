@@ -1504,6 +1504,7 @@ src/game/unit_0208FF50.cpp:
     .text       start:0x0208ff50 end:0x02090ccc
 
 src/game/unit_02090CCC.cpp:
+    complete
     .text       start:0x02090ccc end:0x020916a4
     .data       start:0x020bd284 end:0x020bd29c
 
