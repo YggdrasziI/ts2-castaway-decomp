@@ -1499,9 +1499,10 @@ int func_0206790c(u32 hash) {
 /* The key of the items searched by func_02067970. */
 const u32 data_020af1a8[1] = {0xef816a84};
 
-/* 96.61 %: the original enters the draw loop through a jump to its test (here
- * a test before the loop) and allocates the counters to other registers;
- * while / for forms and declaration orders gave the same code. */
+/* 97.12 %: the original enters the draw loop through a jump to its test (here
+ * a test before the loop). The u32 counter gives the original registers but an
+ * unsigned test (blo for blt); `(int)added <` loses the registers again. while /
+ * for forms and declaration orders gave the same code. */
 void func_02067970(Unk020c43a8 *p) {
     Unk020a20f0 random;
     u8 *db = data_020bfc9c;
@@ -1518,7 +1519,7 @@ void func_02067970(Unk020c43a8 *p) {
     }
     int count = 0;
     Unk020c43a8Pick picked[5];
-    for (int added = 0; added < total;) {
+    for (u32 added = 0; added < total;) {
         int size = list.count;
         Unk020547f8Node *n = func_02054858(&list, func_020a1f84(&random) % size);
         int found = -1;
