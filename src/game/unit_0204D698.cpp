@@ -432,8 +432,9 @@ bool Unk0204d698::func_04(bool locked) {
     return locked;
 }
 
-/* 99.06 %: two register swaps (the result and the touch argument). The blink
- * counter is unsigned (movhi / bls in the original). */
+/* The blink counter is unsigned (movhi / bls in the original). The character
+ * bytes are read as ((const u8 *)&ch)[j] and the result is set by if / else: a
+ * byte pointer and a conditional expression each moved one instruction. */
 void Unk0204d698::func_00() {
     if (!(flags & 2)) {
         return;
@@ -466,9 +467,8 @@ void Unk0204d698::func_00() {
             if (ch != 0) {
                 if ((int)func_0209a418((const u8 *)text, 0) < maxLength) {
                     func_0209a550((const u8 *)&ch);
-                    const u8 *bytes = (const u8 *)&ch;
                     for (u32 j = 0; j < n; j++) {
-                        text[length++] = *bytes++;
+                        text[length++] = ((const u8 *)&ch)[j];
                     }
                     flags |= 4;
                 }
@@ -519,7 +519,11 @@ void Unk0204d698::func_00() {
                     flags |= 4;
                 }
             } else if (i == 0x25 || i == 0x26) {
-                result = i == 0x26 ? 1 : 2;
+                if (i == 0x26) {
+                    result = 1;
+                } else {
+                    result = 2;
+                }
                 func_0204e9f4();
             } else if (i == 0x21) {
                 if (layout != 0 && layout != 1) {

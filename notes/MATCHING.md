@@ -714,6 +714,14 @@ Each fix was found by compiling scratch variants of one function and comparing t
   with a script took `func_02099678` from 89.9 % to 99.3 % and `func_020993d8` to
   99.8 %. Removing a temporary (`end = a + b; ... rest = end - c` -> `rest = a + b -
   c`) fixed the last swap (100 %).
+- Bytes of a word written through a byte pointer (`const u8 *bytes = (const u8 *)&ch;
+  ... *bytes++`) set up the pointer before the loop guard; `((const u8 *)&ch)[j]`
+  computes the address after it as the original. A conditional expression assigned to a
+  member (`result = i == 0x26 ? 1 : 2;`) scheduled `mov r0, this` before the store;
+  `if` / `else` with one store each matched (`Unk0204d698::func_00`, 99.06 % -> 100 %).
+- `why_diff.py` (objdiff `diff` on one function) can flag `bl` rows to a near-match
+  function of the same unit while the full report scores the caller 100 %: check the
+  masked words (`permute.score`) and `report_diff.py` before chasing them.
 - A loop stepping both a counter and an element pointer (`for (i = 0; i < 3; i++,
   f++)`): the counter declared before the pointer (`int i; T *f = fish; for (i = 0;
   ...)`) and the increments in the original's order (`f++, i++` when the original
