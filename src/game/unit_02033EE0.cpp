@@ -19,8 +19,6 @@
  * by func_02035fc0, this class's vtable with its header and the formats of
  * the text functions; `.bss` the id of the object to show first. Real file
  * name unknown.
- *
- * Not complete: the constructor is below 100 % (comment above it).
  */
 
 #include "game/unk_screen.h"
@@ -126,8 +124,8 @@ void func_0202918c(Unk0203c188Owner *owner);
 void func_020291e4(Unk0203c188Owner *owner);
 void func_0202923c(Unk0203c188Owner *owner);
 int sprintf(char *buf, const char *fmt, ...);
-char *func_02082e90(const char *s, const char *sub);
-int func_020833ac(const char *s);
+char *strstr(const char *s, const char *sub);
+int atoi(const char *s);
 int strlen(const char *s);
 char *strncpy(char *dst, const char *src, unsigned long n);
 char *strcpy(char *dst, const char *src);
@@ -194,19 +192,15 @@ public:
 static void *func_02035ef4(u32 id, void *user);
 
 /*
- * 98.98 %: some name lookups truncate their index through r0 where the
- * original uses r1 or the reverse (see the unsolved patterns), with the
- * second list's panel address computed one instruction apart; in the button
- * loop the counter, the name sprite, the button offset and the three y
- * values take rotated callee-saved registers (r8, r9, r4, r5-r7 here; r4,
- * r5, r6, r7-r9 in the original). Tried for the loop: every declaration
- * order of the counter and the three sprites (top or before the loop),
- * explicit y counters, the index written first. The y local of the pager
- * gave the original's direct read of next.func_10()->y (98.43 % -> 98.98 %).
+ * The button loop matches with an unsigned counter compared as signed, the
+ * frame sprite copied to a second local declared at the top, and the y
+ * positions converted from int: FX32((int)(...)) keeps the signed float
+ * conversion that an unsigned counter would otherwise turn into _ffltu.
  */
 Unk02033ee0::Unk02033ee0(Unk0203c188Owner *owner, bool open)
     : Unk0203c188(owner), selected(-1), count(0), records(0), pages(0), page(0), textPage(0), textPages(0),
       textId(0) {
+    Unk020a7c90 *f2;
     if (open) {
         flags |= 0x40;
     }
@@ -245,40 +239,41 @@ Unk02033ee0::Unk02033ee0(Unk0203c188Owner *owner, bool open)
     list2.marks.func_0204f8a0(4);
     list2.marks.delay = 9;
 
-    for (int i = 0; i < 4; i++) {
+    for (u32 i = 0; (int)i < 4; i++) {
         Unk020a7c90 *f = func_sprite(layout, 0xb, func_020a7b50(&names, 0xc8f8d0b5 + i));
+        f2 = f;
         Unk020a7c90 *s = func_sprite(layout, 4, func_020a7b50(&names, 0x31095e70 + i));
         Unk020a7c90 *m = func_sprite(layout, 1, func_020a7b50(&names, 0x7534711d + i));
-        list.panel.func_02051858(f);
+        list.panel.func_02051858(f2);
         list.panel.func_02051858(s);
         list.panel.func_02051858(m);
         list.buttons[i].func_02050c48(0, 3, -1);
-        list.buttons[i].func_02050838(f, false);
-        list.buttons[i].func_14(0x21000, FX32(0x1b + i * 0x25));
+        list.buttons[i].func_02050838(f2, false);
+        list.buttons[i].func_14(0x21000, FX32((int)(0x1b + i * 0x25)));
         list.buttons[i].flags |= 2;
         list.names[i] = s;
         func_020a7c90(s, 0x33000);
-        func_020a7cac(s, FX32(0x1d + i * 0x25));
+        func_020a7cac(s, FX32((int)(0x1d + i * 0x25)));
         list.marks.func_0204f8f4(m);
         func_020a7c90(m, 0x25000);
-        func_020a7cac(m, FX32(0x26 + i * 0x25));
+        func_020a7cac(m, FX32((int)(0x26 + i * 0x25)));
 
-        f = func_sprite(layout, 0xb, func_020a7b50(&names, 0x85f802d8 + i));
+        f2 = func_sprite(layout, 0xb, func_020a7b50(&names, 0x85f802d8 + i));
         s = func_sprite(layout, 4, func_020a7b50(&names, 0x1ddb2ae4 + i));
         m = func_sprite(layout, 1, func_020a7b50(&names, 0x71414fa7 + i));
-        list2.panel.func_02051858(f);
+        list2.panel.func_02051858(f2);
         list2.panel.func_02051858(s);
         list2.panel.func_02051858(m);
         list2.buttons[i].func_02050c48(0, 3, -1);
-        list2.buttons[i].func_02050838(f, false);
-        list2.buttons[i].func_14(0x21000, FX32(0x1b + i * 0x25));
+        list2.buttons[i].func_02050838(f2, false);
+        list2.buttons[i].func_14(0x21000, FX32((int)(0x1b + i * 0x25)));
         list2.buttons[i].flags |= 2;
         list2.names[i] = s;
         func_020a7c90(s, 0x33000);
-        func_020a7cac(s, FX32(0x1d + i * 0x25));
+        func_020a7cac(s, FX32((int)(0x1d + i * 0x25)));
         list2.marks.func_0204f8f4(m);
         func_020a7c90(m, 0x25000);
-        func_020a7cac(m, FX32(0x26 + i * 0x25));
+        func_020a7cac(m, FX32((int)(0x26 + i * 0x25)));
     }
 
     prev.func_02050838(func_sprite(layout, 0xb, func_020a7b50(&names, 0x260323f0)), false);
@@ -587,23 +582,23 @@ void Unk02033ee0::func_02035734() {
 
 /*
  * Copies the text id into p, each "%%" followed by a value up to ";" being
- * replaced by the byte func_020833ac reads from it. An inline helper taking
+ * replaced by the byte atoi reads from it. An inline helper taking
  * the id by reference: written in place, or with the id by value, the
  * callee-saved registers of func_0203577c rotate.
  */
 static inline void func_parse(char *p, const int &id) {
     *p = 0;
     const char *src = func_020a00a0(func_0201ba94(), id);
-    char *mark = func_02082e90(src, "%%");
+    char *mark = strstr(src, "%%");
     while (mark != 0) {
         int len = mark - src;
         strncpy(p, src, len);
         src += len + 2;
         p += len;
-        *p = func_020833ac(src);
+        *p = atoi(src);
         p++;
-        mark = func_02082e90(src, "%%");
-        char *end = func_02082e90(src, ";");
+        mark = strstr(src, "%%");
+        char *end = strstr(src, ";");
         if (end == 0) {
             break;
         }
