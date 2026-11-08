@@ -11,7 +11,6 @@
  * Bounds: hypothesis. No call crosses 0x0208D304 or 0x0208E570 (the font of
  * unit_0208E570.cpp follows); the two manager pointers of .bss 0x020c7f64 are
  * only used here. Real file name unknown.
- * Not complete: three functions do not match yet (see above them).
  */
 
 #include "game/unk_resource.h"
@@ -215,11 +214,6 @@ bool Unk0208d304::func_0208d558() {
     return !sub;
 }
 
-/*
- * 99.34 %: register allocation only. The original keeps the loop counter in r5 and
- * the wrapped x in r6, ours the reverse (declaration orders and scopes, argument
- * forms and an inline wrap helper tried).
- */
 void Unk0208d304::func_0208d570() {
     *func_0208d6fc() = bgcnt;
     *func_0208d728() = ((-x >> 12) & 0x1FF) + (((-y >> 12) & 0x1FF) << 16);
@@ -307,10 +301,7 @@ bool Unk0208d304::func_0208d88c() {
     return flag3;
 }
 
-/*
- * 99.93 %: the two spilled values swap stack slots (srcX + w at sp+0xc and the
- * first width at sp+8 in the original); declaration orders tried.
- */
+/* No local for the first width: one gave it the hoisted srcX + w stack slot. */
 void Unk0208d304::func_0208d8a4(int srcX, int srcY, int dstX, int dstY, int w, int h) {
     if (w > func_0208d7d0() >> 3) {
         return;
@@ -327,9 +318,8 @@ void Unk0208d304::func_0208d8a4(int srcX, int srcY, int dstX, int dstY, int w, i
     while (h-- != 0) {
         int over = srcX + w - mapW;
         if (over > 0) {
-            int first = w - over;
-            func_0208d9bc(srcX, srcY, dstX, dstY, first);
-            func_0208d9bc(0, srcY, dstX + first, dstY, over);
+            func_0208d9bc(srcX, srcY, dstX, dstY, w - over);
+            func_0208d9bc(0, srcY, dstX + (w - over), dstY, over);
         } else {
             func_0208d9bc(srcX, srcY, dstX, dstY, w);
         }
@@ -341,20 +331,14 @@ void Unk0208d304::func_0208d8a4(int srcX, int srcY, int dstX, int dstY, int w, i
     }
 }
 
-/*
- * 97.22 %: register allocation only. The original keeps dst in r7 and the count
- * (sharing dstY's register) in r5, ours the reverse, and masks dstX before the
- * size (declaration orders, initialisers, statement orders, types and reuse of
- * dstY as the count tried).
- */
+/* The masks come first, then the source address and the size. */
 void Unk0208d304::func_0208d9bc(int srcX, int srcY, int dstX, int dstY, int n) {
-    int size = (bgcnt >> 14) & 3;
+    dstY &= 0x3F;
+    dstX &= 0x3F;
     int end = 0x20;
     int count;
     u32 *src = &map[srcY * mapW + srcX];
-
-    dstY &= 0x3F;
-    dstX &= 0x3F;
+    int size = (bgcnt >> 14) & 3;
     u16 *dst = func_0208d82c() + ((dstY & 0x1F) << 5);
     if (size & 2) {
         dst += (dstY & 0x20) << ((size & 1) ? 6 : 5);

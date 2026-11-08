@@ -734,6 +734,12 @@ Each fix was found by compiling scratch variants of one function and comparing t
   palette = unk6f; if (palette < 0) palette = f();`) took r4 where the original has r5;
   `int palette = unk6f >= 0 ? unk6f : f();` (or `if` / `else`) matched
   (`Unk02050640::func_020514f0`, 99.06 % -> 100 %). Try both forms on a two-way value.
+- Parameter masks first: `dstY &= 0x3F; dstX &= 0x3F;` written before the locals that
+  read members (`u32 *src = &map[...]; int size = (bgcnt >> 14) & 3;`) gave the original's
+  load order and registers (`Unk0208d304::func_0208d9bc`, 98.88 % -> 100 %).
+- A local used twice next to a loop-invariant sum (`int first = w - over;` passed to two
+  calls) took the stack slot the original gives the hoisted `srcX + w`; writing `w - over`
+  in both calls swapped the slots back (`func_0208d8a4`, 99.93 % -> 100 %).
 - `why_diff.py` (objdiff `diff` on one function) can flag `bl` rows to a near-match
   function of the same unit while the full report scores the caller 100 %: check the
   masked words (`permute.score`) and `report_diff.py` before chasing them.
