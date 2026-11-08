@@ -388,7 +388,7 @@ bool Unk0202402c::func_10() {
  * swapped.
  *
  * Other gaps: func_020266d4 90.29 % (`this` spilled instead of the colour),
- * func_02026c40 91.76 %, func_02026d18 91.57 %, func_02026e4c 93.46 % and
+ * func_02026c40 91.76 %, func_02026d18 91.57 %, func_02026e4c 94.62 % and
  * func_02026de4 70.00 % (scheduling of the tile index; locals, term orders,
  * `8 << n`, divisions and a word local tried),
  * func_02026584 97.88 %, func_020267ec 98.55 %, func_38 99.23 %, func_3c 99.36 %.
@@ -1117,9 +1117,9 @@ void Unk0202402c::func_02026e4c(int x, int y, int c) {
     int px = x - (cx << 6);
     int py = y - (cy << 6);
     u32 *tiles = (u32 *)entry->unk20;
-    int i = (px & ~7) + ((py >> 3) << 6) + py % 8;
+    py = (px & ~7) + ((py >> 3) << 6) + py % 8;
     int shift = (px % 8) * 4;
-    tiles[i] = (tiles[i] & ~(0xf << shift)) | (c << shift);
+    tiles[py] = (tiles[py] & ~(0xf << shift)) | (c << shift);
 }
 
 bool Unk0202402c::func_34() {

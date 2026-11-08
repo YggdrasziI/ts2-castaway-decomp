@@ -363,7 +363,7 @@ bool Unk02038bcc::func_10() {
 }
 
 /*
- * 94.42 %: the original keeps data_020ae7cc[8] in r11 through the first count
+ * 95.06 %: the original keeps data_020ae7cc[8] in r11 through the first count
  * loop of mode 3 and reloads &data_020c3fc4 from the pool; here the address
  * is kept in r11 and the key is spilled, so the frame is 4 bytes larger and
  * r3 is saved. Comparing the key list's first word rather than `key` gained
@@ -418,7 +418,7 @@ void Unk02038bcc::func_02039a08() {
     key = keys[0];
     func_020a716c(panel.func_02051ad0(0), title);
     func_020a716c(panel2.func_02051ad0(0), title);
-    sel = 0;
+    int selected = 0;
     if (mode == 3) {
         if (keys[0] == data_020ae7cc[8] || keys[0] == data_020ae7cc[9] || keys[0] == data_020ae7cc[10] || keys[0] == data_020ae7cc[7]) {
             u32 kind = func_020081dc(&data_020c43a8).unk28 == 0 ? 0x85fba6e5 : 0x1e49458c;
@@ -469,7 +469,7 @@ void Unk02038bcc::func_02039a08() {
                             }
                         }
                         if (def == data_020b954c) {
-                            sel = j;
+                            selected = j;
                         }
                         j++;
                     }
@@ -497,7 +497,7 @@ void Unk02038bcc::func_02039a08() {
                     records[j].count = collection->func_0206b6bc(def->id);
                     records[j].def = def;
                     if (def == data_020b954c) {
-                        sel = j;
+                        selected = j;
                     }
                     j++;
                 }
@@ -520,7 +520,7 @@ void Unk02038bcc::func_02039a08() {
             records[j].count = func_02054858(&list, j)->count;
             records[j].def = func_02054858(&list, j)->def;
             if (target == records[j].def->id) {
-                sel = j;
+                selected = j;
             }
         }
     }
@@ -537,7 +537,7 @@ void Unk02038bcc::func_02039a08() {
     if (count % 12 > 0) {
         pages++;
     }
-    page = sel / 12;
+    page = selected / 12;
     pager.func_34(0x22);
     func_020a7ce0(pager.func_02051ad0(0));
     func_020a7ce0(pager.func_02051ad0(1));

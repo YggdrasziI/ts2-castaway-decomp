@@ -305,7 +305,7 @@ u32 func_02059cf8(Unk020599a0 *p) {
 }
 
 /*
- * 96.59 %: the state tests are materialized as a bool (the fade test from a
+ * 96.68 %: the state tests are materialized as a bool (the fade test from a
  * flag set to true and cleared, as the original); the state stays in r1 there
  * and is not reloaded in the original. The effect flag test with constant registers; the weather pick
  * loop loads the count before the table, and the fade setter schedules its
@@ -399,11 +399,11 @@ void func_02059d10(Unk020599a0 *p, bool paused) {
         }
         if (!paused && !busy) {
             int s = p->state;
-            bool fading = true;
+            busy = true;
             if (s != 0 && s != 3) {
-                fading = false;
+                busy = false;
             }
-            if (fading) {
+            if (busy) {
                 int level = (func_fxdiv(p->fade << 12, p->fadeMax << 12) * 17) >> 12;
                 if (level > 16) {
                     level = 16;

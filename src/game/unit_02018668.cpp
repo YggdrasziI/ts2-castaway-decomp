@@ -414,8 +414,8 @@ public:
                 if (s != 0) {
                     func_020a32ac(func_020a2994(), 0x43f9fd12, s->unk4, 0x7f, 0);
                 }
-                int k = base + 7;
-                owner->func_sound(k);
+                n = base + 7;
+                owner->func_sound(n);
             }
             g = owner;
             Unk02098e70 *p;

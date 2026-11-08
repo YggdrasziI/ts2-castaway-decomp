@@ -1499,7 +1499,7 @@ int func_0206790c(u32 hash) {
 /* The key of the items searched by func_02067970. */
 const u32 data_020af1a8[1] = {0xef816a84};
 
-/* 91.2 %: the original enters the draw loop through a jump to its test (here
+/* 96.61 %: the original enters the draw loop through a jump to its test (here
  * a test before the loop) and allocates the counters to other registers;
  * while / for forms and declaration orders gave the same code. */
 void func_02067970(Unk020c43a8 *p) {
@@ -1529,9 +1529,8 @@ void func_02067970(Unk020c43a8 *p) {
             }
         }
         if (found != -1) {
-            Unk020c43a8Pick *e = &picked[found];
-            if (n->count - e->count > 0) {
-                e->count++;
+            if (n->count - picked[found].count > 0) {
+                picked[found].count++;
                 added++;
             }
         } else {
@@ -1542,8 +1541,8 @@ void func_02067970(Unk020c43a8 *p) {
         }
     }
     for (int i = 0; i < count; i++) {
-        int n = picked[i].count;
-        for (int j = 0; j < n; j++) {
+        total = picked[i].count;
+        for (int j = 0; j < total; j++) {
             func_02054cf0(db, picked[i].node, 0);
         }
     }

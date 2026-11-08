@@ -220,7 +220,7 @@ static inline const Unk020680d4Vec &func_vec(const Unk02098ff0 &v) {
 }
 
 /*
- * 95.94 %: the original keeps a byte offset for the parts loop (str [base,
+ * 96.61 %: the original keeps a byte offset for the parts loop (str [base,
  * offset]) next to the part pointer, and one more saved register; this build
  * steps a pointer.
  */
@@ -228,14 +228,13 @@ Unk020680d4::Unk020680d4()
     : id(0), dir(4), flags(4), time(-1), archive(0), alpha(0x1f), alphaTo(0x1f), count(0),
       scale(0x1000, 0x1000, 0x1000), xform(0), anim(0), speed(0x1000), blend(0), prevAnim(0), unk174(0),
       unk178(0), unk17c(0), unk180(0) {
-    Unk020c7d38 *pool = &data_020c7d38;
     for (int i = 0; i < 5; i++) {
         Unk020680d4Part *part = &parts[i];
-        parts[i].index = pool->func_0208bbf4(0);
-        pool->func_0208bc68(part->index, false);
+        parts[i].index = data_020c7d38.func_0208bbf4(0);
+        data_020c7d38.func_0208bc68(part->index, false);
         part->frame = id * 5 + i;
     }
-    body.index = pool->func_0208bbf4(0);
+    body.index = data_020c7d38.func_0208bbf4(0);
     archive = new Unk02093648("ROM_Euro/source/archives/sim.nitro_archive");
     archive->func_02094df4();
     Unk02095d1c *file = (Unk02095d1c *)archive->func_02093a9c(archive->func_02093e9c(0x46357938));
