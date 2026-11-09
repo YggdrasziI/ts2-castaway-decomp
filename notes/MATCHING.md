@@ -909,6 +909,29 @@ Each fix was found by compiling scratch variants of one function and comparing t
   holds data no relocation reaches shifts every later address (0x194 bytes for the digit strings 0x020B59F4).
   Keep such data in the same range as a referenced object.
 
+- A static local of an inline function (`inline const char *f(int i) { static const char *t[] =
+  {"Invalid", "Test"}; return t[i]; }`) is emitted even when nothing calls the function, as a
+  multiply-defined symbol (`_ZZ<function>E<name>`) at the **start** of the file's main `.data`
+  section, before the file-scope objects and the vtables, and its string literals come just
+  before that section, in reverse order ("Test", "Invalid", table). Strings in reverse order,
+  then a table nothing reads, right before a vtable: the table opens the next file, it does not
+  end the previous one (0x020BC2A0-0x020BC2B8, moved from `unit_0205D4D8.cpp`, now complete, to
+  `unit_0205D8D8.cpp`). Other forms of such a table, all compiled (2026-11-09): a file-scope
+  array, a class static member and a template static member share the main `.data` section
+  with the other objects and their literals follow in order; a static local of an ordinary
+  function is the same (`name$<n>`); a plain local array with an initializer is copied from an
+  anonymous image in `.rodata`, after the function's literals; a local `static const char
+  *const` array goes to `.rodata` too.
+- Order of the string literals of a file in `.data` (micro tests with the game flags,
+  2026-11-09): each literal is its own section, emitted at its first use in code generation
+  order, which is the statement order after the loop transformations (the condition of a
+  `while` and the step of a `for` come after the body) and not the order of the text. With
+  `-str reuse` equal literals of one function are one object, placed at the first use. The
+  literals of the inline functions expanded in a function come after all of the function's
+  own, in reverse order over the whole function (`f() { k("X"); g(); k("Z"); }` with `g`
+  using "A", "B": X, Z, B, A), and are never shared with the function's own equal literals
+  (two `""` objects). A literal a dead statement used is not emitted.
+
 - A static `u8` array can land in its own `.bss` section, apart from the other statics of the file, and
   the anchored offsets then skip it (`[r0, #0x3c]` for `[r0, #0x64]`). objdiff still shows the `.bss` at 100 %
   because it is all zeros. A `u32` array of the same size stays in the common section

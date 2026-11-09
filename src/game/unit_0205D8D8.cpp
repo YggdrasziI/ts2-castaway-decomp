@@ -9,8 +9,8 @@
  * Bounds: hypothesis. The functions before 0x0205D8D8 are called from the
  * code before 0x0205D6E0; the class operators open this range and the search
  * list ends it, before unit_0205F16C.cpp. `.data`: the vtable with its header
- * (0x020BC2B8) and an all-zero copy of the interface vtable (0x020BC2F0);
- * the strings before it are used by the code before 0x0205D6E0. Real file
+ * (0x020BC2B8) and an all-zero copy of the interface vtable (0x020BC2F0),
+ * after two strings and a table nothing reads (0x020BC2A0, below). Real file
  * name unknown.
  *
  * Not complete: func_0205eed4 is not at 100 % (comment above it). The
@@ -27,6 +27,18 @@
 #include "game/unk_anim.h"
 
 typedef signed char s8;
+
+/*
+ * Two names and a table of pointers to them that no code reads
+ * (0x020BC2A0-0x020BC2B8). The strings come in reverse order before the table,
+ * and the table before the vtable: the layout of a static local of an inline
+ * function, which is emitted even when nothing calls the function. The
+ * function and its use are a hypothesis.
+ */
+inline const char *func_name(int i) {
+    static const char *data_020bc2b0[] = {"Invalid", "Test"};
+    return data_020bc2b0[i];
+}
 
 struct Unk020a4c4c;
 struct Unk02058788;

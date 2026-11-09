@@ -5251,9 +5251,9 @@ data_020bb9f0 kind:data(any) addr:0x020bb9f0
 @424 kind:data(byte[24]) addr:0x020bc26c local
 data_020bc284 kind:data(word[5]) addr:0x020bc284
 @132 kind:data(byte[5]) addr:0x020bc298 local
-@264 kind:data(byte[5]) addr:0x020bc2a0 local
-@263 kind:data(any) addr:0x020bc2a8 local
-data_020bc2b0 kind:data(word[2]) addr:0x020bc2b0
+@195 kind:data(byte[5]) addr:0x020bc2a0 local
+@194 kind:data(byte[8]) addr:0x020bc2a8 local
+_ZZ9func_nameiE13data_020bc2b0 kind:data(word[2]) addr:0x020bc2b0
 _ZTV15Unk02061d08Item kind:data(word[14]) addr:0x020bc2b8
 @335 kind:data(byte[58]) addr:0x020bc328 local
 @870 kind:data(byte[53]) addr:0x020bc364 local

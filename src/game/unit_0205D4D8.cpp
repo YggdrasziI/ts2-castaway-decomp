@@ -8,9 +8,8 @@
  *
  * Bounds: hypothesis. The functions before 0x0205D4D8 work on the object
  * definition record (unit_0205C700.cpp); the scene object class
- * (unit_0205D8D8.cpp) follows. `.data`: the amount table, the "Food" string,
- * then two strings and a table of pointers to them that no code reads
- * (0x020BC2A0-0x020BC2B8). `.bss`: the empty script block data_020c3fb0 that
+ * (unit_0205D8D8.cpp) follows. `.data`: the amount table and the "Food"
+ * string. `.bss`: the empty script block data_020c3fb0 that
  * unit_0205C700.cpp returns (it follows a larger object of that file, so it is
  * not one of its own). Real file name unknown.
  *
@@ -194,5 +193,3 @@ int func_0205d8b0(int value, Unk0206b630 *set) {
 }
 
 }
-
-const char *data_020bc2b0[] = {"Invalid", "Test"};
