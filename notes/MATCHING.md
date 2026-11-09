@@ -1477,16 +1477,19 @@ Each fix was found by compiling scratch variants of one function and comparing t
 - mwccarm gives such vtable copies (and other multiply-defined objects) symbol
   binding 13. While the first copy is still assembly, dsd emits it as a global or
   weak symbol: a global one clashes ("Multiply-defined") and a weak one loses to
-  the compiled copy. The file stays not `complete` until the first copy's file is
-  compiled too (solved for `unit_0209543C.cpp` by `unit_0208B41C.cpp`, see "Data
-  layout"; `unit_02072BEC.cpp`, at 100 %, waits on the base vtable copy 0x020BC8FC
-  of the game states).
-- The same holds for the inline virtual destructor of an interface: every file
-  emitting the interface vtable emits D1 and D0 as multiply-definable functions,
-  and the link keeps the first copy of each (`unit_0208F16C.cpp`: D1 0x0208F168 at
-  the end of the other font's file, D0 0x0201B92C in a far file). Named after the
-  interface while they are assembly, they clash ("Multiply-defined"); left with
-  their dsd names, this file's copies stay in its `.text` and shift everything.
+  the compiled copy. The same holds for the inline virtual destructor of an
+  interface (every file emitting the interface vtable emits D1 and D0 as
+  multiply-definable functions) and for a kept copy written as a plain definition
+  so that it lands where the original has it (global, `unit_02029B80.cpp`).
+  Solved at link time (2026-11-09): `tools/link_multidef.py` wraps the linker and
+  gives binding 13 to every global or weak definition of a name that a compiled
+  object defines with binding 13 (no larger than the compiled copy: dsd ends a
+  symbol at the next label), in copies of those objects. The link keeps the first
+  copy as the original did; six files at 100 % became `complete` with it
+  (`unit_0205007C.cpp`, `unit_02051704.cpp`, `unit_02072BEC.cpp`,
+  `unit_02072D94.cpp`, `unit_02073878.cpp`, `unit_0208F16C.cpp`). Their later copies
+  leave `symbols.txt`, their member pointer constants take the compiler's `@<n>`
+  names, and a `static` table becomes `local` there.
 - String literals: mwccarm puts each one in its own `.data` section with alignment
   1, and the link still places them 4-byte aligned in source order (trial link of
   `unit_0208F16C.cpp`). objdiff does not pair these sections with the original

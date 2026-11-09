@@ -454,7 +454,8 @@ def main():
 
         n.rule(
             name="mwld",
-            command=f'{WINE} "{LD}" {LD_FLAGS} $extra_ld_flags @$objects_file $lcf_file -o $out',
+            # tools/link_multidef.py: delinked copies of multiply-definable objects
+            command=f'{PYTHON} tools/link_multidef.py $objects_file {WINE} "{LD}" {LD_FLAGS} $extra_ld_flags @$objects_file $lcf_file -o $out',
         )
         n.newline()
 
@@ -620,9 +621,10 @@ def add_mwld_and_rom_builds(n: ninja_syntax.Writer, project: Project):
     if len(objects_to_link) > 0:
         n.build(
             inputs=[*objects_to_link, lcf_file, objects_file],
-            implicit=LD,
+            implicit=[LD, "tools/link_multidef.py"],
             rule="mwld",
             outputs=elf_file,
+            implicit_outputs=str(Path(objects_file).parent / "objects_multidef.txt"),
             variables={
                 "extra_ld_flags": ARM9_LD_FLAGS,
                 "lcf_file": str(lcf_file),
