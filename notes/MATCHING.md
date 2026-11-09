@@ -677,6 +677,11 @@ Each fix was found by compiling scratch variants of one function and comparing t
   The scheduler trace shows why the first case cannot come from statement order: the three
   address pcodes of the call are ready together with equal priorities, so they keep their
   code generation order (`tools/mwcc_sched.py --select`).
+- A global's field read after the global's address is already in a register for a member
+  (`player = &data; ...; f(player->sim->anim)`): the original's extra copy (`mov r0, r4; ldr
+  r0, [r0, #0xc]`) comes from naming the global again (`f(data.sim->anim)`); through the
+  member, a local or an inline accessor the copy is folded (`Unk02000df0::func_18`,
+  99.46 % -> 100 %).
 - Inline virtual functions called through an object's vtable are emitted right after
   the first function that calls them, in reverse order of their first call
   (`func_10`, `func_30`, `func_20` after `func_0201ef54`, which calls `func_20`,

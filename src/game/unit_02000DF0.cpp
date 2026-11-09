@@ -3,8 +3,7 @@
  * and the screen fades back in, with scripts of the object before and after. Bounds:
  * hypothesis (from the constructor to the kept copies of the inline func_24 and func_28 of
  * `Unk020071d4`; `.data` is the name and the vtable, `.bss` the guard and the local
- * description). Layouts come from the code; all names are placeholders. Not complete:
- * see func_18.
+ * description). Layouts come from the code; all names are placeholders.
  */
 #include "game/unk_action.h"
 
@@ -105,11 +104,7 @@ int Unk02000df0::func_14() {
 void Unk02000df0::func_1c() {
 }
 
-/*
- * 99.46 % (locals declared first, order searched): the original has one more
- * `mov r0, r4` before the read of the sim, for the call to func_02063d84. A local or a
- * reference for the player, an inline member and a volatile read do not change it.
- */
+/* The animation is read from the global, not through `player` (one more `mov r0, r4`). */
 int Unk02000df0::func_18() {
     Unk0206bcf0 *game;
     Unk020680d4 *sim;
@@ -122,7 +117,7 @@ int Unk02000df0::func_18() {
         sim = player->sim;
         sim->func_18(item->func_1c());
         if (enter != 0) {
-            anim = (Unk02063d84 *)func_02063d84(player->sim->anim);
+            anim = (Unk02063d84 *)func_02063d84(data_020c43a8.sim->anim);
             func_0205e184(item, enter, player);
         }
         state = 1;
