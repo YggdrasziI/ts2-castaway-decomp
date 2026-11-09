@@ -224,6 +224,11 @@ void Unk020471b0::func_38(bool active) {
         counter++;
     }
     if (widget.flags & 2) {
+        // A reference that generates no code: func_3c is emitted right after
+        // func_18, so it is first referenced here. The original form is unknown.
+        if (false) {
+            func_3c(true);
+        }
         func_18();
     }
     panel1c.func_08();

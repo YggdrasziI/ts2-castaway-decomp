@@ -691,6 +691,12 @@ Each fix was found by compiling scratch variants of one function and comparing t
   `func_30`, `func_10`; `unit_0201E300.cpp`). This order tells a kept copy's slot
   and the file that keeps it. `#pragma dont_inline on` around one function keeps
   calls the original did not inline; it also turns off its other inline helpers.
+  A call in a branch the compiler removes (`if (false) { func_3c(true); }`) counts as
+  a call for this order and generates no code: placed before the call of `func_18` in
+  `func_38`, it gives the original order `func_38`, `func_18`, `func_3c` (after that
+  call it gives `func_3c`, `func_18`). A real call (`&& func_3c(true)`) gives the same
+  order but emits the virtual call (95.75 %). The original source form is unknown
+  (hypothesis: a call compiled out) (`unit_020471B0.cpp`, complete, 2026-11-09).
 
 - A nested loop with hand-written induction variables can allocate them in the
   wrong order when they are declared in the `for`. Declaring the inner index
