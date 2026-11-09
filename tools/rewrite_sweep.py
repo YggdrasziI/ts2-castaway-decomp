@@ -5,9 +5,11 @@ tools/permute.py searches at random among small mutations (declaration moves, co
 swaps). Some forms that close register gaps are larger rewrites that it never makes:
 a value given its own local or written over a dead variable of the same type, a nested
 call split in two statements (or two merged), a pointer local replaced by the expression
-it holds, a conditional assignment written as `if` / `else` or as `?:`. There are few
+it holds, a conditional assignment written as `if` / `else` or as `?:`, a temporary
+(call argument, receiver or constructed argument) read into a local first. There are few
 such rewrites per function, so this script compiles every one of them (a beam search of
-`--depth` rounds keeps the `--beam` best of each round) instead of sampling.
+`--depth` rounds keeps the `--beam` best of each round, ties with the start included)
+instead of sampling.
 
 Variants are compiled in a temporary directory with the unit's other code unchanged and
 scored by objdiff-cli against the delinked target, as in the report (`--scorer words`:
@@ -127,6 +129,13 @@ def rename(L, name, new, a, b):
     return [w.sub(new, l) if a <= k < b else l for k, l in enumerate(L)]
 
 
+def fresh_name(L, n):
+    """n, with `_` appended until no word of L is n."""
+    while l_has(L, n):
+        n += "_"
+    return n
+
+
 def dead_after(L, y, x, i):
     """y holds no value needed after line i: it is not used again, or its next use is a
     plain write `y = e;` (e may read x, not y) that every path after line i reaches, after
@@ -182,9 +191,7 @@ def split_var(L, V):
         end = len(L) if ind(l) <= BASE else block_end(L, i)
         if used(L, y, end, len(L)):
             continue
-        n = y + "_"
-        while l_has(L, n):
-            n += "_"
+        n = fresh_name(L, y + "_")
         R = rename(L, y, n, i + 1, end)
         R[i] = "%s%s%s = %s;" % (m.group(1), t if t.endswith(("*", "&", " ")) else t + " ", n, m.group(3))
         out.append(("own local for `%s` (line %d)" % (y, i), R))
@@ -233,9 +240,7 @@ def split_nested(L, V):
                     R[i : i + 1] = ["%s%s = %s;" % (m.group(1), v, g), l[:gs] + v + l[ge:]]
                     out.append(("split nested call into `%s` (line %d)" % (v, i), R))
             if insert_ok(L, i):
-                n = "n%d_" % i
-                while l_has(L, n):
-                    n += "_"
+                n = fresh_name(L, "n%d_" % i)
                 R = list(L)
                 R[i : i + 1] = ["%s__typeof__(%s) %s = %s;" % (" " * ind(l), g, n, g), l[:gs] + n + l[ge:]]
                 out.append(("nested call in a local (line %d)" % i, R))
@@ -451,9 +456,97 @@ def loop_steps(L, V):
     return out
 
 
+TYPE_NAME = re.compile(r"^[A-Z](?=[A-Za-z0-9]*[a-z])[A-Za-z0-9]*$")  # `Unk0206bcf0Xy(...)`, not `OS_Foo` / `ABS`
+CONTROL = re.compile(r"^\s*(if|else|for|while|do|switch|case|default)\b")
+COMPARE_END = re.compile(r"(?<![<>])[=!<>]=$")  # `a == f()`, not `x <<= f()` or `x += f()`
+
+
+def statement(L, i):
+    """(last line, text) of the statement starting on line i when it ends with `;` within
+    four lines and only its first line is less indented; None otherwise."""
+    if not L[i].strip() or L[i].rstrip().endswith(("{", "}")) or L[i].lstrip().startswith(("/", "#", "*")):
+        return None
+    if CONTROL.match(L[i]):  # a brace-less header and its body: the call would leave it
+        return None
+    text = L[i].rstrip()
+    for j in range(i, min(i + 4, len(L))):
+        if "//" in L[j] or "/*" in L[j]:
+            return None
+        if j > i:
+            if ind(L[j]) <= ind(L[i]):
+                return None
+            text += ("" if text.endswith("(") else " ") + L[j].strip()
+        if L[j].rstrip().endswith(";"):
+            return j, text
+    return None
+
+
+def temporaries(L, V):
+    """A call argument, a receiver `g(...).f(...)` or a constructed argument `T(...)` of a
+    statement read into a local first, alone or all of them innermost first. This moves
+    their evaluation before the rest of the statement (and changes the order of
+    side effects), and gives the temporaries named stack slots. `__typeof__` drops a
+    reference: a receiver returned by reference is copied, so read each kept diff."""
+    out = []
+    for i in range(len(L)):
+        st = statement(L, i)
+        if st is None or not insert_ok(L, i):
+            continue
+        j, s = st
+        if '"' in s or "'" in s or re.search(r"&&|\|\||\?", s) or re.match(r"^\s*delete\b", s):
+            continue
+
+        def operands(s):
+            """Spans of the calls of s that are a whole argument or a receiver, not the whole
+            right-hand side or the whole expression statement."""
+            out = []
+            for a, _, b in calls(s):
+                before = s[:a].rstrip()
+                after = s[b + 1 :].lstrip()
+                if not (before.endswith(("(", ",", "=")) or re.search(r"\breturn$", before)):
+                    continue
+                if COMPARE_END.search(before):
+                    continue
+                if after.startswith((")", ",")) or re.match(r"^(\.|->)[A-Za-z_]\w*\(", after):
+                    out.append((a, b + 1))
+            return out
+
+        def hoist(s, a, b, n):
+            """(declaration, s with s[a:b] replaced by n)."""
+            e = s[a:b]
+            name = e[: e.index("(")]
+            if TYPE_NAME.match(name):
+                args = e[len(name) :]
+                d = "%s %s%s;" % (name, n, args if args.strip("() ") else "")  # not `T t();`
+            else:
+                d = "__typeof__(%s) %s = %s;" % (e, n, e)
+            return " " * ind(L[i]) + d, s[:a] + n + s[b:]
+
+        spans = operands(s)
+        for k, (a, b) in enumerate(spans):
+            d, s2 = hoist(s, a, b, fresh_name(L, "t%d_%d_" % (i, k)))
+            out.append(("temporary `%s` in a local (line %d)" % (s[a:b], i), L[:i] + [d, s2] + L[j + 1 :]))
+        if len(spans) > 1:
+            decls, s2, k = [], s, 0
+            while True:
+                sp = operands(s2)
+                if not sp:
+                    break
+                a, b = min(sp, key=lambda x: x[1])  # the one that ends first: innermost, leftmost
+                d, s2 = hoist(s2, a, b, fresh_name(L, "t%d_%d_" % (i, len(spans) + k)))
+                decls.append(d)
+                k += 1
+            out.append(("all %d temporaries in locals (line %d)" % (len(decls), i), L[:i] + decls + [s2] + L[j + 1 :]))
+    return out
+
+
+FRESH = re.compile(r"\b[nt]\d+(?:_\d+)?_+(?!\w)")  # the names split_nested and temporaries make
+
+
 REWRITES = {
     "branch": branches,
     "steps": loop_steps,
+    "temps": temporaries,
     "reuse": reuse_var,
     "split": split_var,
     "nested": split_nested,
@@ -466,10 +559,14 @@ def candidates(L, sig, kinds):
     """The rewrites of L, taken in turn from each kind so that a cut keeps every kind."""
     V = variables(L, sig)
     lists = [REWRITES[k](L, V) for k in kinds]
+    seen = set()
     for k in range(max((len(x) for x in lists), default=0)):
         for x in lists:
             if k < len(x) and x[k][1] != L:
-                yield x[k]
+                key = tuple(FRESH.sub("_", l) for l in x[k][1])  # one rewrite made by two kinds
+                if key not in seen:
+                    seen.add(key)
+                    yield x[k]
 
 
 def nested_name(symbol):
@@ -605,7 +702,7 @@ def sweep(unit, symbol, o):
                 best = scored[0]
             if best[0] == 0:
                 break
-            beam = [x for x in scored[: o.beam] if x[0] < start]
+            beam = [x for x in scored[: o.beam] if x[0] <= start]  # ties too: some rewrites only help together
             if not beam:
                 break
         s.ex.shutdown()

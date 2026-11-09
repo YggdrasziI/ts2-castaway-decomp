@@ -2193,3 +2193,13 @@ body too. A few hundred variants take about a minute: it is a first pass before 
   resolved to the symbol defined there, an absolute word keeps its addend). Checked on
   the report: 3627 of the 3636 game functions at 100 % now score 0 (the other 9 name
   one object differently from the target) and none of the others does.
+- `temps` (2026-11-09): a call argument, a receiver `g(...).f(...)` or a constructed
+  argument `T(...)` of a statement (up to four lines) read into a local first, one at a
+  time or all of them innermost first (`__typeof__` for call results, `T t(...)` for a
+  constructor). It moves their evaluation first, so check the order of side effects
+  before keeping one. The beam now keeps variants that tie with the start, since some
+  of these rewrites only help together. First pass over the 15 largest gaps at 98-100 %:
+  `func_0200d138` 98.61 -> 99.10 % (the first name lookup read into `id0` before the
+  sprite lookup); `func_02018900` 99.83 -> 99.87 % (the two `func_set` vectors named),
+  not kept: the stack order of its temporaries is still wrong. Named locals in inner
+  blocks do not change the slot order (`func_02018900`, five block layouts).
