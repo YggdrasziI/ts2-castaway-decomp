@@ -674,6 +674,9 @@ Each fix was found by compiling scratch variants of one function and comparing t
     `add r1, sp, #0; ldr r1, [r1, #0x14]`); a local copy of the element, a pointer to it, a
     reference or an inline free function read it from the stack (`ldr r9, [sp, #0x14]`)
     (`func_0206fea8`, `func_0206ff5c`, the `Unk02070cc0` constructor 97.2 % -> 100 %).
+  - `o->func_14().func_placed()`, a test of a returned cell as an inline member: its fields are
+    read through the register holding the temporary (`ldrsh r0, [r7, #0x4]`); the free inline
+    on a local copy read them from the stack (`func_0206da24`, 98.79 % -> 99.01 %, registers left).
   The scheduler trace shows why the first case cannot come from statement order: the three
   address pcodes of the call are ready together with equal priorities, so they keep their
   code generation order (`tools/mwcc_sched.py --select`).

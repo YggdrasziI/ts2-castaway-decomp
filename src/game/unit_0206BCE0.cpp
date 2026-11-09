@@ -184,6 +184,8 @@ struct Unk0206bcf0Cell {
         return pos == o.pos && xy == o.xy;
     }
 
+    bool func_placed() const;
+
     Unk0206bcf0Cell func_moved(Unk0206bcf0Xy d) const {
         return Unk0206bcf0Cell(pos.unk3, pos.unk2, pos.unk0, xy.x + d.x, xy.y + d.y);
     }
@@ -856,6 +858,10 @@ static inline u32 *func_tileAt(Unk02056ed0 *l, const Unk0206bcf0Xy &p) {
 
 static inline bool func_isPlaced(const Unk0206bcf0Cell &c) {
     return func_02059418(&c) && c.xy.x >= 0 && c.xy.y >= 0;
+}
+
+inline bool Unk0206bcf0Cell::func_placed() const {
+    return func_02059418(this) && xy.x >= 0 && xy.y >= 0;
 }
 
 static inline bool func_isWater(u32 tile) {
@@ -1554,7 +1560,9 @@ void Unk0206bcf0::func_0206d9c4(Unk0206bcf0Ray ray) {
     func_0206da24(&unk204);
 }
 
-/* 98.79 %: stack slots and registers of the entry and the cell copies. */
+/* 99.01 %: the placed test is an inline member called on the returned cell (the original
+ * reads it through the register holding its address). Left: four callee-saved registers
+ * rotated (the tile layer in r4, the world in r5 in the original). */
 void Unk0206bcf0::func_0206da24(Unk0206bcf0Cell *cell) {
     Unk020c3ba4 *world = &data_020c3ba4;
     Unk02058788 *map = func_02058788(world, world->map);
@@ -1572,8 +1580,7 @@ void Unk0206bcf0::func_0206da24(Unk0206bcf0Cell *cell) {
             Unk0205f098 ctx;
             func_0205f098(&ctx);
             for (Unk0206bcf0Item *o = func_0205fb4c(data_020c3fd4, 0x12d2c5be, &ctx, map->unk24); o != 0; o = o->next) {
-                Unk0206bcf0Cell c = o->func_14();
-                if (!func_isPlaced(c)) {
+                if (!o->func_14().func_placed()) {
                     continue;
                 }
                 u32 *p = func_tileAt(layer, o->func_14().xy);
