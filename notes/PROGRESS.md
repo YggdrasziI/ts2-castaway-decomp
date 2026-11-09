@@ -209,3 +209,4 @@
 
 | 2026-11-08 | f41bfae | 606572 / 723540 bytes (83.83 %; fuzzy 99.53 %, linked 51.27 %) | 4420 / 4577 | 579 / 656 | A rewrite sweep and a permuter both scored with objdiff: declaration and store orders found by search matched the object text line breaking; unit_02090CCC complete |
 | 2026-11-09 | 2106061 | 606572 / 723540 bytes (83.83 %; fuzzy 99.53 %, linked 52.63 %) | 4420 / 4577 | 585 / 656 | Multiply-definable copies linked as such (`tools/link_multidef.py`): six files at 100 % held back by a vtable or inline copy whose first copy was still assembly are complete |
+| 2026-11-09 | 23c06d8 | 606572 / 723540 bytes (83.83 %; fuzzy 99.53 %, linked 54.07 %) | 4420 / 4577 | 588 / 656 | The same link fix: the needs screen, button and slider widget files complete |
