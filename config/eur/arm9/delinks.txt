@@ -398,6 +398,7 @@ src/game/unit_0203C2E8.cpp:
     .bss        start:0x020be428 end:0x020be42c
 
 src/game/unit_0203ECD4.cpp:
+    complete
     .text       start:0x0203ecd4 end:0x0203fa44
     .rodata     start:0x020ae96c end:0x020ae9a4
     .data       start:0x020b96ac end:0x020b96fc
@@ -492,6 +493,7 @@ src/game/unit_0205007C.cpp:
     .data       start:0x020b9edc end:0x020b9f94
 
 src/game/unit_02050640.cpp:
+    complete
     .text       start:0x02050640 end:0x02051704
     .data       start:0x020b9f94 end:0x020ba04c
 
@@ -501,6 +503,7 @@ src/game/unit_02051704.cpp:
     .data       start:0x020ba04c end:0x020ba104
 
 src/game/unit_02051DA0.cpp:
+    complete
     .text       start:0x02051da0 end:0x02052814
     .data       start:0x020ba104 end:0x020ba1bc
 
