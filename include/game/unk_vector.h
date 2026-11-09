@@ -65,6 +65,16 @@ public:
     int func_02099184(const Unk02098ff0 &o) const;
     Unk02098ff0 func_020991b8(const Unk02098ff0 &o, int t) const;
 
+    /*
+     * The sum through an inline member: called on a returned vector, the receiver's
+     * address is then taken before the result's (`add r1`, then `add r0`), as in
+     * func_0200527c and func_02066f14; the direct call takes the result's first.
+     * The inline and its name are a hypothesis.
+     */
+    Unk02098ff0 func_add(const Unk02098ff0 &o) const {
+        return func_0209911c(o);
+    }
+
     /* Clamps each component to [-0x1000, 0xFFF] (inline in the ITCM drawing code). */
     Unk02098ff0 &func_clamp() {
         if (x < -0x1000) {

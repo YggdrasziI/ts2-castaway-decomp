@@ -160,8 +160,6 @@ static Unk02070cc0Effect data_020bc918[] = {
     func_02070954, func_020709b8, func_020709e8, func_02070b24, func_02070b28, func_02070b2c, func_02070c68,
 };
 
-/* 97.24 %: the original reads unk14 of the returned element through a pointer
- * (add r1, sp, #0), not from sp directly. */
 Unk02070cc0::Unk02070cc0(Unk0208b554Item *item, int id, u32 *entries, u32 count) {
     set = item->func_0208ad18();
     this->id = id;
@@ -170,8 +168,7 @@ Unk02070cc0::Unk02070cc0(Unk0208b554Item *item, int id, u32 *entries, u32 count)
     this->count = count;
     state.time = 0;
     Unk020c7f48 *m = func_0208c578();
-    Unk0208af38 e = set->func_0208b0cc(this->id);
-    tex = m->func_0208cc70(m->func_0208ccc0(e.unk14));
+    tex = m->func_0208cc70(m->func_0208ccc0(set->func_0208b0cc(this->id).func_key()));
     flags |= tex == 0;
 }
 

@@ -1231,10 +1231,9 @@ Unk02098ff0 Unk020c43a8::func_0c() {
     return Unk02098ff0(0, 0, 0);
 }
 
-/* 99.8 %: r0 / r1 are set in the other order before func_0209911c. */
 Unk02098ff0 func_02066f14(Unk020c43a8 *p) {
     if (p->sim != 0) {
-        Unk02098ff0 pos = p->sim->func_04().func_0209911c(Unk02098ff0(0, 0xb33, 0));
+        Unk02098ff0 pos = p->sim->func_04().func_add(Unk02098ff0(0, 0xb33, 0));
         if (p->queue.head == 0 || ((int *)p->queue.head)[6] == 0) {
             return pos;
         }

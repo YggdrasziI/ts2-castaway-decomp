@@ -106,8 +106,6 @@ void Unk0206fac8::func_0206fe30(int id) {
     }
 }
 
-/* 99.89 %: the original reads unk14 through the returned pointer (r5), not
- * from the stack copy. */
 void Unk0206fac8::func_0206fea8(Unk02089f38 *model) {
     if (model == 0) {
         return;
@@ -115,8 +113,7 @@ void Unk0206fac8::func_0206fea8(Unk02089f38 *model) {
     Unk0208adc0 *set = model->func_0208a048();
     Unk020c7f48 *m = func_0208c578();
     for (int i = 0; i < set->func_0208b058(); i++) {
-        Unk0208af38 e = set->func_0208b190(i);
-        int key = e.unk14;
+        int key = set->func_0208b190(i).func_key();
         int id = m->func_0208ccc0(key);
         if (id == -1) {
             return;
@@ -128,7 +125,6 @@ void Unk0206fac8::func_0206fea8(Unk02089f38 *model) {
     }
 }
 
-/* 99.89 %: same gap as func_0206fea8. */
 void Unk0206fac8::func_0206ff5c(Unk02089f38 *model) {
     if (model == 0) {
         return;
@@ -136,8 +132,7 @@ void Unk0206fac8::func_0206ff5c(Unk02089f38 *model) {
     Unk0208adc0 *set = model->func_0208a048();
     Unk020c7f48 *m = func_0208c578();
     for (int i = 0; i < set->func_0208b058(); i++) {
-        Unk0208af38 e = set->func_0208b190(i);
-        int key = e.unk14;
+        int key = set->func_0208b190(i).func_key();
         int id = m->func_0208ccc0(key);
         if (id == -1) {
             return;

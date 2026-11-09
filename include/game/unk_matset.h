@@ -53,6 +53,15 @@ struct Unk0208af38 {
     void func_0208b3f4(s16 a, s16 b);
     void func_0208b400(s16 a, s16 b);
 
+    /*
+     * unk14 through an inline member: called on a returned element, it reads the field
+     * through the element's address (`ldr r9, [r5, #0x14]`), where a local copy is read
+     * from the stack. The inline and its name are a hypothesis.
+     */
+    int func_key() const {
+        return unk14;
+    }
+
     u32 unk0;
     u32 unk4;
     u32 unk8;

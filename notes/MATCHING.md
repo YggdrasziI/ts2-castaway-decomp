@@ -659,6 +659,24 @@ Each fix was found by compiling scratch variants of one function and comparing t
 
 ## Inlining and emission order
 
+- An inline member function called on a returned object (a temporary) works through the
+  temporary's address, which a local copy or a direct call does not (2026-11-09):
+  - `f().func_add(V(...))`, with `func_add` an inline member that calls the out-of-line sum
+    (`return func_0209911c(o);`): the receiver's address is taken before the result's
+    (`add r1, sp, #0x48`, then `add r0, sp, #0x54`). The direct call `f().func_0209911c(...)`
+    takes the result's address first, whatever the form of the result (initialized local,
+    assigned local, reference), of the receiver (cast, wrapper, derived class, inline free
+    function taking references) or the kind of function (member, operator, free function).
+    An inline free function taking the receiver by pointer gives the original order too
+    (`func_0200527c`, `func_02066f14`, 99.9 % -> 100 %).
+  - `set->func_0208b190(i).func_key()`, with `func_key` an inline getter: the field is read
+    through the register that holds the temporary's address (`ldr r9, [r5, #0x14]`, or
+    `add r1, sp, #0; ldr r1, [r1, #0x14]`); a local copy of the element, a pointer to it, a
+    reference or an inline free function read it from the stack (`ldr r9, [sp, #0x14]`)
+    (`func_0206fea8`, `func_0206ff5c`, the `Unk02070cc0` constructor 97.2 % -> 100 %).
+  The scheduler trace shows why the first case cannot come from statement order: the three
+  address pcodes of the call are ready together with equal priorities, so they keep their
+  code generation order (`tools/mwcc_sched.py --select`).
 - Inline virtual functions called through an object's vtable are emitted right after
   the first function that calls them, in reverse order of their first call
   (`func_10`, `func_30`, `func_20` after `func_0201ef54`, which calls `func_20`,

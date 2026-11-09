@@ -92,6 +92,7 @@ src/game/unit_02004938.cpp:
     .bss        start:0x020be0e4 end:0x020be0f8
 
 src/game/unit_02004FBC.cpp:
+    complete
     .text       start:0x02004fbc end:0x02005af0
     .data       start:0x020b7360 end:0x020b742c
     .bss        start:0x020be0f8 end:0x020be120

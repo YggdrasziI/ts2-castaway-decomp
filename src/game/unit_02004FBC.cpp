@@ -281,10 +281,6 @@ int Unk02005ad4::func_18() {
     return 1;
 }
 
-/*
- * 99.93 %: the two `add` that prepare func_0209911c are swapped (the original sets r1, the
- * receiver, before r0, the result); registers, stack and all other instructions match.
- */
 int func_0200527c(Unk02005ad4 *o, Unk02005ad4Actor *actor, Unk02005ad4Sim *sim) {
     if (o->done) {
         return 1;
@@ -297,7 +293,7 @@ int func_0200527c(Unk02005ad4 *o, Unk02005ad4Actor *actor, Unk02005ad4Sim *sim) 
     if (func_valid(o->cell0) && func_valid(o->cell1)) {
         func_02067778(actor, o->cell0);
         Unk02098ff0 target = func_02057b5c(func_02058788(&data_020c3ba4, data_020c3ba4.map), &o->cell0)
-                                 .func_0209911c(Unk02098ff0(0x800, 0, 0x800));
+                                 .func_add(Unk02098ff0(0x800, 0, 0x800));
         o->pos = (const Unk02005ad4Pos &)actor->func_04();
         o->angle = func_02097a58(target.x - o->pos.v.x, target.z - o->pos.v.z);
         if (o->cell0.xy.x == actor->func_14().xy.x || o->cell0.xy.y == actor->func_14().xy.y) {
