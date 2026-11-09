@@ -25,7 +25,7 @@ import tempfile
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 DEFAULT_GHIDRA = r"E:\Projets\Github\Decomp\Tools\Ghidra\ghidra_11.2.1_PUBLIC"
-DEFAULT_PROJECT = r"E:\Projets\Dev\ts2-castaway-ghidra"
+DEFAULT_PROJECT = r"E:\Projets\Dev\Decomp\NDS\ts2-castaway-ghidra"
 PROJECT_NAME = "ts2c_eur"
 # Wildcard: the project holds one ROM, whatever name it was imported under (cmd.exe
 # breaks analyzeHeadless.bat arguments with parentheses, e.g. "(EU)")
