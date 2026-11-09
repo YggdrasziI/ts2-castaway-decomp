@@ -954,6 +954,8 @@ Unk0200c308::~Unk0200c308() {
     }
 }
 
+/* 99.10 %: names is in r7 (the original r4) and the catch / sprite pointers of the
+ * first loop take each other's registers. */
 void Unk0200cec8::func_0200d138(Unk020a7af4 *names) {
     Unk020a7c90 *a;
     int j;
@@ -962,7 +964,8 @@ void Unk0200cec8::func_0200d138(Unk020a7af4 *names) {
     u32 id0;
     Unk020a7c90 *icon;
     Unk020a7c90 *b;
-    sprite = func_020aa04c(&layout, func_020a7b50(names, 0x6f9e2311));
+    id0 = func_020a7b50(names, 0x6f9e2311);
+    sprite = func_020aa04c(&layout, id0);
     texts[0] = func_020aa040(&layout, 4, func_020a7b50(names, 0xc4189d9c));
     texts[1] = func_020aa040(&layout, 4, func_020a7b50(names, 0xdc127127));
     texts[2] = func_020aa040(&layout, 4, func_020a7b50(names, 0xfd435bc9));
