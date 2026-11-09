@@ -118,9 +118,18 @@ function that needs one). CRI middleware (twewy's `libs/cri`) is absent: only 8-
 - **Host-dependent switch** (2026-11-01): the `switch` of `__pformatter` has 9 cases
   over the 18 values 'd'..'u', the density limit of the jump table. On Windows the table
   ends at 'u' (ROM); under wibo (CI) it ends at 'o' and the function is 4 bytes shorter
-  (objects compared through a CI artifact). Cause inside the compiler not known; a
-  floating point difference between the hosts is a hypothesis. `printf.c` stays not
-  `complete`: the CI objdiff report can score `__pformatter` below 100 %.
+  (objects compared through a CI artifact). `printf.c` stays not `complete` until CI
+  runs a fixed wibo: the CI objdiff report can score `__pformatter` below 100 %.
+  **Cause (2026-11-09): the x87 precision control of the host.** A Win32 process starts
+  with the x87 control word 0x027F (53-bit precision); wibo 1.2.0 leaves the Linux
+  default 0x037F (64-bit), and the compiler's switch cost comparison, done in floating
+  point, falls on the other side at the limit. Checked on Windows with the unmodified
+  compilers run under a debugger that sets the control word at the entry point
+  (0x401000): with 0x027F the objects are the build's; with 0x037F `__pformatter`
+  (2.0/sp1p2) is 4 bytes shorter and `GX_SetBankForSubBG` (1.2/sp2p3,
+  `gx/unit_02078208.c`) 4 bytes longer, the two differences seen in CI. wibo fixed it
+  after 1.2.0 (decompals/wibo #137, commit e8f4795, merged 2026-07-12: guest threads
+  start with 0x027F); no release holds the fix yet (1.2.0 is the latest).
 
 ## Runtime: software floating point
 
@@ -346,5 +355,6 @@ Read from the disassembly and traced with `tools/mwcc_sched.py` (same debugger).
   C-locale `strftime` formats, to compare with MSL sources).
 
 `libs/nitro/src/gx/unit_02078208.c` shows the same host difference with 1.2/sp2p3: all its
-functions are at 100 % on Windows, but under wibo the code before 0x02078368 is 4 bytes longer
-(the file is not `complete` for that reason; hypothesis: the `switch` of `GX_SetBankForSubBG`).
+functions are at 100 % on Windows, but under wibo 1.2.0 `GX_SetBankForSubBG` is 4 bytes longer
+(the file is not `complete` for that reason). Cause: the host's x87 precision, see
+"Host-dependent switch" above.

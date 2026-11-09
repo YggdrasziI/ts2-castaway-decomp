@@ -1986,9 +1986,9 @@ Each fix was found by compiling scratch variants of one function and comparing t
 - A whole file off by one pattern is a build setting: `mov pc, lr` against `bx lr` was
   `-interworking`; a register-level gap in only some functions was a service pack (sweep
   the compilers on the function before changing the source).
-- CI builds under wibo: a function compiled to 100 % on Windows can differ there (jump
-  table on the density limit, `notes/COMPILER.md`). Check the CI run before building on
-  a new `complete` file.
+- CI builds under wibo: a function compiled to 100 % on Windows can differ there with
+  wibo 1.2.0 (x87 precision of the host, `notes/COMPILER.md`, "Host-dependent switch").
+  Check the CI run before building on a new `complete` file.
 
 - Hand-written library `asm`: a function nothing calls is dropped by the `-dead` link and
   every later address moves; `#pragma force_active on` keeps it. Without `global` labels,
