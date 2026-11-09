@@ -208,3 +208,4 @@
 | 2026-11-08 | d929ddc | 605824 / 723540 bytes (83.73 %; fuzzy 99.51 %, linked 50.92 %) | 4419 / 4577 | 578 / 656 | A parameter reused or a new local for a reassigned value, and the done flag chained through each button: the sound effect start and four screen input handlers matched; unit_0202CDF0 complete |
 
 | 2026-11-08 | f41bfae | 606572 / 723540 bytes (83.83 %; fuzzy 99.53 %, linked 51.27 %) | 4420 / 4577 | 579 / 656 | A rewrite sweep and a permuter both scored with objdiff: declaration and store orders found by search matched the object text line breaking; unit_02090CCC complete |
+| 2026-11-09 | 2106061 | 606572 / 723540 bytes (83.83 %; fuzzy 99.53 %, linked 52.63 %) | 4420 / 4577 | 585 / 656 | Multiply-definable copies linked as such (`tools/link_multidef.py`): six files at 100 % held back by a vtable or inline copy whose first copy was still assembly are complete |
