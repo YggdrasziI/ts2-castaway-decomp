@@ -3,7 +3,6 @@ The Sims 2: Castaway (Nintendo DS)
 
 > [!IMPORTANT]
 > AI Disclosure:
-> 
 > AI was used for the following tasks:
 > - Writing commentary (primarily translating into English and formatting).
 > - Documenting and citing the various sources used in the project (see PROVENANCE.md, REFERENCE.md, and more generally the files contained within the "notes" directory).
