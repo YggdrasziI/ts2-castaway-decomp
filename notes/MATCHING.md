@@ -2019,7 +2019,8 @@ Each fix was found by compiling scratch variants of one function and comparing t
   `-interworking`; a register-level gap in only some functions was a service pack (sweep
   the compilers on the function before changing the source).
 - CI builds under wibo: a function compiled to 100 % on Windows can differ there with
-  wibo 1.2.0 (x87 precision of the host, `notes/COMPILER.md`, "Host-dependent switch").
+  wibo 1.2.0 (x87 precision of the host, `notes/COMPILER.md`, "Host-dependent switch");
+  CI runs a wibo built with the fix since 2026-11-10.
   Check the CI run before building on a new `complete` file.
 
 - Hand-written library `asm`: a function nothing calls is dropped by the `-dead` link and

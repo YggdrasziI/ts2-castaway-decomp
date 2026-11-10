@@ -130,6 +130,13 @@ function that needs one). CRI middleware (twewy's `libs/cri`) is absent: only 8-
   `gx/unit_02078208.c`) 4 bytes longer, the two differences seen in CI. wibo fixed it
   after 1.2.0 (decompals/wibo #137, commit e8f4795, merged 2026-07-12: guest threads
   start with 0x027F); no release holds the fix yet (1.2.0 is the latest).
+  **Fixed in CI (2026-11-10):** the build image compiles wibo from that commit (static
+  x86_64, the steps of wibo's own Dockerfile) and the CI job runs it instead of a
+  downloaded release. The CI objdiff report is then identical to the Windows one (both
+  functions at 100 %), and `printf.c` and `gx/unit_02078208.c` are `complete`. A Linux
+  build outside CI still downloads 1.2.0 (`WIBO_VERSION`) and fails the module check on
+  these two files: pass a fixed wibo with `-w`. When a release holds the fix, bump
+  `WIBO_VERSION` and drop the image's build stage.
 
 ## Runtime: software floating point
 
@@ -355,6 +362,6 @@ Read from the disassembly and traced with `tools/mwcc_sched.py` (same debugger).
   C-locale `strftime` formats, to compare with MSL sources).
 
 `libs/nitro/src/gx/unit_02078208.c` shows the same host difference with 1.2/sp2p3: all its
-functions are at 100 % on Windows, but under wibo 1.2.0 `GX_SetBankForSubBG` is 4 bytes longer
-(the file is not `complete` for that reason). Cause: the host's x87 precision, see
-"Host-dependent switch" above.
+functions are at 100 % on Windows, but under wibo 1.2.0 `GX_SetBankForSubBG` is 4 bytes longer.
+Cause: the host's x87 precision, see "Host-dependent switch" above; `complete` since CI runs
+a fixed wibo (2026-11-10).

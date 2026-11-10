@@ -320,8 +320,8 @@ the sine and cosine table: every entry equals the rounded value, checked by scri
 
 ### MSL / runtime files (2026-10-25, sources 2026-11-01)
 
-All `complete` except `printf.c`: code at 100 % on Windows, but its `__pformatter` compiles
-differently under wibo (`notes/COMPILER.md`), so it stays delinked from the original.
+All `complete`; `printf.c` since 2026-11-10: its `__pformatter` compiles differently under
+wibo 1.2.0 (`notes/COMPILER.md`), and CI now runs a wibo built with the fix.
 objdiff scores the `.bss` of `abort_exit_arm_eabi.c` 97 % (section names); the bytes
 are checked by the link.
 

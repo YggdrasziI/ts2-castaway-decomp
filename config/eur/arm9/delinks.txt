@@ -771,6 +771,7 @@ libs/nns/src/fnd/unit_0209E854.c:
     .text       start:0x0209e854 end:0x0209ea7c
 
 libs/nitro/src/gx/unit_02078208.c:
+    complete
     .text       start:0x02078208 end:0x02078b3c
 
 libs/nitro/src/gx/unit_02078C48.c:
@@ -1255,6 +1256,7 @@ libs/c/src/mem_funcs.c:
     .text       start:0x02080864 end:0x02080914
 
 libs/c/src/printf.c:
+    complete
     .text       start:0x02080914 end:0x02082a58
     .exception  start:0x020acc60 end:0x020acc68
     .exceptix   start:0x020acdd8 end:0x020ace44
