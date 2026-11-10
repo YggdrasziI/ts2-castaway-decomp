@@ -7,7 +7,8 @@ on:
 jobs:
   build:
     # This is a *private* build container (YggdrasziI/ts2-castaway-decomp-build):
-    # it holds the ROM in /extract and the mwccarm compilers. No BIOS: the ROM is
+    # it holds the ROM in /extract, the mwccarm compilers and wibo built from the
+    # commit that sets the guest x87 state (notes/COMPILER.md). No BIOS: the ROM is
     # checked against build_nobios.sha1 (see SPEC.md).
     container: ghcr.io/yggdraszii/ts2-castaway-decomp-build:main
 
@@ -30,13 +31,12 @@ jobs:
         run: |
           python tools/download_tool.py dsd v0.12.1 --path dsd
           python tools/download_tool.py objdiff v3.8.1 --path objdiff-cli
-          python tools/download_tool.py wibo 1.2.0 --path wibo
 
       # Delink, link, check modules and symbols, rebuild and check the ROM, report
       - name: Build
         run: |
           ./dsd --version
-          python tools/configure.py --version ${{ matrix.version }} -w ./wibo --compiler /mwccarm
+          python tools/configure.py --version ${{ matrix.version }} -w /usr/local/bin/wibo --compiler /mwccarm
           ninja
 
       # Draw the progress badges (nothing is committed by CI)
