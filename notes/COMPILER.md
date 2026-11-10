@@ -89,8 +89,9 @@ Confirmed in the build: `src/game/unit_0205D6E0.c` compiled with 2.0/sp1p5 and
 (That function, `func_0205d6e0`, now lives in `src/game/unit_0205D4D8.cpp`, the
 parameter reader file it belongs to; still 100 % compiled as C++.)
 
-Command (NitroSDK): `python tools/compiler_sweep.py --ref E:/Projets/Github/Decomp/DS/twewy
---define REGION_USA "E:/Projets/Github/Decomp/DS/twewy/libs/nitro/src/*/*.c"`
+Command (NitroSDK): `python tools/compiler_sweep.py --ref <twewy>
+--define REGION_USA "<twewy>/libs/nitro/src/*/*.c"`, `<twewy>` being a clone of
+[Yotona/twewy](https://github.com/Yotona/twewy)
 
 ## NitroSystem and MSL
 

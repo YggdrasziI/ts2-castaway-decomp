@@ -7,7 +7,9 @@ chooser replaced by the first script argument) to a temporary folder and runs it
 Ghidra's analyzeHeadless on the imported ROM. Nothing from dsd-ghidra is stored in
 this repository. Needs Ghidra 11.2.1 with the dsd-ghidra v0.7.0 extension installed
 (Install Extensions) and the ROM imported once in the GUI as ARM9, without
-auto-analysis; --ghidra and --project override the default paths.
+auto-analysis. The Ghidra install and project folders come from --ghidra and
+--project, or from the GHIDRA_INSTALL_DIR and TS2C_GHIDRA_PROJECT environment
+variables.
 
 Usage:
   python tools/ghidra_sync.py              # sync config/eur/arm9/config.yaml
@@ -24,8 +26,8 @@ import sys
 import tempfile
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-DEFAULT_GHIDRA = r"E:\Projets\Github\Decomp\Tools\Ghidra\ghidra_11.2.1_PUBLIC"
-DEFAULT_PROJECT = r"E:\Projets\Dev\Decomp\NDS\ts2-castaway-ghidra"
+DEFAULT_GHIDRA = os.environ.get("GHIDRA_INSTALL_DIR")
+DEFAULT_PROJECT = os.environ.get("TS2C_GHIDRA_PROJECT")
 PROJECT_NAME = "ts2c_eur"
 # Wildcard: the project holds one ROM, whatever name it was imported under (cmd.exe
 # breaks analyzeHeadless.bat arguments with parentheses, e.g. "(EU)")
@@ -62,6 +64,8 @@ def main():
                         help="program name in the Ghidra project (default: %(default)s)")
     parser.add_argument("--dry-run", action="store_true", help="change nothing")
     args = parser.parse_args()
+    if not args.ghidra or not args.project:
+        parser.error("set --ghidra and --project, or GHIDRA_INSTALL_DIR and TS2C_GHIDRA_PROJECT")
 
     source = open(installed_script(args.ghidra), encoding="utf-8").read()
     patched, count = CHOOSER.subn(HEADLESS, source)
