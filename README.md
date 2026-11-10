@@ -3,12 +3,11 @@ The Sims 2: Castaway (Nintendo DS)
 
 > [!IMPORTANT]
 > AI Disclosure:
+> 
 > AI was used for the following tasks:
 > - Writing commentary (primarily translating into English and formatting).
 > - Documenting and citing the various sources used in the project (see PROVENANCE.md, REFERENCE.md, and more generally the files contained within the "notes" directory).
 > - Writing code (C, C++, Python, etc.—I used it as a tool) and reviewing my own work (yes, some code was written by AI, but it was verified by a human; I didn't simply type "Claude, decompile this for me").
->
-> Placeholder important line 2
 
 A work-in-progress matching decompilation of The Sims 2: Castaway for the Nintendo
 DS, built with [ds-decomp](https://github.com/AetiasHax/ds-decomp).
