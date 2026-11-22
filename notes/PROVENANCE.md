@@ -25,18 +25,22 @@ It replaces our former copies of:
   check and output;
 - `tools/asm_compare.py` (written here): `tools/common/asm_compare.py` is the same
   tool, with absolute `--objects` paths; `tools/why_diff.py` imports it;
-- `tools/report_diff.py` (spyro-dotd, below): `tools/common/report_diff.py` adds the
+- `tools/report_diff.py` (spyro-dotd): `tools/common/report_diff.py` adds the
   pairing of renamed items by size and the totals check (`[report] auto_units` =
-  `_dsd_gap@` in `decomp.toml`).
+  `_dsd_gap@` in `decomp.toml`);
+- `tools/progress_badges.py` (spyro-dotd): `tools/common/progress_badges.py`
+  reads the same dsd `symbols.txt` files and takes its regions from `[regions.eur]`
+  of `decomp.toml`; it also places a `func_<addr>` missing from `symbols.txt` by its
+  name (`func_02087eec`, `func_02088d0c`: 24 bytes that the former script counted
+  in "Other").
 
 ## Scripts from the sibling projects
 
 Source: `YggdrasziI/spyro-dotd-decomp` (private, same owner), commit
-`35d0baf60d7df46879015cda2fa7f45807bc5b2e`.
-
-| Our file | Changes |
-|---|---|
-| `tools/progress_badges.py` | default version `eur`; function addresses read from the dsd `symbols.txt` files (dsd's objdiff report has no `virtual_address`); regions from `notes/SPLITS.md` |
+`35d0baf60d7df46879015cda2fa7f45807bc5b2e`: the former `tools/report_diff.py` and
+`tools/progress_badges.py` (default version `eur`, lower-case version names,
+function addresses from the dsd `symbols.txt` files), now replaced by
+`tools/common/` (above).
 
 ## Project documents
 

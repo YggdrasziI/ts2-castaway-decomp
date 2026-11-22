@@ -44,7 +44,7 @@ Progress
 - **Linked**: code built from source (`complete` files of `delinks.txt`).
 
 The badges and the card are drawn from the objdiff report by
-`tools/progress_badges.py`. After a build, `python tools/progress_badges.py --record`
+`tools/common/progress_badges.py`. After a build, `python tools/common/progress_badges.py --record`
 redraws `progress/eur/` and adds the current commit to `progress/eur/history.csv`;
 commit the `progress/` folder with it.
 
