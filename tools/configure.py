@@ -504,7 +504,7 @@ def main():
         )
         n.newline()
 
-        n.rule(name="sha1", command=f"{PYTHON} tools/sha1.py $in -c $sha1_file")
+        n.rule(name="sha1", command=f"{PYTHON} tools/common/sha1.py $in -c $sha1_file")
         n.newline()
 
         configure_cmdline = subprocess.list2cmdline(sys.argv[1:])
