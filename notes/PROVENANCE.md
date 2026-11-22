@@ -22,7 +22,9 @@ It replaces our former copies of:
 
 - `tools/ninja_syntax.py` (twewy, from ninja, Apache-2.0);
 - `tools/sha1.py` (twewy): `tools/common/sha1.py <file> -c <list>` gives the same
-  check and output.
+  check and output;
+- `tools/asm_compare.py` (written here): `tools/common/asm_compare.py` is the same
+  tool, with absolute `--objects` paths; `tools/why_diff.py` imports it.
 
 ## Scripts from the sibling projects
 

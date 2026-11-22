@@ -61,7 +61,7 @@ default: add one here only once a unit of this ROM proves it with mwccarm.
   (`int index = func_020a69cc(s); oam->func_0209201c(file, index, ...)`) is passed inline in
   the original (`func_0203161c`, 99.75 % -> 100 %; the two other calls of the file keep the
   local).
-- `objdiff-cli diff` (`tools/asm_compare.py`) can show a `bl` to the next function as an argument
+- `objdiff-cli diff` (`tools/common/asm_compare.py`) can show a `bl` to the next function as an argument
   mismatch: it reads the original's `target - 8` as a branch inside the caller. The report
   scores it 100 %; check the word counts with relocations masked (`permute.score`).
 - Inline slots of a class come out in the declaration order of their overrides: declare them first in the class to get the original tail (`func_34`, `func_2c`, then `func_1c`, ...; `Unk0204a9f8`). This only works for slots declared in a base: moving a new virtual changes the vtable while objdiff still scores `.text` 100 %.
@@ -537,7 +537,7 @@ explicit `if (n > 0)` around the `for` then adds a third test (`cmpgt`): drop it
 ### Small register swaps fixed by the shape of one statement (2026-11-06)
 
 Each fix was found by compiling scratch variants of one function and comparing them with
-`tools/asm_compare.py --objects`:
+`tools/common/asm_compare.py --objects`:
 
 - **Loop bound in the test.** A limit taken from a shifted argument goes in the test
   (`for (u32 i = 0; i < size >> 1; i++)`), not in a local before the loop. With the local,

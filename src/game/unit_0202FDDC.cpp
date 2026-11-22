@@ -606,7 +606,7 @@ static inline Unk0205367c *func_recipe() {
 }
 
 /*
- * 100 % in the report; `objdiff-cli diff` (tools/asm_compare.py) shows 99.99 %
+ * 100 % in the report; `objdiff-cli diff` (tools/common/asm_compare.py) shows 99.99 %
  * because it reads the original call to func_020322b4, the next function, as a
  * branch inside this one (target symbol - 8).
  */
