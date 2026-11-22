@@ -1,0 +1,48 @@
+# Project settings read by the tools of tools/common (see tools/common/decomp_config.py)
+
+title = "The Sims 2: Castaway"
+
+# First one is the default version. kor and jpn are known but disabled
+# (DISABLED_VERSIONS in tools/configure.py, SPEC.md).
+versions = [
+    "eur",  # YS2P, rev 0
+]
+
+[paths]
+# dsd symbol files (`name kind:function(...) addr:0x...` lines) of every module
+symbol_files = "config/{version}/**/symbols.txt"
+
+# Compiler of the game units: mwccarm 2.0/sp1p5, a working choice of the 2.0
+# family; libs/ use other compilers and flags (COMPILER_CONFIGS in
+# tools/configure.py, notes/COMPILER.md). Same flags as DEFAULT_CC_FLAGS there.
+[compiler]
+path = "tools/mwccarm/2.0/sp1p5/mwccarm.exe"
+flags = "-O4,p -enum int -char signed -proc arm946e -gccext,on -fp soft -inline noauto -RTTI off -interworking -w off -sym on -gccinc -nolink -msgstyle gcc -enc SJIS -str reuse -Cpp_exceptions off -avoid_byte strb"
+
+# tools/common/report_diff.py: units dsd makes from the code not yet delinked
+# (renumbered whenever a file is added to delinks.txt)
+[report]
+auto_units = ["_dsd_gap@"]
+
+# tools/common/try_unit.py: one C++ source compiled outside the build and scored
+# against the object dsd delinked from the original for that file (piece =
+# its path in delinks.txt without the extension, e.g. src/game/unit_0205D4D8)
+[try]
+compile = "{cc} {flags} -i include -i libs/c/include -i libs/cpp/include -i libs/nitro/include -i libs/runtime/include -lang=c++ -d REGION_EUR -c {src} -o {obj}"
+target = "build/{version}/delinks/{piece}.o"
+
+# Code regions of the progress card (tools/common/progress_badges.py), from the
+# region map of notes/SPLITS.md; bounds marked "~" there are approximate. The
+# engine block stays apart from the game until its ownership is proven. "Other"
+# gathers the rest: BIOS call veneers, `.init` (static initializers of units from
+# several regions) and the 2.0 code of the ITCM.
+[regions.eur]
+"Game" = [[0x02000BA0, 0x02073ED0], [0x0209F0AC, 0x020ACC60]]
+"Engine block (owner unproven)" = [[0x02089780, 0x0209A740]]
+"NitroSDK (+ crt0, ITCM IRQ)" = [[0x02000800, 0x02000BA0], [0x02073ED0, 0x02080114], [0x01FF8114, 0x01FF84D0]]
+"NitroSystem" = [[0x0209A740, 0x0209F0AC]]
+"MSL, C++ runtime" = [[0x02080114, 0x02089780]]
+
+# tools/common/check_traces.py: the README's disclosure line
+[traces]
+allow = ["decompile this for me"]
