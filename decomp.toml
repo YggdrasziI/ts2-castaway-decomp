@@ -24,12 +24,18 @@ flags = "-O4,p -enum int -char signed -proc arm946e -gccext,on -fp soft -inline 
 [report]
 auto_units = ["_dsd_gap@"]
 
-# tools/common/try_unit.py: one C++ source compiled outside the build and scored
+# tools/common/try_unit.py: one game source compiled outside the build and scored
 # against the object dsd delinked from the original for that file (piece =
-# its path in delinks.txt without the extension, e.g. src/game/unit_0205D4D8)
+# its path in delinks.txt without the extension, e.g. src/game/unit_0205D4D8).
+# Same command as the mwcc rule of tools/configure.py. mwccarm compiles as C++ as
+# soon as one -lang=c++ is on the line, so the language goes by suffix.
 [try]
-compile = "{cc} {flags} -i include -i libs/c/include -i libs/cpp/include -i libs/nitro/include -i libs/runtime/include -lang=c++ -d REGION_EUR -c {src} -o {obj}"
+compile = "{cc} {flags} -i include -i libs/c/include -i libs/cpp/include -i libs/nitro/include -i libs/runtime/include {suffix_flags} -d REGION_EUR -c {src} -o {obj}"
 target = "build/{version}/delinks/{piece}.o"
+
+[try.suffix_flags]
+".c" = "-lang=c99"
+".cpp" = "-lang=c++"
 
 # Code regions of the progress card (tools/common/progress_badges.py), from the
 # region map of notes/SPLITS.md; bounds marked "~" there are approximate. The
