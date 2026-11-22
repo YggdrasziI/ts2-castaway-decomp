@@ -6,8 +6,7 @@
  * starts unit_02098BC8.cpp (a rectangle). The matrix and interpolation functions
  * have no direct caller. Real file name unknown.
  * The rotation matrix is the 3x3 matrix of unit_02097B6C.cpp.
- * Not complete: func_02098934 and func_02098a5c do not match yet (comments above
- * them).
+ * Not complete: func_02098a5c does not match yet (comment above it).
  */
 
 #include "game/unk_matrix.h"
@@ -68,15 +67,19 @@ Unk02097b6c Unk020988d8::func_02098934() const {
     }
 }
 
-/* 99.34 %: the flip flag and the angle swap registers (original: flag in r5,
- * angle in r11). All 720 declaration orders and five control-flow forms were
- * tried. */
+/* 99.62 %: the flip flag and the angle swap registers (original: flag in r5,
+ * angle in r11). With a separate `angle` local the function was at 99.34 % (three
+ * registers rotated, 720 declaration orders and five control-flow forms tried);
+ * reusing `dot` for the angle puts sinAngle in r4 as in the original. On this form:
+ * all 120 declaration orders, `bool` / `unsigned` / initialized / scoped flag, flag
+ * set first, `else` branch, `flip != 0` (none better), focused permuter 120 s
+ * (6592 variants, nothing). Coloring (tools/mwcc_sched.py --colors) visits the
+ * flag's virtual register after the other callee-saved ones. */
 Unk020988d8 Unk020988d8::func_02098a5c(const Unk020988d8 &o, int t) const {
     int dot;
     int flip;
     int a;
     int b;
-    int angle;
     int sinAngle;
 
     dot = ((x * o.x) >> 12) + ((y * o.y) >> 12) + ((z * o.z) >> 12) + ((w * o.w) >> 12);
@@ -86,10 +89,10 @@ Unk020988d8 Unk020988d8::func_02098a5c(const Unk020988d8 &o, int t) const {
         flip = 1;
     }
     if (0x1000 - dot > 0xc) {
-        angle = func_02097b14(dot);
-        sinAngle = func_sin((u16)angle);
-        a = func_fxdiv(func_sin((u16)(((0x1000 - t) * angle) >> 12)), sinAngle);
-        b = func_fxdiv(func_sin((u16)((t * angle) >> 12)), sinAngle);
+        dot = func_02097b14(dot);
+        sinAngle = func_sin((u16)dot);
+        a = func_fxdiv(func_sin((u16)(((0x1000 - t) * dot) >> 12)), sinAngle);
+        b = func_fxdiv(func_sin((u16)((t * dot) >> 12)), sinAngle);
     } else {
         a = 0x1000 - t;
         b = t;

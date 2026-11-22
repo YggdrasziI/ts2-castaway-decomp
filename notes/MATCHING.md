@@ -657,6 +657,13 @@ Each fix was found by compiling scratch variants of one function and comparing t
   room->info->layerCount`, `room->layers[l]`); the original then steps the pointer by
   the element size (`Unk02058788` constructor 91.70 % -> 92.99 %).
 
+- A call result kept in its own local can take the wrong place in the coloring order
+  when declaration orders change nothing: write it over the variable it was computed
+  from (`dot = func_02097b14(dot);` instead of `angle = ...`). The reused variable's new
+  live range is colored with the late group (`tools/mwcc_sched.py --colors`): in
+  `Unk020988d8::func_02098a5c` this put sinAngle in r4 as in the original, 99.34 ->
+  99.62 % (the flag and the angle still swap r5 / r11; 2026-11-22).
+
 ## Inlining and emission order
 
 - An inline member function called on a returned object (a temporary) works through the
