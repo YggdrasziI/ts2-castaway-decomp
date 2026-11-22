@@ -271,6 +271,11 @@ int Unk02008d18::func_14() {
     return 1;
 }
 
+/* 99.84 %: the zero of the two head vectors and the reloaded head pointer swap
+ * r12 / r6 (original: zero in r12, head in r6). Tried: head local at the top, named
+ * zero vectors, focused permuter 200 s (2026-11-08); head read inline, written over
+ * `sim`, declared then assigned, `o->visible` and `conversation` in locals
+ * (2026-11-22). */
 int Unk02008d18::func_18() {
     Unk02008d18Actor *actor = func_02002414(owner);
     Unk02061d08Item *o;
