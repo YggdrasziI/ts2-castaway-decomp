@@ -24,7 +24,10 @@ It replaces our former copies of:
 - `tools/sha1.py` (twewy): `tools/common/sha1.py <file> -c <list>` gives the same
   check and output;
 - `tools/asm_compare.py` (written here): `tools/common/asm_compare.py` is the same
-  tool, with absolute `--objects` paths; `tools/why_diff.py` imports it.
+  tool, with absolute `--objects` paths; `tools/why_diff.py` imports it;
+- `tools/report_diff.py` (spyro-dotd, below): `tools/common/report_diff.py` adds the
+  pairing of renamed items by size and the totals check (`[report] auto_units` =
+  `_dsd_gap@` in `decomp.toml`).
 
 ## Scripts from the sibling projects
 
@@ -33,7 +36,6 @@ Source: `YggdrasziI/spyro-dotd-decomp` (private, same owner), commit
 
 | Our file | Changes |
 |---|---|
-| `tools/report_diff.py` | default version `eur`, lower-case version names |
 | `tools/progress_badges.py` | default version `eur`; function addresses read from the dsd `symbols.txt` files (dsd's objdiff report has no `virtual_address`); regions from `notes/SPLITS.md` |
 
 ## Project documents
