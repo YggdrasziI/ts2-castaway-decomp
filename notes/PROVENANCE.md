@@ -12,7 +12,15 @@ Source: [Yotona/twewy](https://github.com/Yotona/twewy), local clone at commit
 | Our file | Their file | Changes |
 |---|---|---|
 | `tools/configure.py` | `tools/configure.py` | `GAME = "ts2c"`, one version `eur`; twewy's per-path compiler configs removed (`COMPILER_CONFIGS` empty); ROM check against `build_nobios.sha1` when `arm7_bios.bin` is absent |
-| `tools/download_tool.py`, `get_platform.py`, `ninja_syntax.py`, `transform_dep.py`, `m2ctx.py`, `mangle.py`, `sha1.py`, `requirements.txt` | same paths | none |
+| `tools/download_tool.py`, `get_platform.py`, `transform_dep.py`, `m2ctx.py`, `mangle.py`, `sha1.py`, `requirements.txt` | same paths | none |
+
+## Shared tools (`tools/common/`)
+
+`tools/common/` is the [decomp-tools](https://github.com/YggdrasziI/decomp-tools)
+submodule (same owner, CC0-1.0; its README gives the provenance of its own files).
+It replaces our former copies of:
+
+- `tools/ninja_syntax.py` (twewy, from ninja, Apache-2.0).
 
 ## Scripts from the sibling projects
 
