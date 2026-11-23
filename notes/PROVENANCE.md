@@ -12,7 +12,10 @@ Source: [Yotona/twewy](https://github.com/Yotona/twewy), local clone at commit
 | Our file | Their file | Changes |
 |---|---|---|
 | `tools/configure.py` | `tools/configure.py` | `GAME = "ts2c"`, one version `eur`; twewy's per-path compiler configs removed (`COMPILER_CONFIGS` empty); ROM check against `build_nobios.sha1` when `arm7_bios.bin` is absent |
-| `tools/download_tool.py`, `get_platform.py`, `transform_dep.py`, `m2ctx.py`, `mangle.py`, `requirements.txt` | same paths | none |
+| `tools/download_tool.py`, `mangle.py`, `requirements.txt` | same paths | none |
+
+`get_platform.py`, `transform_dep.py` and `m2ctx.py` (same twewy origin) are now in
+`tools/nds/` (below).
 
 ## Shared tools (`tools/common/`)
 
@@ -33,6 +36,17 @@ It replaces our former copies of:
   of `decomp.toml`; it also places a `func_<addr>` missing from `symbols.txt` by its
   name (`func_02087eec`, `func_02088d0c`: 24 bytes that the former script counted
   in "Other").
+
+`tools/nds/` is the [nds-decomp-tools](https://github.com/YggdrasziI/nds-decomp-tools)
+submodule (same owner, CC0-1.0; its README gives the provenance of its own files).
+It replaces our former copies of:
+
+- `tools/get_platform.py`, `tools/transform_dep.py` (twewy): same content;
+- `tools/m2ctx.py` (twewy): same tool, the project root found from `decomp.toml`
+  instead of the script's folder, include directories from `[m2ctx] include_dirs`
+  (the former list by default);
+- `tools/objdiff_prune.py` (written here): same tool, `objdiff.json` read from the
+  current directory (the build runs from the project root).
 
 ## Scripts from the sibling projects
 
