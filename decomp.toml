@@ -52,3 +52,20 @@ target = "build/{version}/delinks/{piece}.o"
 # tools/common/check_traces.py: the README's disclosure line
 [traces]
 allow = ["decompile this for me"]
+
+# Nintendo DS tools (tools/nds/, nds_config.py)
+[nds]
+ghidra_project = "ts2c"              # Ghidra project ts2c_<version>
+ghidra_env = "TS2C_GHIDRA_PROJECT"   # variable holding the Ghidra project folder
+
+# tools/nds/lcf_keep.py: NitroSDK link-time constants, read from the literal pools
+[nds.absolute_symbols]
+SDK_SYS_STACKSIZE = 0x0                     # func_0207b5f4 pool word 0x0207b710
+SDK_IRQ_STACKSIZE = 0x400                   # func_02079fc0 pool word 0x02079ff0
+SDK_SECTION_ARENA_DTCM_START = 0x027E0080   # func_0207b5f4 pool word 0x0207b718
+
+# tools/nds/unit_candidates.py: EA code regions of the region map (notes/SPLITS.md):
+# game block 1 after crt0, the engine block after MSL, game block 2 after
+# NitroSystem. Bounds are approximate.
+[nds.candidates.eur]
+main = [[0x02000BA0, 0x02073ED0], [0x02089780, 0x0209A740], [0x0209F0AC, 0x020ACC60]]

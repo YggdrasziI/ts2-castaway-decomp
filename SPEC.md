@@ -74,9 +74,9 @@ Evidence and the candidate analysis go in `notes/COMPILER.md`.
   `-ipa file`").
 - Linker flags: `-proc arm946e -interworking -dead -nostdlib -m Entry` (twewy has
   `-nodead`; `-dead` drops the unused C1/C2, D1/D2 copies, as the original link did,
-  and `tools/lcf_keep.py` keeps `.exception` alive; notes/COMPILER.md).
+  and `tools/nds/lcf_keep.py` keeps `.exception` alive; notes/COMPILER.md).
 - Optional: Ghidra 11.2.1 with the dsd-ghidra v0.7.0 extension, outside the repository
-  (`tools/ghidra_sync.py` pushes the dsd symbols to a Ghidra project).
+  (`tools/nds/ghidra_sync.py` pushes the dsd symbols to a Ghidra project).
 
 ## Acceptance criteria
 
@@ -116,7 +116,7 @@ Evidence and the candidate analysis go in `notes/COMPILER.md`.
 - SDK and library code under `libs/<lib>/{include,src}` with the real names of the
   library once identified by signature or reference project.
 - Library function names (owner's choice, 2026-10-25): a function found at exactly
-  one address by `tools/compiler_sweep.py` (more than 8 bytes) takes khdays-decomp's
+  one address by `tools/nds/compiler_sweep.py` (more than 8 bytes) takes khdays-decomp's
   name, which follows the NitroSDK / NitroSystem API (`MIi_CpuCopy16`,
   `DC_FlushAll`); twewy's name only where khdays has no match. The byte match is the
   evidence; the name is the reference's. Advance Wars fingerprints (CC0) confirm a

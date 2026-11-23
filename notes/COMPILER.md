@@ -47,7 +47,7 @@ Reading of the relstep (hypothesis, from NitroSDK's `SDK_VERSION_RELSTEP` scheme
 No other `[SDK+...]` markers (NitroSystem, NitroWiFi, CW) are in the ARM9, so the
 library list must come from signatures and fingerprints.
 
-## Probes (`tools/compiler_sweep.py`, 2026-10-25)
+## Probes (`tools/nds/compiler_sweep.py`, 2026-10-25)
 
 The sweep compiles a file with every mwccarm in `tools/mwccarm/` (flags: twewy's
 common flags, `-O4,p`, `-lang=c99`) and searches each function in the ARM9 modules
@@ -89,7 +89,7 @@ Confirmed in the build: `src/game/unit_0205D6E0.c` compiled with 2.0/sp1p5 and
 (That function, `func_0205d6e0`, now lives in `src/game/unit_0205D4D8.cpp`, the
 parameter reader file it belongs to; still 100 % compiled as C++.)
 
-Command (NitroSDK): `python tools/compiler_sweep.py --ref <twewy>
+Command (NitroSDK): `python tools/nds/compiler_sweep.py --ref <twewy>
 --define REGION_USA "<twewy>/libs/nitro/src/*/*.c"`, `<twewy>` being a clone of
 [Yotona/twewy](https://github.com/Yotona/twewy)
 
@@ -225,7 +225,7 @@ and every later address moves; the link therefore uses `-dead`.
 
 `-dead` alone fails: dsd's LCF keeps `.init`, `.ctor` and `.exceptix` but not
 `.exception`, whose records no relocation reaches, so the linker drops its 0xC4 bytes
-and `.init` moves. `tools/lcf_keep.py` adds `.exception` to `KEEP_SECTION` after
+and `.init` moves. `tools/nds/lcf_keep.py` adds `.exception` to `KEEP_SECTION` after
 `dsd lcf`; with it the ARM9, ITCM and DTCM modules and the ROM stay identical
 (build of 2026-10-25, before and after `unit_02099800.cpp` became complete).
 
@@ -245,7 +245,7 @@ Read from `mwccarm.exe` (2.0/sp1p5, SHA-1 `6153c610…0ee6`) with a disassembler
   `dumpir_postiro`, `dump_file`... are in the pragma table with ids 0x1000019A+ and
   have no effect.
 - Front end: the IRO optimizer's log code is live but its flag (0x64641C) is only
-  ever cleared. `tools/mwcc_irdump.py` writes a copy of the compiler under
+  ever cleared. `tools/nds/mwcc_irdump.py` writes a copy of the compiler under
   `build/irdump/` with three bytes patched (the flag set, and the dump-option test
   skipped) and prints the IR flowgraph of a file's functions after each IRO pass.
   The object code is the same as the original compiler's (checked on
@@ -267,7 +267,7 @@ start of a statement when it holds more than 100 pcodes (`cmp word ptr [edx+0x28
 the GameCube compiler's `CodeGen.c` (PrimeDecomp/mwcc-tools, read only). The flip
 above follows these splits: with the jump removed in a scratch copy of the compiler
 the 30-statement run has no flip, and thresholds of 50, 80 and 127 change its period.
-`tools/mwcc_blocks.py` runs the unmodified compiler under a small Win32 debugger
+`tools/nds/mwcc_blocks.py` runs the unmodified compiler under a small Win32 debugger
 (Windows only) and prints, per function, the block's pcode count at each statement
 start and each split with the number of calls emitted before it; the object it
 writes is identical to the build's. Addresses used: `pclastblock` 0x63A224,
@@ -276,7 +276,7 @@ generation, end of register coloring 0x513A85. Use in `notes/MATCHING.md`.
 
 ### Back end: instruction scheduler (2026-11-07)
 
-Read from the disassembly and traced with `tools/mwcc_sched.py` (same debugger).
+Read from the disassembly and traced with `tools/nds/mwcc_sched.py` (same debugger).
 
 - Two passes per function: `scheduleinstructions` (0x4FF8C0) is called at 0x471C4F,
   **before** register coloring (virtual registers; the byte the selection reads at

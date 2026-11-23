@@ -16,7 +16,7 @@ A unit boundary is proven only once the unit is decompiled and `complete`.
 
 Drawn on 2026-10-25 from two kinds of evidence:
 
-- **Library fingerprints**: `tools/compiler_sweep.py` (2.0/sp1p5, project flags) on the
+- **Library fingerprints**: `tools/nds/compiler_sweep.py` (2.0/sp1p5, project flags) on the
   CC0 sources of twewy (`libs/{nitro,c,runtime,cri}`) and khdays-decomp
   (`libs/{nitro,nns,msl}`): functions found at exactly one address, 8-byte and
   mid-function hits ignored.
@@ -54,7 +54,7 @@ EA engine objects, NitroSystem, game objects. Inside NitroSDK the modules found 
 alphabetical order (CP, CTRDG, FS, GX, MI, OS, PM), so 0x02073ED0-0x020755F4 is
 probably CARD (not fingerprinted).
 
-Commands: `python tools/compiler_sweep.py --ref <project> --compilers 2.0/sp1p5
+Commands: `python tools/nds/compiler_sweep.py --ref <project> --compilers 2.0/sp1p5
 --min-size 8 --json out.json <sources>` (khdays: add `--include
 <khdays>/include/{nitro,nnsys,game}`, and batches of ~150 files on Windows).
 

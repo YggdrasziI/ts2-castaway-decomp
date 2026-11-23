@@ -42,7 +42,7 @@ default: add one here only once a unit of this ROM proves it with mwccarm.
   level: put the local in its own `{ }` block (`func_28` of `unit_020080C0.cpp`).
 ## Registers and stack
 
-- `tools/decl_search.py` tries declaration orders, splits and types on all near matches: two passes moved 6 functions to 100 % and 20 closer. Its score is not objdiff's: about one applied unit in four regressed and was reverted, so always gate with `report_diff.py`.
+- `tools/nds/decl_search.py` tries declaration orders, splits and types on all near matches: two passes moved 6 functions to 100 % and 20 closer. Its score is not objdiff's: about one applied unit in four regressed and was reverted, so always gate with `report_diff.py`.
 - Hoisting every local to the top of the function, including those of nested blocks and
   `for` headers, then searching their declaration order (whole permutations up to six, random
   orders and pair swaps above) moved `func_0206ddb4`, `func_02059224` and `func_0202f2ac` to
@@ -52,10 +52,10 @@ default: add one here only once a unit of this ROM proves it with mwccarm.
   (difflib) instead of rejecting them; that estimate is rougher (`func_02067970` regressed in
   objdiff), so gate each one with `report_diff.py`.
 - Library functions written from the ROM (2026-11-01): a register swap between two values read one after the other is often fixed by declaring the second first (`int max = d->max; int min = d->min;`, `int i = 0; const Split *s = ...`, `func_0207e2f4`, `func_0207c004`). Tests sharing one exit with values read on the way are one `if` with assignments in the operands (`(month = d->month) < 1`, `func_0207d164`). A global tick counter that reloads and adds in place is `volatile` (`func_0207bb4c`). A 64-bit product with `mla` on a zero register has both operands cast: `(u64)a * (u64)1000 / (u64)b` (`func_0209e520`). A switch whose table covers case 0 lists `case 0:` next to `default:` (`func_0207e2f4`).
-- r0 / r1 flipping on a repeated pattern (`mov r1, r0, lsl #16` at every 5th or so of many identical statements) follows the **basic block splits of the code generator** (found 2026-11-06 with `tools/mwcc_blocks.py`, `notes/COMPILER.md`): at the start of each statement, a block holding more than 100 pcodes is ended, and a truncation at the head of a block takes r1. A C++ expression statement is several statements here (one per call or temporary: `add(get(layout, 0xb, look(&names, h)))` is 7 + 9 + 4 pcodes), so a block can start in the middle of a source line. With the split removed from a copy of the compiler, the 30-statement scratch run has no flip; with the threshold at 50, 80 or 127 its period changes.
-- To move a flip, add or remove pcodes before the site in its block (from the previous label or split) without changing the final code. Each of these is one code-neutral pcode: a local for a call result (`Unk02093648 *archive = func_020a18e4()->archive;`), a `u32` local for an index, `func_sprite` (`include/game/unk_screen.h`). Constants in locals add none (propagated before code generation). Run `tools/mwcc_blocks.py` on the file: the split must fall at the statement start where the original's block starts (`Unk0203ecd4` constructor, 99.97 % -> 100 %: the split moved from before the third lookup's `func_02051858` to before its `func_020aa040` with six pcodes, the archive local and `func_sprite` on the three lookups). This also explains why the earlier forms (`func_sprite` fixing nine constructors, extra calls) moved the pattern unevenly. An inline stops being expanded past a budget in the longest constructors: there write the locals in a block (`unit_0202E0EC.cpp`). `({ ... })` is an internal compiler error.
-- Whether a split move can close a gap at all is tested by forcing or suppressing the split at a chosen statement in the code generator under the debugger (flags of the `jg` at 0x4FFCD2) and comparing the function with the original: `python tools/mwcc_blocks.py <src> --search <symbol>` prints the moves that lower the count. Swept 2026-11-06 over all game near matches (each split moved by -8 ... +8 statements, singles and pairs): besides the three constructors closed this way (`Unk0203ecd4`, `Unk02029b80`, `Unk02041b10`), no function reaches 100 %; `Unk0202aef4`'s constructor drops from 398 to 208 differing words (split 2 statements earlier, 10 more pcodes needed), the rest being the scheduling of its table set-up. The other gaps are not block placement.
-- Instruction order inside a block and register pairs: `python tools/mwcc_sched.py <src> <symbol> --select` shows each block's pcodes with virtual registers, the order of both scheduling passes and, for the first one, why each instruction was picked (`notes/COMPILER.md`, instruction scheduler). A constant materialized later than in the original lost a tie to a store (rank) or was held back in register pressure mode, which issues last uses first, then stores, and values (loads, constants) last; a swapped register pair is a coloring order (the value generated last is colored first), not a scheduling one: `--colors` prints the order and the register each virtual register gets.
+- r0 / r1 flipping on a repeated pattern (`mov r1, r0, lsl #16` at every 5th or so of many identical statements) follows the **basic block splits of the code generator** (found 2026-11-06 with `tools/nds/mwcc_blocks.py`, `notes/COMPILER.md`): at the start of each statement, a block holding more than 100 pcodes is ended, and a truncation at the head of a block takes r1. A C++ expression statement is several statements here (one per call or temporary: `add(get(layout, 0xb, look(&names, h)))` is 7 + 9 + 4 pcodes), so a block can start in the middle of a source line. With the split removed from a copy of the compiler, the 30-statement scratch run has no flip; with the threshold at 50, 80 or 127 its period changes.
+- To move a flip, add or remove pcodes before the site in its block (from the previous label or split) without changing the final code. Each of these is one code-neutral pcode: a local for a call result (`Unk02093648 *archive = func_020a18e4()->archive;`), a `u32` local for an index, `func_sprite` (`include/game/unk_screen.h`). Constants in locals add none (propagated before code generation). Run `tools/nds/mwcc_blocks.py` on the file: the split must fall at the statement start where the original's block starts (`Unk0203ecd4` constructor, 99.97 % -> 100 %: the split moved from before the third lookup's `func_02051858` to before its `func_020aa040` with six pcodes, the archive local and `func_sprite` on the three lookups). This also explains why the earlier forms (`func_sprite` fixing nine constructors, extra calls) moved the pattern unevenly. An inline stops being expanded past a budget in the longest constructors: there write the locals in a block (`unit_0202E0EC.cpp`). `({ ... })` is an internal compiler error.
+- Whether a split move can close a gap at all is tested by forcing or suppressing the split at a chosen statement in the code generator under the debugger (flags of the `jg` at 0x4FFCD2) and comparing the function with the original: `python tools/nds/mwcc_blocks.py <src> --search <symbol>` prints the moves that lower the count. Swept 2026-11-06 over all game near matches (each split moved by -8 ... +8 statements, singles and pairs): besides the three constructors closed this way (`Unk0203ecd4`, `Unk02029b80`, `Unk02041b10`), no function reaches 100 %; `Unk0202aef4`'s constructor drops from 398 to 208 differing words (split 2 statements earlier, 10 more pcodes needed), the rest being the scheduling of its table set-up. The other gaps are not block placement.
+- Instruction order inside a block and register pairs: `python tools/nds/mwcc_sched.py <src> <symbol> --select` shows each block's pcodes with virtual registers, the order of both scheduling passes and, for the first one, why each instruction was picked (`notes/COMPILER.md`, instruction scheduler). A constant materialized later than in the original lost a tie to a store (rank) or was held back in register pressure mode, which issues last uses first, then stores, and values (loads, constants) last; a swapped register pair is a coloring order (the value generated last is colored first), not a scheduling one: `--colors` prints the order and the register each virtual register gets.
 - A stack argument stored later in the original (`mov r3, #0x10` then `str r3, [sp, #4]` after
   the register arguments): a call result read into a local just before the call
   (`int index = func_020a69cc(s); oam->func_0209201c(file, index, ...)`) is passed inline in
@@ -632,7 +632,7 @@ Each fix was found by compiling scratch variants of one function and comparing t
   in the original against `bic r3; bic r2; bic r1; orr r1`): the field is written
   in two statements, clear then OR (`f.seconds = 0; v |= s << 6;`), so the cleared
   value gets its own register (dead stores before coloring, notes/COMPILER.md).
-  Find the form with a micro test: `python tools/mwcc_sched.py test.cpp <symbol>
+  Find the form with a micro test: `python tools/nds/mwcc_sched.py test.cpp <symbol>
   --like src/game/<unit>.cpp --colors` compiles any file with a unit's flags
   (`func_02019fa0` 99.8 % -> 100 %, `func_0200cc60` 97.44 -> 97.62 %).
 - A helper class that is also in another file (the countdown of `unit_0200B23C.cpp`
@@ -660,7 +660,7 @@ Each fix was found by compiling scratch variants of one function and comparing t
 - A call result kept in its own local can take the wrong place in the coloring order
   when declaration orders change nothing: write it over the variable it was computed
   from (`dot = func_02097b14(dot);` instead of `angle = ...`). The reused variable's new
-  live range is colored with the late group (`tools/mwcc_sched.py --colors`): in
+  live range is colored with the late group (`tools/nds/mwcc_sched.py --colors`): in
   `Unk020988d8::func_02098a5c` this put sinAngle in r4 as in the original, 99.34 ->
   99.62 % (the flag and the angle still swap r5 / r11; 2026-11-22).
 
@@ -686,7 +686,7 @@ Each fix was found by compiling scratch variants of one function and comparing t
     on a local copy read them from the stack (`func_0206da24`, 98.79 % -> 99.01 %, registers left).
   The scheduler trace shows why the first case cannot come from statement order: the three
   address pcodes of the call are ready together with equal priorities, so they keep their
-  code generation order (`tools/mwcc_sched.py --select`).
+  code generation order (`tools/nds/mwcc_sched.py --select`).
 - A global's field read after the global's address is already in a register for a member
   (`player = &data; ...; f(player->sim->anim)`): the original's extra copy (`mov r0, r4; ldr
   r0, [r0, #0xc]`) comes from naming the global again (`f(data.sim->anim)`); through the
@@ -2052,7 +2052,7 @@ Two 32-bit stores through one base register, the high word 0 or the low word 0, 
 
 A khdays function off by one or two words is mostly a different field offset, not different code: this ROM's SDK has shorter structures (`NNSSndStrmPlayer` 0x170, one word less than khdays; `OSThreadInfo.list` at 8; `CARD` backup assert at 0x02000B88). Compare the words first, then fix the type, not the code. Note `ldrh` immediates are split: `e1d000b2` is offset 2, not 0xb2.
 
-Link-time constants without relocation (`SDK_IRQ_STACKSIZE`, `SDK_SYS_STACKSIZE`, `SDK_SECTION_ARENA_DTCM_START`) cannot be written as C constants, the compiler folds them: declare them as functions (`extern void SDK_IRQ_STACKSIZE(void);`, cast to `s32`) and `tools/lcf_keep.py` defines them as absolute symbols in the linker script (values read from the ROM pools, as khdays and Advance Wars do). objdiff scores the symbol against the bare pool word as a match (2026-11-06: `OS_InitThread`, arena bounds, IRQ stack checker at 100 %).
+Link-time constants without relocation (`SDK_IRQ_STACKSIZE`, `SDK_SYS_STACKSIZE`, `SDK_SECTION_ARENA_DTCM_START`) cannot be written as C constants, the compiler folds them: declare them as functions (`extern void SDK_IRQ_STACKSIZE(void);`, cast to `s32`) and `tools/nds/lcf_keep.py` defines them as absolute symbols in the linker script (values read from the ROM pools, as khdays and Advance Wars do). objdiff scores the symbol against the bare pool word as a match (2026-11-06: `OS_InitThread`, arena bounds, IRQ stack checker at 100 %).
 
 Data that the original keeps in `.text` between functions (crt0's `BuildInfo`): `#pragma define_section TEXT_DATA ".text" abs32 RWX` then `#pragma section TEXT_DATA begin` / `end` around a non-const initialized definition (Advance Wars' `text_data.h`). `dcd` in an `asm` function gives the same bytes. A data-only leftover gap with nothing pointing at it is dropped by `-dead`: put the data in the unit of the code that uses it.
 
@@ -2110,7 +2110,7 @@ objdiff's alignment into register, stack, moved (scheduling), extra / missing an
 and sums the register rows up as a permutation (ours -> original) with our source lines;
 a cycle among r4-r11 is a coloring order problem. `--trace` adds, for each permuted
 register, the virtual registers coloring gave it and their visit order
-(`tools/mwcc_sched.py --colors`): the first visited gets the lowest free register.
+(`tools/nds/mwcc_sched.py --colors`): the first visited gets the lowest free register.
 Rules found with small test files compiled with the game flags (2026-11-08):
 
 - **Copy propagation decides load order.** `int x = p.x; int y = p.y; d.x = x; d.y = y;`

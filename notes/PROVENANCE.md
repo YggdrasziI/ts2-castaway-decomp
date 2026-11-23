@@ -12,10 +12,10 @@ Source: [Yotona/twewy](https://github.com/Yotona/twewy), local clone at commit
 | Our file | Their file | Changes |
 |---|---|---|
 | `tools/configure.py` | `tools/configure.py` | `GAME = "ts2c"`, one version `eur`; twewy's per-path compiler configs removed (`COMPILER_CONFIGS` empty); ROM check against `build_nobios.sha1` when `arm7_bios.bin` is absent |
-| `tools/download_tool.py`, `mangle.py`, `requirements.txt` | same paths | none |
+| `tools/requirements.txt` | same path | none |
 
-`get_platform.py`, `transform_dep.py` and `m2ctx.py` (same twewy origin) are now in
-`tools/nds/` (below).
+`download_tool.py`, `mangle.py`, `get_platform.py`, `transform_dep.py` and `m2ctx.py`
+(same twewy origin) are now in `tools/nds/` (below).
 
 ## Shared tools (`tools/common/`)
 
@@ -43,10 +43,19 @@ It replaces our former copies of:
 
 - `tools/get_platform.py`, `tools/transform_dep.py` (twewy): same content;
 - `tools/m2ctx.py` (twewy): same tool, the project root found from `decomp.toml`
-  instead of the script's folder, include directories from `[m2ctx] include_dirs`
+  instead of the script's folder, include directories from `[nds] include_dirs`
   (the former list by default);
 - `tools/objdiff_prune.py` (written here): same tool, `objdiff.json` read from the
   current directory (the build runs from the project root).
+
+Since 2026-11-23 it also replaces our copies of `compiler_sweep.py`,
+`decl_search.py`, `download_tool.py`, `gdb_trace.py`, `ghidra_sync.py`,
+`lcf_keep.py`, `mangle.py`, `mwcc_blocks.py`, `mwcc_irdump.py`, `mwcc_sched.py` and
+`unit_candidates.py`, merged with those of dqmj2-decomp (the newest of each:
+overlays, download retries, FORCE_ACTIVE of the sourced functions, which leaves
+this ROM identical). The game settings they held (version, compiler, link-time
+constants, candidate regions, Ghidra project) are now in the `[nds]` table of
+`decomp.toml`.
 
 ## Scripts from the sibling projects
 
